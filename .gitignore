@@ -1,0 +1,25 @@
+# Ambientes e caches criados ao executar os exercícios.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Artefactos de packaging, regeneráveis.
+build/
+dist/
+*.egg-info/
+
+# Segredos e configuração local: nunca entram no repositório.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Sistema operativo e editores.
+.DS_Store
+Thumbs.db
+.idea/
