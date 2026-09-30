@@ -6,6 +6,7 @@ Materiais da disciplina, publicados aqui à medida que ficam prontos.
 
 ## Disponível agora
 
+- [Python avançado](01-python-avancado/README.md): o tema 03, Objetos, composição e comportamento, com guia, laboratório e ficha de exercícios
 - [Diagnóstico inicial: Python em contexto de serviço](avaliacoes/diagnostico-python.md)
 
 ## O ano
@@ -23,7 +24,7 @@ Começamos por organizar melhor o Python que já conheces, passamos a guardar da
 
 ## Como usar este repositório
 
-Cada área tem a sua pasta, com o número da ordem à frente: `01-python-avancado`, `02-sql-fundamentos`, `03-sql-avancado` e `04-cloud`. Dentro de cada pasta há um ficheiro por aula, numerado, com o nome da matéria. A ficha de exercícios fica ao lado do guia da mesma aula, com `-exercicios` no fim do nome.
+Cada área tem a sua pasta, com o número da ordem à frente: `01-python-avancado`, `02-sql-fundamentos`, `03-sql-avancado` e `04-cloud`. Dentro de cada pasta há um guia por tema, numerado, com o nome da matéria. Ao lado do guia, com o mesmo número, podem estar mais dois documentos: o laboratório, com `-laboratorio` no fim do nome, que tem os passos para seguires no computador, e a ficha de exercícios, com `-exercicios` no fim do nome, para fazeres sem ajuda.
 
 Há ainda três pastas transversais. Em `exemplos/` fica o código que já está completo e serve para leres e perceberes. Em `laboratorios/` fica o código de partida que vais completar tu. Em `avaliacoes/` ficam os enunciados de avaliação de todas as áreas.
 
