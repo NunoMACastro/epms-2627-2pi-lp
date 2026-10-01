@@ -25,7 +25,7 @@ O computador com o Python 3 e o VS Code, e o guia aberto ao lado. Uma folha de p
 As classes de Pokémon já estão feitas: são as das partes 2 e 3 do guia, e estão no ficheiro `pokemon.py` dos exemplos. O teu ficheiro do ginásio vai importá-las desse ficheiro, e por isso os dois têm de estar na mesma pasta.
 
 1. Cria uma pasta nova, chamada `ginasio-pokemon`, no sítio onde guardas os trabalhos desta disciplina, e abre-a no VS Code.
-2. Abre o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/ginasio-pokemon/pokemon.py). Se tens este repositório no teu computador, copia o ficheiro para a tua pasta. Se o estás a ler no GitHub, usa o botão de copiar o conteúdo do ficheiro, que está por cima do código, cria na tua pasta um ficheiro novo chamado `pokemon.py`, cola o conteúdo e guarda.
+2. Abre o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). Se tens este repositório no teu computador, copia o ficheiro para a tua pasta. Se o estás a ler no GitHub, usa o botão de copiar o conteúdo do ficheiro, que está por cima do código, cria na tua pasta um ficheiro novo chamado `pokemon.py`, cola o conteúdo e guarda.
 3. Confirma o nome do ficheiro. Tem de ser exatamente `pokemon.py`, tudo em minúsculas e sem acento. Se o descarregaste, o browser pode tê-lo guardado com outro nome, como `pokemon (1).py`, e nesse caso muda-lhe o nome.
 4. Abre o terminal do VS Code e executa `python3 pokemon.py`.
 

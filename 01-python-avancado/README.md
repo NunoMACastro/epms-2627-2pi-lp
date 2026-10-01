@@ -14,7 +14,7 @@ Cada tema tem até três documentos com o mesmo número. O guia é para ler e es
 
 O tema 03 ainda está a ser dado. O guia cobre o que já foi dado nas aulas, e os assuntos seguintes do tema entram nele como partes novas.
 
-O código completo dos exemplos dos guias está na pasta `exemplos/python-avancado`, na raiz deste repositório. Para o tema 03, são os ficheiros `pokemon.py` e `ginasio.py`, na pasta [ginasio-pokemon](../exemplos/python-avancado/ginasio-pokemon/).
+O código completo dos exemplos dos guias está na pasta `exemplos/python-avancado`, na raiz deste repositório. O exemplo das aulas é o dos Pokémon, que cresce de tema para tema, com cada versão numa pasta própria em [exemplos/python-avancado/pokemon](../exemplos/python-avancado/pokemon/). A do tema 03 é a pasta `03-objetos-e-composicao`, com os ficheiros `pokemon.py` e `ginasio.py`.
 
 [Voltar ao índice](../README.md)
 

@@ -24,7 +24,7 @@ Além deste guia, o tema tem mais dois documentos com o mesmo número, um para c
 - o [laboratório](03-objetos-e-composicao-laboratorio.md), com os passos para construíres no computador o ginásio Pokémon da parte 4, com o guia aberto ao lado;
 - a [ficha de exercícios](03-objetos-e-composicao-exercicios.md), para praticares sem ajuda.
 
-O código completo dos exemplos das aulas está em dois ficheiros: [pokemon.py](../exemplos/python-avancado/ginasio-pokemon/pokemon.py), com a classe `Pokemon` e as suas classes-filhas, e [ginasio.py](../exemplos/python-avancado/ginasio-pokemon/ginasio.py), com o treinador, o ginásio e o registo dos combates.
+O código completo dos exemplos das aulas está em dois ficheiros: [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas, e [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o ginásio e o registo dos combates.
 
 ## O que precisas de saber antes
 
@@ -587,7 +587,7 @@ O Mew nasceu com 999 de vida, que é um estado impossível. Na linha seguinte, a
 
 ### A classe Pokemon completa
 
-Esta é a classe `Pokemon` do mini-projeto das aulas, com as duas propriedades, a da vida e a do ataque, e os métodos para verificar a vida, calcular o dano e atacar. É a primeira parte do ficheiro [pokemon.py](../exemplos/python-avancado/ginasio-pokemon/pokemon.py):
+Esta é a classe `Pokemon` do mini-projeto das aulas, com as duas propriedades, a da vida e a do ataque, e os métodos para verificar a vida, calcular o dano e atacar. É a primeira parte do ficheiro [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py):
 
 ```python
 VIDA_MINIMA = 0
@@ -757,7 +757,7 @@ A herança descreve uma relação "é um": um `PokemonFogo` é um `Pokemon`. Par
 
 ### Criar uma classe-filha
 
-Esta é a classe `PokemonFogo`, do ficheiro [pokemon.py](../exemplos/python-avancado/ginasio-pokemon/pokemon.py):
+Esta é a classe `PokemonFogo`, do ficheiro [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py):
 
 ```python
 class PokemonFogo(Pokemon):
@@ -1009,7 +1009,7 @@ Estas relações são do tipo "tem um", ou "tem vários": um treinador tem vári
 
 ### O Treinador e a sua equipa
 
-Esta é a classe `Treinador`, do ficheiro [ginasio.py](../exemplos/python-avancado/ginasio-pokemon/ginasio.py):
+Esta é a classe `Treinador`, do ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py):
 
 ```python
 class Treinador:
@@ -1297,7 +1297,7 @@ A herança só serve quando "é um" é verdade sempre, e quando um objeto da fil
 
 ### Exemplo guiado: o ginásio Pokémon
 
-Este exemplo junta tudo o que a parte 4 explicou, num programa completo. É o código do ficheiro [ginasio.py](../exemplos/python-avancado/ginasio-pokemon/ginasio.py), e o [laboratório](03-objetos-e-composicao-laboratorio.md) mostra como o construir no computador, passo a passo.
+Este exemplo junta tudo o que a parte 4 explicou, num programa completo. É o código do ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), e o [laboratório](03-objetos-e-composicao-laboratorio.md) mostra como o construir no computador, passo a passo.
 
 #### Passo 1: O problema
 
