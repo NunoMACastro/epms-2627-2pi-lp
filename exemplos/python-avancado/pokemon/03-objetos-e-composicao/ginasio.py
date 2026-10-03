@@ -22,6 +22,7 @@ class Treinador:
     """Um treinador tem uma equipa de Pokémon (agregação)."""
 
     def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
         self.nome = nome
         # AGREGAÇÃO: a equipa começa vazia e recebe Pokémon que já existiam.
         self.equipa = []
@@ -42,6 +43,7 @@ class Combate:
     """Registo de um combate. Só o ginásio cria registos (composição)."""
 
     def __init__(self, desafiante, pokemon_desafiante, vencedor):
+        """Guarda os nomes do desafiante, do seu Pokémon e do vencedor."""
         self.desafiante = desafiante
         self.pokemon_desafiante = pokemon_desafiante
         self.vencedor = vencedor
@@ -56,6 +58,7 @@ class Ginasio:
     e guarda o registo dos seus combates (composição)."""
 
     def __init__(self, cidade, lider):
+        """Cria um ginásio com a cidade e o líder, e as duas listas vazias."""
         self.cidade = cidade
         self.lider = lider              # AGREGAÇÃO: Treinador criado fora
         self.desafiantes = []           # AGREGAÇÃO: existem sem o ginásio

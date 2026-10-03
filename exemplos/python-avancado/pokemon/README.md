@@ -8,10 +8,10 @@ Cada pasta é uma versão completa, que funciona sozinha. O nome da pasta é o d
 
 | Pasta | O que tem | Guia |
 | --- | --- | --- |
-| `03-objetos-e-composicao` | A classe `Pokemon` com a vida e o ataque protegidos por propriedades, os tipos por herança, o treinador e o ginásio por agregação e os combates por composição | [Objetos e composição](../../../01-python-avancado/03-objetos-e-composicao.md) |
+| `03-objetos-e-composicao` | A classe `Pokemon` com a vida e o ataque protegidos por propriedades, os tipos por herança, o treinador e o ginásio por agregação e os combates por composição | [Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) |
 
 As versões seguintes aparecem aqui quando a matéria lá chegar.
 
-Para executar uma versão, abre o terminal na pasta dela e escreve `python3 ginasio.py`.
+Para executar uma versão, abre o terminal na pasta dela e escreve `python3 ginasio.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
 
 ![Rodapé](../../../imagens/rodape.png)

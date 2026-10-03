@@ -94,6 +94,7 @@ class PokemonFogo(Pokemon):
     """Um PokemonFogo É UM Pokemon: herda tudo e só muda o dano."""
 
     def __init__(self, nome, vida, ataque):
+        """Cria um Pokémon de fogo com nome, vida e ataque."""
         # Um PokemonFogo é sempre do tipo "Fogo", por isso o tipo não se pede.
         super().__init__(nome, "Fogo", vida, ataque)
 
@@ -110,6 +111,7 @@ class PokemonAgua(Pokemon):
     """Um PokemonAgua É UM Pokemon: herda tudo e só muda o dano."""
 
     def __init__(self, nome, vida, ataque):
+        """Cria um Pokémon de água com nome, vida e ataque."""
         super().__init__(nome, "Água", vida, ataque)
 
     def calcular_dano(self, alvo):
@@ -125,6 +127,7 @@ class PokemonPlanta(Pokemon):
     """Um PokemonPlanta É UM Pokemon, com um atributo e um método a mais."""
 
     def __init__(self, nome, vida, ataque, regeneracao):
+        """Cria um Pokémon de planta com nome, vida, ataque e regeneração."""
         super().__init__(nome, "Planta", vida, ataque)
         self.regeneracao = regeneracao
 

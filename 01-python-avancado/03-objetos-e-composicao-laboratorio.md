@@ -25,7 +25,7 @@ O computador com o Python 3 e o VS Code, e o guia aberto ao lado. Uma folha de p
 As classes de Pokémon já estão feitas: são as das partes 2 e 3 do guia, e estão no ficheiro `pokemon.py` dos exemplos. O teu ficheiro do ginásio vai importá-las desse ficheiro, e por isso os dois têm de estar na mesma pasta.
 
 1. Cria uma pasta nova, chamada `ginasio-pokemon`, no sítio onde guardas os trabalhos desta disciplina, e abre-a no VS Code.
-2. Abre o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). Se tens este repositório no teu computador, copia o ficheiro para a tua pasta. Se o estás a ler no GitHub, usa o botão de copiar o conteúdo do ficheiro, que está por cima do código, cria na tua pasta um ficheiro novo chamado `pokemon.py`, cola o conteúdo e guarda.
+2. Abre o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). Se tens este repositório no teu computador, copia o ficheiro para a tua pasta. Se o estás a ler no GitHub, usa o botão de copiar o conteúdo do ficheiro, que está por cima do código, cria na tua pasta um ficheiro novo chamado `pokemon.py`, cola o conteúdo e guarda. Também podes usar o botão de descarregar o ficheiro, ao lado do de copiar, e depois mover o ficheiro descarregado para a tua pasta.
 3. Confirma o nome do ficheiro. Tem de ser exatamente `pokemon.py`, tudo em minúsculas e sem acento. Se o descarregaste, o browser pode tê-lo guardado com outro nome, como `pokemon (1).py`, e nesse caso muda-lhe o nome.
 4. Abre o terminal do VS Code e executa `python3 pokemon.py`.
 
@@ -40,7 +40,7 @@ Se as vês, o ficheiro está no sítio certo e funciona. O resto da saída é a 
 
 Essa demonstração está debaixo da linha `if __name__ == "__main__":`. É por isso que, nas partes seguintes, quando o teu ficheiro do ginásio importar o `pokemon.py`, a demonstração não vai aparecer: só corre quando executas o `pokemon.py` diretamente.
 
-## Parte 2: O Treinador e a equipa (10 min)
+## Parte 2: O Treinador e a equipa (15 min)
 
 Precisas da secção [O Treinador e a sua equipa](03-objetos-e-composicao.md#o-treinador-e-a-sua-equipa) do guia.
 
@@ -158,13 +158,13 @@ Histórico do ginásio de Cerulean:
 
 O `True` mostra que o líder do ginásio e a variável `misty` são o mesmo objeto: o ginásio recebeu a treinadora por parâmetro e guardou uma referência para ela, e não uma cópia. As duas listas estão vazias, porque ainda não houve combates, e por isso o histórico só tem o título.
 
-## Parte 6: O combate (15 min)
+## Parte 6: O combate (25 min)
 
 Precisas do [passo 6](03-objetos-e-composicao.md#passo-6-o-método-combater) e do [passo 7](03-objetos-e-composicao.md#passo-7-prever-e-executar) do exemplo guiado.
 
 1. Escreve o método `combater` dentro da classe `Ginasio`, entre o construtor e o `mostrar_historico`. Cuidado com a indentação: o método tem quatro espaços, as linhas dentro dele têm oito, e as linhas dentro do `while` e dos `if` têm doze ou dezasseis.
 2. Apaga as linhas de teste da parte 5 e escreve no fim do ficheiro o programa principal do passo 7 do guia, que começa em `if __name__ == "__main__":`.
-3. Antes de executar, faz no papel a tabela do primeiro combate, com uma linha por ataque, com o dano e a vida dos dois Pokémon depois de cada ataque. Se já leste o passo 7 do guia, tapa a tabela de lá e faz a tua. Escreve também quem achas que ganha o segundo combate, e porquê.
+3. Antes de executar, faz no papel a tabela do primeiro combate, com uma linha por ataque, com o dano e a vida dos dois Pokémon depois de cada ataque. Se já leste o passo 7 do guia, tapa a tabela de lá e o parágrafo a seguir a ela, sobre o segundo combate, e faz a tua. Escreve também quem achas que ganha o segundo combate, e porquê.
 4. Executa e compara com a tua tabela.
 
 A saída tem de ser exatamente a do passo 7 do guia. As últimas linhas são estas:
@@ -179,9 +179,9 @@ Ash continua com 2 Pokémon; Misty continua com 1.
 
 Se a tua saída for diferente, compara o teu código com o do guia linha a linha, a começar pelo método `combater`, e vê a secção [Quando alguma coisa corre mal](#quando-alguma-coisa-corre-mal), no fim deste laboratório.
 
-Responde por escrito: no segundo combate, o Starmie começou com 40 de vida, e não com 120. Porquê? Que relação entre classes explica isto?
+Responde por escrito: se o programa principal tivesse um terceiro `cerulean.combater(ash)`, logo a seguir aos outros dois, o que escrevia esse terceiro combate? Porquê? Que relação entre classes explica isto? Depois de responderes, podes confirmar: acrescenta a linha, executa e volta a apagá-la.
 
-## Parte 7: Duas experiências com as relações (10 min)
+## Parte 7: Duas experiências com as relações (15 min)
 
 Precisas das secções [Agregação: o todo reúne partes que existem por si](03-objetos-e-composicao.md#agregação-o-todo-reúne-partes-que-existem-por-si), [Composição: o todo cria e guarda as suas partes](03-objetos-e-composicao.md#composição-o-todo-cria-e-guarda-as-suas-partes) e do [passo 8](03-objetos-e-composicao.md#passo-8-o-que-sobrevive-quando-o-ginásio-desaparece).
 
@@ -272,19 +272,21 @@ Antes de escreveres o método, olha outra vez para a classe `Combate` e para a l
 
 ## Quando alguma coisa corre mal
 
+**`can't open file '...ginasio.py': [Errno 2] No such file or directory`.** O Python não encontrou o ficheiro que mandaste executar, porque o terminal está aberto noutra pasta. A mensagem mostra o caminho completo onde o procurou. Abre no VS Code a pasta `ginasio-pokemon` e abre aí um terminal novo, que já começa nessa pasta, ou muda para ela com `cd`.
+
 **`ModuleNotFoundError: No module named 'pokemon'`.** O Python não encontrou o ficheiro `pokemon.py`. Confirma que está na mesma pasta que o `ginasio.py` e que o nome é exatamente `pokemon.py`, em minúsculas, sem acento e sem nada a mais, como `pokemon (1).py`.
 
-**`ImportError: cannot import name 'PokemonAgau' from 'pokemon'`.** O ficheiro foi encontrado, mas não tem uma classe com o nome escrito na importação. Aqui, `PokemonAgau` está mal escrito. Nas versões recentes do Python, a mensagem acaba com uma sugestão do nome certo.
+**`ImportError: cannot import name 'PokemonAgau' from 'pokemon'`.** O ficheiro foi encontrado, mas não tem uma classe com o nome escrito na importação. Aqui, `PokemonAgau` está mal escrito. A mensagem continua com o caminho do teu `pokemon.py`, entre parênteses, e nas versões recentes do Python acaba com uma sugestão do nome certo.
 
 **`NameError: name 'Treinador' is not defined`.** Há uma linha a usar a classe antes de ela ser definida. As linhas de teste e o programa principal ficam sempre no fim do ficheiro, depois de todas as classes.
 
 **`AttributeError: 'Treinador' object has no attribute 'capturar'`.** O método existe no ficheiro, mas não está dentro da classe. Um método tem de estar indentado quatro espaços em relação à linha `class`. Se o `def capturar` começar na margem, é uma função solta, e não um método do treinador.
 
-**`TypeError: Treinador.capturar() takes 1 positional argument but 2 were given`.** Falta o `self` na definição do método: escreveste `def capturar(pokemon):` em vez de `def capturar(self, pokemon):`.
+**`TypeError: Treinador.capturar() takes 1 positional argument but 2 were given`.** Falta o `self` na definição do método: escreveste `def capturar(pokemon):` em vez de `def capturar(self, pokemon):`. Nas versões antigas do Python, a mensagem começa só por `capturar()`, sem o nome da classe.
 
 **`AttributeError: 'Treinador' object has no attribute 'equipa'`.** No construtor, a linha da equipa ficou sem `self.`: `equipa = []` cria uma variável que desaparece quando o construtor acaba. Tem de ser `self.equipa = []`.
 
-**A demonstração do `pokemon.py` aparece quando executas o `ginasio.py`.** Alguém apagou a linha `if __name__ == "__main__":` do `pokemon.py`, ou tirou a indentação das linhas debaixo dela. Volta a copiar o ficheiro dos exemplos.
+**A demonstração do `pokemon.py` aparece quando executas o `ginasio.py`.** Alguém apagou a linha `if __name__ == "__main__":` do `pokemon.py` e tirou a indentação das linhas debaixo dela. Se só uma destas duas coisas foi feita, o que aparece é um erro: um `NameError` sobre o `PokemonPlanta`, se só se apagou a linha, ou um `IndentationError`, se só se tirou a indentação. Em qualquer dos casos, volta a copiar o ficheiro dos exemplos.
 
 **O programa não para.** Carrega em Ctrl+C no terminal para o interromper. Um combate que nunca acaba vem quase sempre do ciclo `while True` do `combater`: confirma que tens os dois `break`, que as condições são `defensor.vida == 0` e `atacante.vida == 0`, e que não mudaste o ataque mínimo no `pokemon.py`. Com ataque mínimo 1, cada ataque tira pelo menos 1 de vida, e o combate acaba sempre.
 

@@ -10,10 +10,10 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 
 | Grupo | Parte do guia | Exercícios | Tempo |
 | --- | --- | --- | ---: |
-| Classes e objetos | Parte 1 | 1, 2 e 3 | 35 min |
+| Classes e objetos | Parte 1 | 1, 2 e 3 | 40 min |
 | Proteger o estado | Parte 2 | 4 e 5 | 25 min |
 | Herança | Parte 3 | 6 | 20 min |
-| Composição e agregação | Parte 4 | 7, 8, 9 e 10 | 55 min |
+| Composição e agregação | Parte 4 | 7, 8, 9 e 10 | 60 min |
 | Desafio opcional | Partes 1 a 4 | | 30 min |
 | Para ires mais longe, opcional | Parte 4 | | 15 min |
 
@@ -90,9 +90,9 @@ Pikachu come a Baga Sitrus.
 Pikachu tem 150/150 de vida.
 ```
 
-Depois de o teste funcionar, responde: o Pikachu tinha 145 de vida e comeu uma baga que cura 30. Porque é que ficou com 150, e não com 175, se o teu método não tem nenhum `if`?
+Depois de o teste funcionar, responde: o Pikachu tinha 145 de vida e comeu uma baga que cura 30. Porque é que ficou com 150, e não com 175, se o teu método não tem nenhum `if`? Esta pergunta usa a parte 2 do guia: se ainda não a leste, responde-lhe quando fizeres o grupo seguinte.
 
-### Exercício 3: Estático ou do objeto (10 min)
+### Exercício 3: Estático ou do objeto (15 min)
 
 Treina: decidir se um método precisa do objeto (guia, [Métodos estáticos: funções que vivem na classe](03-objetos-e-composicao.md#métodos-estáticos-funções-que-vivem-na-classe)).
 
@@ -106,15 +106,42 @@ Queremos acrescentar três métodos à classe `Baga`:
 
 **b)** Escreve só a primeira linha de cada um dos três métodos, com o decorador por cima, se for preciso.
 
-**c)** Escreve o método `cura_valida` completo, dentro da classe, e testa-o com `print(Baga.cura_valida(10))` e o mesmo para 0, 50 e 51. Os quatro resultados têm de ser `True`, `False`, `True` e `False`.
+**c)** Escreve o método `cura_valida` completo, dentro da classe, e testa-o com `print(Baga.cura_valida(1))` e o mesmo para 0, 50 e 51. Os quatro resultados têm de ser `True`, `False`, `True` e `False`.
 
 ## Proteger o estado
 
-### Exercício 4: Uma propriedade para um texto (15 min)
+### Exercício 4: O que o privado deixa e não deixa fazer (10 min)
 
-Treina: escrever uma propriedade com uma regra (guia, [Propriedades: o get e o set com cara de atributo](03-objetos-e-composicao.md#propriedades-o-get-e-o-set-com-cara-de-atributo)).
+Treina: prever o efeito dos dois sublinhados (guia, [Público e privado em Python](03-objetos-e-composicao.md#público-e-privado-em-python)).
 
-Na classe `Baga`, o nome não pode ficar vazio. Transforma o atributo `nome` numa propriedade, com get e set, que aplica esta regra: se alguém tentar dar à baga o texto vazio, `""`, a baga fica com o nome `"Baga sem nome"`. Qualquer outro texto é guardado tal como vem.
+```python
+class Baga:
+    def __init__(self, nome, cura):
+        self.nome = nome
+        self.__cura = cura
+
+    def descricao(self):
+        return f"{self.nome} (cura {self.__cura})"
+
+
+oran = Baga("Baga Oran", 10)
+print(oran.descricao())
+print(oran.nome)
+print(oran._Baga__cura)
+print(oran.__cura)
+```
+
+**a)** Sem executar, diz, para cada uma das quatro linhas com `print`, se funciona ou dá erro. Para as que funcionam, escreve o que mostram.
+
+**b)** O método `descricao` usa `self.__cura` e funciona. A última linha usa `oran.__cura` e não funciona. Explica a diferença.
+
+**c)** Executa e confirma as tuas previsões. Um colega diz que, com os dois sublinhados, ninguém consegue mudar a cura de uma baga a partir de fora da classe. Troca a última linha do programa, a que dá erro, por linhas tuas que mudem a cura da `oran` para 99 e que mostrem a mudança com o método `descricao`, que tem de escrever `Baga Oran (cura 99)`. O que mostra isto sobre a proteção que os dois sublinhados dão?
+
+### Exercício 5: Uma propriedade para um texto (15 min)
+
+Treina: escrever uma propriedade com uma regra (guia, [Propriedades: o get e o set com cara de atributo](03-objetos-e-composicao.md#propriedades-o-get-e-o-set-com-cara-de-atributo) e [O construtor também passa pelo set](03-objetos-e-composicao.md#o-construtor-também-passa-pelo-set)).
+
+Na classe `Baga` do exercício 1, o nome não pode ficar vazio. Transforma o atributo `nome` numa propriedade, com get e set, que aplica esta regra: se alguém tentar dar à baga o texto vazio, `""`, a baga fica com o nome `"Baga sem nome"`. Qualquer outro texto é guardado tal como vem.
 
 A regra tem de se aplicar também quando a baga é criada. Pensa também em onde fica guardado o valor: não pode ser no próprio `nome`.
 
@@ -140,38 +167,11 @@ Baga sem nome
 Baga Pecha
 ```
 
-### Exercício 5: O que o privado deixa e não deixa fazer (10 min)
-
-Treina: prever o efeito dos dois sublinhados (guia, [Público e privado em Python](03-objetos-e-composicao.md#público-e-privado-em-python)).
-
-```python
-class Baga:
-    def __init__(self, nome, cura):
-        self.nome = nome
-        self.__cura = cura
-
-    def descricao(self):
-        return f"{self.nome} (cura {self.__cura})"
-
-
-oran = Baga("Baga Oran", 10)
-print(oran.descricao())
-print(oran.nome)
-print(oran._Baga__cura)
-print(oran.__cura)
-```
-
-**a)** Sem executar, diz, para cada uma das quatro linhas com `print`, se funciona ou dá erro. Para as que funcionam, escreve o que mostram.
-
-**b)** O método `descricao` usa `self.__cura` e funciona. A última linha usa `oran.__cura` e não funciona. Explica a diferença.
-
-**c)** Executa e confirma. O que mostra a terceira linha sobre a proteção que os dois sublinhados dão?
-
 ## Herança
 
 ### Exercício 6: Um Pokémon elétrico (20 min)
 
-Treina: escrever uma classe-filha que reescreve um método com `super()` (guia, [Reescrever um método](03-objetos-e-composicao.md#reescrever-um-método) e [super() dentro de um método reescrito](03-objetos-e-composicao.md#super-dentro-de-um-método-reescrito)).
+Treina: escrever uma classe-filha que reescreve um método com `super()` (guia, [O construtor da filha chama o da mãe](03-objetos-e-composicao.md#o-construtor-da-filha-chama-o-da-mãe), [Reescrever um método](03-objetos-e-composicao.md#reescrever-um-método) e [super() dentro de um método reescrito](03-objetos-e-composicao.md#super-dentro-de-um-método-reescrito)).
 
 Escreve a classe `PokemonEletrico`, filha de `Pokemon`. Um `PokemonEletrico` é sempre do tipo `"Elétrico"`, e por isso o construtor pede só o nome, a vida e o ataque. O dano segue estas regras:
 
@@ -216,9 +216,9 @@ A tua classe não tem nenhum método `atacar`, e mesmo assim o `pikachu.atacar(.
 
 ## Composição e agregação
 
-### Exercício 7: Herança, agregação ou composição (10 min)
+### Exercício 7: Herança, agregação ou composição (15 min)
 
-Treina: classificar uma relação com as perguntas do guia (guia, [As perguntas que decidem](03-objetos-e-composicao.md#as-perguntas-que-decidem) e [É um ou tem um: herança, agregação ou composição](03-objetos-e-composicao.md#é-um-ou-tem-um-herança-agregação-ou-composição)).
+Treina: classificar uma relação com as perguntas do guia (guia, [As perguntas que decidem](03-objetos-e-composicao.md#as-perguntas-que-decidem), [É um ou tem um: herança, agregação ou composição](03-objetos-e-composicao.md#é-um-ou-tem-um-herança-agregação-ou-composição) e, para o losango, [O desenho em UML: losango vazio e losango cheio](03-objetos-e-composicao.md#o-desenho-em-uml-losango-vazio-e-losango-cheio)).
 
 Para cada uma das cinco relações, decide se é herança, agregação ou composição. Na justificação, usa a frase "é um" ou "tem", e, nas relações "tem", responde às duas perguntas: a parte faz sentido sem o todo? Quem cria a parte? Nas que forem agregação ou composição, diz também como é o losango em UML e de que lado fica.
 
@@ -300,13 +300,16 @@ class Pokedex:
     """Lista dos nomes dos Pokémon que um treinador já registou."""
 
     def __init__(self):
+        """Cria uma Pokédex vazia."""
         self.registados = []
 
     def registar(self, pokemon):
+        """Regista o nome do Pokémon, se ainda não estiver registado."""
         if pokemon.nome not in self.registados:
             self.registados.append(pokemon.nome)
 
     def total(self):
+        """Devolve quantos Pokémon diferentes estão registados."""
         return len(self.registados)
 ```
 
@@ -409,7 +412,7 @@ print(len(misty.equipa), len(brock.equipa))
 misty.libertar(starmie)
 brock.capturar(starmie)
 print(len(misty.equipa), len(brock.equipa))
-print(starmie.treinador.nome)
+misty.capturar(starmie)
 ```
 
 Quando as classes estiverem certas, o teste mostra:
@@ -417,8 +420,9 @@ Quando as classes estiverem certas, o teste mostra:
 ```text
 Starmie já pertence a Misty.
 1 0
+Misty liberta Starmie.
 0 1
-Brock
+Starmie já pertence a Brock.
 ```
 
 ## Para ires mais longe: um histórico que se deixa estragar (15 min)
@@ -470,8 +474,8 @@ Histórico do ginásio de Cerulean:
 
 Concluíste a ficha quando:
 
-- os testes dos exercícios 2, 3, 4, 6, 9 e 10 mostram exatamente as linhas indicadas no enunciado;
-- as tuas previsões dos exercícios 1, 5 e 8 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
+- os testes dos exercícios 2, 3, 4, 5, 6, 9 e 10 mostram exatamente as linhas indicadas no enunciado;
+- as tuas previsões dos exercícios 1, 4 e 8 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
 - as tuas justificações dos exercícios 3, 7 e 8 usam as perguntas do guia, e não só a resposta final;
 - consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio.
 

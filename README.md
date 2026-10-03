@@ -26,7 +26,7 @@ Começamos por organizar melhor o Python que já conheces, passamos a guardar da
 
 Cada área tem a sua pasta, com o número da ordem à frente: `01-python-avancado`, `02-sql-fundamentos`, `03-sql-avancado` e `04-cloud`. Dentro de cada pasta há um guia por tema, numerado, com o nome da matéria. Ao lado do guia, com o mesmo número, podem estar mais dois documentos: o laboratório, com `-laboratorio` no fim do nome, que tem os passos para seguires no computador, e a ficha de exercícios, com `-exercicios` no fim do nome, para fazeres sem ajuda.
 
-Há ainda três pastas transversais. Em `exemplos/` fica o código que já está completo e serve para leres e perceberes. Em `laboratorios/` fica o código de partida que vais completar tu. Em `avaliacoes/` ficam os enunciados de avaliação de todas as áreas.
+Há ainda três pastas transversais. Em `exemplos/` fica o código que já está completo e serve para leres e perceberes. Em `laboratorios/` fica o código de partida que vais completar tu, quando um laboratório precisa dele; os passos de cada laboratório estão no documento com `-laboratorio` no nome, ao lado do guia. Em `avaliacoes/` ficam os enunciados de avaliação de todas as áreas.
 
 As pastas aparecem à medida que a matéria é dada. Se uma pasta ainda não existe, é porque essa parte do ano ainda não começou.
 
