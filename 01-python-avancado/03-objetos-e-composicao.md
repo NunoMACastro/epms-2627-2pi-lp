@@ -21,7 +21,7 @@ O guia está dividido em oito partes, que seguem, no essencial, a ordem em que a
 | 7 | Dataclasses: classes que guardam dados, com o `@dataclass`, os campos e as anotações de tipo, e os casos em que não servem |
 | 8 | Decoradores: uma função é um valor, entregar uma função sem a chamar, e o que faz a arroba nos decoradores que já usas |
 
-Este tema ainda não acabou. Falta uma primeira janela feita com tkinter. Vai entrar neste guia como parte nova, a seguir à parte 8, e as partes que já existem ficam como estão.
+Com a parte 8, este tema fica completo. A primeira janela feita com tkinter não entra neste guia: vem mais à frente, quando o exemplo dos Pokémon passar a ser uma aplicação completa, com a equipa guardada num ficheiro.
 
 Além deste guia, o tema tem mais dois documentos com o mesmo número, um para cada uso:
 
@@ -2683,7 +2683,7 @@ Bulbasaur tem 30/150 de vida.
 Guardado em acao: None
 ```
 
-O ataque aconteceu logo, na própria linha, e o que ficou guardado foi o que o `atacar` devolve, que é `None`. Vais encontrar esta diferença na janela com tkinter: um botão recebe o método que deve chamar quando alguém carregar nele, e esse método escreve-se sem parênteses. Com parênteses, o ataque acontece uma vez, quando a janela é criada, e o botão fica sem nada para fazer.
+O ataque aconteceu logo, na própria linha, e o que ficou guardado foi o que o `atacar` devolve, que é `None`. Vais encontrar esta diferença mais à frente, na janela com tkinter: um botão recebe o método que deve chamar quando alguém carregar nele, e esse método escreve-se sem parênteses. Com parênteses, o ataque acontece uma vez, quando a janela é criada, e o botão fica sem nada para fazer.
 
 ### O que faz a arroba
 
@@ -2886,7 +2886,7 @@ A mensagem diz que um objeto `None` não se pode chamar. O `def` foi lido sem pr
 
 O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e depois a acrescentar-lhe o líder, os anunciadores e o registo como dataclass. A [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das oito partes deste guia, para fazeres sem ajuda.
 
-Falta, neste tema, uma primeira janela com tkinter. Vai entrar neste guia como parte nova, a seguir à parte 8, e é lá que vais voltar a usar um método sem parênteses.
+Este tema acaba aqui. O tema seguinte é o dos erros: as exceções que o ginásio ainda não usa, o depurador do VS Code e o registo do que um programa faz. A primeira janela com tkinter vem mais à frente, quando o exemplo dos Pokémon passar a ser uma aplicação completa, e é lá que vais voltar a usar um método sem parênteses.
 
 ## Vocabulário
 
