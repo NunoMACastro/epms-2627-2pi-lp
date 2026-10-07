@@ -4,7 +4,7 @@
 
 ## Objetivos e organização
 
-Esta ficha serve para praticares sem ajuda o que o [guia](03-objetos-e-composicao.md) explica. Está dividida em sete grupos, um por cada parte do guia, e cada grupo só precisa da parte do guia que lhe corresponde, indicada na tabela. Podes fazer os grupos em alturas diferentes.
+Esta ficha serve para praticares sem ajuda o que o [guia](03-objetos-e-composicao.md) explica. Está dividida em oito grupos, um por cada parte do guia, e cada grupo só precisa da parte do guia que lhe corresponde, indicada na tabela. Podes fazer os grupos em alturas diferentes.
 
 Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti. O desafio e a secção "Para ires mais longe", no fim, são opcionais, e é lá que estão os casos que enganam.
 
@@ -17,6 +17,7 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 | Métodos de classe | Parte 5 | 11 e 12 | 25 min |
 | Duck typing | Parte 6 | 13 e 14 | 30 min |
 | Dataclasses | Parte 7 | 15 e 16 | 25 min |
+| Decoradores | Parte 8 | 17 e 18 | 25 min |
 | Desafio opcional | Partes 1 a 4 | | 30 min |
 | Para ires mais longe, opcional | Parte 4 | | 15 min |
 
@@ -604,6 +605,83 @@ False
 
 **c)** O Ash e o Gary ganharam uma medalha cada um no ginásio de Cerulean. O `==` diz `True` e o `is` diz `False`. Explica o que quer dizer cada uma das duas respostas, com as palavras "os mesmos dados" e "o mesmo objeto".
 
+## Decoradores
+
+### Exercício 17: Funções que se entregam (10 min)
+
+Treina: distinguir uma função de uma chamada à função (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor) e [Entregar uma função a outra função](03-objetos-e-composicao.md#entregar-uma-função-a-outra-função)).
+
+```python
+def dobro(numero):
+    return numero * 2
+
+
+def triplo(numero):
+    return numero * 3
+
+
+def aplicar(funcao, valores):
+    resultado = []
+    for valor in valores:
+        resultado.append(funcao(valor))
+    return resultado
+
+
+print(aplicar(dobro, [1, 2, 3]))
+operacao = triplo
+print(aplicar(operacao, [10]))
+print(operacao is triplo, operacao is dobro)
+print(dobro(triplo(2)))
+```
+
+**a)** Sem executar, escreve as quatro linhas que o programa mostra.
+
+**b)** Na linha `operacao = triplo`, a função `triplo` foi chamada? O que ficou guardado na variável `operacao`?
+
+**c)** Executa e compara. Depois acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Antes de executar, prevê o que acontece. Executa, explica a mensagem e apaga a linha.
+
+### Exercício 18: Uma classe sem arrobas (15 min)
+
+Treina: reescrever decoradores como atribuições (guia, [O que faz a arroba](03-objetos-e-composicao.md#o-que-faz-a-arroba)).
+
+Esta versão da `Baga` usa três decoradores:
+
+```python
+class Baga:
+    def __init__(self, nome, cura):
+        self.nome = nome
+        self.cura = cura
+
+    @staticmethod
+    def cura_valida(valor):
+        return valor >= 1 and valor <= 50
+
+    @classmethod
+    def oran(cls):
+        return cls("Baga Oran", 10)
+
+    @property
+    def descricao(self):
+        return f"{self.nome} (cura {self.cura})"
+
+
+print(Baga.cura_valida(30), Baga.cura_valida(80))
+print(Baga.oran().descricao)
+```
+
+O programa mostra:
+
+```text
+True False
+Baga Oran (cura 10)
+```
+
+**a)** Reescreve a classe sem nenhuma linha começada por arroba, de forma que as duas linhas de teste continuem a mostrar exatamente o mesmo.
+
+**b)** Na tua versão, apaga só a linha que substitui o `@property`. Antes de executar, prevê o que mostra a última linha do teste. Executa e explica o que viste. Depois volta a pôr a linha.
+
+**c)** As duas versões fazem o mesmo. Diz uma vantagem da versão com arroba para quem lê a classe.
+
 ## Desafio opcional: o mesmo Pokémon em duas equipas (30 min)
 
 Na agregação, a mesma parte pode estar em mais do que um todo. No mundo dos Pokémon, isso cria um problema: com a classe `Treinador` do guia, nada impede que dois treinadores capturem o mesmo Pokémon.
@@ -707,8 +785,8 @@ Histórico do ginásio de Cerulean:
 
 Concluíste a ficha quando:
 
-- os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15 e 16 mostram exatamente as linhas indicadas no enunciado;
-- as tuas previsões dos exercícios 1, 4, 8, 11, 13 e 15 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
+- os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 16 e 18 mostram exatamente as linhas indicadas no enunciado;
+- as tuas previsões dos exercícios 1, 4, 8, 11, 13, 15 e 17 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
 - as tuas justificações dos exercícios 3, 7, 8 e 16 usam as perguntas do guia, e não só a resposta final;
 - consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio, e a diferença entre um método estático e um método de classe com o exemplo do líder.
 

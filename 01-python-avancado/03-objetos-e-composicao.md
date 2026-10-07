@@ -2,13 +2,13 @@
 
 # Objetos, composição e comportamento
 
-Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação, passa pelos métodos de classe e pelo duck typing e acaba nas dataclasses. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
+Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação, passa pelos métodos de classe, pelo duck typing e pelas dataclasses e acaba nos decoradores. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
 
 É um texto para leres com calma, antes ou depois de uma aula, e perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho: a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário.
 
 ## O que este guia cobre e o que ainda vai entrar
 
-O guia está dividido em sete partes, que seguem, no essencial, a ordem em que a matéria é dada:
+O guia está dividido em oito partes, que seguem, no essencial, a ordem em que a matéria é dada:
 
 | Parte | Assunto |
 | --- | --- |
@@ -19,15 +19,16 @@ O guia está dividido em sete partes, que seguem, no essencial, a ordem em que a
 | 5 | Métodos de classe: o `@classmethod`, o `cls` e os construtores alternativos |
 | 6 | Duck typing: objetos de classes diferentes que respondem à mesma chamada, com o exemplo guiado dos anunciadores do ginásio |
 | 7 | Dataclasses: classes que guardam dados, com o `@dataclass`, os campos e as anotações de tipo, e os casos em que não servem |
+| 8 | Decoradores: uma função é um valor, entregar uma função sem a chamar, e o que faz a arroba nos decoradores que já usas |
 
-Este tema ainda não acabou. Faltam os decoradores, para perceberes o que fazem as linhas com arroba que já usas, e uma primeira janela feita com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 7, e as partes que já existem ficam como estão.
+Este tema ainda não acabou. Falta uma primeira janela feita com tkinter. Vai entrar neste guia como parte nova, a seguir à parte 8, e as partes que já existem ficam como estão.
 
 Além deste guia, o tema tem mais dois documentos com o mesmo número, um para cada uso:
 
 - o [laboratório](03-objetos-e-composicao-laboratorio.md), com os passos para construíres no computador o ginásio Pokémon da parte 4, com o guia aberto ao lado;
 - a [ficha de exercícios](03-objetos-e-composicao-exercicios.md), para praticares sem ajuda.
 
-O laboratório e a ficha têm exercícios das sete partes.
+A ficha tem exercícios das oito partes, e o laboratório das sete primeiras. A parte 8 explica um mecanismo e não constrói nada novo no ginásio, por isso não tem parte própria no laboratório.
 
 O código completo dos exemplos das aulas está em três ficheiros: [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas; [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o líder, o ginásio e o registo dos combates; e [anunciadores.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/anunciadores.py), com os anunciadores da parte 6.
 
@@ -2298,7 +2299,7 @@ O programa tem três coisas novas, todas antes dos objetos.
 
 A primeira linha, `from dataclasses import dataclass`, vai buscar o `dataclass` a um módulo chamado `dataclasses`, que vem com o Python: não é preciso instalar nada. É a mesma forma de importar que usas para ir buscar as classes de Pokémon ao `pokemon.py`, com a diferença de que este módulo não é um ficheiro teu, faz parte do Python.
 
-A linha `@dataclass`, por cima da classe, é um decorador, como o `@property`, o `@staticmethod` e o `@classmethod` que já usaste. Os outros três estavam por cima de um método e mudavam esse método. Este está por cima da classe e muda a classe inteira: o Python lê a classe, vê que dados ela tem e acrescenta-lhe os métodos que faltam. O que um decorador é, afinal, e o que faz a arroba, vai ser o assunto de uma parte própria, a seguir a esta.
+A linha `@dataclass`, por cima da classe, é um decorador, como o `@property`, o `@staticmethod` e o `@classmethod` que já usaste. Os outros três estavam por cima de um método e mudavam esse método. Este está por cima da classe e muda a classe inteira: o Python lê a classe, vê que dados ela tem e acrescenta-lhe os métodos que faltam. O que um decorador é, afinal, e o que faz a arroba, é o assunto da parte 8.
 
 Dentro da classe, no lugar do construtor, há três linhas, uma por cada dado: `desafiante: str`, `pokemon_desafiante: str` e `vencedor: str`. Cada uma é um **campo** da dataclass, um dado que cada objeto vai guardar, com o nome à esquerda dos dois pontos e o tipo à direita. A docstring continua no sítio do costume, logo a seguir à linha `class`.
 
@@ -2566,11 +2567,326 @@ TypeError: Combate() takes no arguments
 4. Com a `Pocao` desta parte, o que mostram `print(Pocao("Hiper Poção", 200))` e `print(Pocao("Poção", "muita"))`? Porquê?
 5. Para cada classe, diz se faria sentido escrevê-la como dataclass, e porquê: a `Medalha` da parte 4, o `Pokemon` e o `Ginasio`.
 
+## Parte 8: Decoradores
+
+### As linhas com arroba que já usas
+
+Ao longo deste guia escreveste várias linhas que começam por uma arroba: `@staticmethod` na parte 1, `@property` e `@vida.setter` na parte 2, `@classmethod` na parte 5 e `@dataclass` na parte 7. A cada uma chamámos decorador, e de cada uma dissemos o efeito: o método deixa de receber o `self`, o get e o set passam a ter cara de atributo, o método passa a receber a classe, a classe ganha um construtor. Nunca dissemos o que a arroba faz, nem porque é que uma linha escrita por cima de um `def` consegue mudar o que está por baixo.
+
+É isso que esta parte explica. Não vais ainda escrever decoradores que mudam o que uma função faz de cada vez que é chamada: isso fica para um tema mais à frente. Vais perceber o mecanismo dos que já usas. Para isso precisas de uma ideia primeiro, que é também a que vais usar na janela com tkinter: uma função é um valor, como um número ou uma lista.
+
+### Uma função é um valor
+
+Quando o Python lê um `def`, cria uma função e guarda-a no nome que vem a seguir ao `def`, tal como um `=` guarda um valor numa variável. Esse nome pode usar-se de duas maneiras: com parênteses, que é chamar a função, e sem parênteses, que é a própria função.
+
+```python
+def saudar(nome):
+    """Devolve uma saudação para o nome dado."""
+    return f"Olá, {nome}!"
+
+
+print(saudar("Ash"))
+print(type(saudar).__name__)
+falar = saudar
+print(falar("Misty"))
+print(falar is saudar)
+```
+
+Prevê as quatro linhas antes de executares.
+
+```text
+Olá, Ash!
+function
+Olá, Misty!
+True
+```
+
+A primeira linha chama a função, e o `print` escreve o que ela devolveu. A segunda não chama nada: `saudar`, sem parênteses, é a função, e o `type` diz que é um objeto da classe `function`. A linha `falar = saudar` também não chama a função: guarda na variável `falar` uma referência para a mesma função, como na parte 4 duas variáveis podiam apontar para o mesmo Pokémon. Por isso `falar("Misty")` funciona, e `falar is saudar` dá `True`: há uma só função, com dois nomes.
+
+A diferença entre `saudar` e `saudar("Ash")` é a mais importante desta parte. Sem parênteses, tens a função, que podes guardar ou entregar a alguém. Com parênteses, a função corre nesse momento, e o que fica é o que ela devolve.
+
+### Entregar uma função a outra função
+
+Se uma função é um valor, pode ser dada como argumento a outra função, como se dá um número ou uma lista:
+
+```python
+def saudar(nome):
+    """Devolve uma saudação para o nome dado."""
+    return f"Olá, {nome}!"
+
+
+def despedir(nome):
+    """Devolve uma despedida para o nome dado."""
+    return f"Adeus, {nome}."
+
+
+def para_todos(funcao, nomes):
+    """Chama a função com cada nome da lista e escreve o que ela devolve."""
+    for nome in nomes:
+        print(funcao(nome))
+
+
+treinadores = ["Ash", "Misty"]
+para_todos(saudar, treinadores)
+para_todos(despedir, treinadores)
+```
+
+```text
+Olá, Ash!
+Olá, Misty!
+Adeus, Ash.
+Adeus, Misty.
+```
+
+O parâmetro `funcao` recebe uma função. Na primeira chamada, recebe a `saudar`; na segunda, a `despedir`. Repara que se escreve `para_todos(saudar, treinadores)`, sem parênteses depois de `saudar`: a função é entregue, e quem a chama é o `para_todos`, lá dentro, com `funcao(nome)`. É o duck typing da parte 6 aplicado a funções: o `para_todos` não quer saber que função recebe, desde que a possa chamar com um nome.
+
+### Um método também é um valor
+
+O mesmo vale para os métodos. Escrito sem parênteses, `charmander.atacar` é o método `atacar` já preso ao Charmander: quando for chamado, o `self` vai ser o Charmander.
+
+```python
+from pokemon import PokemonFogo, PokemonPlanta
+
+charmander = PokemonFogo("Charmander", 90, 40)
+bulbasaur = PokemonPlanta("Bulbasaur", 110, 25, 20)
+acao = charmander.atacar
+print(type(acao).__name__)
+acao(bulbasaur)
+acao(bulbasaur)
+```
+
+```text
+method
+É super eficaz!
+Charmander ataca Bulbasaur e tira 80 de vida.
+Bulbasaur tem 30/150 de vida.
+É super eficaz!
+Charmander ataca Bulbasaur e tira 80 de vida.
+Bulbasaur está KO (0/150).
+```
+
+A variável `acao` guarda o ataque do Charmander, sem o fazer. Cada `acao(bulbasaur)` é um ataque do Charmander, igual a `charmander.atacar(bulbasaur)`. Com parênteses na linha da variável, o resultado é outro:
+
+```python
+from pokemon import PokemonFogo, PokemonPlanta
+
+charmander = PokemonFogo("Charmander", 90, 40)
+bulbasaur = PokemonPlanta("Bulbasaur", 110, 25, 20)
+acao = charmander.atacar(bulbasaur)
+print("Guardado em acao:", acao)
+```
+
+```text
+É super eficaz!
+Charmander ataca Bulbasaur e tira 80 de vida.
+Bulbasaur tem 30/150 de vida.
+Guardado em acao: None
+```
+
+O ataque aconteceu logo, na própria linha, e o que ficou guardado foi o que o `atacar` devolve, que é `None`. Vais encontrar esta diferença na janela com tkinter: um botão recebe o método que deve chamar quando alguém carregar nele, e esse método escreve-se sem parênteses. Com parênteses, o ataque acontece uma vez, quando a janela é criada, e o botão fica sem nada para fazer.
+
+### O que faz a arroba
+
+Com estas duas ideias, a arroba explica-se numa frase. Escrever um decorador por cima de um `def`:
+
+```python
+@decorador
+def funcao():
+    ...
+```
+
+é o mesmo que escrever o `def` sem arroba e, logo a seguir, esta linha:
+
+```python
+def funcao():
+    ...
+
+funcao = decorador(funcao)
+```
+
+O Python cria a função, entrega-a ao decorador e guarda no mesmo nome o que o decorador devolver. Um **decorador** é, portanto, uma coisa que se pode chamar, como uma função, que recebe o que está escrito por baixo da arroba e devolve o que fica com esse nome. A arroba é só uma forma mais curta e mais legível de escrever essa linha, posta em cima, onde se vê antes de se ler o método.
+
+Os dois excertos acima só mostram a forma, não são programas para executar. Os programas que se seguem são completos, e reescrevem sem arroba os decoradores que já conheces.
+
+O método estático da parte 1, com a linha da atribuição no lugar da arroba:
+
+```python
+class Pokemon:
+    """Versão curta: só o método estático, escrito sem arroba."""
+
+    def limitar(valor, minimo, maximo):
+        """Devolve o valor, preso entre o mínimo e o máximo."""
+        if valor < minimo:
+            return minimo
+        if valor > maximo:
+            return maximo
+        return valor
+
+    limitar = staticmethod(limitar)
+
+
+print(Pokemon.limitar(200, 0, 150))
+print(Pokemon.limitar(75, 0, 150))
+```
+
+```text
+150
+75
+```
+
+O `limitar` funciona como o da parte 1. O `staticmethod` recebeu a função e devolveu um objeto que a guarda e que sabe uma coisa: quando o método for chamado, não lhe deve passar nem o objeto nem a classe. O `staticmethod`, como o `classmethod` e o `property`, é uma classe do próprio Python, e chamá-lo é criar um desses objetos. A linha `limitar = staticmethod(limitar)` está dentro da classe, com a mesma indentação do `def`, porque é dentro da classe que o nome `limitar` tem de ficar.
+
+O construtor alternativo da parte 5 escreve-se da mesma maneira, com `com_equipa = classmethod(com_equipa)` por baixo do `def`, e cria um `Lider` quando é chamado em `Lider`, como antes.
+
+A propriedade da parte 2 é o caso mais interessante, porque junta o get e o set que escreveste como métodos normais. O `property` recebe os dois e devolve a propriedade:
+
+```python
+VIDA_MINIMA = 0
+VIDA_MAXIMA = 150
+
+
+class Pokemon:
+    """O Pokémon da parte 2, com o get e o set juntos numa propriedade sem arroba."""
+
+    def __init__(self, nome, vida):
+        """Cria um Pokémon com nome e vida, passando pelo set."""
+        self.nome = nome
+        self.vida = vida
+
+    def get_vida(self):
+        """Get: devolve a vida atual."""
+        return self._vida
+
+    def set_vida(self, valor):
+        """Set: guarda a vida, sempre entre 0 e 150."""
+        if valor < VIDA_MINIMA:
+            valor = VIDA_MINIMA
+        elif valor > VIDA_MAXIMA:
+            valor = VIDA_MAXIMA
+        self._vida = valor
+
+    vida = property(get_vida, set_vida)
+
+
+geodude = Pokemon("Geodude", 500)
+print(geodude.vida)
+geodude.vida = geodude.vida - 200
+print(geodude.vida)
+```
+
+```text
+150
+0
+```
+
+A última linha da classe diz: o nome `vida` passa a ser uma propriedade, cuja leitura chama o `get_vida` e cuja escrita chama o `set_vida`. Com as arrobas da parte 2, o mesmo faz-se em dois passos. O `@property`, por cima do get, faz `vida = property(vida)`, uma propriedade só com o get. O `@vida.setter`, por cima do set, pede a essa propriedade uma propriedade nova, igual mas com o set, e guarda-a no mesmo nome. É por isso que os dois métodos têm de ter o mesmo nome, `vida`, e é por isso que o segundo decorador começa por `vida.`: usa a propriedade que o primeiro deixou nesse nome.
+
+O `@dataclass` também se escreve sem arroba, mas por baixo da classe, e não de um método:
+
+```python
+from dataclasses import dataclass
+
+
+class Combate:
+    """Registo de um combate, com os campos e sem a arroba."""
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
+
+
+Combate = dataclass(Combate)
+print(Combate("Ash", "Bulbasaur", "Ash"))
+```
+
+```text
+Combate(desafiante='Ash', pokemon_desafiante='Bulbasaur', vencedor='Ash')
+```
+
+O `dataclass` recebe a classe, lê os campos, acrescenta-lhe os métodos da parte 7 e devolve-a. Um decorador pode estar por cima de um `def` ou de um `class`; o mecanismo é o mesmo.
+
+### Um decorador corre uma vez, quando o def é lido
+
+Para veres o momento em que um decorador trabalha, este programa usa um decorador escrito por nós. Recebe a função, escreve o nome dela e devolve-a tal como a recebeu. O nome de uma função obtém-se com `.__name__`, como o da classe na parte 5.
+
+```python
+def anunciar_definicao(funcao):
+    """Decorador: escreve o nome da função quando ela é definida e devolve-a igual."""
+    print(f"Definida a função {funcao.__name__}.")
+    return funcao
+
+
+@anunciar_definicao
+def saudar(nome):
+    """Devolve uma saudação para o nome dado."""
+    return f"Olá, {nome}!"
+
+
+print("O programa continua.")
+print(saudar("Ash"))
+print(saudar("Misty"))
+```
+
+Antes de executares, prevê quantas vezes aparece a frase "Definida a função", e onde.
+
+```text
+Definida a função saudar.
+O programa continua.
+Olá, Ash!
+Olá, Misty!
+```
+
+A frase aparece uma vez, antes de tudo o resto. O decorador correu quando o Python leu o `def`, a fazer `saudar = anunciar_definicao(saudar)`, e devolveu a função igual. As duas chamadas a `saudar` são chamadas à função original, e o decorador não volta a correr. Os decoradores que conheces fazem o mesmo: o `@staticmethod` trabalha uma vez, quando a classe é lida, e não de cada vez que o `limitar` é chamado.
+
+Um decorador que mudasse o que a função faz em cada chamada, por exemplo para escrever uma linha antes de cada ataque, teria de devolver outra função, escrita dentro dele, que chamasse a original. É assim que se escrevem os decoradores mais comuns, e é matéria de um tema mais à frente, quando vires as funções escritas dentro de outras funções.
+
+### Erros frequentes com funções como valores e decoradores
+
+**Parênteses a mais quando se entrega uma função.** `para_todos(saudar(), treinadores)` chama a `saudar` na própria linha, sem nome, e dá `TypeError: saudar() missing 1 required positional argument: 'nome'`. Com um método, como em `acao = charmander.atacar(bulbasaur)`, não há erro: a ação acontece logo e fica guardado `None`. Quando entregas uma função ou um método, escreve só o nome.
+
+**Um decorador que não devolve nada.** Se o `anunciar_definicao` não tiver o `return funcao`, devolve `None`, e é `None` que fica guardado em `saudar`:
+
+```python
+def anunciar_definicao(funcao):
+    """Decorador: escreve o nome da função quando ela é definida, mas esquece o return."""
+    print(f"Definida a função {funcao.__name__}.")
+
+
+@anunciar_definicao
+def saudar(nome):
+    """Devolve uma saudação para o nome dado."""
+    return f"Olá, {nome}!"
+
+
+print(saudar)
+print(saudar("Ash"))
+```
+
+```text
+Definida a função saudar.
+None
+TypeError: 'NoneType' object is not callable
+```
+
+A mensagem diz que um objeto `None` não se pode chamar. O `def` foi lido sem problema; o erro só aparece quando alguém tenta chamar a `saudar`, que já não é uma função.
+
+**Parênteses depois do nome do decorador.** `@staticmethod()` chama o `staticmethod` sem nada, antes de lhe dar a função, e o Python queixa-se logo ao ler a classe: `TypeError: staticmethod expected 1 argument, got 0`. Os decoradores que conheces escrevem-se sem parênteses.
+
+**Pensar que o decorador corre em cada chamada.** Corre uma vez, quando o `def` ou a `class` é lido, como mostrou o `anunciar_definicao`.
+
+### Verifica se percebeste: decoradores
+
+1. Que diferença há entre `saudar` e `saudar("Ash")`? O que fica guardado em `x` em cada caso, se escreveres `x = saudar` ou `x = saudar("Ash")`?
+2. Reescreve sem arroba o `@classmethod` que está por cima do `com_equipa`, no `ginasio.py`. Onde fica a linha nova, e com que indentação?
+3. Porque é que `acao = charmander.atacar(bulbasaur)` não guarda o ataque para fazer mais tarde?
+4. Porque é que, com o `@property` e o `@vida.setter`, os dois métodos têm de ter o mesmo nome?
+5. Um colega diz que o `@dataclass` é diferente dos outros, porque não está por cima de um método. Em que é diferente, e em que é igual?
+
 ## A seguir
 
-O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e depois a acrescentar-lhe o líder, os anunciadores e o registo como dataclass. A [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das sete partes deste guia, para fazeres sem ajuda.
+O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e depois a acrescentar-lhe o líder, os anunciadores e o registo como dataclass. A [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das oito partes deste guia, para fazeres sem ajuda.
 
-Faltam, neste tema, os decoradores e uma primeira janela com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 7.
+Falta, neste tema, uma primeira janela com tkinter. Vai entrar neste guia como parte nova, a seguir à parte 8, e é lá que vais voltar a usar um método sem parênteses.
 
 ## Vocabulário
 
@@ -2585,7 +2901,7 @@ Faltam, neste tema, os decoradores e uma primeira janela com tkinter. Vão entra
 | `self` | Dentro de um método, o objeto que está a ser usado |
 | Método | Uma função definida dentro de uma classe, que recebe o objeto no `self` |
 | Método estático | Um método marcado com `@staticmethod`, que não recebe `self` porque não precisa de nenhum objeto |
-| Decorador | Uma marca com `@` por cima de um método ou de uma classe, que muda a forma como ele funciona |
+| Decorador | O que se escreve com `@` por cima de um `def` ou de uma `class`: uma coisa que se pode chamar, que recebe o que está por baixo e devolve o que fica com esse nome. `@d` por cima de `def f` é o mesmo que `f = d(f)` por baixo |
 | Invariante | Uma regra que tem de ser verdadeira durante toda a existência do objeto |
 | Get e set | O método que lê um valor e o método que o altera, aplicando a regra |
 | Modificador de acesso | O que marca um nome como público ou privado. Em Python, é a forma como o nome começa: sem sublinhado, com um ou com dois |
@@ -2608,6 +2924,7 @@ Faltam, neste tema, os decoradores e uma primeira janela com tkinter. Vão entra
 | Campo | Numa dataclass, cada dado que os objetos guardam, escrito com o nome, dois pontos e o tipo |
 | Anotação de tipo | A indicação do tipo de valor esperado, depois de dois pontos, como em `vencedor: str`. O Python não a verifica |
 | Valor por omissão | O valor que um campo recebe quando quem cria o objeto não dá nenhum |
+| Função como valor | Uma função, ou um método, usada pelo nome, sem parênteses: pode guardar-se numa variável ou entregar-se a outra função, que a chama mais tarde |
 | UML | Uma forma de desenhar programas orientados a objetos, com diagramas de classes |
 
 ![Rodapé](../imagens/rodape.png)
