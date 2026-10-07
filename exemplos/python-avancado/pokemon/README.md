@@ -8,7 +8,7 @@ Cada pasta é uma versão completa, que funciona sozinha. O nome da pasta é o d
 
 | Pasta | O que tem | Guia |
 | --- | --- | --- |
-| `03-objetos-e-composicao` | A classe `Pokemon` com a vida e o ataque protegidos por propriedades, os tipos por herança, o treinador e o ginásio por agregação e os combates por composição | [Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) |
+| `03-objetos-e-composicao` | A classe `Pokemon` com a vida e o ataque protegidos por propriedades, os tipos por herança, o treinador e o ginásio por agregação e os combates por composição; o líder, criado com um método de classe; e os anunciadores dos combates, por duck typing | [Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) |
 
 As versões seguintes aparecem aqui quando a matéria lá chegar.
 

@@ -11,6 +11,15 @@ Três classes que guardam outros objetos:
 - Combate é o registo de um combate: quem desafiou, com que Pokémon e quem
   venceu.
 
+E duas coisas que vieram depois, com as partes 5 e 6 do guia:
+
+- Lider É UM Treinador que escolhe sempre o Pokémon com mais vida. O
+  Treinador tem um método de classe, com_equipa, que cria um treinador já com
+  a equipa; chamado em Lider, cria um Lider.
+- O Ginasio anuncia os seus combates através de um anunciador, que pode ser
+  qualquer objeto com o método anunciar(combate). É o duck typing: os
+  anunciadores estão no ficheiro anunciadores.py.
+
 As classes de Pokémon vêm do ficheiro pokemon.py, que tem de estar na mesma
 pasta que este.
 """
@@ -27,6 +36,19 @@ class Treinador:
         # AGREGAÇÃO: a equipa começa vazia e recebe Pokémon que já existiam.
         self.equipa = []
 
+    @classmethod
+    def com_equipa(cls, nome, pokemons):
+        """Cria um treinador da classe cls, já com os Pokémon da lista na equipa.
+
+        É um construtor alternativo. Em Treinador.com_equipa(...), cls é
+        Treinador; em Lider.com_equipa(...), cls é Lider, e o objeto criado
+        é um Lider.
+        """
+        treinador = cls(nome)
+        for pokemon in pokemons:
+            treinador.capturar(pokemon)
+        return treinador
+
     def capturar(self, pokemon):
         """Junta à equipa um Pokémon que foi criado fora do treinador."""
         self.equipa.append(pokemon)
@@ -37,6 +59,19 @@ class Treinador:
             if pokemon.vida > 0:
                 return pokemon
         return None
+
+
+class Lider(Treinador):
+    """Um Lider É UM Treinador que escolhe sempre o Pokémon com mais vida."""
+
+    def escolher_pokemon(self):
+        """Devolve o Pokémon da equipa com mais vida, ou None se estão todos KO."""
+        escolhido = None
+        for pokemon in self.equipa:
+            if pokemon.vida > 0:
+                if escolhido is None or pokemon.vida > escolhido.vida:
+                    escolhido = pokemon
+        return escolhido
 
 
 class Combate:
@@ -91,6 +126,15 @@ class Ginasio:
         print(f"\nHistórico do ginásio de {self.cidade}:")
         for combate in self.combates:
             print(" -", combate.resumo())
+
+    def anunciar_combates(self, anunciador):
+        """Entrega cada combate ao anunciador, para ele o anunciar.
+
+        O anunciador pode ser um objeto de qualquer classe, desde que tenha o
+        método anunciar(combate). O ginásio não quer saber de que classe é.
+        """
+        for combate in self.combates:
+            anunciador.anunciar(combate)
 
 
 if __name__ == "__main__":

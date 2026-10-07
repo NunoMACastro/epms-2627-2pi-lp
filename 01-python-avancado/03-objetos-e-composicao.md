@@ -2,13 +2,13 @@
 
 # Objetos, composição e comportamento
 
-Este guia reúne a matéria de programação orientada a objetos em Python que já demos nas aulas. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, e acaba na maneira como um objeto guarda outros objetos, que é a composição e a agregação. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
+Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação, e acaba nos métodos de classe e no duck typing. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
 
 É um texto para leres com calma, antes ou depois de uma aula, e perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho: a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário.
 
 ## O que este guia cobre e o que ainda vai entrar
 
-O guia está dividido em quatro partes, que seguem, no essencial, a ordem em que a matéria foi dada:
+O guia está dividido em seis partes, que seguem, no essencial, a ordem em que a matéria é dada:
 
 | Parte | Assunto |
 | --- | --- |
@@ -16,15 +16,19 @@ O guia está dividido em quatro partes, que seguem, no essencial, a ordem em que
 | 2 | Proteger o estado do objeto: get e set, público e privado, propriedades e a forma como as propriedades e o privado trabalham juntos |
 | 3 | Herança: classes-filhas, `super()` e métodos reescritos |
 | 4 | Composição e agregação, com o exemplo guiado do ginásio Pokémon |
+| 5 | Métodos de classe: o `@classmethod`, o `cls` e os construtores alternativos |
+| 6 | Duck typing: objetos de classes diferentes que respondem à mesma chamada, com o exemplo guiado dos anunciadores do ginásio |
 
-Este tema ainda não acabou. Faltam os métodos de classe, que se marcam com `@classmethod`, o duck typing, as dataclasses e uma primeira janela feita com tkinter. Quando forem dados, entram neste guia como partes novas, a seguir à parte 4, e as quatro partes que já existem ficam como estão.
+Este tema ainda não acabou. Faltam as dataclasses e uma primeira janela feita com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 6, e as partes que já existem ficam como estão.
 
 Além deste guia, o tema tem mais dois documentos com o mesmo número, um para cada uso:
 
 - o [laboratório](03-objetos-e-composicao-laboratorio.md), com os passos para construíres no computador o ginásio Pokémon da parte 4, com o guia aberto ao lado;
 - a [ficha de exercícios](03-objetos-e-composicao-exercicios.md), para praticares sem ajuda.
 
-O código completo dos exemplos das aulas está em dois ficheiros: [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas, e [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o ginásio e o registo dos combates.
+O laboratório e a ficha ainda não têm exercícios das partes 5 e 6.
+
+O código completo dos exemplos das aulas está em três ficheiros: [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas; [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o líder, o ginásio e o registo dos combates; e [anunciadores.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/anunciadores.py), com os anunciadores da parte 6.
 
 ## O que precisas de saber antes
 
@@ -46,7 +50,7 @@ Cada parte tem teoria com exemplos completos, uma secção de erros frequentes e
 
 Para executar um exemplo, guarda-o num ficheiro com a extensão `.py`, abre o terminal do VS Code na pasta desse ficheiro e escreve `python3 nome-do-ficheiro.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
 
-Todos os programas deste guia foram executados em Python 3.14 e também em Python 3.9, e as saídas mostradas são as reais. As saídas dos programas são iguais nas duas versões. Nas mensagens de erro, o Python mostra várias linhas, com o caminho do ficheiro no teu computador, e só a última linha diz qual foi o erro. Por isso o guia mostra apenas essa última linha. Nas versões mais recentes, essa linha pode acabar com uma sugestão do tipo `Did you mean: ...?`, que as versões antigas não mostram, e há quatro erros, dois na parte 1 e dois na parte 2, em que o texto muda de uma versão para a outra. Quando isso acontece, o guia diz também como é a mensagem nas versões antigas.
+Todos os programas deste guia foram executados em Python 3.14 e também em Python 3.9, e as saídas mostradas são as reais. As saídas dos programas são iguais nas duas versões. Nas mensagens de erro, o Python mostra várias linhas, com o caminho do ficheiro no teu computador, e só a última linha diz qual foi o erro. Por isso o guia mostra apenas essa última linha. Nas versões mais recentes, essa linha pode acabar com uma sugestão do tipo `Did you mean: ...?`, que as versões antigas não mostram, e há sete erros, dois na parte 1, dois na parte 2, dois na parte 5 e um na parte 6, em que o texto muda de uma versão para a outra. Quando isso acontece, o guia diz também como é a mensagem nas versões antigas.
 
 ## Parte 1: Classes e objetos
 
@@ -1653,11 +1657,557 @@ A mensagem diz que se tentou ler `nome` num valor do tipo `NoneType`, que é o t
 3. Depois de `del cerulean`, porque é que ainda se consegue usar a variável `ash`, e porque é que já não há forma de ver o histórico de Cerulean?
 4. Imagina um ginásio que, no construtor, criasse o seu próprio líder, com `self.lider = Treinador("Misty")`, em vez de o receber por parâmetro. Que relação passava a haver entre o ginásio e o líder? O que acontecia a uma treinadora que quisesse ser líder de dois ginásios?
 
+## Parte 5: Métodos de classe
+
+### Três maneiras de um método trabalhar
+
+Até aqui conheceste dois tipos de método. O método do objeto, que é o normal, recebe o objeto no `self` e trabalha com os atributos dele: o `verificar_vida` precisa de saber de que Pokémon mostrar a vida. O método estático, marcado com `@staticmethod`, não recebe nada além dos seus parâmetros: o `limitar` da parte 1 faz a conta só com o que lhe dão.
+
+Há um terceiro tipo, que fica entre os dois. Não precisa de nenhum objeto, como o estático, mas precisa de saber uma coisa que o estático não sabe: de que classe foi chamado. Chama-se **método de classe**. Para perceberes para que serve, vale a pena começar por um problema que os outros dois não resolvem bem.
+
+### Um treinador já com a equipa
+
+Até agora, criar um treinador com uma equipa leva várias linhas: uma para criar o treinador, com a equipa vazia, e uma por cada Pokémon capturado.
+
+```python
+ash = Treinador("Ash")
+ash.capturar(PokemonFogo("Charmander", 90, 40))
+ash.capturar(PokemonPlanta("Bulbasaur", 110, 25, 20))
+```
+
+Num programa com muitos treinadores, dava jeito criar cada um numa linha só, já com a equipa: dar o nome e a lista dos Pokémon, e receber o treinador pronto. O construtor `__init__` só recebe o nome, e mudá-lo obrigava a mudar todos os sítios onde já se cria um treinador. A alternativa é uma segunda forma de criar treinadores, ao lado do construtor. Chama-se **construtor alternativo**: um método da classe que cria um objeto, faz-lhe o trabalho que for preciso, e devolve-o.
+
+### Primeira tentativa: um método estático
+
+O construtor alternativo não precisa de nenhum treinador para trabalhar: é ele que o cria. Por isso, parece um caso para um método estático. Este programa experimenta, com uma versão curta do `Treinador` e uma classe-filha, `Lider`, para um líder de ginásio. Um líder é um treinador, por isso a herança faz sentido; por agora, a filha não acrescenta nada, e o corpo dela é só a docstring. Os Pokémon da equipa são só nomes, para o programa ficar curto.
+
+```python
+class Treinador:
+    """Versão curta do Treinador, só para ver o problema do método estático."""
+
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        self.equipa = []
+
+    def capturar(self, pokemon):
+        """Junta um Pokémon à equipa."""
+        self.equipa.append(pokemon)
+
+    @staticmethod
+    def com_equipa(nome, pokemons):
+        """Cria um treinador já com os Pokémon da lista na equipa."""
+        treinador = Treinador(nome)
+        for pokemon in pokemons:
+            treinador.capturar(pokemon)
+        return treinador
+
+
+class Lider(Treinador):
+    """Um Lider É UM Treinador. Por agora, não acrescenta nada."""
+
+
+ash = Treinador.com_equipa("Ash", ["Charmander", "Bulbasaur"])
+misty = Lider.com_equipa("Misty", ["Starmie"])
+print(ash.nome, len(ash.equipa), type(ash).__name__)
+print(misty.nome, len(misty.equipa), type(misty).__name__)
+```
+
+O que achas que mostra a última linha? Escreve a previsão antes de veres a saída.
+
+```text
+Ash 2 Treinador
+Misty 1 Treinador
+```
+
+A função `type` devolve a classe de um objeto, e o `.__name__` dá o nome dessa classe. A primeira linha está certa: o Ash é um `Treinador`. A segunda não: a Misty foi criada com `Lider.com_equipa`, e saiu um `Treinador`. O método estático tem escrito `Treinador(nome)`, e cria sempre um `Treinador`, seja qual for a classe por onde foi chamado. Não tem forma de saber que foi chamado por `Lider`, porque um método estático não recebe nada da classe.
+
+Se o `Lider` tiver, mais à frente, um comportamento próprio, a Misty não o vai ter, porque não é um `Lider`. É um erro silencioso: o programa corre sem nenhuma mensagem, e o objeto é da classe errada.
+
+### O método de classe recebe a classe
+
+Um **método de classe** é um método marcado com `@classmethod`, que recebe como primeiro parâmetro a classe por onde foi chamado. Por convenção, esse parâmetro chama-se `cls`, como o do objeto se chama `self`. Em `Treinador.com_equipa(...)`, o `cls` é `Treinador`; em `Lider.com_equipa(...)`, o `cls` é `Lider`. O decorador `@classmethod` diz ao Python: "quando alguém chamar este método, passa-lhe a classe".
+
+É assim que o `com_equipa` fica no ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py):
+
+```python
+class Treinador:
+    """Um treinador tem uma equipa de Pokémon (agregação)."""
+
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        # AGREGAÇÃO: a equipa começa vazia e recebe Pokémon que já existiam.
+        self.equipa = []
+
+    @classmethod
+    def com_equipa(cls, nome, pokemons):
+        """Cria um treinador da classe cls, já com os Pokémon da lista na equipa.
+
+        É um construtor alternativo. Em Treinador.com_equipa(...), cls é
+        Treinador; em Lider.com_equipa(...), cls é Lider, e o objeto criado
+        é um Lider.
+        """
+        treinador = cls(nome)
+        for pokemon in pokemons:
+            treinador.capturar(pokemon)
+        return treinador
+
+    # O capturar e o escolher_pokemon ficam por baixo, iguais aos da parte 4.
+```
+
+Compara com a versão estática. Há três diferenças. A linha `@classmethod` em vez de `@staticmethod`. O primeiro parâmetro, `cls`, que o Python preenche sozinho: quem chama o método só passa o nome e a lista, como antes. E a linha que cria o treinador, que passou de `Treinador(nome)` para `cls(nome)`. Chamar `cls(nome)` é chamar o construtor da classe que está no `cls`: se for `Lider`, cria um `Lider`.
+
+O resto do método é o que fazias à mão: percorre a lista e captura cada Pokémon. Repara que usa o `capturar` do próprio treinador, e não `treinador.equipa.append`: se um dia a captura tiver uma regra, como um limite de seis Pokémon, o construtor alternativo passa a cumpri-la sem ninguém lhe mexer.
+
+### O líder, um treinador que escolhe de outra maneira
+
+Para o `cls` fazer diferença, o `Lider` tem de ter alguma coisa sua. No mesmo ficheiro, o líder reescreve o `escolher_pokemon`: um treinador escolhe o primeiro Pokémon da equipa que ainda tem vida; um líder escolhe sempre o que tem mais vida.
+
+```python
+class Lider(Treinador):
+    """Um Lider É UM Treinador que escolhe sempre o Pokémon com mais vida."""
+
+    def escolher_pokemon(self):
+        """Devolve o Pokémon da equipa com mais vida, ou None se estão todos KO."""
+        escolhido = None
+        for pokemon in self.equipa:
+            if pokemon.vida > 0:
+                if escolhido is None or pokemon.vida > escolhido.vida:
+                    escolhido = pokemon
+        return escolhido
+```
+
+O `Lider` não tem construtor próprio: herda o do `Treinador`, que só pede o nome. É isto que permite ao `com_equipa`, escrito na mãe, servir também à filha: `cls(nome)` funciona nas duas, porque as duas se criam da mesma maneira.
+
+O método percorre a equipa e vai guardando em `escolhido` o melhor Pokémon encontrado até ali. Começa em `None`, porque ainda não viu nenhum. Um Pokémon com vida passa a ser o escolhido se ainda não havia nenhum, ou se tem mais vida do que o escolhido. No fim, devolve o escolhido, que fica `None` se nenhum Pokémon tinha vida, como o do `Treinador`.
+
+### O método de classe a trabalhar
+
+Este programa usa as classes do `ginasio.py`, já com o `@classmethod`. A Misty é criada como líder e, mais abaixo, uma segunda Misty com a mesma equipa é criada como treinadora normal.
+
+```python
+from pokemon import PokemonAgua, PokemonFogo
+from ginasio import Lider, Treinador
+
+equipa_da_misty = [PokemonAgua("Staryu", 60, 20), PokemonAgua("Starmie", 90, 35)]
+misty = Lider.com_equipa("Misty", equipa_da_misty)
+ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 90, 40)])
+print(misty.nome, len(misty.equipa), type(misty).__name__)
+print(ash.nome, len(ash.equipa), type(ash).__name__)
+print(misty.escolher_pokemon().nome)
+outra_misty = Treinador.com_equipa("Misty", equipa_da_misty)
+print(outra_misty.escolher_pokemon().nome)
+```
+
+Antes de executares, prevê as quatro linhas, sobretudo as duas últimas.
+
+```text
+Misty 2 Lider
+Ash 1 Treinador
+Starmie
+Staryu
+```
+
+Agora a Misty é um `Lider`: o `cls` era `Lider`, e o `cls(nome)` criou um `Lider`. O Ash, criado pela mesma linha de código chamada em `Treinador`, é um `Treinador`. Um só método, escrito uma vez na mãe, cria objetos da classe certa.
+
+As duas últimas linhas mostram porque é que isso importa. A Misty líder escolhe o Starmie, que tem 90 de vida, mais do que os 60 do Staryu. A outra Misty, com a mesma equipa mas criada como `Treinador`, escolhe o Staryu, que é o primeiro da lista. Com o método estático, as duas Mistys teriam escolhido o Staryu.
+
+Um método de classe chama-se pelo nome da classe, como o estático: `Lider.com_equipa(...)`. O Python também deixa chamá-lo a partir de um objeto, como em `ash.com_equipa(...)`, e nesse caso o `cls` é a classe desse objeto. Funciona, mas quem lê fica a pensar que o método faz alguma coisa ao Ash, e não faz. Chama-o sempre pela classe.
+
+### Que tipo de método?
+
+Ficas assim com três tipos de método, e cada um recebe uma coisa diferente:
+
+| Tipo | Como se marca | Primeiro parâmetro | Exemplo | Para quê |
+| --- | --- | --- | --- | --- |
+| Método do objeto | sem decorador | `self`, o objeto | `ash.capturar(pikachu)` | Trabalhar com os atributos de um objeto |
+| Método estático | `@staticmethod` | nenhum especial | `Pokemon.limitar(200, 0, 150)` | Uma função que pertence às regras da classe, mas não precisa de objeto nem de classe |
+| Método de classe | `@classmethod` | `cls`, a classe | `Lider.com_equipa("Misty", [...])` | Trabalhar com a classe, sobretudo para criar objetos dela |
+
+Para decidires, faz as perguntas por esta ordem. O método precisa de saber qual é o objeto, porque lê ou muda os seus atributos? É um método do objeto, com `self`. Não precisa de objeto, mas precisa de saber que classe o chamou, normalmente para criar um objeto dessa classe? É um método de classe, com `cls`. Não precisa de nenhuma das duas coisas, porque tudo chega pelos parâmetros? É um método estático.
+
+O uso mais comum de um método de classe é este: um construtor alternativo, que cria o objeto de outra forma, a partir de outros dados. O próprio Python tem vários, quase sempre com nomes começados por from, como o `int.from_bytes` e o `dict.fromkeys`, que criam um número e um dicionário a partir de outros dados.
+
+### Um caso que engana: um construtor alternativo nos Pokémon
+
+O `com_equipa` funciona porque o `Treinador` e o `Lider` se criam da mesma maneira, só com o nome. Nos Pokémon não é assim: a `Pokemon` pede o nome, o tipo, a vida e o ataque, e as filhas pedem menos, porque o tipo já está escrito nelas. Este programa experimenta um construtor alternativo para Pokémon selvagens, fracos, numa versão curta das classes:
+
+```python
+class Pokemon:
+    """Versão curta: só o construtor e um método de classe."""
+
+    def __init__(self, nome, tipo, vida, ataque):
+        """Cria um Pokémon com nome, tipo, vida e ataque."""
+        self.nome = nome
+        self.tipo = tipo
+        self.vida = vida
+        self.ataque = ataque
+
+    @classmethod
+    def selvagem(cls, nome):
+        """Cria um Pokémon selvagem, fraco, da classe cls."""
+        return cls(nome, "Normal", 40, 10)
+
+
+class PokemonFogo(Pokemon):
+    """Versão curta: o construtor não pede o tipo."""
+
+    def __init__(self, nome, vida, ataque):
+        """Cria um Pokémon de fogo com nome, vida e ataque."""
+        super().__init__(nome, "Fogo", vida, ataque)
+
+
+rattata = Pokemon.selvagem("Rattata")
+print(rattata.nome, rattata.tipo, rattata.vida)
+vulpix = PokemonFogo.selvagem("Vulpix")
+print(vulpix.nome)
+```
+
+```text
+Rattata Normal 40
+TypeError: PokemonFogo.__init__() takes 4 positional arguments but 5 were given
+```
+
+O Rattata foi criado: em `Pokemon.selvagem`, o `cls` é `Pokemon`, e `cls(nome, "Normal", 40, 10)` dá ao construtor da `Pokemon` os quatro valores que ele pede. O Vulpix não: em `PokemonFogo.selvagem`, o `cls` é `PokemonFogo`, e o construtor da `PokemonFogo` só aceita o nome, a vida e o ataque. A mensagem diz que ele aceita 4 argumentos e recebeu 5. Os números contam o `self`, que o Python passa sozinho: 3 teus mais o `self` são 4, e os 4 que o `selvagem` mandou mais o `self` são 5. Nas versões antigas do Python, a mensagem começa só por `__init__()`, sem o nome da classe.
+
+A regra que sai daqui: um construtor alternativo com `cls(...)` só serve às classes que se criam com os mesmos argumentos. Antes de pores um método de classe na mãe, confirma que todas as filhas que o vão usar têm o mesmo construtor que ela. É por isso que, no exemplo das aulas, o `com_equipa` está no `Treinador`, e não há nenhum construtor alternativo na `Pokemon`.
+
+### Erros frequentes com métodos de classe
+
+**Esquecer o `@classmethod`.** Sem o decorador, o método passa a ser um método do objeto, e o Python já não lhe passa a classe. Quem chama `Treinador.com_equipa("Ash", ["Charmander"])` está a dar os valores pela ordem dos parâmetros: o `"Ash"` vai para o `cls`, a lista vai para o `nome`, e o `pokemons` fica sem nada.
+
+```python
+class Treinador:
+    """Um treinador com um construtor alternativo, mas sem o decorador."""
+
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        self.equipa = []
+
+    def com_equipa(cls, nome, pokemons):
+        """Devia ser um método de classe, mas falta o @classmethod."""
+        treinador = cls(nome)
+        for pokemon in pokemons:
+            treinador.equipa.append(pokemon)
+        return treinador
+
+
+ash = Treinador.com_equipa("Ash", ["Charmander"])
+```
+
+```text
+TypeError: Treinador.com_equipa() missing 1 required positional argument: 'pokemons'
+```
+
+Nas versões antigas do Python, a mensagem começa só por `com_equipa()`. Quando um método de classe se queixa de que falta o último argumento, verifica primeiro se o decorador está lá.
+
+**Escrever o nome da classe em vez de `cls`.** Um `Treinador(nome)` dentro de um método de classe funciona, mas cria sempre um `Treinador`, e as filhas recebem objetos da classe errada, como na primeira tentativa. Dentro de um método de classe, cria-se com `cls(...)`.
+
+**Usar `cls` para chegar a um objeto.** O `cls` é a classe, e não um objeto. Dentro de um método de classe não há `self`: não há nenhum treinador em particular cujo nome ou equipa se possa ler. Se o método precisa dos atributos de um objeto, é um método do objeto.
+
+**Chamar o método por um objeto.** Funciona, como viste, mas engana quem lê. Chama-o pela classe.
+
+### Verifica se percebeste: métodos de classe
+
+1. Que diferença há entre o que recebe um método do objeto, um método estático e um método de classe?
+2. Porque é que, com o `com_equipa` estático, a Misty saía `Treinador`, mesmo chamada por `Lider`?
+3. No `com_equipa`, o que é o `cls` quando se escreve `Treinador.com_equipa(...)`? E quando se escreve `Lider.com_equipa(...)`?
+4. A `PokemonPlanta` pede a regeneração no construtor. Se a classe `Pokemon` tivesse o `selvagem` do caso que engana, o que acontecia a `PokemonPlanta.selvagem("Oddish")`?
+5. Para cada método, diz se devia ser do objeto, estático ou de classe: um método que diz se um nome de treinador é válido (não está vazio); um método que mostra a equipa de um treinador; um método que cria um líder com um Pokémon de cada tipo.
+
+## Parte 6: Duck typing
+
+### O que o atacar precisa do alvo
+
+Olha outra vez para o `atacar` da classe `Pokemon`, no ficheiro [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). O que é que ele faz ao `alvo`? Lê `alvo.vida`, para saber se o alvo já está KO. Passa o alvo ao `calcular_dano`, que, nas filhas, lê `alvo.tipo`. Escreve `alvo.nome` na mensagem. Muda `alvo.vida`. E chama `alvo.verificar_vida()`.
+
+Em lado nenhum o `atacar` pergunta se o alvo é um Pokémon. Só usa estas cinco coisas: um `nome`, um `tipo`, uma `vida` que se pode ler e mudar, e um método `verificar_vida`. Que acontece se lhe dermos um alvo que tem as cinco coisas e não é um Pokémon?
+
+### Um alvo que não é um Pokémon
+
+No ginásio há um boneco de palha para os Pokémon treinarem os ataques. Não é um Pokémon: não ataca, não tem a regra da vida máxima, e a classe não herda de `Pokemon`. Mas tem um nome, um tipo, uma vida e um `verificar_vida`.
+
+```python
+from pokemon import PokemonFogo
+
+
+class BonecoDePalha:
+    """Um alvo para treinar ataques. NÃO é um Pokémon: não herda de Pokemon."""
+
+    def __init__(self):
+        """Cria o boneco, de palha, com muita vida."""
+        self.nome = "Boneco de palha"
+        self.tipo = "Planta"
+        self.vida = 500
+
+    def verificar_vida(self):
+        """Mostra quanto o boneco ainda aguenta."""
+        print(f"{self.nome} ainda aguenta {self.vida}.")
+        return True
+
+
+charmander = PokemonFogo("Charmander", 90, 40)
+boneco = BonecoDePalha()
+charmander.atacar(boneco)
+charmander.atacar(boneco)
+```
+
+Prevê a saída antes de executares. O boneco é de palha, e por isso do tipo `"Planta"`.
+
+```text
+É super eficaz!
+Charmander ataca Boneco de palha e tira 80 de vida.
+Boneco de palha ainda aguenta 420.
+É super eficaz!
+Charmander ataca Boneco de palha e tira 80 de vida.
+Boneco de palha ainda aguenta 340.
+```
+
+O Charmander atacou o boneco como se ele fosse um Pokémon. O `calcular_dano` do fogo leu `alvo.tipo`, viu `"Planta"` e dobrou o dano. O `atacar` mudou a vida do boneco e chamou o `verificar_vida` dele, que é o do boneco, e não o da `Pokemon`. O boneco tem 500 de vida, mais do que os 150 de um Pokémon: a regra da vida máxima é das propriedades da classe `Pokemon`, e o boneco não as tem, porque não é um Pokémon.
+
+### Duck typing: o que conta é o comportamento
+
+O que acabaste de ver tem um nome: **duck typing**. Em Python, uma função ou um método não pergunta de que classe é o objeto que recebe. Usa-o: lê os atributos e chama os métodos de que precisa. Se o objeto os tiver, funciona. A classe do objeto não interessa; interessa o que ele sabe fazer.
+
+O nome vem de uma frase em inglês: "se anda como um pato e grasna como um pato, então é um pato" (duck quer dizer pato). Para o `atacar`, um alvo é qualquer coisa que tenha nome, tipo, vida e `verificar_vida`. O boneco tem, e por isso, para o `atacar`, o boneco é um alvo, tal como um Pokémon.
+
+O Python só verifica se o objeto tem o atributo ou o método no momento em que a linha que o usa corre. Antes disso, não verifica nada. Há linguagens, como o Java e o C#, em que o programa nem chega a correr se a classe do objeto não declarar que tem o que é preciso. Em Python, a verificação é feita na altura, linha a linha. Isto dá muita liberdade, e também tem um preço, que vais ver mais abaixo.
+
+Na parte 3, o `atacar` funcionava com qualquer tipo de Pokémon, porque todas as filhas tinham o seu `calcular_dano`. Aquilo também era um objeto diferente a responder à mesma chamada, mas por herança: todas as filhas são Pokémon. O duck typing vai um passo mais longe: o objeto nem precisa de ser da mesma família.
+
+### Exemplo guiado: anunciar os combates do ginásio
+
+#### Passo 1: O problema
+
+O ginásio guarda o registo de todos os combates. Agora quer anunciá-los, e de mais do que uma maneira. Para o público, um narrador que conta cada combate com entusiasmo. Para a parede do ginásio, um placard que mostra cada combate numa linha curta, numerada. E amanhã pode querer outra maneira que ainda ninguém imaginou, sem ter de mudar o ginásio de cada vez.
+
+#### Passo 2: O que o ginásio precisa de um anunciador
+
+A primeira decisão é o que o ginásio vai pedir a um anunciador. Basta uma coisa: que tenha um método `anunciar`, que recebe um combate. O ginásio entrega-lhe os combates um a um, e o anunciador faz o que quiser com cada um. Este é o método novo do `Ginasio`, no `ginasio.py`:
+
+```python
+class Ginasio:
+    # O construtor, o combater e o mostrar_historico ficam por cima deste método.
+
+    def anunciar_combates(self, anunciador):
+        """Entrega cada combate ao anunciador, para ele o anunciar.
+
+        O anunciador pode ser um objeto de qualquer classe, desde que tenha o
+        método anunciar(combate). O ginásio não quer saber de que classe é.
+        """
+        for combate in self.combates:
+            anunciador.anunciar(combate)
+```
+
+O método não diz de que classe tem de ser o anunciador, nem verifica nada: chama `anunciador.anunciar(combate)` para cada combate. A docstring é o único sítio onde está escrito o que um anunciador tem de ter. Em Python, com duck typing, a docstring é o contrato: diz a quem usa o método que tipo de objeto lhe deve dar.
+
+#### Passo 3: Dois anunciadores sem nada em comum
+
+Os anunciadores estão num ficheiro novo, [anunciadores.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/anunciadores.py), na mesma pasta:
+
+```python
+"""Anunciadores de combates: duck typing, o código das aulas de Python avançado.
+
+O Ginasio, no ficheiro ginasio.py, anuncia os combates com
+anunciador.anunciar(combate). Estas duas classes não têm nenhuma classe-mãe em
+comum, nem com o ginásio: só têm um método com o mesmo nome e os mesmos
+parâmetros. Para o ginásio, é quanto basta.
+"""
+
+
+class Narrador:
+    """Anuncia cada combate como um locutor, com entusiasmo."""
+
+    def anunciar(self, combate):
+        """Escreve o anúncio do combate, numa frase longa."""
+        print(f"E atenção! {combate.desafiante} entrou com {combate.pokemon_desafiante}...")
+        print(f"... e o vencedor é {combate.vencedor}! Que combate!")
+
+
+class Placard:
+    """Mostra cada combate numa linha curta, como um placard do ginásio."""
+
+    def __init__(self):
+        """Cria o placard com o contador de combates a zero."""
+        self.numero = 0
+
+    def anunciar(self, combate):
+        """Escreve uma linha numerada com o desafiante e o vencedor."""
+        self.numero = self.numero + 1
+        print(f"[{self.numero}] {combate.desafiante} | vencedor: {combate.vencedor}")
+```
+
+O `Narrador` escreve duas linhas por combate. O `Placard` escreve uma, com um número que vai contando, e por isso tem um atributo `numero` e um construtor que o põe a zero. As duas classes são diferentes por dentro e não têm nenhuma classe-mãe em comum. Não importam nada do `ginasio.py`. Só têm uma coisa igual: um método `anunciar`, que recebe um combate. Os dois métodos usam os atributos do `Combate` da parte 4: `desafiante`, `pokemon_desafiante` e `vencedor`.
+
+#### Passo 4: Prever e executar
+
+Este programa cria a Misty como líder, com o `com_equipa` da parte 5, faz dois combates no ginásio de Cerulean e anuncia-os com os dois anunciadores.
+
+```python
+from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
+from ginasio import Ginasio, Lider, Treinador
+from anunciadores import Narrador, Placard
+
+misty = Lider.com_equipa("Misty", [PokemonAgua("Staryu", 60, 20), PokemonAgua("Starmie", 90, 35)])
+ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 50, 20)])
+gary = Treinador.com_equipa("Gary", [PokemonFogo("Vulpix", 30, 20)])
+
+cerulean = Ginasio("Cerulean", misty)
+cerulean.combater(ash)
+cerulean.combater(gary)
+
+print("\n--- Narrador ---")
+cerulean.anunciar_combates(Narrador())
+print("\n--- Placard ---")
+cerulean.anunciar_combates(Placard())
+```
+
+Antes de executares, prevê quem vence cada combate e o que escreve cada anunciador. Uma pista: a Misty é líder, e um líder escolhe o Pokémon com mais vida.
+
+```text
+
+=== Ash desafia Misty no ginásio de Cerulean ===
+É super eficaz!
+Bulbasaur ataca Starmie e tira 100 de vida.
+Starmie está KO (0/150).
+
+=== Gary desafia Misty no ginásio de Cerulean ===
+Vulpix ataca Staryu e tira 20 de vida.
+Staryu tem 40/150 de vida.
+É super eficaz!
+Staryu ataca Vulpix e tira 40 de vida.
+Vulpix está KO (0/150).
+
+--- Narrador ---
+E atenção! Ash entrou com Bulbasaur...
+... e o vencedor é Ash! Que combate!
+E atenção! Gary entrou com Vulpix...
+... e o vencedor é Misty! Que combate!
+
+--- Placard ---
+[1] Ash | vencedor: Ash
+[2] Gary | vencedor: Misty
+```
+
+No primeiro combate, a Misty, como líder, escolheu o Starmie, que tinha mais vida. O Bulbasaur, de planta, tirou-lhe o dobro do ataque, 100, e o Starmie ficou KO à primeira. No segundo combate, o Starmie já não tinha vida, e a Misty escolheu o Staryu. A água tira o dobro ao fogo, e o Vulpix perdeu.
+
+Depois, o mesmo método, `anunciar_combates`, deu dois resultados completamente diferentes, conforme o objeto que recebeu. O ginásio não mudou uma linha. Para acrescentar uma terceira maneira de anunciar, basta escrever uma classe nova com um método `anunciar(self, combate)`, e dar um objeto dela ao ginásio.
+
+### Quando o objeto não tem o que é preciso
+
+O preço da liberdade do duck typing é este: se o objeto não tiver o método, o Python só descobre quando a linha que o chama corre. Este fotógrafo sabe fotografar os combates, mas não sabe anunciar:
+
+```python
+from pokemon import PokemonAgua, PokemonPlanta
+from ginasio import Ginasio, Lider, Treinador
+
+
+class Fotografo:
+    """Fotografa os combates, mas não sabe anunciar."""
+
+    def fotografar(self, combate):
+        """Diz que fotografou o vencedor do combate."""
+        print(f"Fotografia de {combate.vencedor}.")
+
+
+misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
+ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 50, 20)])
+cerulean = Ginasio("Cerulean", misty)
+cerulean.anunciar_combates(Fotografo())
+print("Sem combates, ainda não houve erro.")
+cerulean.combater(ash)
+cerulean.anunciar_combates(Fotografo())
+```
+
+```text
+Sem combates, ainda não houve erro.
+
+=== Ash desafia Misty no ginásio de Cerulean ===
+É super eficaz!
+Bulbasaur ataca Starmie e tira 100 de vida.
+Starmie está KO (0/150).
+AttributeError: 'Fotografo' object has no attribute 'anunciar'
+```
+
+Repara na primeira linha da saída. Na primeira vez que o fotógrafo foi entregue ao ginásio, ainda não havia combates. O ciclo do `anunciar_combates` não deu nenhuma volta, a linha `anunciador.anunciar(combate)` não correu, e não houve erro. O fotógrafo só falhou na segunda vez, quando havia um combate para anunciar. Um objeto errado pode passar despercebido durante muito tempo, até ao dia em que a linha que o usa corre. Por isso, quando escreves uma classe para ser usada por duck typing, experimenta-a numa situação em que o método seja mesmo chamado.
+
+A mensagem é a mesma da parte 3, quando o Charmander tentou recuperar: o objeto não tem esse atributo. O Python não sabe que querias um anunciador: só sabe que o fotógrafo não tem nada chamado `anunciar`.
+
+### O mesmo nome não chega
+
+Ter um método com o nome certo não chega: tem de receber o que o ginásio lhe dá. Este sino tem um `anunciar`, mas sem o parâmetro do combate:
+
+```python
+from pokemon import PokemonAgua, PokemonPlanta
+from ginasio import Ginasio, Lider, Treinador
+
+
+class Sino:
+    """Toca um sino no fim de cada combate, mas o anunciar não recebe o combate."""
+
+    def anunciar(self):
+        """Toca o sino."""
+        print("Dlim, dlom!")
+
+
+misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
+ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 50, 20)])
+cerulean = Ginasio("Cerulean", misty)
+cerulean.combater(ash)
+cerulean.anunciar_combates(Sino())
+```
+
+```text
+
+=== Ash desafia Misty no ginásio de Cerulean ===
+É super eficaz!
+Bulbasaur ataca Starmie e tira 100 de vida.
+Starmie está KO (0/150).
+TypeError: Sino.anunciar() takes 1 positional argument but 2 were given
+```
+
+O ginásio chamou `anunciador.anunciar(combate)`, com um argumento. O `anunciar` do sino não tem lugar para ele. A mensagem diz que o método aceita 1 argumento, que é o `self`, e recebeu 2, o `self` e o combate. Nas versões antigas do Python, a mensagem começa só por `anunciar()`. Para o duck typing funcionar, o objeto tem de ter o método com o mesmo nome e com os mesmos parâmetros que quem o chama usa. O sino resolve-se com `def anunciar(self, combate):`, mesmo que o combate não seja usado lá dentro.
+
+### Duck typing ou herança
+
+Tanto a herança como o duck typing permitem a mesma coisa: chamar o mesmo método em objetos diferentes e obter comportamentos diferentes. A diferença está no que liga esses objetos.
+
+| | Herança | Duck typing |
+| --- | --- | --- |
+| O que liga as classes | Uma relação "é um": a filha é um caso da mãe | Nada, a não ser terem os mesmos métodos |
+| O que se partilha | Todo o código da mãe: atributos, métodos, regras | Só os nomes e os parâmetros dos métodos |
+| Exemplo deste guia | `PokemonFogo` é um `Pokemon`; `Lider` é um `Treinador` | `BonecoDePalha` e os Pokémon; `Narrador` e `Placard` |
+| Quando se usa | Quando a frase "um X é um Y" é verdadeira e as classes partilham código | Quando objetos sem parentesco têm de responder à mesma chamada |
+
+O narrador e o placard não são um tipo de nada em comum: não faz sentido dizer que um narrador é um placard, nem inventar uma classe-mãe só para os juntar. O duck typing não obriga a isso. Já um `PokemonFogo` partilha com a `Pokemon` as propriedades, as regras da vida e do ataque e o `atacar`: aí, a herança evita repetir código.
+
+As duas convivem. O ginásio de Cerulean aceita a Misty como líder porque usa só o `nome` e o `escolher_pokemon` do líder, e o `Lider` tem os dois. Funcionaria igual com um objeto de qualquer outra classe que os tivesse. O Python não faz diferença entre as duas situações: em ambas, chama o método do objeto que lá está.
+
+### Erros frequentes com duck typing
+
+**Um nome ligeiramente diferente.** `anuncia` em vez de `anunciar`, ou `Anunciar` com maiúscula. Para o Python são métodos diferentes, e o erro é o do fotógrafo: o objeto não tem o atributo `anunciar`.
+
+**Parâmetros diferentes.** Um método com o nome certo, mas com parâmetros a mais ou a menos, como o sino. O erro aparece na chamada, com o número de argumentos.
+
+**Devolver em vez de mostrar.** Um anunciador cujo `anunciar` faz `return` de uma frase em vez de a escrever com `print`. Não há erro nenhum: o ginásio chama o método, ignora o que ele devolve, e não aparece nada no ecrã. O duck typing garante que a chamada funciona, mas não que o objeto faz o que se esperava. O contrato na docstring do `anunciar_combates` serve para isso: diz o que o método tem de fazer, e não só como se chama.
+
+**Pensar que o erro só pode estar no objeto novo.** Quando uma chamada falha com um objeto que veio de fora, confirma primeiro, na docstring ou no código de quem chama, o que é preciso, e só depois o objeto.
+
+### Verifica se percebeste: duck typing
+
+1. Que cinco coisas o `atacar` usa do alvo? Porque é que isso chega para o boneco de palha poder ser atacado?
+2. O boneco de palha tem 500 de vida. Porque é que a regra da vida máxima não o impede, e a um Pokémon impedia?
+3. O que tem uma classe de ter para ser usada como anunciador no `anunciar_combates`? Onde está isso escrito?
+4. No programa do fotógrafo, porque é que a primeira chamada ao `anunciar_combates` não deu erro e a segunda deu?
+5. Uma colega quer juntar o `Narrador` e o `Placard` numa classe-mãe `Anunciador`, só para os dois herdarem dela. É necessário? Em que caso passaria a valer a pena?
+
 ## A seguir
 
-O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e a [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das quatro partes deste guia, para fazeres sem ajuda.
+O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e a [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das quatro primeiras partes deste guia, para fazeres sem ajuda.
 
-Os próximos assuntos deste tema são os métodos de classe, que se marcam com `@classmethod`, o duck typing, as dataclasses e uma primeira janela com tkinter. Vão entrar neste guia como partes novas, a seguir a esta.
+Os próximos assuntos deste tema são as dataclasses e uma primeira janela com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 6.
 
 ## Vocabulário
 
@@ -1687,6 +2237,10 @@ Os próximos assuntos deste tema são os métodos de classe, que se marcam com `
 | Todo e parte | Numa relação "tem", o objeto que guarda e o objeto guardado |
 | Agregação | Relação em que as partes existem por si: criadas fora, podem estar em vários todos, sobrevivem ao todo. Losango vazio em UML |
 | Composição | Relação em que as partes pertencem ao todo: criadas por ele, não partilhadas, desaparecem com ele. Losango cheio em UML |
+| Método de classe | Um método marcado com `@classmethod`, que recebe a classe por onde foi chamado, em vez de um objeto |
+| `cls` | Num método de classe, o nome do parâmetro que recebe a classe, como o `self` recebe o objeto |
+| Construtor alternativo | Um método de classe que cria e devolve um objeto de outra forma, além do `__init__` |
+| Duck typing | Usar um objeto pelo que ele sabe fazer, os seus atributos e métodos, e não pela classe a que pertence |
 | UML | Uma forma de desenhar programas orientados a objetos, com diagramas de classes |
 
 ![Rodapé](../imagens/rodape.png)
