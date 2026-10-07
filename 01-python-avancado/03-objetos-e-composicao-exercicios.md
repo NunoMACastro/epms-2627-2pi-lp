@@ -4,7 +4,7 @@
 
 ## Objetivos e organização
 
-Esta ficha serve para praticares sem ajuda o que o [guia](03-objetos-e-composicao.md) explica. Está dividida em quatro grupos, um por cada parte do guia, e cada grupo só precisa da parte do guia que lhe corresponde, indicada na tabela. Podes fazer os grupos em alturas diferentes.
+Esta ficha serve para praticares sem ajuda o que o [guia](03-objetos-e-composicao.md) explica. Está dividida em sete grupos, um por cada parte do guia, e cada grupo só precisa da parte do guia que lhe corresponde, indicada na tabela. Podes fazer os grupos em alturas diferentes.
 
 Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti. O desafio e a secção "Para ires mais longe", no fim, são opcionais, e é lá que estão os casos que enganam.
 
@@ -14,6 +14,9 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 | Proteger o estado | Parte 2 | 4 e 5 | 25 min |
 | Herança | Parte 3 | 6 | 20 min |
 | Composição e agregação | Parte 4 | 7, 8, 9 e 10 | 60 min |
+| Métodos de classe | Parte 5 | 11 e 12 | 25 min |
+| Duck typing | Parte 6 | 13 e 14 | 30 min |
+| Dataclasses | Parte 7 | 15 e 16 | 25 min |
 | Desafio opcional | Partes 1 a 4 | | 30 min |
 | Para ires mais longe, opcional | Parte 4 | | 15 min |
 
@@ -23,7 +26,7 @@ Os tempos são para quem leu a parte do guia antes de começar o grupo.
 
 Material: o computador com o Python 3 e o VS Code, e o guia aberto ao lado.
 
-Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que no início do [laboratório](03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta. Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O desafio e a secção "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses dois, copia-o também para a pasta da ficha.
+Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que no início do [laboratório](03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta. Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O exercício 14, o desafio e a secção "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses, copia-o também para a pasta da ficha. Usa o `ginasio.py` dos exemplos, ou o teu do laboratório se já fizeste a parte 8, porque o exercício 14 precisa do `com_equipa`.
 
 Duas regras para toda a ficha. A primeira: quando um exercício te pedir para prever o que um programa escreve, escreve a previsão antes de executar. Se só a escreveres depois, concorda sempre com o computador e não te ensina nada. A segunda: quando um exercício te pedir para explicar, responde em frases completas, com as tuas palavras, como se estivesses a explicar a um colega que faltou à aula.
 
@@ -371,6 +374,236 @@ Charmander tem 90/150 de vida.
 
 Depois de o teste funcionar, responde: o Charmander deixou de estar na equipa, mas a última linha ainda o consegue usar. Porquê? Relaciona a tua resposta com a agregação.
 
+## Métodos de classe
+
+### Exercício 11: Seguir o cls (10 min)
+
+Treina: prever que classe um método de classe cria, e compará-lo com um método estático (guia, [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Primeira tentativa: um método estático](03-objetos-e-composicao.md#primeira-tentativa-um-método-estático)).
+
+A classe `Baga` tem agora duas formas de criar bagas conhecidas, uma de classe e outra estática. A `BagaRara` é uma filha que se descreve de outra maneira:
+
+```python
+class Baga:
+    def __init__(self, nome, cura):
+        self.nome = nome
+        self.cura = cura
+
+    @classmethod
+    def oran(cls):
+        return cls("Baga Oran", 10)
+
+    @staticmethod
+    def sitrus():
+        return Baga("Baga Sitrus", 30)
+
+    def descricao(self):
+        return f"{self.nome} (cura {self.cura})"
+
+
+class BagaRara(Baga):
+    def descricao(self):
+        return f"{self.nome} rara (cura {self.cura * 2})"
+
+
+print(Baga.oran().descricao())
+print(BagaRara.oran().descricao())
+print(BagaRara.sitrus().descricao())
+print(type(BagaRara.oran()).__name__, type(BagaRara.sitrus()).__name__)
+```
+
+**a)** Sem executar, escreve as quatro linhas que o programa mostra.
+
+**b)** Em `BagaRara.oran()`, o que está no `cls`? E que objeto cria a linha `return cls("Baga Oran", 10)`?
+
+**c)** Executa e compara. A terceira linha não diz "rara", embora o método tenha sido chamado por `BagaRara`. Explica porquê, e diz que mudanças faria no `sitrus` para ele passar a criar uma `BagaRara` quando é chamado por `BagaRara`.
+
+### Exercício 12: Uma baga feita de duas (15 min)
+
+Treina: escrever um construtor alternativo que cria o objeto a partir de outros objetos (guia, [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Que tipo de método?](03-objetos-e-composicao.md#que-tipo-de-método)).
+
+Copia as classes `Baga` e `BagaRara` do exercício 11 para um ficheiro novo, e apaga da `Baga` os métodos `oran` e `sitrus`. Acrescenta à `Baga` um método de classe `mistura(primeira, segunda)`, que recebe duas bagas e devolve uma baga nova, da classe por onde foi chamado. O nome da baga nova é "Mistura de", seguido dos nomes das duas, ligados por "e", e a cura é a soma das duas curas. As duas bagas que o método recebe não mudam.
+
+Testa com estas linhas, no fim do ficheiro:
+
+```python
+oran = Baga("Baga Oran", 10)
+sitrus = Baga("Baga Sitrus", 30)
+mistura = Baga.mistura(oran, sitrus)
+print(mistura.descricao())
+rara = BagaRara.mistura(oran, sitrus)
+print(rara.descricao())
+print(type(rara).__name__)
+print(oran.descricao(), sitrus.descricao())
+```
+
+Quando o método estiver certo, o teste mostra:
+
+```text
+Mistura de Baga Oran e Baga Sitrus (cura 40)
+Mistura de Baga Oran e Baga Sitrus rara (cura 80)
+BagaRara
+Baga Oran (cura 10) Baga Sitrus (cura 30)
+```
+
+Depois de o teste funcionar, responde: o `mistura` não lê nenhum atributo de um objeto que esteja no `self`. Que pergunta do guia, em "Que tipo de método?", te diz que é um método de classe, e não um método estático?
+
+## Duck typing
+
+### Exercício 13: Tudo o que se pode usar num Pokémon (10 min)
+
+Treina: prever o que acontece quando uma função usa objetos de classes diferentes, e em que momento falha (guia, [Duck typing: o que conta é o comportamento](03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) e [Quando o objeto não tem o que é preciso](03-objetos-e-composicao.md#quando-o-objeto-não-tem-o-que-é-preciso)).
+
+A função `tratar` recebe um Pokémon e uma lista de coisas, e usa cada coisa no Pokémon. As três classes não têm nenhuma classe-mãe em comum:
+
+```python
+from pokemon import Pokemon
+
+
+class Baga:
+    def __init__(self, nome, cura):
+        self.nome = nome
+        self.cura = cura
+
+    def usar_em(self, pokemon):
+        print(f"{pokemon.nome} come a {self.nome}.")
+        pokemon.vida = pokemon.vida + self.cura
+
+
+class Pocao:
+    def usar_em(self, pokemon):
+        print(f"{pokemon.nome} bebe uma poção.")
+        pokemon.vida = pokemon.vida + 50
+
+
+class Pedra:
+    def usar(self, pokemon):
+        print(f"{pokemon.nome} olha para a pedra.")
+
+
+def tratar(pokemon, itens):
+    for item in itens:
+        item.usar_em(pokemon)
+    pokemon.verificar_vida()
+
+
+pikachu = Pokemon("Pikachu", "Elétrico", 40, 30)
+tratar(pikachu, [Baga("Baga Oran", 10), Pocao()])
+tratar(pikachu, [])
+tratar(pikachu, [Pedra(), Baga("Baga Oran", 10)])
+```
+
+**a)** Sem executar, escreve tudo o que o programa mostra, até ao fim ou até ao erro. Se achas que há um erro, escreve a última linha da mensagem.
+
+**b)** A `Baga` e a `Pocao` não são da mesma família. Porque é que a função `tratar` funciona com as duas?
+
+**c)** Executa e compara. Na terceira chamada, a Baga Oran chegou a ser usada? Porquê? Que nome tem de ter o método da `Pedra` para a terceira chamada funcionar até ao fim?
+
+### Exercício 14: Um líder que não é um treinador (20 min)
+
+Treina: escrever uma classe que tem o que outra classe espera dela, sem herança (guia, [Duck typing: o que conta é o comportamento](03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) e [Duck typing ou herança](03-objetos-e-composicao.md#duck-typing-ou-herança)).
+
+O ginásio de Pallet não tem líder: tem uma máquina de treino. A máquina não é um treinador, e a classe dela não herda de `Treinador`. Chama-se "Máquina de treino" e tem sempre um só Pokémon, que ela própria cria quando é criada: um `PokemonAgua` chamado "Robô de água", com 60 de vida e 20 de ataque.
+
+**a)** Abre o `ginasio.py` e lê o método `combater` da classe `Ginasio`. Faz uma lista do que o ginásio usa do seu líder: que atributos lê e que métodos chama. Só isso é que a máquina precisa de ter.
+
+**b)** Num ficheiro novo, na pasta onde está o `ginasio.py`, escreve a classe `MaquinaDeTreino`, com o que encontraste na alínea a). Quando o Robô de água já não tiver vida, a máquina não tem Pokémon para lutar. No início do ficheiro, importa o que precisas:
+
+```python
+from pokemon import PokemonAgua, PokemonPlanta
+from ginasio import Ginasio, Treinador
+```
+
+Testa com estas linhas, no fim do ficheiro:
+
+```python
+maquina = MaquinaDeTreino()
+treino = Ginasio("Pallet", maquina)
+ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 25, 20)])
+treino.combater(ash)
+treino.combater(ash)
+treino.mostrar_historico()
+```
+
+Quando a classe estiver certa, o teste mostra:
+
+```text
+
+=== Ash desafia Máquina de treino no ginásio de Pallet ===
+É super eficaz!
+Bulbasaur ataca Robô de água e tira 50 de vida.
+Robô de água tem 10/150 de vida.
+Robô de água ataca Bulbasaur e tira 20 de vida.
+Bulbasaur tem 90/150 de vida.
+É super eficaz!
+Bulbasaur ataca Robô de água e tira 50 de vida.
+Robô de água está KO (0/150).
+Não há combate: um dos treinadores não tem Pokémon com vida.
+
+Histórico do ginásio de Pallet:
+ - Ash com Bulbasaur: venceu Ash
+```
+
+**c)** O ginásio aceitou a máquina como líder sem saber o que ela é. Que linha da tua classe faz com que o segundo combate não aconteça?
+
+## Dataclasses
+
+### Exercício 15: A ficha do Centro Pokémon como dataclass (10 min)
+
+Treina: escrever uma dataclass a partir de uma classe que só guarda dados (guia, [A mesma classe como dataclass](03-objetos-e-composicao.md#a-mesma-classe-como-dataclass) e [O que a dataclass escreve por ti](03-objetos-e-composicao.md#o-que-a-dataclass-escreve-por-ti)).
+
+A classe `Ficha` do exercício 8 guarda o nome de um Pokémon e a vida com que ele entrou no Centro Pokémon. Num ficheiro novo, escreve-a como dataclass, com os mesmos dois dados e com o método `resumo`, igual ao do exercício 8. Escolhe o tipo de cada campo.
+
+Testa com estas linhas, no fim do ficheiro:
+
+```python
+primeira = Ficha("Charmander", 20)
+segunda = Ficha("Charmander", 20)
+print(primeira.resumo())
+print(primeira)
+print(primeira == segunda, primeira is segunda)
+```
+
+**a)** Antes de executar, escreve o que achas que as duas últimas linhas vão mostrar.
+
+**b)** Executa e compara. A primeira linha tem de ser exatamente `Charmander entrou com 20 de vida`.
+
+**c)** Que tipo deste a cada campo? Na segunda linha da saída, como se vê qual dos campos é um texto e qual é um número?
+
+### Exercício 16: Dataclass ou classe normal (15 min)
+
+Treina: decidir quando uma dataclass serve (guia, [Quando uma dataclass não serve](03-objetos-e-composicao.md#quando-uma-dataclass-não-serve)).
+
+**a)** Para cada uma destas quatro classes, diz se faria sentido escrevê-la como dataclass. Justifica cada resposta com o que a classe guarda e com as regras que tem.
+
+| | Classe |
+| --- | --- |
+| a1) | A `Baga` do exercício 1, que guarda um nome e uma cura e tem o método `descricao` |
+| a2) | A `Baga` do exercício 5, em que o nome é uma propriedade e nunca pode ficar vazio |
+| a3) | A `Pokedex` do exercício 9, com a lista dos nomes registados, que começa vazia, e o método `registar` |
+| a4) | A `Medalha` da parte 4 do guia, que só guarda a cidade do ginásio |
+
+**b)** Escreve a `Medalha` como dataclass, com um só campo, `cidade`, e testa-a com estas linhas:
+
+```python
+medalha_do_ash = Medalha("Cerulean")
+medalha_do_gary = Medalha("Cerulean")
+print(medalha_do_ash)
+print(medalha_do_ash == medalha_do_gary)
+print(medalha_do_ash is medalha_do_gary)
+print(medalha_do_ash == Medalha("Pewter"))
+```
+
+Quando a classe estiver certa, o teste mostra:
+
+```text
+Medalha(cidade='Cerulean')
+True
+False
+False
+```
+
+**c)** O Ash e o Gary ganharam uma medalha cada um no ginásio de Cerulean. O `==` diz `True` e o `is` diz `False`. Explica o que quer dizer cada uma das duas respostas, com as palavras "os mesmos dados" e "o mesmo objeto".
+
 ## Desafio opcional: o mesmo Pokémon em duas equipas (30 min)
 
 Na agregação, a mesma parte pode estar em mais do que um todo. No mundo dos Pokémon, isso cria um problema: com a classe `Treinador` do guia, nada impede que dois treinadores capturem o mesmo Pokémon.
@@ -474,9 +707,9 @@ Histórico do ginásio de Cerulean:
 
 Concluíste a ficha quando:
 
-- os testes dos exercícios 2, 3, 4, 5, 6, 9 e 10 mostram exatamente as linhas indicadas no enunciado;
-- as tuas previsões dos exercícios 1, 4 e 8 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
-- as tuas justificações dos exercícios 3, 7 e 8 usam as perguntas do guia, e não só a resposta final;
-- consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio.
+- os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15 e 16 mostram exatamente as linhas indicadas no enunciado;
+- as tuas previsões dos exercícios 1, 4, 8, 11, 13 e 15 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
+- as tuas justificações dos exercícios 3, 7, 8 e 16 usam as perguntas do guia, e não só a resposta final;
+- consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio, e a diferença entre um método estático e um método de classe com o exemplo do líder.
 
 ![Rodapé](../imagens/rodape.png)

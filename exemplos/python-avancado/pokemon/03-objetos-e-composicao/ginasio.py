@@ -11,7 +11,7 @@ Três classes que guardam outros objetos:
 - Combate é o registo de um combate: quem desafiou, com que Pokémon e quem
   venceu.
 
-E duas coisas que vieram depois, com as partes 5 e 6 do guia:
+E três coisas que vieram depois, com as partes 5, 6 e 7 do guia:
 
 - Lider É UM Treinador que escolhe sempre o Pokémon com mais vida. O
   Treinador tem um método de classe, com_equipa, que cria um treinador já com
@@ -19,10 +19,14 @@ E duas coisas que vieram depois, com as partes 5 e 6 do guia:
 - O Ginasio anuncia os seus combates através de um anunciador, que pode ser
   qualquer objeto com o método anunciar(combate). É o duck typing: os
   anunciadores estão no ficheiro anunciadores.py.
+- Combate passou a ser uma dataclass: o @dataclass escreve o construtor, a
+  forma de mostrar um registo com print e a comparação de registos com ==.
 
 As classes de Pokémon vêm do ficheiro pokemon.py, que tem de estar na mesma
 pasta que este.
 """
+
+from dataclasses import dataclass
 
 from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
 
@@ -74,14 +78,18 @@ class Lider(Treinador):
         return escolhido
 
 
+@dataclass
 class Combate:
-    """Registo de um combate. Só o ginásio cria registos (composição)."""
+    """Registo de um combate. Só o ginásio cria registos (composição).
 
-    def __init__(self, desafiante, pokemon_desafiante, vencedor):
-        """Guarda os nomes do desafiante, do seu Pokémon e do vencedor."""
-        self.desafiante = desafiante
-        self.pokemon_desafiante = pokemon_desafiante
-        self.vencedor = vencedor
+    É uma dataclass: guarda os nomes do desafiante, do seu Pokémon e do
+    vencedor, e o @dataclass escreve sozinho o construtor, a forma de o
+    mostrar com print e a comparação com ==.
+    """
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
 
     def resumo(self):
         """Devolve uma linha de texto que descreve o combate."""

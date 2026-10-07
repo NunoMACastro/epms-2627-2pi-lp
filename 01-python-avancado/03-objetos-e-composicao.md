@@ -2,13 +2,13 @@
 
 # Objetos, composição e comportamento
 
-Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação, e acaba nos métodos de classe e no duck typing. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
+Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação, passa pelos métodos de classe e pelo duck typing e acaba nas dataclasses. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
 
 É um texto para leres com calma, antes ou depois de uma aula, e perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho: a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário.
 
 ## O que este guia cobre e o que ainda vai entrar
 
-O guia está dividido em seis partes, que seguem, no essencial, a ordem em que a matéria é dada:
+O guia está dividido em sete partes, que seguem, no essencial, a ordem em que a matéria é dada:
 
 | Parte | Assunto |
 | --- | --- |
@@ -18,15 +18,16 @@ O guia está dividido em seis partes, que seguem, no essencial, a ordem em que a
 | 4 | Composição e agregação, com o exemplo guiado do ginásio Pokémon |
 | 5 | Métodos de classe: o `@classmethod`, o `cls` e os construtores alternativos |
 | 6 | Duck typing: objetos de classes diferentes que respondem à mesma chamada, com o exemplo guiado dos anunciadores do ginásio |
+| 7 | Dataclasses: classes que guardam dados, com o `@dataclass`, os campos e as anotações de tipo, e os casos em que não servem |
 
-Este tema ainda não acabou. Faltam as dataclasses e uma primeira janela feita com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 6, e as partes que já existem ficam como estão.
+Este tema ainda não acabou. Faltam os decoradores, para perceberes o que fazem as linhas com arroba que já usas, e uma primeira janela feita com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 7, e as partes que já existem ficam como estão.
 
 Além deste guia, o tema tem mais dois documentos com o mesmo número, um para cada uso:
 
 - o [laboratório](03-objetos-e-composicao-laboratorio.md), com os passos para construíres no computador o ginásio Pokémon da parte 4, com o guia aberto ao lado;
 - a [ficha de exercícios](03-objetos-e-composicao-exercicios.md), para praticares sem ajuda.
 
-O laboratório e a ficha ainda não têm exercícios das partes 5 e 6.
+O laboratório e a ficha têm exercícios das sete partes.
 
 O código completo dos exemplos das aulas está em três ficheiros: [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas; [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o líder, o ginásio e o registo dos combates; e [anunciadores.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/anunciadores.py), com os anunciadores da parte 6.
 
@@ -40,7 +41,7 @@ Vais usar funções com parâmetros e com `return`, e vais precisar de te lembra
 
 Vais usar as f-strings, como `f"{nome} tem {vida} de vida."`, que escrevem o valor de cada variável no sítio das chavetas.
 
-A partir da parte 2, e no laboratório, um ficheiro vai usar classes que estão noutro ficheiro da mesma pasta, com uma linha como `from pokemon import PokemonFogo`. Vais precisar também de reconhecer a linha `if __name__ == "__main__":`, que viste no 10.º: o código que está debaixo dela só corre quando executas esse ficheiro diretamente, e não quando outro ficheiro o importa.
+A partir da parte 2, e no laboratório, um ficheiro vai usar classes que estão noutro ficheiro da mesma pasta, com uma linha como `from pokemon import PokemonFogo`. Vais precisar também de reconhecer a linha `if __name__ == "__main__":`, que viste no 10.º: o código que está debaixo dela só corre quando executas esse ficheiro diretamente, e não quando outro ficheiro o importa. Na parte 7, um ficheiro vai importar de um módulo que vem com o Python, com a linha `from dataclasses import dataclass`, que a própria parte 7 explica.
 
 Se alguma destas ideias estiver esquecida, os guias de Python do 10.º ano continuam a ser a melhor referência. A parte 4 usa também uma ideia do guia de memória do 10.º, sobre referências. Não precisas de o reler: a parte 4 explica essa ideia desde o início.
 
@@ -50,7 +51,7 @@ Cada parte tem teoria com exemplos completos, uma secção de erros frequentes e
 
 Para executar um exemplo, guarda-o num ficheiro com a extensão `.py`, abre o terminal do VS Code na pasta desse ficheiro e escreve `python3 nome-do-ficheiro.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
 
-Todos os programas deste guia foram executados em Python 3.14 e também em Python 3.9, e as saídas mostradas são as reais. As saídas dos programas são iguais nas duas versões. Nas mensagens de erro, o Python mostra várias linhas, com o caminho do ficheiro no teu computador, e só a última linha diz qual foi o erro. Por isso o guia mostra apenas essa última linha. Nas versões mais recentes, essa linha pode acabar com uma sugestão do tipo `Did you mean: ...?`, que as versões antigas não mostram, e há sete erros, dois na parte 1, dois na parte 2, dois na parte 5 e um na parte 6, em que o texto muda de uma versão para a outra. Quando isso acontece, o guia diz também como é a mensagem nas versões antigas.
+Todos os programas deste guia foram executados em Python 3.14 e também em Python 3.9, e as saídas mostradas são as reais. As saídas dos programas são iguais nas duas versões. Nas mensagens de erro, o Python mostra várias linhas, com o caminho do ficheiro no teu computador, e só a última linha diz qual foi o erro. Por isso o guia mostra apenas essa última linha. Nas versões mais recentes, essa linha pode acabar com uma sugestão do tipo `Did you mean: ...?`, que as versões antigas não mostram, e há nove erros, dois na parte 1, dois na parte 2, dois na parte 5, um na parte 6 e dois na parte 7, em que o texto muda de uma versão para a outra. Quando isso acontece, o guia diz também como é a mensagem nas versões antigas.
 
 ## Parte 1: Classes e objetos
 
@@ -2203,11 +2204,373 @@ As duas convivem. O ginásio de Cerulean aceita a Misty como líder porque usa s
 4. No programa do fotógrafo, porque é que a primeira chamada ao `anunciar_combates` não deu erro e a segunda deu?
 5. Uma colega quer juntar o `Narrador` e o `Placard` numa classe-mãe `Anunciador`, só para os dois herdarem dela. É necessário? Em que caso passaria a valer a pena?
 
+## Parte 7: Dataclasses
+
+### Uma classe que só guarda dados
+
+Volta ao registo de um combate, o `Combate` do passo 4 do exemplo guiado da parte 4. É a classe mais simples do ginásio. Guarda três nomes, o do desafiante, o do Pokémon com que ele lutou e o do vencedor, e tem um método, o `resumo`, que os junta numa frase. Não tem regras: não há propriedades, não há valores proibidos, não há listas. Serve para manter três dados juntos, como uma linha de uma tabela.
+
+Mesmo sendo tão simples, o construtor obriga a escrever cada nome três vezes: no parâmetro, no atributo e no valor que o atributo recebe. Este é o construtor do `Combate` da parte 4:
+
+```python
+def __init__(self, desafiante, pokemon_desafiante, vencedor):
+    """Guarda os nomes do desafiante, do seu Pokémon e do vencedor."""
+    self.desafiante = desafiante
+    self.pokemon_desafiante = pokemon_desafiante
+    self.vencedor = vencedor
+```
+
+Com três dados, é só aborrecido. Numa classe com dez, são trinta nomes para escrever, e basta trocar um deles, como `self.vencedor = desafiante`, para o objeto guardar um valor errado sem nenhuma mensagem de erro. Além disso, há duas coisas que um objeto destes faz mal, e que o programa seguinte mostra.
+
+### O que o print e o == fazem com um objeto
+
+Este programa usa uma versão curta do `Combate`, só com o construtor, e cria dois registos com os mesmos três nomes:
+
+```python
+class Combate:
+    """Registo de um combate, como na parte 4: só o construtor."""
+
+    def __init__(self, desafiante, pokemon_desafiante, vencedor):
+        """Guarda os nomes do desafiante, do seu Pokémon e do vencedor."""
+        self.desafiante = desafiante
+        self.pokemon_desafiante = pokemon_desafiante
+        self.vencedor = vencedor
+
+
+primeiro = Combate("Ash", "Bulbasaur", "Ash")
+repetido = Combate("Ash", "Bulbasaur", "Ash")
+print(primeiro.vencedor)
+print(primeiro)
+print(primeiro == repetido)
+```
+
+Prevê as três linhas antes de executares. A segunda é a mais difícil.
+
+```text
+Ash
+<__main__.Combate object at 0x107d2dfd0>
+False
+```
+
+O número depois de `at` vai ser outro no teu computador, e muda de cada vez que executas o programa: é o sítio da memória onde o objeto ficou guardado.
+
+A primeira linha é a esperada, o vencedor do combate. A segunda mostra o que o Python escreve quando lhe pedes para mostrar um objeto de uma classe tua: de que classe é, `Combate`, no ficheiro que está a ser executado, a que o Python chama `__main__`, e em que sítio da memória está. Não diz nada sobre o que o objeto guarda. Para veres os dados, tinhas de escrever `primeiro.desafiante`, `primeiro.pokemon_desafiante` e `primeiro.vencedor`, um a um, ou chamar o `resumo`.
+
+A terceira linha diz que os dois registos não são iguais, embora guardem exatamente os mesmos três nomes. Para os objetos de uma classe tua, o `==` faz, se ninguém disser outra coisa, a mesma pergunta que o `is` da parte 4: são o mesmo objeto? Não são. São dois objetos, criados por duas chamadas ao construtor, que por acaso têm os mesmos valores. Para comparares os dados, tinhas de comparar os atributos um a um.
+
+Nada disto é um erro do Python. Para o `Combate`, porém, dava jeito outra coisa: que o `print` mostrasse os dados e que o `==` comparasse os dados. É isso que uma dataclass faz.
+
+### A mesma classe como dataclass
+
+Uma **dataclass** é uma classe que serve sobretudo para guardar dados, escrita de forma que o Python faça sozinho o trabalho repetitivo. Em vez de escreveres o construtor, dizes quais são os dados, e o Python escreve o construtor por ti. Este é o mesmo `Combate`, escrito como dataclass, com o mesmo programa por baixo e mais uma linha no fim:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Combate:
+    """Registo de um combate, agora escrito como dataclass."""
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
+
+
+primeiro = Combate("Ash", "Bulbasaur", "Ash")
+repetido = Combate("Ash", "Bulbasaur", "Ash")
+print(primeiro.vencedor)
+print(primeiro)
+print(primeiro == repetido)
+print(primeiro is repetido)
+```
+
+Antes de executares, prevê as quatro linhas e compara-as com as três do programa anterior.
+
+```text
+Ash
+Combate(desafiante='Ash', pokemon_desafiante='Bulbasaur', vencedor='Ash')
+True
+False
+```
+
+O programa tem três coisas novas, todas antes dos objetos.
+
+A primeira linha, `from dataclasses import dataclass`, vai buscar o `dataclass` a um módulo chamado `dataclasses`, que vem com o Python: não é preciso instalar nada. É a mesma forma de importar que usas para ir buscar as classes de Pokémon ao `pokemon.py`, com a diferença de que este módulo não é um ficheiro teu, faz parte do Python.
+
+A linha `@dataclass`, por cima da classe, é um decorador, como o `@property`, o `@staticmethod` e o `@classmethod` que já usaste. Os outros três estavam por cima de um método e mudavam esse método. Este está por cima da classe e muda a classe inteira: o Python lê a classe, vê que dados ela tem e acrescenta-lhe os métodos que faltam. O que um decorador é, afinal, e o que faz a arroba, vai ser o assunto de uma parte própria, a seguir a esta.
+
+Dentro da classe, no lugar do construtor, há três linhas, uma por cada dado: `desafiante: str`, `pokemon_desafiante: str` e `vencedor: str`. Cada uma é um **campo** da dataclass, um dado que cada objeto vai guardar, com o nome à esquerda dos dois pontos e o tipo à direita. A docstring continua no sítio do costume, logo a seguir à linha `class`.
+
+### O que a dataclass escreve por ti
+
+A partir dos três campos, o `@dataclass` escreveu três coisas que o programa anterior não tinha.
+
+O construtor. `Combate("Ash", "Bulbasaur", "Ash")` funciona sem nenhum `__init__` escrito por ti. O construtor que a dataclass escreve recebe um valor por cada campo, pela ordem em que os campos estão na classe, e guarda cada valor num atributo com o nome do campo. Faz o mesmo que o construtor da parte 4: `primeiro.vencedor` continua a dar `"Ash"`. Também podes dar os valores pelo nome, como numa chamada de função: `Combate(desafiante="Ash", pokemon_desafiante="Bulbasaur", vencedor="Ash")`.
+
+A forma de se mostrar. O `print(primeiro)` escreve agora o nome da classe e, entre parênteses, cada campo com o seu valor. Os textos aparecem entre plicas, `'Ash'`, para se ver que são textos. É uma linha escrita para quem programa: quando um programa não faz o que esperavas, um `print` de um objeto mostra logo o que ele guarda.
+
+A comparação pelos dados. `primeiro == repetido` dá agora `True`. Numa dataclass, o `==` compara os campos, um a um, e dois objetos são iguais se todos os campos forem iguais. O `is` não mudou: `primeiro is repetido` continua a dar `False`, porque continuam a ser dois objetos. Numa dataclass, o `==` pergunta se os dois objetos guardam os mesmos dados, e o `is` continua a perguntar se são o mesmo objeto.
+
+Se encontrares estes métodos noutros textos, os nomes que o Python lhes dá são `__init__`, o construtor que já conheces, `__repr__`, a forma de se mostrar, e `__eq__`, a comparação com `==`. Não precisas de os escrever: é esse o trabalho que a dataclass faz por ti.
+
+### Os campos e as anotações de tipo
+
+A parte `: str` de cada campo chama-se **anotação de tipo**: diz que tipo de valor se espera ali. É uma forma de escrever nova para ti, e numa dataclass não é opcional. É pelas anotações que o `@dataclass` descobre quais são os campos: cada linha com um nome, dois pontos e um tipo passa a ser um campo, e mais nenhuma. Os tipos são os que já conheces, como `str`, `int`, `float` e `bool`.
+
+Há uma coisa que a anotação não faz: não verifica nada. O Python não confirma que o valor dado é do tipo anotado. Este programa usa o `Combate` do `ginasio.py`, que já é uma dataclass, como vais ver na secção seguinte, e dá um número ao vencedor:
+
+```python
+from ginasio import Combate
+
+estranho = Combate("Ash", "Bulbasaur", 42)
+print(estranho)
+print(estranho.resumo())
+```
+
+```text
+Combate(desafiante='Ash', pokemon_desafiante='Bulbasaur', vencedor=42)
+Ash com Bulbasaur: venceu 42
+```
+
+O 42 foi aceite sem queixa, e no `print` aparece sem plicas, porque é um número. A anotação `vencedor: str` serve para quem lê o código saber o que ali se espera, e para a dataclass saber que o campo existe. Não é uma regra que o Python aplique. Uma regra a sério, como a da vida entre 0 e 150, continua a precisar de uma propriedade, como na parte 2. As anotações também se podem escrever nos parâmetros das funções, mas isso fica para mais tarde.
+
+### O Combate do ginásio passa a dataclass
+
+No ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), o `Combate` passou a ser uma dataclass, e o resto do ficheiro ficou igual. A primeira linha de código do ficheiro, antes da importação dos Pokémon, é agora `from dataclasses import dataclass`, e a classe ficou assim:
+
+```python
+@dataclass
+class Combate:
+    """Registo de um combate. Só o ginásio cria registos (composição).
+
+    É uma dataclass: guarda os nomes do desafiante, do seu Pokémon e do
+    vencedor, e o @dataclass escreve sozinho o construtor, a forma de o
+    mostrar com print e a comparação com ==.
+    """
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
+
+    def resumo(self):
+        """Devolve uma linha de texto que descreve o combate."""
+        return f"{self.desafiante} com {self.pokemon_desafiante}: venceu {self.vencedor}"
+```
+
+Uma dataclass continua a ser uma classe: pode ter métodos, escritos como sempre, com `self`. O `resumo` ficou igual ao da parte 4.
+
+O resto do ginásio não deu pela mudança. A linha do `combater` que cria cada registo, `Combate(desafiante.nome, atacante.nome, vencedor.nome)`, dá os três valores pela mesma ordem dos campos, e o construtor escrito pela dataclass recebe-os como o antigo. Os anunciadores da parte 6 leem os mesmos três atributos. A composição também não mudou: os registos continuam a ser criados só pelo ginásio, dentro do `combater`. A demonstração do fim do `ginasio.py` dá a mesma saída de antes. A parte 4 continua a mostrar o `Combate` com o construtor escrito à mão, porque foi assim que o escrevemos primeiro, e as duas versões fazem o mesmo dentro do ginásio.
+
+Este programa faz um combate e mostra o registo que o ginásio guardou:
+
+```python
+from pokemon import PokemonAgua, PokemonPlanta
+from ginasio import Ginasio, Lider, Treinador
+
+misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
+ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 50, 20)])
+cerulean = Ginasio("Cerulean", misty)
+cerulean.combater(ash)
+print(cerulean.combates[0])
+cerulean.mostrar_historico()
+```
+
+Prevê a saída, sobretudo a linha do `print` do registo.
+
+```text
+
+=== Ash desafia Misty no ginásio de Cerulean ===
+É super eficaz!
+Bulbasaur ataca Starmie e tira 100 de vida.
+Starmie está KO (0/150).
+Combate(desafiante='Ash', pokemon_desafiante='Bulbasaur', vencedor='Ash')
+
+Histórico do ginásio de Cerulean:
+ - Ash com Bulbasaur: venceu Ash
+```
+
+A linha do registo mostra, de uma vez, tudo o que o ginásio guardou sobre o combate. Com o `Combate` da parte 4, a mesma linha escrevia `<ginasio.Combate object at 0x...>`: desta vez o Python diz `ginasio.Combate`, e não `__main__.Combate`, porque a classe vem do ficheiro `ginasio.py`.
+
+### Um campo com valor por omissão
+
+Um campo pode ter um **valor por omissão**: um valor que o campo recebe quando quem cria o objeto não dá nenhum. Escreve-se como uma atribuição, a seguir ao tipo. Nos jogos, uma poção cura um Pokémon, e a poção mais simples cura 20:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Pocao:
+    """Uma poção que cura um Pokémon. Se ninguém disser quanto, cura 20."""
+
+    nome: str
+    cura: int = 20
+
+
+normal = Pocao("Poção")
+super_pocao = Pocao("Super Poção", 50)
+print(normal)
+print(super_pocao)
+print(normal.cura + super_pocao.cura)
+```
+
+```text
+Pocao(nome='Poção', cura=20)
+Pocao(nome='Super Poção', cura=50)
+70
+```
+
+A `Pocao("Poção")` só deu o nome, e a cura ficou com o valor por omissão, 20. A `Pocao("Super Poção", 50)` deu os dois valores, e o 50 ocupou o lugar do 20. Funciona como um parâmetro com valor por omissão numa função: se não o dás, vale o que está escrito na definição.
+
+Os campos com valor por omissão têm de ficar depois dos campos sem valor. Se a cura vier primeiro:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Pocao:
+    """A mesma poção, com os campos pela ordem errada."""
+
+    cura: int = 20
+    nome: str
+
+
+normal = Pocao("Poção")
+```
+
+```text
+TypeError: non-default argument 'nome' follows default argument 'cura'
+```
+
+A mensagem diz que um argumento sem valor por omissão, o `nome`, vem a seguir a um argumento com valor por omissão, a `cura`. O erro aparece logo quando o Python lê a classe, antes de se criar qualquer poção: é o `@dataclass` que se recusa a escrever um construtor assim. A razão está na ordem dos valores. Em `Pocao("Poção")`, o primeiro valor vai para o primeiro campo, que seria a cura, e o nome ficava sem nada. Nas versões antigas do Python, a mensagem acaba em `follows default argument`, sem o nome do outro campo.
+
+### Quando uma dataclass não serve
+
+Uma dataclass escreve um construtor que guarda o que recebe, tal como recebe. Para o `Combate` é exatamente o que se quer. Para uma classe com regras, não é. Este programa experimenta escrever um Pokémon como dataclass, e compara-o com a classe `PokemonPlanta` do `pokemon.py`:
+
+```python
+from dataclasses import dataclass
+
+from pokemon import PokemonPlanta
+
+
+@dataclass
+class PokemonDeDados:
+    """Um Pokémon só com dados, para ver o que se perde."""
+
+    nome: str
+    tipo: str
+    vida: int
+    ataque: int
+
+
+geodude = PokemonDeDados("Geodude", "Pedra", 500, -10)
+print(geodude)
+geodude.vida = geodude.vida - 800
+print(geodude.vida)
+oddish = PokemonPlanta("Oddish", 500, -10, 5)
+print(oddish.vida, oddish.ataque)
+```
+
+```text
+PokemonDeDados(nome='Geodude', tipo='Pedra', vida=500, ataque=-10)
+-300
+150 1
+```
+
+O `PokemonDeDados` aceitou 500 de vida e -10 de ataque, e depois deixou a vida descer a -300. Não há regra nenhuma, porque ninguém a escreveu: o construtor da dataclass guarda os valores tal como chegam, e a vida é um atributo normal, sem set. O Oddish, criado pela classe com propriedades da parte 2, ficou com 150 de vida e 1 de ataque, porque o construtor dele passa pelos sets, que corrigem os valores.
+
+A decisão fica assim. Uma classe que só guarda dados juntos, sem regras, como um registo, é uma boa dataclass: o `Combate`, a `Pocao`, a `Medalha` da parte 4. Uma classe com regras que protegem o estado, como o `Pokemon`, fica uma classe normal, com as propriedades. Há formas de juntar regras a uma dataclass, mas dão mais trabalho do que a classe normal e ficam fora deste guia.
+
+Também não é qualquer valor que pode ser valor por omissão. Uma lista, por exemplo, é recusada:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Treinador:
+    """Um treinador como dataclass, com a equipa vazia por omissão."""
+
+    nome: str
+    equipa: list = []
+```
+
+```text
+ValueError: mutable default <class 'list'> for field equipa is not allowed: use default_factory
+```
+
+A palavra mutable, em inglês, quer dizer que se pode alterar, e uma lista altera-se com o `append`. O Python recusa porque a lista do valor por omissão é criada uma só vez, quando a classe é lida, e ficaria a ser a mesma lista para todos os treinadores: uma captura do Ash aparecia também na equipa da Misty. É o problema das referências da parte 4. A mensagem sugere uma solução, o `default_factory`, que não faz falta neste guia: o `Treinador`, com a equipa que começa vazia e os métodos que a mudam, continua a ser uma classe normal.
+
+### Erros frequentes com dataclasses
+
+**Esquecer o tipo de um campo.** Sem a anotação, a linha deixa de ser um campo. Se a linha tiver só o nome, como `pokemon_desafiante`, o Python tenta ler uma variável com esse nome, que não existe, e a classe nem chega a ser criada:
+
+```text
+NameError: name 'pokemon_desafiante' is not defined
+```
+
+Se a linha tiver um valor sem tipo, como `vencedor = ""`, o caso é mais traiçoeiro, porque a classe é criada sem erro. O `vencedor` passa a ser um atributo da classe, e não um campo, e o construtor escrito pela dataclass só recebe os outros dois:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Combate:
+    """Registo de um combate, com um campo sem tipo."""
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor = ""
+
+
+registo = Combate("Ash", "Bulbasaur", "Ash")
+```
+
+```text
+TypeError: Combate.__init__() takes 3 positional arguments but 4 were given
+```
+
+O construtor aceita 3 argumentos, o `self` e os dois campos, e recebeu 4, o `self` e os três valores. Nas versões antigas do Python, a mensagem começa só por `__init__()`. Quando o construtor de uma dataclass se queixa de argumentos a mais, confirma primeiro se todos os campos têm tipo.
+
+**Esquecer o `@dataclass`.** Sem o decorador, as anotações ficam na classe, mas ninguém escreve o construtor:
+
+```python
+class Combate:
+    """Registo de um combate, sem o @dataclass."""
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
+
+
+registo = Combate("Ash", "Bulbasaur", "Ash")
+```
+
+```text
+TypeError: Combate() takes no arguments
+```
+
+**Esquecer a importação.** Sem a linha `from dataclasses import dataclass`, o Python não sabe o que é `dataclass`, e o erro aparece na linha do decorador: `NameError: name 'dataclass' is not defined`.
+
+**Pensar que o tipo é verificado.** Como viste com o 42, a anotação não impede nenhum valor. Se um campo tem uma regra, a dataclass não a aplica.
+
+### Verifica se percebeste: dataclasses
+
+1. Que três coisas escreveu o `@dataclass` sozinho na classe `Combate`?
+2. Com o `Combate` da parte 4, `primeiro == repetido` dava `False`; com a dataclass, dá `True`. O que pergunta o `==` em cada caso? E o `is`, mudou?
+3. Numa dataclass, porque é que o campo tem de ser `vencedor: str`, e não só `vencedor`? O que acontece se escreveres `vencedor = ""`?
+4. Com a `Pocao` desta parte, o que mostram `print(Pocao("Hiper Poção", 200))` e `print(Pocao("Poção", "muita"))`? Porquê?
+5. Para cada classe, diz se faria sentido escrevê-la como dataclass, e porquê: a `Medalha` da parte 4, o `Pokemon` e o `Ginasio`.
+
 ## A seguir
 
-O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e a [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das quatro primeiras partes deste guia, para fazeres sem ajuda.
+O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e depois a acrescentar-lhe o líder, os anunciadores e o registo como dataclass. A [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das sete partes deste guia, para fazeres sem ajuda.
 
-Os próximos assuntos deste tema são as dataclasses e uma primeira janela com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 6.
+Faltam, neste tema, os decoradores e uma primeira janela com tkinter. Vão entrar neste guia como partes novas, a seguir à parte 7.
 
 ## Vocabulário
 
@@ -2222,7 +2585,7 @@ Os próximos assuntos deste tema são as dataclasses e uma primeira janela com t
 | `self` | Dentro de um método, o objeto que está a ser usado |
 | Método | Uma função definida dentro de uma classe, que recebe o objeto no `self` |
 | Método estático | Um método marcado com `@staticmethod`, que não recebe `self` porque não precisa de nenhum objeto |
-| Decorador | Uma marca com `@` por cima de um método, que muda a forma como ele funciona |
+| Decorador | Uma marca com `@` por cima de um método ou de uma classe, que muda a forma como ele funciona |
 | Invariante | Uma regra que tem de ser verdadeira durante toda a existência do objeto |
 | Get e set | O método que lê um valor e o método que o altera, aplicando a regra |
 | Modificador de acesso | O que marca um nome como público ou privado. Em Python, é a forma como o nome começa: sem sublinhado, com um ou com dois |
@@ -2241,6 +2604,10 @@ Os próximos assuntos deste tema são as dataclasses e uma primeira janela com t
 | `cls` | Num método de classe, o nome do parâmetro que recebe a classe, como o `self` recebe o objeto |
 | Construtor alternativo | Um método de classe que cria e devolve um objeto de outra forma, além do `__init__` |
 | Duck typing | Usar um objeto pelo que ele sabe fazer, os seus atributos e métodos, e não pela classe a que pertence |
+| Dataclass | Uma classe que serve sobretudo para guardar dados, marcada com `@dataclass`, para a qual o Python escreve o construtor, a forma de se mostrar e a comparação com `==` |
+| Campo | Numa dataclass, cada dado que os objetos guardam, escrito com o nome, dois pontos e o tipo |
+| Anotação de tipo | A indicação do tipo de valor esperado, depois de dois pontos, como em `vencedor: str`. O Python não a verifica |
+| Valor por omissão | O valor que um campo recebe quando quem cria o objeto não dá nenhum |
 | UML | Uma forma de desenhar programas orientados a objetos, com diagramas de classes |
 
 ![Rodapé](../imagens/rodape.png)

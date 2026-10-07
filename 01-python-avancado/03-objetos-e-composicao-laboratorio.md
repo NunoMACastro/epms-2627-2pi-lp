@@ -6,13 +6,15 @@
 
 Vais construir no computador, uma classe de cada vez, o ginásio Pokémon da parte 4 do [guia](03-objetos-e-composicao.md): o treinador com a sua equipa, o registo de um combate e o ginásio que organiza os combates. Depois de cada classe, vais executar um pequeno teste, e antes de cada teste vais escrever o que achas que ele vai mostrar.
 
-Além de pores o programa a funcionar, vais ver com os teus olhos, no computador, as ideias da parte 4: que a equipa de um treinador guarda os mesmos Pokémon que existem fora dele, que o mesmo treinador pode desafiar dois ginásios, e o que sobrevive e o que desaparece quando um ginásio deixa de existir. No fim há uma parte autónoma, em que acrescentas ao ginásio um método teu.
+Além de pores o programa a funcionar, vais ver com os teus olhos, no computador, as ideias da parte 4: que a equipa de um treinador guarda os mesmos Pokémon que existem fora dele, que o mesmo treinador pode desafiar dois ginásios, e o que sobrevive e o que desaparece quando um ginásio deixa de existir. Depois há uma parte autónoma, em que acrescentas ao ginásio um método teu.
+
+Numa segunda volta, das partes 8 a 10, vais acrescentar ao mesmo ginásio o que as partes 5, 6 e 7 do guia ensinam: o líder, criado por um construtor alternativo; os anunciadores dos combates, por duck typing; e o registo de um combate escrito como dataclass. Esta segunda volta também acaba numa parte autónoma, em que escreves um anunciador teu.
 
 Este laboratório não repete a teoria. Tem o guia aberto ao lado: é de lá que vais tirar o código de cada classe, e é lá que está explicado o porquê de cada linha. Cada parte diz a secção do guia de que precisas.
 
 ## O que precisas de saber antes
 
-Do guia, precisas das partes 1 a 3 e das secções da parte 4 até ao exemplo guiado. Não precisas de as saber de cor, mas precisas de as ter lido, porque os testes deste laboratório só fazem sentido para quem sabe o que é uma referência, uma agregação e uma composição.
+Do guia, precisas das partes 1 a 3 e das secções da parte 4 até ao exemplo guiado. Não precisas de as saber de cor, mas precisas de as ter lido, porque os testes deste laboratório só fazem sentido para quem sabe o que é uma referência, uma agregação e uma composição. Para a segunda volta, das partes 8 a 10, precisas também das partes 5, 6 e 7 do guia; cada parte do laboratório diz de que secções.
 
 Do 10.º ano, precisas de saber criar uma pasta e um ficheiro no VS Code, abrir o terminal do VS Code nessa pasta e executar um ficheiro com `python3 nome.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
 
@@ -270,6 +272,166 @@ As duas linhas de teste ficam antes do `del cerulean` porque, depois dele, a var
 
 Antes de escreveres o método, olha outra vez para a classe `Combate` e para a linha do `combater` que cria cada registo: o que é que um registo guarda sobre o vencedor? A resposta decide a forma como comparas cada registo com o treinador que o método recebe.
 
+## Parte 8: O líder e o construtor alternativo (15 min)
+
+Precisas das secções [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [O líder, um treinador que escolhe de outra maneira](03-objetos-e-composicao.md#o-líder-um-treinador-que-escolhe-de-outra-maneira), da parte 5 do guia.
+
+1. Na classe `Treinador` do teu `ginasio.py`, acrescenta o método de classe `com_equipa`, entre o construtor e o `capturar`, tal como está no guia. Não te esqueças da linha `@classmethod` por cima do `def`.
+2. A seguir à classe `Treinador`, e antes da classe `Combate`, escreve a classe `Lider`, com o seu `escolher_pokemon`.
+3. Substitui todo o programa principal, desde a linha `if __name__ == "__main__":` até ao fim do ficheiro, por este:
+
+```python
+if __name__ == "__main__":
+    erika = Lider.com_equipa("Erika", [PokemonPlanta("Tangela", 50, 20, 10), PokemonPlanta("Gloom", 80, 25, 5)])
+    ash = Treinador.com_equipa("Ash", [PokemonAgua("Squirtle", 100, 30), PokemonFogo("Charmander", 90, 40)])
+    print(type(erika).__name__, len(erika.equipa))
+    print(type(ash).__name__, len(ash.equipa))
+    print(erika.escolher_pokemon().nome, ash.escolher_pokemon().nome)
+    celadon = Ginasio("Celadon", erika)
+    celadon.combater(ash)
+    celadon.combater(ash)
+    celadon.mostrar_historico()
+```
+
+4. Antes de executar, escreve a tua previsão das três primeiras linhas. Não precisas de prever os combates ataque a ataque.
+5. Executa e compara.
+
+As três primeiras linhas devem ser estas:
+
+```text
+Lider 2
+Treinador 2
+Gloom Squirtle
+```
+
+Depois vêm os dois combates, e a saída acaba com este histórico:
+
+```text
+Histórico do ginásio de Celadon:
+ - Ash com Squirtle: venceu Erika
+ - Ash com Charmander: venceu Ash
+```
+
+Responde por escrito:
+
+- **a)** No `com_equipa` não há nenhuma linha com a palavra `Lider`. Que linha faz com que a Erika saia um `Lider`?
+- **b)** No primeiro combate, a Erika lutou com o Gloom; no segundo, com a Tangela. Porque é que mudou de Pokémon? Procura, na saída do primeiro combate, a vida com que o Gloom acabou.
+- **c)** Muda, só por um momento, a primeira linha do programa principal para `erika = Treinador.com_equipa(...)`, com a mesma equipa. Antes de executar, prevê que Pokémon escolhe a Erika no primeiro combate e quem ganha cada um dos dois combates. Executa, compara e volta a pôr `Lider`.
+
+## Parte 9: Anunciar os combates (15 min)
+
+Precisas do [passo 2](03-objetos-e-composicao.md#passo-2-o-que-o-ginásio-precisa-de-um-anunciador) e do [passo 3](03-objetos-e-composicao.md#passo-3-dois-anunciadores-sem-nada-em-comum) do exemplo guiado da parte 6 do guia.
+
+1. Acrescenta à classe `Ginasio` o método `anunciar_combates`, no fim da classe, depois do `mostrar_historico`.
+2. Na mesma pasta, cria um ficheiro novo chamado `anunciadores.py` e escreve nele as classes `Narrador` e `Placard`, tal como estão no passo 3.
+3. Cria outro ficheiro novo, `anunciar.py`, com este programa:
+
+```python
+from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
+from ginasio import Ginasio, Lider, Treinador
+from anunciadores import Narrador, Placard
+
+erika = Lider.com_equipa("Erika", [PokemonPlanta("Tangela", 50, 20, 10), PokemonPlanta("Gloom", 80, 25, 5)])
+ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 90, 40)])
+gary = Treinador.com_equipa("Gary", [PokemonAgua("Psyduck", 60, 20)])
+celadon = Ginasio("Celadon", erika)
+celadon.combater(ash)
+celadon.combater(gary)
+celadon.combater(ash)
+
+print("\n--- Placard ---")
+celadon.anunciar_combates(Placard())
+print("\n--- Narrador ---")
+celadon.anunciar_combates(Narrador())
+```
+
+Este programa fica num ficheiro à parte, e não no programa principal do `ginasio.py`, de propósito. O `ginasio.py` não importa os anunciadores, nem precisa de os conhecer: quem junta o ginásio aos anunciadores é o `anunciar.py`.
+
+4. Antes de executar, prevê quem vence cada um dos três combates. Uma pista: a Erika é líder, e um líder escolhe sempre o Pokémon com mais vida. Depois, prevê as três linhas do placard.
+5. Executa `python3 anunciar.py` e compara.
+
+Depois dos três combates, a saída deve acabar assim:
+
+```text
+--- Placard ---
+[1] Ash | vencedor: Ash
+[2] Gary | vencedor: Erika
+[3] Ash | vencedor: Ash
+
+--- Narrador ---
+E atenção! Ash entrou com Charmander...
+... e o vencedor é Ash! Que combate!
+E atenção! Gary entrou com Psyduck...
+... e o vencedor é Erika! Que combate!
+E atenção! Ash entrou com Charmander...
+... e o vencedor é Ash! Que combate!
+```
+
+Responde por escrito:
+
+- **a)** O `ginasio.py` não tem nenhuma linha que fale de `Narrador` ou de `Placard`. Como é que o `anunciar_combates` consegue usar os dois?
+- **b)** Acrescenta, no fim do `anunciar.py`, a linha `celadon.anunciar_combates(ash)`, que entrega o treinador Ash ao ginásio como se fosse um anunciador. Antes de executar, prevê o que acontece e em que momento. Executa, compara e apaga a linha.
+
+## Parte 10: O registo como dataclass (10 min)
+
+Precisas das secções [O que a dataclass escreve por ti](03-objetos-e-composicao.md#o-que-a-dataclass-escreve-por-ti) e [O Combate do ginásio passa a dataclass](03-objetos-e-composicao.md#o-combate-do-ginásio-passa-a-dataclass), da parte 7 do guia.
+
+1. Antes de mexeres na classe `Combate`, acrescenta estas linhas ao fim do `anunciar.py`:
+
+```python
+print()
+print(celadon.combates[0])
+print(celadon.combates[0] == celadon.combates[2])
+print(celadon.combates[0] is celadon.combates[2])
+```
+
+2. Executa e copia para as tuas notas as três últimas linhas da saída. Devem ser parecidas com estas, com outro número depois de `at`:
+
+```text
+<ginasio.Combate object at 0x100cc0590>
+False
+False
+```
+
+3. Agora transforma a classe `Combate` do `ginasio.py` numa dataclass, como no guia. Acrescenta a linha `from dataclasses import dataclass` no início do ficheiro, antes da importação dos Pokémon, com uma linha em branco a separá-las; põe `@dataclass` por cima da classe; troca o construtor pelos três campos, cada um com o seu tipo; e deixa o `resumo` como está.
+4. Antes de executar outra vez, prevê: os combates e os anúncios mudam? E as três últimas linhas?
+5. Executa e compara.
+
+Tudo o que vem antes das três últimas linhas fica exatamente igual. As três últimas passam a ser estas:
+
+```text
+Combate(desafiante='Ash', pokemon_desafiante='Charmander', vencedor='Ash')
+True
+False
+```
+
+Responde por escrito:
+
+- **a)** O `combater` cria os registos com `Combate(desafiante.nome, atacante.nome, vencedor.nome)`, e não mudaste essa linha. Porque é que continua a funcionar com a dataclass?
+- **b)** O primeiro e o terceiro combates aconteceram em alturas diferentes, mas, com a dataclass, o `==` diz que são iguais. O que é que um registo guarda, e o que não guarda, que faz com que os dois sejam iguais? E o `is`, o que continua a dizer?
+
+## Parte autónoma: um anunciador que conta vitórias (15 min)
+
+Esta parte fazes sozinho. Não está no guia.
+
+No `anunciadores.py`, escreve uma classe nova, `Contador`, que serve de anunciador: tem um método `anunciar(combate)`, como o `Narrador` e o `Placard`, mas não escreve nada quando recebe um combate. Em vez disso, conta quantos combates ganharam os desafiantes e quantos ganhou o líder. Tem também um método `mostrar()`, que escreve as duas contagens numa linha, como `Desafiantes: 2 | Líder: 1`.
+
+Para o testares, junta o `Contador` à linha que importa os anunciadores no `anunciar.py` e acrescenta estas linhas ao fim do ficheiro:
+
+```python
+contador = Contador()
+celadon.anunciar_combates(contador)
+contador.mostrar()
+```
+
+Quando a classe estiver certa, a última linha da saída é:
+
+```text
+Desafiantes: 2 | Líder: 1
+```
+
+Antes de escreveres a classe, repara que o `Contador` não sabe quem é o líder do ginásio: só recebe os combates, um a um. Olha para os três atributos de um registo. Como é que, só com um registo, se sabe se ganhou o desafiante ou o líder?
+
 ## Quando alguma coisa corre mal
 
 **`can't open file '...ginasio.py': [Errno 2] No such file or directory`.** O Python não encontrou o ficheiro que mandaste executar, porque o terminal está aberto noutra pasta. A mensagem mostra o caminho completo onde o procurou. Abre no VS Code a pasta `ginasio-pokemon` e abre aí um terminal novo, que já começa nessa pasta, ou muda para ela com `cd`.
@@ -292,8 +454,24 @@ Antes de escreveres o método, olha outra vez para a classe `Combate` e para a l
 
 **A saída tem os números certos mas as linhas em branco não coincidem.** Confirma os `\n` no início dos títulos do `combater` e do `mostrar_historico`, e o `print()` sozinho do programa principal da parte 7, que escreve uma linha em branco.
 
+**`TypeError: Treinador.com_equipa() missing 1 required positional argument: 'pokemons'`.** Falta a linha `@classmethod` por cima do `def com_equipa`. Sem ela, o Python não passa a classe ao método, e os valores que dás ficam desencontrados dos parâmetros: o nome vai para o `cls`, a lista vai para o `nome`, e o `pokemons` fica sem nada. Nas versões antigas do Python, a mensagem começa só por `com_equipa()`.
+
+**Na parte 8, a primeira linha diz `Treinador 2` em vez de `Lider 2`.** No `com_equipa`, a linha que cria o treinador está escrita `Treinador(nome)`. Tem de ser `cls(nome)`, para criar um objeto da classe por onde o método foi chamado.
+
+**`ModuleNotFoundError: No module named 'anunciadores'`.** O Python não encontrou o ficheiro `anunciadores.py`. Confirma que está na mesma pasta que o `anunciar.py` e o `ginasio.py`, e que o nome está escrito exatamente assim, em minúsculas e sem acentos.
+
+**`AttributeError: 'Placard' object has no attribute 'numero'`.** O `Placard` ficou sem o construtor, ou o construtor ficou sem o `self.` na linha `self.numero = 0`. É o mesmo problema da equipa sem `self.`, mais acima.
+
+**`TypeError: Combate() takes no arguments`.** A classe `Combate` tem os campos, mas falta a linha `@dataclass` por cima dela. Sem o decorador, ninguém escreve o construtor.
+
+**`NameError: name 'dataclass' is not defined`.** Falta a linha `from dataclasses import dataclass` no início do `ginasio.py`.
+
+**`TypeError: Combate.__init__() takes 3 positional arguments but 4 were given`.** Um dos três campos ficou sem o tipo, por exemplo `vencedor = ""` em vez de `vencedor: str`. Sem a anotação, a linha não é um campo, e o construtor da dataclass só recebe os outros dois. Nas versões antigas do Python, a mensagem começa só por `__init__()`.
+
 ## O que entregar
 
-O ficheiro `ginasio.py`, na versão final: com as classes `Treinador`, `Combate` e `Ginasio`, com o método `vitorias_de`, e com o programa principal da parte 7 e as duas linhas de teste da parte autónoma. Entrega também as tuas previsões e as respostas às perguntas das partes 3, 6 e 7, escritas por ti, em papel ou num ficheiro de texto, conforme o professor indicar.
+O ficheiro `ginasio.py`, na versão final: com as classes `Treinador`, `Lider`, `Combate` e `Ginasio`, com o método `vitorias_de` e o `anunciar_combates`, o `Combate` já como dataclass, e o programa principal da parte 8. Entrega também o `anunciadores.py`, com o teu `Contador`, e o `anunciar.py`, com as linhas de teste das partes 10 e autónoma. Se fizeste só a primeira volta, entrega o `ginasio.py` com o programa principal da parte 7 e as duas linhas de teste da primeira parte autónoma.
+
+Entrega também as tuas previsões e as respostas às perguntas das partes 3, 6, 7, 8, 9 e 10, escritas por ti, em papel ou num ficheiro de texto, conforme o professor indicar.
 
 ![Rodapé](../imagens/rodape.png)
