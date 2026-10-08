@@ -6,7 +6,7 @@
 
 Esta ficha serve para praticares sem ajuda o que o [guia](03-objetos-e-composicao.md) explica. Está dividida em oito grupos, um por cada parte do guia, e cada grupo só precisa da parte do guia que lhe corresponde, indicada na tabela. Podes fazer os grupos em alturas diferentes.
 
-Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti. O desafio e a secção "Para ires mais longe", no fim, são opcionais, e é lá que estão os casos que enganam.
+Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti. O desafio e as duas secções "Para ires mais longe", no fim, são opcionais, e é lá que estão os casos que enganam.
 
 | Grupo | Parte do guia | Exercícios | Tempo |
 | --- | --- | --- | ---: |
@@ -17,9 +17,10 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 | Métodos de classe | Parte 5 | 11 e 12 | 25 min |
 | Duck typing | Parte 6 | 13 e 14 | 30 min |
 | Dataclasses | Parte 7 | 15 e 16 | 25 min |
-| Decoradores | Parte 8 | 17 e 18 | 25 min |
+| Decoradores | Parte 8 | 17 a 23 | 75 min |
 | Desafio opcional | Partes 1 a 4 | | 30 min |
 | Para ires mais longe, opcional | Parte 4 | | 15 min |
+| Para ires mais longe, opcional | Parte 8 | | 5 min |
 
 Os tempos são para quem leu a parte do guia antes de começar o grupo.
 
@@ -27,7 +28,7 @@ Os tempos são para quem leu a parte do guia antes de começar o grupo.
 
 Material: o computador com o Python 3 e o VS Code, e o guia aberto ao lado.
 
-Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que no início do [laboratório](03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta. Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O exercício 14, o desafio e a secção "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses, copia-o também para a pasta da ficha. Usa o `ginasio.py` dos exemplos, ou o teu do laboratório se já fizeste a parte 8, porque o exercício 14 precisa do `com_equipa`.
+Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que no início do [laboratório](03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta. Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O exercício 14, o desafio e a primeira secção "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses, copia-o também para a pasta da ficha. Usa o `ginasio.py` dos exemplos, ou o teu do laboratório se já fizeste a parte 8, porque o exercício 14 precisa do `com_equipa`.
 
 Duas regras para toda a ficha. A primeira: quando um exercício te pedir para prever o que um programa escreve, escreve a previsão antes de executar. Se só a escreveres depois, concorda sempre com o computador e não te ensina nada. A segunda: quando um exercício te pedir para explicar, responde em frases completas, com as tuas palavras, como se estivesses a explicar a um colega que faltou à aula.
 
@@ -607,7 +608,155 @@ False
 
 ## Decoradores
 
-### Exercício 17: Funções que se entregam (10 min)
+Os exercícios 17 a 21 são uma introdução aos decoradores só com funções, sem classes e sem o `pokemon.py`: faz cada um num ficheiro novo. Os exercícios 22 e 23 voltam às mesmas ideias, com funções entregues a outras funções e com uma classe.
+
+### Exercício 17: Função ou chamada? (5 min)
+
+Treina: distinguir a função de uma chamada à função (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor)).
+
+```python
+def saudacao():
+    return "Bom dia!"
+
+
+mensagem = saudacao()
+funcao = saudacao
+
+print(mensagem)
+print(funcao())
+print(funcao)
+```
+
+**a)** Sem executar, escreve o que achas que mostra cada `print`.
+
+**b)** Qual das duas variáveis, `mensagem` ou `funcao`, guarda um texto? E qual guarda a própria função? Executa e confirma.
+
+### Exercício 18: Uma tabela de conversões (10 min)
+
+Treina: guardar funções num dicionário e chamá-las a partir dele (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor)).
+
+```python
+def km_para_metros(valor):
+    return valor * 1000
+
+
+def horas_para_minutos(valor):
+    return valor * 60
+
+
+conversoes = {"km": km_para_metros, "horas": horas_para_minutos}
+
+print(conversoes["km"](3))
+print(conversoes["horas"](2))
+```
+
+**a)** Sem executar, escreve as duas linhas que o programa mostra.
+
+**b)** Escreve uma função `euros_para_centimos` e acrescenta-a ao dicionário, com a chave `"euros"`. Junta uma linha que mostre quantos cêntimos são 2,5 euros (em Python, escreve-se `2.5`).
+
+### Exercício 19: Pôr as arrobas (10 min)
+
+Treina: passar de `f = d(f)` para `@d` (guia, [O que faz a arroba](03-objetos-e-composicao.md#o-que-faz-a-arroba)).
+
+```python
+tarefas = []
+
+
+def tarefa(funcao):
+    tarefas.append(funcao)
+    return funcao
+
+
+def acordar():
+    print("Acordar às 7h.")
+
+
+acordar = tarefa(acordar)
+
+
+def tomar_pequeno_almoco():
+    print("Tomar o pequeno-almoço.")
+
+
+tomar_pequeno_almoco = tarefa(tomar_pequeno_almoco)
+
+for passo in tarefas:
+    passo()
+```
+
+**a)** Sem executar, escreve o que o programa mostra.
+
+**b)** Reescreve o programa com `@tarefa` por cima de cada `def`, sem as linhas de atribuição. A saída tem de ficar igual.
+
+**c)** Acrescenta uma terceira tarefa, `apanhar_autocarro`, que escreve "Apanhar o autocarro.". Usa só a arroba e não mexas no ciclo.
+
+### Exercício 20: Quando corre o decorador? (10 min)
+
+Treina: perceber que o decorador corre quando o `def` é lido, e não quando a função é chamada (guia, [Um decorador corre uma vez, quando o def é lido](03-objetos-e-composicao.md#um-decorador-corre-uma-vez-quando-o-def-é-lido)).
+
+```python
+def avisar(funcao):
+    print(f"Li a função {funcao.__name__}.")
+    return funcao
+
+
+print("Início")
+
+
+@avisar
+def ligar_luz():
+    print("Luz ligada.")
+
+
+print("Meio")
+
+
+@avisar
+def abrir_porta():
+    print("Porta aberta.")
+
+
+print("Fim")
+abrir_porta()
+ligar_luz()
+```
+
+**a)** Sem executar, escreve todas as linhas que o programa mostra, pela ordem certa.
+
+**b)** Executa e compara. Quantas vezes aparece "Li a função"? Porque é que não aparece outra vez quando se chama `ligar_luz()`?
+
+### Exercício 21: O teu primeiro decorador (15 min)
+
+Treina: escrever um decorador que guarda funções (guia, [O que faz a arroba](03-objetos-e-composicao.md#o-que-faz-a-arroba)).
+
+Uma casa inteligente tem três comandos:
+
+```python
+def ligar_luz():
+    print("Luz ligada.")
+
+
+def abrir_porta():
+    print("Porta aberta.")
+
+
+def ligar_aquecimento():
+    print("Aquecimento ligado.")
+```
+
+**a)** Cria uma lista vazia `comandos` e escreve um decorador `comando` que acrescenta a função à lista e a devolve. Põe `@comando` por cima dos três `def`.
+
+**b)** Mostra um menu numerado, com o nome de cada função (usa `.__name__`):
+
+```text
+1 - ligar_luz
+2 - abrir_porta
+3 - ligar_aquecimento
+```
+
+**c)** Pede ao utilizador o número de um comando e executa esse comando. Atenção: o utilizador escreve 1, 2 ou 3, mas as posições da lista começam em 0.
+
+### Exercício 22: Funções que se entregam (10 min)
 
 Treina: distinguir uma função de uma chamada à função (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor) e [Entregar uma função a outra função](03-objetos-e-composicao.md#entregar-uma-função-a-outra-função)).
 
@@ -640,7 +789,7 @@ print(dobro(triplo(2)))
 
 **c)** Executa e compara. Depois acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Antes de executar, prevê o que acontece. Executa, explica a mensagem e apaga a linha.
 
-### Exercício 18: Uma classe sem arrobas (15 min)
+### Exercício 23: Uma classe sem arrobas (15 min)
 
 Treina: reescrever decoradores como atribuições (guia, [O que faz a arroba](03-objetos-e-composicao.md#o-que-faz-a-arroba)).
 
@@ -781,12 +930,32 @@ Histórico do ginásio de Cerulean:
 
 **c)** Muda o método `ultimo_combate` de forma que quem o chama fique a saber o resultado do último combate, mas não consiga estragar o histórico do ginásio.
 
+## Para ires mais longe: o decorador que se esqueceu de uma linha (5 min)
+
+```python
+def tarefa(funcao):
+    print(f"Guardei {funcao.__name__}.")
+
+
+@tarefa
+def acordar():
+    print("Acordar às 7h.")
+
+
+print(acordar)
+acordar()
+```
+
+**a)** Comparado com o `tarefa` do exercício 19, o que falta neste decorador?
+
+**b)** Sem executar, diz o que achas que mostra o `print(acordar)`. Executa e explica a última linha da mensagem de erro.
+
 ## Critérios de conclusão
 
 Concluíste a ficha quando:
 
-- os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 16 e 18 mostram exatamente as linhas indicadas no enunciado;
-- as tuas previsões dos exercícios 1, 4, 8, 11, 13, 15 e 17 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
+- os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 16, 21 e 23 mostram exatamente as linhas indicadas no enunciado;
+- as tuas previsões dos exercícios 1, 4, 8, 11, 13, 15, 17, 18, 19, 20 e 22 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
 - as tuas justificações dos exercícios 3, 7, 8 e 16 usam as perguntas do guia, e não só a resposta final;
 - consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio, e a diferença entre um método estático e um método de classe com o exemplo do líder.
 
