@@ -6,7 +6,7 @@
 
 Esta ficha serve para praticares sem ajuda o que o [guia](03-objetos-e-composicao.md) explica. Está dividida em oito grupos, um por cada parte do guia, e cada grupo só precisa da parte do guia que lhe corresponde, indicada na tabela. Podes fazer os grupos em alturas diferentes.
 
-Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti. O desafio e as duas secções "Para ires mais longe", no fim, são opcionais, e é lá que estão os casos que enganam.
+Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti. O desafio e as três secções "Para ires mais longe", no fim, são opcionais. É lá que estão os casos que enganam e também três exercícios de decoradores, o 18, o 19 e o 22, para quem quiser praticar mais.
 
 | Grupo | Parte do guia | Exercícios | Tempo |
 | --- | --- | --- | ---: |
@@ -17,12 +17,13 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 | Métodos de classe | Parte 5 | 11 e 12 | 25 min |
 | Duck typing | Parte 6 | 13 e 14 | 30 min |
 | Dataclasses | Parte 7 | 15 e 16 | 25 min |
-| Decoradores | Parte 8 | 17 a 23 | 75 min |
+| Decoradores | Parte 8 | 17, 20, 21 e 23 | 45 min |
 | Desafio opcional | Partes 1 a 4 | | 30 min |
 | Para ires mais longe, opcional | Parte 4 | | 15 min |
+| Para ires mais longe, opcional | Parte 8 | 18, 19 e 22 | 30 min |
 | Para ires mais longe, opcional | Parte 8 | | 5 min |
 
-Os tempos são para quem leu a parte do guia antes de começar o grupo.
+Os oito grupos são a parte obrigatória da ficha e somam 270 minutos. O desafio e as três secções "Para ires mais longe", incluindo os exercícios 18, 19 e 22, são opcionais e ficam fora dessa conta. Os tempos são para quem leu a parte do guia antes de começar o grupo.
 
 ## Antes de começar
 
@@ -608,7 +609,9 @@ False
 
 ## Decoradores
 
-Os exercícios 17 a 21 são uma introdução aos decoradores só com funções, sem classes e sem o `pokemon.py`: faz cada um num ficheiro novo. Os exercícios 22 e 23 voltam às mesmas ideias, com funções entregues a outras funções e com uma classe.
+Os exercícios 17, 20 e 21 são uma introdução aos decoradores só com funções, sem classes e sem o `pokemon.py`: faz cada um num ficheiro novo. O exercício 23 volta às mesmas ideias com uma classe, a `Baga`, que reescreves sem arrobas.
+
+Dos decoradores, o que precisas de saber fazer nesta ficha é ler o que faz a arroba nos decoradores que já usas e usar uma função como valor, sem a chamar. Estes quatro exercícios chegam para isso. Na numeração faltam o 18, o 19 e o 22: são três exercícios de decoradores para quem quiser praticar mais, e estão no fim da ficha, na secção [Para ires mais longe: mais três exercícios de decoradores](#para-ires-mais-longe-mais-três-exercícios-de-decoradores-30-min). São opcionais e não contam nos minutos deste grupo. Se no exercício 21 não souberes por onde começar, lê primeiro o exercício 19, que tem um decorador parecido, já escrito.
 
 ### Exercício 17: Função ou chamada? (5 min)
 
@@ -630,65 +633,6 @@ print(funcao)
 **a)** Sem executar, escreve o que achas que mostra cada `print`.
 
 **b)** Qual das duas variáveis, `mensagem` ou `funcao`, guarda um texto? E qual guarda a própria função? Executa e confirma.
-
-### Exercício 18: Uma tabela de conversões (10 min)
-
-Treina: guardar funções num dicionário e chamá-las a partir dele (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor)).
-
-```python
-def km_para_metros(valor):
-    return valor * 1000
-
-
-def horas_para_minutos(valor):
-    return valor * 60
-
-
-conversoes = {"km": km_para_metros, "horas": horas_para_minutos}
-
-print(conversoes["km"](3))
-print(conversoes["horas"](2))
-```
-
-**a)** Sem executar, escreve as duas linhas que o programa mostra.
-
-**b)** Escreve uma função `euros_para_centimos` e acrescenta-a ao dicionário, com a chave `"euros"`. Junta uma linha que mostre quantos cêntimos são 2,5 euros (em Python, escreve-se `2.5`).
-
-### Exercício 19: Pôr as arrobas (10 min)
-
-Treina: passar de `f = d(f)` para `@d` (guia, [O que faz a arroba](03-objetos-e-composicao.md#o-que-faz-a-arroba)).
-
-```python
-tarefas = []
-
-
-def tarefa(funcao):
-    tarefas.append(funcao)
-    return funcao
-
-
-def acordar():
-    print("Acordar às 7h.")
-
-
-acordar = tarefa(acordar)
-
-
-def tomar_pequeno_almoco():
-    print("Tomar o pequeno-almoço.")
-
-
-tomar_pequeno_almoco = tarefa(tomar_pequeno_almoco)
-
-for passo in tarefas:
-    passo()
-```
-
-**a)** Sem executar, escreve o que o programa mostra.
-
-**b)** Reescreve o programa com `@tarefa` por cima de cada `def`, sem as linhas de atribuição. A saída tem de ficar igual.
-
-**c)** Acrescenta uma terceira tarefa, `apanhar_autocarro`, que escreve "Apanhar o autocarro.". Usa só a arroba e não mexas no ciclo.
 
 ### Exercício 20: Quando corre o decorador? (10 min)
 
@@ -755,39 +699,6 @@ def ligar_aquecimento():
 ```
 
 **c)** Pede ao utilizador o número de um comando e executa esse comando. Atenção: o utilizador escreve 1, 2 ou 3, mas as posições da lista começam em 0.
-
-### Exercício 22: Funções que se entregam (10 min)
-
-Treina: distinguir uma função de uma chamada à função (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor) e [Entregar uma função a outra função](03-objetos-e-composicao.md#entregar-uma-função-a-outra-função)).
-
-```python
-def dobro(numero):
-    return numero * 2
-
-
-def triplo(numero):
-    return numero * 3
-
-
-def aplicar(funcao, valores):
-    resultado = []
-    for valor in valores:
-        resultado.append(funcao(valor))
-    return resultado
-
-
-print(aplicar(dobro, [1, 2, 3]))
-operacao = triplo
-print(aplicar(operacao, [10]))
-print(operacao is triplo, operacao is dobro)
-print(dobro(triplo(2)))
-```
-
-**a)** Sem executar, escreve as quatro linhas que o programa mostra.
-
-**b)** Na linha `operacao = triplo`, a função `triplo` foi chamada? O que ficou guardado na variável `operacao`?
-
-**c)** Executa e compara. Depois acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Antes de executar, prevê o que acontece. Executa, explica a mensagem e apaga a linha.
 
 ### Exercício 23: Uma classe sem arrobas (15 min)
 
@@ -930,6 +841,102 @@ Histórico do ginásio de Cerulean:
 
 **c)** Muda o método `ultimo_combate` de forma que quem o chama fique a saber o resultado do último combate, mas não consiga estragar o histórico do ginásio.
 
+## Para ires mais longe: mais três exercícios de decoradores (30 min)
+
+Estes três exercícios são opcionais e ficam fora dos minutos dos grupos. Pertencem ao grupo dos decoradores, e por isso guardam o número que têm nessa sequência: o 18 e o 19 vêm a seguir ao exercício 17, e o 22 a seguir ao 21. Para ler o que faz a arroba, os exercícios 17, 20, 21 e 23 chegam. Estes dão mais prática a quem a quiser: o 18 guarda funções num dicionário, o 19 faz o caminho de `f = d(f)` para `@d` com um decorador parecido com o do exercício 21, e o 22 entrega funções a outras funções. Faz cada um num ficheiro novo, como os outros exercícios de decoradores.
+
+### Exercício 18: Uma tabela de conversões (10 min)
+
+Treina: guardar funções num dicionário e chamá-las a partir dele (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor)).
+
+```python
+def km_para_metros(valor):
+    return valor * 1000
+
+
+def horas_para_minutos(valor):
+    return valor * 60
+
+
+conversoes = {"km": km_para_metros, "horas": horas_para_minutos}
+
+print(conversoes["km"](3))
+print(conversoes["horas"](2))
+```
+
+**a)** Sem executar, escreve as duas linhas que o programa mostra.
+
+**b)** Escreve uma função `euros_para_centimos` e acrescenta-a ao dicionário, com a chave `"euros"`. Junta uma linha que mostre quantos cêntimos são 2,5 euros (em Python, escreve-se `2.5`).
+
+### Exercício 19: Pôr as arrobas (10 min)
+
+Treina: passar de `f = d(f)` para `@d` (guia, [O que faz a arroba](03-objetos-e-composicao.md#o-que-faz-a-arroba)).
+
+```python
+tarefas = []
+
+
+def tarefa(funcao):
+    tarefas.append(funcao)
+    return funcao
+
+
+def acordar():
+    print("Acordar às 7h.")
+
+
+acordar = tarefa(acordar)
+
+
+def tomar_pequeno_almoco():
+    print("Tomar o pequeno-almoço.")
+
+
+tomar_pequeno_almoco = tarefa(tomar_pequeno_almoco)
+
+for passo in tarefas:
+    passo()
+```
+
+**a)** Sem executar, escreve o que o programa mostra.
+
+**b)** Reescreve o programa com `@tarefa` por cima de cada `def`, sem as linhas de atribuição. A saída tem de ficar igual.
+
+**c)** Acrescenta uma terceira tarefa, `apanhar_autocarro`, que escreve "Apanhar o autocarro.". Usa só a arroba e não mexas no ciclo.
+
+### Exercício 22: Funções que se entregam (10 min)
+
+Treina: distinguir uma função de uma chamada à função (guia, [Uma função é um valor](03-objetos-e-composicao.md#uma-função-é-um-valor) e [Entregar uma função a outra função](03-objetos-e-composicao.md#entregar-uma-função-a-outra-função)).
+
+```python
+def dobro(numero):
+    return numero * 2
+
+
+def triplo(numero):
+    return numero * 3
+
+
+def aplicar(funcao, valores):
+    resultado = []
+    for valor in valores:
+        resultado.append(funcao(valor))
+    return resultado
+
+
+print(aplicar(dobro, [1, 2, 3]))
+operacao = triplo
+print(aplicar(operacao, [10]))
+print(operacao is triplo, operacao is dobro)
+print(dobro(triplo(2)))
+```
+
+**a)** Sem executar, escreve as quatro linhas que o programa mostra.
+
+**b)** Na linha `operacao = triplo`, a função `triplo` foi chamada? O que ficou guardado na variável `operacao`?
+
+**c)** Executa e compara. Depois acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Antes de executar, prevê o que acontece. Executa, explica a mensagem e apaga a linha.
+
 ## Para ires mais longe: o decorador que se esqueceu de uma linha (5 min)
 
 ```python
@@ -946,7 +953,7 @@ print(acordar)
 acordar()
 ```
 
-**a)** Comparado com o `tarefa` do exercício 19, o que falta neste decorador?
+**a)** Comparado com o `tarefa` do exercício 19, na secção anterior, o que falta neste decorador?
 
 **b)** Sem executar, diz o que achas que mostra o `print(acordar)`. Executa e explica a última linha da mensagem de erro.
 
@@ -955,8 +962,10 @@ acordar()
 Concluíste a ficha quando:
 
 - os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 16, 21 e 23 mostram exatamente as linhas indicadas no enunciado;
-- as tuas previsões dos exercícios 1, 4, 8, 11, 13, 15, 17, 18, 19, 20 e 22 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
+- as tuas previsões dos exercícios 1, 4, 8, 11, 13, 15, 17 e 20 foram escritas antes de executares, e, onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
 - as tuas justificações dos exercícios 3, 7, 8 e 16 usam as perguntas do guia, e não só a resposta final;
 - consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio, e a diferença entre um método estático e um método de classe com o exemplo do líder.
+
+O desafio e as três secções "Para ires mais longe", incluindo os exercícios 18, 19 e 22, são opcionais e não entram nestes critérios. Se os fizeres, a regra das previsões vale também para eles.
 
 ![Rodapé](../imagens/rodape.png)
