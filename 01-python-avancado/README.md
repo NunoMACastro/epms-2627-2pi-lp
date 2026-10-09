@@ -15,7 +15,7 @@ Cada tema tem até três documentos com o mesmo número. O guia é para ler e es
 
 Os guias são preparados com antecedência, e podes lê-los antes de a matéria ser dada nas aulas.
 
-O código completo dos exemplos dos guias está na pasta `exemplos/python-avancado`, na raiz deste repositório. O exemplo das aulas é o dos Pokémon, que cresce de tema para tema, com cada versão numa pasta própria em [exemplos/python-avancado/pokemon](../exemplos/python-avancado/pokemon/). A do tema 03 é a pasta `03-objetos-e-composicao`, e a do tema 04 é a pasta `04-excecoes-depuracao-e-logging`, que acrescenta as exceções do ginásio e o registo dos combates. Os programas curtos mostrados na aula das dataclasses, que correm sozinhos, estão em [exemplos/python-avancado/aula-dataclasses](../exemplos/python-avancado/aula-dataclasses/README.md).
+O código completo dos exemplos dos guias está na pasta `exemplos/python-avancado`, na raiz deste repositório. O exemplo das aulas é o dos Pokémon, que cresce de tema para tema, com cada versão numa pasta própria em [exemplos/python-avancado/pokemon](../exemplos/python-avancado/pokemon/). A do tema 03 é a pasta `03-objetos-e-composicao`, e a do tema 04 é a pasta `04-excecoes-depuracao-e-logging`, que acrescenta as exceções do ginásio e o registo dos combates. Os programas curtos preparados para a aula das dataclasses, que correm sozinhos, estão em [exemplos/python-avancado/aula-dataclasses](../exemplos/python-avancado/aula-dataclasses/README.md).
 
 [Voltar ao índice](../README.md)
 

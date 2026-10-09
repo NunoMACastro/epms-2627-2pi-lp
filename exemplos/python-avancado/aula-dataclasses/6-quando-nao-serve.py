@@ -1,3 +1,11 @@
+"""Programa 6 das dataclasses: o que uma dataclass não faz.
+
+O mesmo Pokémon escrito de duas maneiras: como dataclass, só com os dados, e
+como classe normal, com a vida protegida por uma propriedade com o get e o
+set. Os dois são criados com 500 de vida. Antes de executares, prevê com
+quanta vida fica cada um.
+"""
+
 from dataclasses import dataclass
 
 
@@ -13,6 +21,7 @@ class Pokemon:
     """Um Pokémon com a vida protegida por uma propriedade."""
 
     def __init__(self, nome, vida):
+        """Cria um Pokémon com nome e vida, passando pelo set."""
         self.nome = nome
         self.vida = vida
 

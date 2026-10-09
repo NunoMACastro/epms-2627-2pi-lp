@@ -35,7 +35,7 @@ Ao longo do laboratório, vais mudar o `ginasio.py` e criar ficheiros novos nest
 Precisas da secção [As exceções do ginásio](04-excecoes-depuracao-e-logging.md#as-exceções-do-ginásio) do guia.
 
 1. Cria o ficheiro `erros.py`, com as três classes do guia: `ErroDoGinasio`, filha de `Exception`, e `EquipaCheia` e `SemPokemonComVida`, filhas de `ErroDoGinasio`. Escreve-as tu, com as docstrings.
-2. Cria o ficheiro `teste_erros.py`, com estas linhas:
+2. Cria o ficheiro `teste_erros.py`, com as linhas abaixo. O `isinstance` está explicado no guia, no início da secção [Uma exceção própria](04-excecoes-depuracao-e-logging.md#uma-exceção-própria): pergunta se um objeto é de uma classe, ou de uma classe-filha dela, e devolve `True` ou `False`.
 
 ```python
 from erros import EquipaCheia, ErroDoGinasio, SemPokemonComVida

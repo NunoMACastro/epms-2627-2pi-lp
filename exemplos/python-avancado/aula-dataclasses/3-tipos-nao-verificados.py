@@ -1,3 +1,11 @@
+"""Programa 3 das dataclasses: o tipo de um campo e a forma de dar os valores.
+
+A classe Combate é a do programa 2. O primeiro combate dá ao vencedor um
+número, em vez de um texto, e o segundo dá os três valores pelo nome dos
+campos, por outra ordem. Antes de executares, prevê se o Python aceita o
+primeiro combate, e por que ordem aparecem os campos do segundo.
+"""
+
 from dataclasses import dataclass
 
 

@@ -25,7 +25,7 @@ O código completo do exemplo está na pasta [04-excecoes-depuracao-e-logging](.
 
 ## O que precisas de saber antes
 
-Do guia [Objetos, composição e comportamento](03-objetos-e-composicao.md), precisas das classes, da herança (parte 3), do ginásio Pokémon (parte 4) e do método de classe `com_equipa` (parte 5). Uma exceção própria é uma classe-filha, e a parte 3 é a base dela.
+Do guia [Objetos, composição e comportamento](03-objetos-e-composicao.md), precisas das classes, da herança (parte 3), do ginásio Pokémon (parte 4), do método de classe `com_equipa` (parte 5), dos anunciadores do ginásio (parte 6) e da dataclass (parte 7). Uma exceção própria é uma classe-filha, e a parte 3 é a base dela. As partes 6 e 7 entram porque os ficheiros da pasta 04 dos exemplos, que vais copiar e usar, já têm o que elas ensinam: o ginásio entrega os combates a um anunciador, e cada combate fica guardado num `Combate`, que é uma dataclass.
 
 Do 10.º ano, precisas do que o guia de exceções tinha como essencial: o que é uma exceção, como se lê a última linha de uma mensagem de erro, e o `try` com `except` para apanhar um erro conhecido, como o `ValueError` de um `int("abc")`. Precisas também da ideia de que uma função chama outra, e que a que foi chamada tem de acabar para a outra continuar.
 
@@ -190,7 +190,23 @@ O `else` de um `try` corre quando o bloco do `try` acaba sem exceção nenhuma. 
 
 ### Quando o except apanha de mais
 
-O `ValueError` não é só do `capturar`. O `int` também o lança, quando o texto não é um número. Neste programa, cada pedido de captura traz o nível do Pokémon escrito em texto, e o `try` tem as duas linhas:
+O `ValueError` não é só do `capturar`. O `int` também o lança, quando o texto não é um número. No programa desta secção, cada pedido de captura traz dois dados, o nome do Pokémon e o nível escrito em texto, e o `try` tem as duas linhas.
+
+Antes do programa, repara na forma como os pedidos estão escritos: `pedidos = [("Pikachu", "5"), ("Charmander", "cinco")]`. A lista tem dois elementos, e cada um deles é um conjunto de valores entre parênteses, separados por vírgulas, como `("Pikachu", "5")`. Um conjunto de valores escrito assim chama-se **tuplo**. Um tuplo é parecido com uma lista: guarda vários valores por ordem, e lê-se cada um pela posição, com `[0]` para o primeiro e `[1]` para o segundo. A diferença é que um tuplo não se muda depois de criado, não tem `append` nem `remove`, e por isso serve para juntar valores que andam sempre juntos, como o nome e o nível do mesmo pedido. Um tuplo com dois valores também se chama um **par**.
+
+O `for` do programa escreve-se com dois nomes: `for nome, texto_do_nivel in pedidos:`. Em cada volta, o `for` tira da lista o pedido seguinte, que é um par, e reparte os dois valores pelos dois nomes, pela ordem em que estão: o primeiro valor do par fica em `nome` e o segundo em `texto_do_nivel`. Na primeira volta, `nome` é `"Pikachu"` e `texto_do_nivel` é `"5"`; na segunda, `nome` é `"Charmander"` e `texto_do_nivel` é `"cinco"`. Repartir os valores de um tuplo por vários nomes chama-se **desempacotar** o tuplo.
+
+O `for` com dois nomes faz o mesmo que um `for` com um nome só, seguido de duas linhas que tiram cada valor pela posição. Este excerto mostra essa forma mais comprida, e não é um programa para executar:
+
+```python
+for pedido in pedidos:
+    nome = pedido[0]
+    texto_do_nivel = pedido[1]
+```
+
+Com os dois nomes no `for`, essas duas linhas deixam de ser precisas, e cada valor ganha logo um nome que diz o que é. A regra é haver tantos nomes como valores em cada tuplo: dois nomes para pares, como aqui, e quatro nomes se cada tuplo tiver quatro valores. Se os números não baterem certo, o Python lança um `ValueError`, com uma mensagem a dizer que há valores a mais ou a menos para desempacotar.
+
+Este é o programa:
 
 ```python
 class Treinador:
@@ -232,6 +248,27 @@ A equipa do Ash tem um só Pokémon, e o programa pergunta se está cheia. O `ex
 ### Uma exceção própria
 
 A solução é dar à recusa da captura um tipo seu. Uma **exceção própria** é uma classe criada por ti, filha de `Exception`, a classe-mãe das exceções do Python. Não precisa de mais nada: a classe-filha herda tudo o que uma exceção precisa, incluindo a forma de guardar e mostrar a mensagem. O corpo da classe pode ser só a docstring, como o primeiro `Lider` do guia anterior.
+
+O programa desta secção acaba com uma linha que usa a função `isinstance`, que vem com o Python. O nome vem do inglês "is instance", que quer dizer "é instância", e instância é outro nome para objeto, como viste na parte 1 do guia anterior. O `isinstance` recebe dois valores, primeiro um objeto e depois uma classe, e pergunta se o objeto é dessa classe ou de uma classe-filha dela. Devolve `True` ou `False`, um `bool`, como uma comparação com `==`. É a relação "é um" da herança, escrita como pergunta: o `isinstance` responde `True` para a classe com que o objeto foi criado e para todas as classes de que essa classe herda, subindo pela família, e responde `False` para qualquer outra.
+
+Com as classes do `pokemon.py`, por exemplo:
+
+```python
+from pokemon import Pokemon, PokemonAgua, PokemonFogo
+
+charmander = PokemonFogo("Charmander", 90, 40)
+print(isinstance(charmander, PokemonFogo))
+print(isinstance(charmander, Pokemon))
+print(isinstance(charmander, PokemonAgua))
+```
+
+```text
+True
+True
+False
+```
+
+O Charmander foi criado como `PokemonFogo`, e por isso a primeira resposta é `True`. A segunda também é `True`, porque a `PokemonFogo` é filha da `Pokemon`: um Pokémon de fogo é um Pokémon. A terceira é `False`, porque a `PokemonAgua` é outra filha da `Pokemon`, e um Pokémon de fogo não é um Pokémon de água. No programa seguinte, `isinstance(EquipaCheia("teste"), Exception)` cria um objeto `EquipaCheia`, com uma mensagem qualquer, e pergunta se esse objeto é uma exceção.
 
 ```python
 class EquipaCheia(Exception):
@@ -343,14 +380,14 @@ class Ginasio:
         atacante = desafiante.escolher_pokemon()
         defensor = self.lider.escolher_pokemon()
         if atacante is None or defensor is None:
-            logger.warning(f"Combate recusado em {self.cidade}: {desafiante.nome} contra {self.lider.nome}, sem Pokémon com vida.")
+            # No ficheiro, há aqui uma linha do registo, que a parte 3 explica.
             raise SemPokemonComVida(f"Não há combate em {self.cidade}: um dos treinadores não tem Pokémon com vida.")
         if desafiante not in self.desafiantes:
             self.desafiantes.append(desafiante)
         # O resto do método, com o combate e o registo, fica como estava.
 ```
 
-Há duas mudanças em relação ao tema 03. A primeira é o `raise` no lugar do `print` e do `return`. A segunda é a ordem: na versão anterior, o desafiante entrava na lista de desafiantes logo no início, antes de se saber se havia combate. Agora, a verificação vem primeiro, e o desafiante só entra na lista quando o combate vai mesmo acontecer. Se o combate for recusado, o ginásio fica exatamente como estava, como diz a docstring. As linhas com `logger` são o registo do ginásio, que a parte 3 explica; por agora, basta saber que escrevem uma linha de aviso.
+Há duas mudanças em relação ao tema 03. A primeira é o `raise` no lugar do `print` e do `return`. A segunda é a ordem: na versão anterior, o desafiante entrava na lista de desafiantes logo no início, antes de se saber se havia combate. Agora, a verificação vem primeiro, e o desafiante só entra na lista quando o combate vai mesmo acontecer. Se o combate for recusado, o ginásio fica exatamente como estava, como diz a docstring. No ficheiro, o método tem também umas linhas do registo do ginásio, uma delas antes do `raise`, que este excerto deixa de fora; a parte 3 mostra-as e explica-as. Por agora, basta saber que, quando o combate é recusado, essa linha escreve um aviso no ecrã, como vais ver no programa da secção seguinte.
 
 Nenhuma das duas classes escreve no ecrã que houve um problema, nem decide o que fazer a seguir. Lançam a exceção, com uma mensagem que explica o que aconteceu, e quem chamou o método decide: mostrar a mensagem, tentar outro treinador, guardar o erro num registo. A classe não sabe onde vai ser usada. Num programa de consola, a decisão pode ser um `print`; numa janela, uma caixa de mensagem; numa API web, uma resposta de erro. A exceção serve às três.
 

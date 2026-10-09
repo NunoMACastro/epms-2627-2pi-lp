@@ -6,7 +6,7 @@ Materiais da disciplina, publicados aqui à medida que ficam prontos.
 
 ## Disponível agora
 
-- [Python avançado](01-python-avancado/README.md): o tema 03, Objetos, composição e comportamento, com guia, laboratório e ficha de exercícios
+- [Python avançado](01-python-avancado/README.md): o tema 03, Objetos, composição e comportamento, e o tema 04, Exceções, depuração e logging, cada um com guia, laboratório e ficha de exercícios
 - [Diagnóstico inicial: Python em contexto de serviço](avaliacoes/diagnostico-python.md)
 
 ## O ano

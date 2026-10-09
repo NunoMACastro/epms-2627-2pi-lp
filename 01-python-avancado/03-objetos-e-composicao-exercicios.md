@@ -28,7 +28,7 @@ Os tempos são para quem leu a parte do guia antes de começar o grupo.
 
 Material: o computador com o Python 3 e o VS Code, e o guia aberto ao lado.
 
-Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que no início do [laboratório](03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta. Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O exercício 14, o desafio e a primeira secção "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses, copia-o também para a pasta da ficha. Usa o `ginasio.py` dos exemplos, ou o teu do laboratório se já fizeste a parte 8, porque o exercício 14 precisa do `com_equipa`.
+Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que no início do [laboratório](03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta. Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O exercício 14, o desafio e a primeira secção "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses, copia-o também para a pasta da ficha. Usa o `ginasio.py` dos exemplos, ou o teu, se já fizeste a parte 8 do laboratório, porque o exercício 14 precisa do `com_equipa`.
 
 Duas regras para toda a ficha. A primeira: quando um exercício te pedir para prever o que um programa escreve, escreve a previsão antes de executar. Se só a escreveres depois, concorda sempre com o computador e não te ensina nada. A segunda: quando um exercício te pedir para explicar, responde em frases completas, com as tuas palavras, como se estivesses a explicar a um colega que faltou à aula.
 
@@ -421,7 +421,7 @@ print(type(BagaRara.oran()).__name__, type(BagaRara.sitrus()).__name__)
 
 ### Exercício 12: Uma baga feita de duas (15 min)
 
-Treina: escrever um construtor alternativo que cria o objeto a partir de outros objetos (guia, [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Que tipo de método?](03-objetos-e-composicao.md#que-tipo-de-método)).
+Treina: escrever um construtor alternativo que cria o objeto a partir de outros objetos (guia, [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Escolher o tipo de método](03-objetos-e-composicao.md#escolher-o-tipo-de-método)).
 
 Copia as classes `Baga` e `BagaRara` do exercício 11 para um ficheiro novo, e apaga da `Baga` os métodos `oran` e `sitrus`. Acrescenta à `Baga` um método de classe `mistura(primeira, segunda)`, que recebe duas bagas e devolve uma baga nova, da classe por onde foi chamado. O nome da baga nova é "Mistura de", seguido dos nomes das duas, ligados por "e", e a cura é a soma das duas curas. As duas bagas que o método recebe não mudam.
 
@@ -447,7 +447,7 @@ BagaRara
 Baga Oran (cura 10) Baga Sitrus (cura 30)
 ```
 
-Depois de o teste funcionar, responde: o `mistura` não lê nenhum atributo de um objeto que esteja no `self`. Que pergunta do guia, em "Que tipo de método?", te diz que é um método de classe, e não um método estático?
+Depois de o teste funcionar, responde: o `mistura` não lê nenhum atributo de um objeto que esteja no `self`. Que pergunta do guia, em "Escolher o tipo de método", te diz que é um método de classe, e não um método estático?
 
 ## Duck typing
 

@@ -1,3 +1,9 @@
+"""Programa 4 das dataclasses: uma dataclass com um método.
+
+O método resumo escreve-se como em qualquer classe, com o self como primeiro
+parâmetro, e chega aos campos do combate através do self.
+"""
+
 from dataclasses import dataclass
 
 

@@ -1069,7 +1069,7 @@ Até aqui, os atributos dos objetos guardavam números e textos: a vida, o ataqu
 
 Estas relações são do tipo "tem um", ou "tem vários": um treinador tem vários Pokémon, um ginásio tem um líder. São diferentes da herança, que é do tipo "é um". Um treinador não é um Pokémon; tem Pokémon.
 
-Às relações "tem" entre um objeto e os objetos que ele guarda chamamos relações entre um **todo** e as suas **partes**. O treinador é o todo, e os Pokémon da equipa são as partes. Há duas formas de relação entre um todo e as suas partes, a agregação e a composição. No código escrevem-se da mesma maneira, e a diferença entre elas está no que a relação significa: quem cria a parte, se a parte pode ser partilhada, e se a parte sobrevive quando o todo desaparece. Para perceberes essa diferença, precisas primeiro de perceber o que uma variável guarda quando guarda um objeto. Vamos lá chegar com o treinador.
+Às relações "tem" entre um objeto e os objetos que ele guarda chamamos relações entre um **todo** e as suas **partes**. O treinador é o todo, e os Pokémon da equipa são as partes. Há duas formas de relação entre um todo e as suas partes, a agregação e a composição. No código escrevem-se da mesma maneira, e a diferença entre elas está no que a relação significa: quem cria a parte, se a parte pode ser partilhada, e se a parte sobrevive quando o todo desaparece. Para perceberes essa diferença, precisas primeiro de perceber o que uma variável guarda quando guarda um objeto. As duas secções seguintes tratam disso, com o treinador e a sua equipa.
 
 ### O Treinador e a sua equipa
 
@@ -1817,7 +1817,7 @@ As duas últimas linhas mostram porque é que isso importa. A Misty líder escol
 
 Um método de classe chama-se pelo nome da classe, como o estático: `Lider.com_equipa(...)`. O Python também deixa chamá-lo a partir de um objeto, como em `ash.com_equipa(...)`, e nesse caso o `cls` é a classe desse objeto. Funciona, mas quem lê fica a pensar que o método faz alguma coisa ao Ash, e não faz. Chama-o sempre pela classe.
 
-### Que tipo de método?
+### Escolher o tipo de método
 
 Ficas assim com três tipos de método, e cada um recebe uma coisa diferente:
 
@@ -2569,6 +2569,8 @@ TypeError: Combate() takes no arguments
 
 ## Parte 8: Decoradores
 
+Nota de leitura: as passagens desta parte sobre o decorador `@dataclass` usam a parte 7. São três: a lista dos decoradores que já usas, na primeira secção; o fim da secção "O que faz a arroba", com o `@dataclass` escrito sem arroba; e a pergunta 5 de "Verifica se percebeste". Se ainda não leste a parte 7, podes ler o resto desta parte e voltar a essas três passagens depois de a leres.
+
 ### As linhas com arroba que já usas
 
 Ao longo deste guia escreveste várias linhas que começam por uma arroba: `@staticmethod` na parte 1, `@property` e `@vida.setter` na parte 2, `@classmethod` na parte 5 e `@dataclass` na parte 7. A cada uma chamámos decorador, e de cada uma dissemos o efeito: o método deixa de receber o `self`, o get e o set passam a ter cara de atributo, o método passa a receber a classe, a classe ganha um construtor. Nunca dissemos o que a arroba faz, nem porque é que uma linha escrita por cima de um `def` consegue mudar o que está por baixo.
@@ -2738,7 +2740,7 @@ O `limitar` funciona como o da parte 1. O `staticmethod` recebeu a função e de
 
 O construtor alternativo da parte 5 escreve-se da mesma maneira, com `com_equipa = classmethod(com_equipa)` por baixo do `def`, e cria um `Lider` quando é chamado em `Lider`, como antes.
 
-A propriedade da parte 2 é o caso mais interessante, porque junta o get e o set que escreveste como métodos normais. O `property` recebe os dois e devolve a propriedade:
+A propriedade da parte 2 junta o get e o set que escreveste como métodos normais. O `property` recebe os dois e devolve a propriedade:
 
 ```python
 VIDA_MINIMA = 0

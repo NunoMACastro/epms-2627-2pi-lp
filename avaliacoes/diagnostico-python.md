@@ -2,11 +2,11 @@
 
 # Diagnóstico inicial: Python em contexto de serviço
 
-Duração: 60 min, integrada no bloco inicial de 2 h com bridge. Finalidade: perceber como raciocinas, para orientar a revisão.
+Este diagnóstico é uma revisão opcional da matéria de Python do 10.º ano, para fazeres por tua conta, quando quiseres. Não é recolhido nem corrigido em aula. Serve para perceberes como raciocinas e o que ainda dominas, e para escolheres o que te convém rever. Feito de seguida, demora cerca de 60 min.
 
-Podes consultar os guias do 10.º e executar código localmente. Antes de executar, escreve a tua previsão; depois compara-a com o resultado. Não uses um gerador de soluções durante o diagnóstico: precisamos de observar o teu raciocínio. Uma sintaxe esquecida não impede uma explicação em português. Usa apenas os dados fictícios apresentados; não são pedidos dados reais. Não são atribuídas percentagens institucionais.
+Podes consultar os guias do 10.º e executar código localmente. Antes de executar, escreve a tua previsão; depois compara-a com o resultado. Não uses um gerador de soluções durante o diagnóstico: o objetivo é veres o teu próprio raciocínio, e um gerador mostrava-te o dele. Uma sintaxe esquecida não impede uma explicação em português. Usa apenas os dados fictícios apresentados; não são pedidos dados reais. Não são atribuídas percentagens institucionais.
 
-Reserva A: 12 min; B: 10 min; C: 13 min; D: 15 min; E: 5 min; revisão/entrega: 5 min. Se não conseguires terminar uma parte, explica o passo em que paraste.
+Reserva A: 12 min; B: 10 min; C: 13 min; D: 15 min; E: 5 min; revisão final: 5 min. Se não conseguires terminar uma parte, explica o passo em que paraste.
 
 ## A: ler e explicar
 
@@ -96,8 +96,8 @@ Dados para testar manualmente: ficheiro válido com `[{"id": 1, "estado": "abert
 
 Sem escrever uma API nem instalar bibliotecas, propõe módulos/funções para **carregar pedidos, selecionar por estado e apresentar identificadores**. Para cada função, indica entrada, saída e responsabilidade. Explica onde colocarias o arranque e para que serve `if __name__ == "__main__":`. Qual das funções testarias sem abrir ficheiros?
 
-## Entrega e checkpoint
+## Checkpoint final
 
-Entrega código e explicações no canal indicado pelo professor, sem credenciais nem dados pessoais de terceiros. Marca quais os resultados que previste e quais os que efetivamente executaste. O professor usa esta evidência para a revisão dirigida; não confundir terminar rapidamente com compreender.
+Não há entrega: o código e as explicações ficam contigo. Marca quais os resultados que previste e quais os que efetivamente executaste, e compara cada previsão com o que aconteceu. As partes em que a previsão falhou, ou em que paraste, mostram-te a matéria do 10.º que vale a pena rever nos guias desse ano. Não confundas terminar rapidamente com compreender.
 
 ![Rodapé](../imagens/rodape.png)

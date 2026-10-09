@@ -2,7 +2,7 @@
 
 # Programas da aula das dataclasses
 
-Estes são os programas mostrados na aula das dataclasses, que o guia [Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) explica na parte 7. São mais curtos do que os do guia: correm sozinhos, sem precisar do `pokemon.py`, e cada um mostra uma ideia só.
+Estes são os programas preparados para a aula das dataclasses, que o guia [Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) explica na parte 7. São mais curtos do que os do guia: correm sozinhos, sem precisar do `pokemon.py`, e cada um mostra uma ideia só.
 
 Para executar um programa, abre o terminal nesta pasta e escreve, por exemplo, `python3 1-classe-normal.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`. Antes de executares, escreve o que achas que vai acontecer, e só depois compara.
 
