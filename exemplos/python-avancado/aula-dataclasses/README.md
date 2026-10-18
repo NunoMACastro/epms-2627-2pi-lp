@@ -2,9 +2,9 @@
 
 # Programas da aula das dataclasses
 
-Estes são os programas preparados para a aula das dataclasses, que o guia [Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) explica na parte 7. São mais curtos do que os do guia: correm sozinhos, sem precisar do `pokemon.py`, e cada um mostra uma ideia só.
+Estes são os programas preparados para a aula das dataclasses. São mais curtos do que os do guia: correm sozinhos, sem precisar do `pokemon.py`, e cada um mostra uma ideia só. É usado no tema [03 Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md), na parte das dataclasses.
 
-Para executar um programa, abre o terminal nesta pasta e escreve, por exemplo, `python3 1-classe-normal.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`. Antes de executares, escreve o que achas que vai acontecer, e só depois compara.
+## O que está nesta pasta
 
 | Programa | O que mostra |
 | --- | --- |
@@ -17,6 +17,22 @@ Para executar um programa, abre o terminal nesta pasta e escreve, por exemplo, `
 | [`7-campo-sem-tipo.py`](7-campo-sem-tipo.py) | Um engano de propósito: um campo escrito sem o tipo |
 | [`8-sem-dataclass.py`](8-sem-dataclass.py) | Outro engano de propósito: falta o `@dataclass` |
 
-Os programas 7 e 8 acabam com uma mensagem de erro, e é isso que devem fazer. Lê a última linha da mensagem e procura, na parte 7 do guia, a secção dos erros frequentes.
+Os programas 7 e 8 acabam com uma mensagem de erro, e é isso que devem fazer. Lê a última linha da mensagem e procura, na parte das dataclasses do guia, a secção dos erros frequentes.
+
+## Como correr
+
+Abre o terminal nesta pasta e escreve, por exemplo:
+
+```bash
+python3 1-classe-normal.py
+```
+
+No Windows, se `python3` não funcionar, experimenta `python` ou `py`. Antes de executares, escreve o que achas que vai acontecer, e só depois compara.
+
+O que deves ver: cada programa escreve poucas linhas. O 1 mostra um endereço de memória, que muda de computador para computador. O 7 e o 8 acabam num `TypeError`.
+
+## Versões com que foi testado
+
+Python 3.9 e Python 3.14, a 18 de outubro de 2026. No Python 3.9, a mensagem de erro do programa 7 diz só `__init__()`; nas versões mais recentes, diz `Combate.__init__()`.
 
 ![Rodapé](../../../imagens/rodape.png)

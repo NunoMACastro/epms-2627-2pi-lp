@@ -1,35 +1,32 @@
 ![Cabeçalho](imagens/cabecalho.png)
 
-# Linguagens de Programação, 11.º PI
+# Linguagens de Programação · 11.º PI
 
-Materiais da disciplina, publicados aqui à medida que ficam prontos.
+Materiais de Linguagens de Programação do 11.º ano do curso de Programador/a de Informática. Cada material é publicado quando fica pronto, e podes lê-lo antes de ser dado na aula.
 
-## Disponível agora
+## Por onde começar
 
-- [Python avançado](01-python-avancado/README.md): o tema 03, Objetos, composição e comportamento, e o tema 04, Exceções, depuração e logging, cada um com guia, laboratório e ficha de exercícios
-- [Diagnóstico inicial: Python em contexto de serviço](avaliacoes/diagnostico-python.md)
+Começa pelo índice da área de [Python avançado](01-python-avancado/README.md), que diz por que ordem se leem os temas. Cada tema tem três tipos de documento:
 
-## O ano
+- o guia, para ler e estudar;
+- o laboratório, para seguir passo a passo no computador, sem precisares de abrir o guia;
+- a ficha de exercícios, para praticares sozinho.
 
-O ano divide-se em quatro áreas, pela ordem em que são lecionadas. Cada área corresponde a um módulo com código oficial, que é o código que vês nas pautas e nos sumários.
+## As áreas
 
-| Ordem | Área | Código | Designação oficial | Horas |
-|---|---|---|---|---:|
-| 1 | Python avançado | 10794 | Programação avançada com Python | 50 |
-| 2 | SQL, fundamentos | 10788 | Fundamentos da linguagem SQL | 25 |
-| 3 | SQL avançado | 0814 | Programação em linguagem SQL avançada | 50 |
-| 4 | Cloud | 10873 | Arquitetura de sistemas em cloud | 50 |
+| Área | Módulo |
+| --- | --- |
+| [Python avançado](01-python-avancado/README.md) | 10794, Programação avançada com Python |
 
-Começamos por organizar melhor o Python que já conheces, passamos a guardar dados numa base de dados e terminamos em arquitetura de sistemas na cloud.
+As outras três áreas do ano, com o SQL e a cloud, aparecem aqui quando tiverem o primeiro material.
 
-## Como usar este repositório
+## Como estudar
 
-Cada área tem a sua pasta, com o número da ordem à frente: `01-python-avancado`, `02-sql-fundamentos`, `03-sql-avancado` e `04-cloud`. Dentro de cada pasta há um guia por tema, numerado, com o nome da matéria. Ao lado do guia, com o mesmo número, podem estar mais dois documentos: o laboratório, com `-laboratorio` no fim do nome, que tem os passos para seguires no computador, e a ficha de exercícios, com `-exercicios` no fim do nome, para fazeres sem ajuda.
+Lê o guia antes de escrever código: primeiro a explicação, depois o exemplo guiado. Antes de correres um exemplo, tenta prever o resultado. É aí que percebes se a ideia ficou entendida. As resoluções dos exercícios não estão aqui, porque se trabalham na aula.
 
-Há ainda três pastas transversais. Em `exemplos/` fica o código que já está completo e serve para leres e perceberes. Em `laboratorios/` fica o código de partida que vais completar tu, quando um laboratório precisa dele; os passos de cada laboratório estão no documento com `-laboratorio` no nome, ao lado do guia. Em `avaliacoes/` ficam os enunciados de avaliação de todas as áreas.
+## Outras pastas
 
-As pastas aparecem à medida que a matéria é dada. Se uma pasta ainda não existe, é porque essa parte do ano ainda não começou.
-
-Todos os exemplos usam dados inventados e correm no teu computador. Nenhum exercício precisa de conta em serviços externos nem de cartão.
+- [Exemplos](exemplos/): código para ler e correr, com o exemplo dos Pokémon, que cresce de tema para tema.
+- [Avaliações](avaliacoes/): o diagnóstico, uma revisão do Python do 10.º ano que podes fazer ao teu ritmo.
 
 ![Rodapé](imagens/rodape.png)

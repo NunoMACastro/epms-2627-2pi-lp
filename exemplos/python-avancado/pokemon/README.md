@@ -2,7 +2,9 @@
 
 # Exemplo dos Pokémon
 
-Este é o exemplo que usamos nas aulas. Começou com uma classe `Pokemon` e vai crescendo à medida que a matéria avança, até ser uma aplicação completa.
+Este é o exemplo que usamos nas aulas. Começou com uma classe `Pokemon` e vai crescendo à medida que a matéria avança, até ser uma aplicação completa. É usado nos temas [03 Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md) e [04 Exceções, depuração e logging](../../../01-python-avancado/04-excecoes-depuracao-e-logging.md).
+
+## O que está nesta pasta
 
 Cada pasta é uma versão completa, que funciona sozinha. O nome da pasta é o do guia onde essa versão é explicada. Uma versão nova parte da anterior e acrescenta-lhe o que o guia novo ensina, por isso podes abrir duas pastas seguidas e comparar o que mudou.
 
@@ -13,6 +15,20 @@ Cada pasta é uma versão completa, que funciona sozinha. O nome da pasta é o d
 
 As versões seguintes aparecem aqui quando a matéria lá chegar.
 
-Para executar uma versão, abre o terminal na pasta dela e escreve `python3 ginasio.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
+## Como correr
+
+Abre o terminal na pasta de uma versão e escreve:
+
+```bash
+python3 ginasio.py
+```
+
+No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
+
+O que deves ver: a demonstração do ginásio, com os treinadores, os combates anunciados e o resultado de cada um. Na versão 04, aparecem também as recusas do ginásio e as linhas do registo dos combates.
+
+## Versões com que foi testado
+
+Python 3.9 e Python 3.14, a 18 de outubro de 2026, com a mesma saída nas duas.
 
 ![Rodapé](../../../imagens/rodape.png)

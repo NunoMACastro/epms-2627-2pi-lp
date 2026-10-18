@@ -6,7 +6,7 @@ Este diagnóstico é uma revisão opcional da matéria de Python do 10.º ano, p
 
 Podes consultar os guias do 10.º e executar código localmente. Antes de executar, escreve a tua previsão; depois compara-a com o resultado. Não uses um gerador de soluções durante o diagnóstico: o objetivo é veres o teu próprio raciocínio, e um gerador mostrava-te o dele. Uma sintaxe esquecida não impede uma explicação em português. Usa apenas os dados fictícios apresentados; não são pedidos dados reais. Não tem nota.
 
-Se o fizeres de seguida, conta com cerca de 12 minutos para a parte A, 10 para a B, 13 para a C, 15 para a D, 5 para a E e 5 para a revisão final. Se não conseguires terminar uma parte, escreve o passo em que paraste.
+Se o fizeres de seguida, conta com cerca de 10 minutos para a parte A, 10 para a B, 15 para a C, 15 para a D, 5 para a E e 5 para a revisão final. Se não conseguires terminar uma parte, escreve o passo em que paraste.
 
 ## A: ler e explicar
 
