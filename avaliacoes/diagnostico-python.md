@@ -6,7 +6,7 @@ Este diagnóstico é uma revisão opcional da matéria de Python do 10.º ano, p
 
 Podes consultar os guias do 10.º e executar código localmente. Antes de executar, escreve a tua previsão; depois compara-a com o resultado. Não uses um gerador de soluções durante o diagnóstico: o objetivo é veres o teu próprio raciocínio, e um gerador mostrava-te o dele. Uma sintaxe esquecida não impede uma explicação em português. Usa apenas os dados fictícios apresentados; não são pedidos dados reais. Não tem nota.
 
-Se o fizeres de seguida, conta com cerca de 10 minutos para a parte A, 10 para a B, 15 para a C, 15 para a D, 5 para a E e 5 para a revisão final. Se não conseguires terminar uma parte, escreve o passo em que paraste.
+Se o fizeres de seguida, conta com cerca de 10 minutos para a parte A, 10 para a B e 15 para a C. Depois, 15 para a D, 5 para a E e 5 para a revisão final. Se não conseguires terminar uma parte, escreve o passo em que paraste.
 
 ## A: ler e explicar
 
@@ -61,7 +61,7 @@ print(resultado, total)
 
 ## C: alterar e escrever uma função
 
-A função recebe dados que cumprem este contrato: `registos` é uma lista de dicionários, e cada dicionário tem uma chave `"id"`, com um número inteiro, e uma chave `"estado"`, com um texto. Não precisas de verificar dados que não cumpram o contrato.
+A função recebe dados que cumprem este contrato: `registos` é uma lista de dicionários. Cada dicionário tem uma chave `"id"`, com um número inteiro, e uma chave `"estado"`, com um texto. Não precisas de verificar dados que não cumpram o contrato.
 
 Escreve a função `selecionar_por_estado(registos, estado)`, que devolve uma lista nova com os identificadores dos pedidos cujo estado é igual ao parâmetro `estado`. A função não deve alterar `registos`. Acrescenta uma docstring curta a dizer para que serve a função.
 
@@ -87,10 +87,10 @@ def carregar(caminho):
 
 1. Explica porque é que `json.loads(ficheiro)` não é a chamada certa e indica que função do módulo `json` lê diretamente um ficheiro aberto.
 2. Corrige a função `carregar`. Deve devolver a lista lida do ficheiro e, se o valor guardado no JSON não for uma lista, deve lançar `ValueError`. Não precisas de verificar os campos de cada pedido.
-3. Escreve o código que chama `carregar` e trata, cada um à sua maneira, três erros: `OSError`, quando o ficheiro não se consegue ler; `json.JSONDecodeError`, quando o texto não é JSON válido; e `ValueError`, quando o JSON é válido mas não é uma lista. Indica por que ordem escreves os `except`, sabendo que `JSONDecodeError` é uma subclasse de `ValueError`. Não apanhes todos os erros com `except Exception`.
+3. Escreve o código que chama `carregar` e trata três erros, cada um à sua maneira. São estes: `OSError`, quando o ficheiro não se consegue ler; `json.JSONDecodeError`, quando o texto não é JSON válido; e `ValueError`, quando o JSON é válido mas não é uma lista. Indica por que ordem escreves os `except`, sabendo que `JSONDecodeError` é uma subclasse de `ValueError`. Não apanhes todos os erros com `except Exception`.
 4. Explica porque é que devolver `[]` em qualquer falha esconde informação a quem chama a função. Explica também para que serve o `with`.
 
-Para testares à mão, prepara quatro casos: um ficheiro válido com `[{"id": 1, "estado": "aberto"}]`; um ficheiro com JSON válido que não é uma lista, `{}`; um ficheiro com JSON mal formado, só com `[`; e um caminho para um ficheiro que não existe. Antes de correres cada caso, escreve a resposta que esperas.
+Para testares à mão, prepara quatro casos. O primeiro é um ficheiro válido com `[{"id": 1, "estado": "aberto"}]`, e o segundo um ficheiro com JSON válido que não é uma lista, `{}`. O terceiro é um ficheiro com JSON mal formado, só com `[`, e o quarto um caminho para um ficheiro que não existe. Antes de correres cada caso, escreve a resposta que esperas.
 
 ## E: decompor e organizar
 
