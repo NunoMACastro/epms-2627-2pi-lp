@@ -2,57 +2,79 @@
 
 # Objetos, composição e comportamento
 
-Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto, passa pela forma de proteger o estado de um objeto e pela herança, chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação, passa pelos métodos de classe, pelo duck typing e pelas dataclasses e acaba nos decoradores. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
+Módulo 10794, Programação avançada com Python. Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto. Passa pela forma de proteger o estado de um objeto e pela herança. Chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação. Segue com os métodos de classe, o duck typing e as dataclasses, e acaba nos decoradores. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
 
-É um texto para leres com calma, antes ou depois de uma aula, e perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho: a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário.
+É um texto para leres com calma, antes ou depois de uma aula, ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. O objetivo é perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho. Há a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário. Para praticar, há o [laboratório](03-objetos-e-composicao-laboratorio.md) e a [ficha de exercícios](03-objetos-e-composicao-exercicios.md) deste tema.
 
-## O que este guia cobre e o que ainda vai entrar
+Este guia não dá ainda duas coisas, porque dependem de matéria que vem depois. O tkinter é a biblioteca do Python para desenhar janelas. A primeira janela feita com ele vem no tema dos pacotes, quando o exemplo dos Pokémon passar a ser uma aplicação completa, com a equipa guardada num ficheiro. Os decoradores que mudam o que uma função faz de cada vez que é chamada vêm no tema da iteração.
 
-O guia está dividido em oito partes, que seguem, no essencial, a ordem em que a matéria é dada:
+## Neste guia
 
-| Parte | Assunto |
-| --- | --- |
-| 1 | Paradigmas, classe e objeto, atributos, construtor, `self`, métodos dos objetos e métodos estáticos |
-| 2 | Proteger o estado do objeto: get e set, público e privado, propriedades e a forma como as propriedades e o privado trabalham juntos |
-| 3 | Herança: classes-filhas, `super()` e métodos reescritos |
-| 4 | Composição e agregação, com o exemplo guiado do ginásio Pokémon |
-| 5 | Métodos de classe: o `@classmethod`, o `cls` e os construtores alternativos |
-| 6 | Duck typing: objetos de classes diferentes que respondem à mesma chamada, com o exemplo guiado dos anunciadores do ginásio |
-| 7 | Dataclasses: classes que guardam dados, com o `@dataclass`, os campos e as anotações de tipo, e os casos em que não servem |
-| 8 | Decoradores: uma função é um valor, entregar uma função sem a chamar, e o que faz a arroba nos decoradores que já usas |
+1. O que vais aprender
+2. O que já sabes e vais usar
+3. Como ler este guia
+4. Parte 1: Classes e objetos (paradigmas, classe e objeto, atributos, construtor, `self`, métodos do objeto e métodos estáticos)
+5. Parte 2: Proteger o estado do objeto (get e set, público e privado, propriedades, e a forma como as propriedades e o privado trabalham juntos)
+6. Parte 3: Herança (classes-filhas, `super()` e métodos reescritos)
+7. Parte 4: Composição e agregação (referências, agregação, composição, UML e a escolha entre herança e "tem um")
+8. Exemplo guiado: o ginásio Pokémon (o ginásio construído com o que a parte 4 ensinou)
+9. Parte 5: Métodos de classe (o `@classmethod`, o `cls` e os construtores alternativos)
+10. Parte 6: Duck typing (objetos de classes diferentes que respondem à mesma chamada, com o exemplo guiado dos anunciadores do ginásio)
+11. Parte 7: Dataclasses (classes que guardam dados, com o `@dataclass`, os campos e as anotações de tipo, e os casos em que não servem)
+12. Parte 8: Decoradores (uma função é um valor, entregar uma função sem a chamar, e o que faz a arroba nos decoradores que já usas)
+13. Erros frequentes
+14. Palavras novas deste guia
+15. Verificar o que aprendeste
+16. O que vem a seguir
 
-Com a parte 8, este tema fica completo. A primeira janela feita com tkinter não entra neste guia: vem mais à frente, quando o exemplo dos Pokémon passar a ser uma aplicação completa, com a equipa guardada num ficheiro.
+## O que vais aprender
 
-Além deste guia, o tema tem mais dois documentos com o mesmo número, um para cada uso:
+No fim deste guia, consegues:
 
-- o [laboratório](03-objetos-e-composicao-laboratorio.md), com os passos para construíres no computador o ginásio Pokémon da parte 4, com o guia aberto ao lado;
-- a [ficha de exercícios](03-objetos-e-composicao-exercicios.md), para praticares sem ajuda.
+- escrever uma classe com atributos, construtor e métodos, e criar objetos a partir dela;
+- proteger o estado de um objeto com propriedades, para que uma regra como "a vida fica entre 0 e 150" se cumpra sempre;
+- criar classes-filhas com herança e reescrever um método da classe-mãe com `super()`;
+- decidir se uma relação entre classes é herança, agregação ou composição, e desenhá-la num diagrama de classes;
+- escolher entre método do objeto, método estático e método de classe, e usar objetos de classes diferentes que respondem à mesma chamada, com duck typing;
+- escrever uma classe que só guarda dados com `@dataclass`, e explicar o que faz a arroba de um decorador.
 
-A ficha tem exercícios das oito partes, e o laboratório das sete primeiras. A parte 8 explica um mecanismo e não constrói nada novo no ginásio, por isso não tem parte própria no laboratório.
-
-O código completo dos exemplos das aulas está em três ficheiros: [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas; [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o líder, o ginásio e o registo dos combates; e [anunciadores.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/anunciadores.py), com os anunciadores da parte 6.
-
-## O que precisas de saber antes
+## O que já sabes e vais usar
 
 Este guia parte do Python que trabalhaste no 10.º ano e que revimos no início das aulas deste tema. Não volta a ensinar essa matéria: usa-a. Antes de começares, confirma que consegues fazer o que está nesta lista.
 
-Vais usar variáveis, os tipos `int`, `float`, `str` e `bool`, e as decisões com `if`, `elif` e `else`. Vais usar ciclos `for` para percorrer uma lista e, na parte 4, um ciclo `while True` que só acaba quando chega a um `break`. Vais usar listas: criar uma lista vazia com `[]`, acrescentar um elemento com `append`, contar os elementos com `len`, percorrer a lista com `for` e perguntar se um valor está lá dentro com `in` ou `not in`. Na ficha de exercícios, vais também tirar um elemento de uma lista com `remove`. Há um exemplo com um dicionário, logo no início, para comparar com a forma nova de trabalhar.
+- As variáveis, os tipos `int`, `float`, `str` e `bool` e as decisões com `if`, `elif` e `else`: do 10.º ano.
+- O ciclo `for`, para percorrer uma lista: do 10.º ano. Na parte 4 aparece também o ciclo `while True`, que só acaba quando chega a um `break`.
+- As listas, do 10.º ano. Vais criar uma lista vazia com `[]`, acrescentar um elemento com `append`, contar os elementos com `len` e percorrer a lista com `for`.
+- Perguntar se um valor está numa lista com `in` ou `not in`: do 10.º ano. Na ficha de exercícios, vais também tirar um elemento de uma lista com `remove`.
+- Os dicionários, do 10.º ano. Há um exemplo com um dicionário logo no início, para comparar com a forma nova de trabalhar.
+- As funções com parâmetros e com `return`, do 10.º ano. Os parâmetros de uma função só existem enquanto a função está a correr.
+- O valor `None`, que uma função devolve para dizer que não encontrou nada, e a pergunta `valor is None`: do 10.º ano.
+- A docstring, o texto entre três aspas logo a seguir ao `def`, que explica o que a função faz: do 10.º ano. Nos exemplos deste guia, cada função e cada método tem uma.
+- As f-strings, como `f"{nome} tem {vida} de vida."`, que escrevem o valor de cada variável no sítio das chavetas: do 10.º ano.
+- A linha `if __name__ == "__main__":`, que viste no 10.º ano. O código que está debaixo dela só corre quando executas esse ficheiro diretamente, e não quando outro ficheiro o importa.
+- A linha `from pokemon import PokemonFogo`, que traz para um ficheiro classes escritas noutro ficheiro da mesma pasta. Aparece a partir da parte 2, e o primeiro programa que a usa explica-a.
+- A linha `from dataclasses import dataclass`, que importa de um módulo que vem com o Python. A própria parte 7 explica-a.
+- A ideia de referência, do guia de memória do 10.º ano. Não precisas de o reler: a parte 4 explica essa ideia desde o início.
 
-Vais usar funções com parâmetros e com `return`, e vais precisar de te lembrar de duas coisas sobre elas: os parâmetros de uma função só existem enquanto a função está a correr, e uma função pode devolver `None` para dizer que não encontrou nada. Para perguntar se um valor é `None`, escreve-se `valor is None`. Nos exemplos deste guia, cada função e cada método tem, logo a seguir ao `def`, uma docstring, como as das funções do 10.º: um texto entre três aspas que explica o que a função faz.
-
-Vais usar as f-strings, como `f"{nome} tem {vida} de vida."`, que escrevem o valor de cada variável no sítio das chavetas.
-
-A partir da parte 2, e no laboratório, um ficheiro vai usar classes que estão noutro ficheiro da mesma pasta, com uma linha como `from pokemon import PokemonFogo`. Vais precisar também de reconhecer a linha `if __name__ == "__main__":`, que viste no 10.º: o código que está debaixo dela só corre quando executas esse ficheiro diretamente, e não quando outro ficheiro o importa. Na parte 7, um ficheiro vai importar de um módulo que vem com o Python, com a linha `from dataclasses import dataclass`, que a própria parte 7 explica.
-
-Se alguma destas ideias estiver esquecida, os guias de Python do 10.º ano continuam a ser a melhor referência. A parte 4 usa também uma ideia do guia de memória do 10.º, sobre referências. Não precisas de o reler: a parte 4 explica essa ideia desde o início.
+Se alguma destas ideias estiver esquecida, os guias de Python do 10.º ano continuam a ser a melhor referência.
 
 ## Como ler este guia
 
-Cada parte tem teoria com exemplos completos, uma secção de erros frequentes e umas perguntas para verificares se percebeste. Os exemplos são programas curtos que podes copiar para um ficheiro e executar. A regra é sempre a mesma: antes de executares um programa, escreve o que achas que ele vai mostrar, e só depois compara. Se escreveres a previsão depois de ver o resultado, a comparação concorda sempre contigo e não te ensina nada.
+Cada parte tem teoria com exemplos completos. Os erros frequentes e as perguntas para verificares se percebeste ficam no fim do guia, com um grupo para cada parte. Podes fazer as perguntas de cada parte logo depois de a leres, ou todas no fim.
+
+Os exemplos são programas curtos que podes copiar para um ficheiro e executar. A regra é sempre a mesma: antes de executares um programa, escreve o que achas que ele vai mostrar, e só depois compara. Se escreveres a previsão depois de ver o resultado, a comparação concorda sempre contigo e não te ensina nada.
 
 Para executar um exemplo, guarda-o num ficheiro com a extensão `.py`, abre o terminal do VS Code na pasta desse ficheiro e escreve `python3 nome-do-ficheiro.py`. No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
 
-Todos os programas deste guia foram executados em Python 3.14 e também em Python 3.9, e as saídas mostradas são as reais. As saídas dos programas são iguais nas duas versões. Nas mensagens de erro, o Python mostra várias linhas, com o caminho do ficheiro no teu computador, e só a última linha diz qual foi o erro. Por isso o guia mostra apenas essa última linha. Nas versões mais recentes, essa linha pode acabar com uma sugestão do tipo `Did you mean: ...?`, que as versões antigas não mostram, e há nove erros, dois na parte 1, dois na parte 2, dois na parte 5, um na parte 6 e dois na parte 7, em que o texto muda de uma versão para a outra. Quando isso acontece, o guia diz também como é a mensagem nas versões antigas.
+A partir da parte 2, muitos exemplos começam por uma linha `from pokemon import ...`. Esses programas precisam de ter na mesma pasta os ficheiros do exemplo das aulas, que têm o código completo:
+
+- [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), com a classe `Pokemon` e as suas classes-filhas;
+- [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), com o treinador, o líder, o ginásio e o registo dos combates;
+- [anunciadores.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/anunciadores.py), com os anunciadores da parte 6.
+
+Todos os programas deste guia foram executados em Python 3.14 e também em Python 3.9, e as saídas mostradas são as reais. As saídas dos programas são iguais nas duas versões.
+
+Nas mensagens de erro, o Python mostra várias linhas, com o caminho do ficheiro no teu computador, e só a última linha diz qual foi o erro. Por isso o guia mostra apenas essa última linha. Nas versões mais recentes, essa linha pode acabar com uma sugestão do tipo `Did you mean: ...?`, que em português quer dizer "querias dizer...?". As versões antigas não a mostram. Há ainda nove erros em que o texto da mensagem muda de uma versão para a outra. São dois na parte 1, dois na parte 2, dois na parte 5, um na parte 6 e dois na parte 7. Nesses, o guia diz também como é a mensagem nas versões antigas.
 
 ## Parte 1: Classes e objetos
 
@@ -68,7 +90,7 @@ Existem outros paradigmas, como a programação funcional, mas não fazem parte 
 
 ### O problema de um Pokémon guardado num dicionário
 
-Com o que aprendeste no 10.º, um Pokémon pode ser guardado num dicionário, e o ataque pode ser uma função que recebe dois dicionários:
+Com o que aprendeste no 10.º, um Pokémon pode ser guardado num dicionário, e o ataque pode ser uma função que recebe dois dicionários. Antes de correres o programa, prevê o que mostram as três linhas e se o Python protesta com a vida de -500 ou com a chave mal escrita:
 
 ```python
 charmander = {"nome": "Charmander", "tipo": "Fogo", "vida": 90, "ataque": 40}
@@ -102,7 +124,7 @@ O primeiro é que o dicionário aceita qualquer valor. A vida de um Pokémon dev
 
 O segundo é que um engano no nome de uma chave não dá erro. Quem escreveu `"vidda"` queria mudar a vida, mas o Python criou uma chave nova, e a vida verdadeira ficou com -500. Um engano destes pode passar semanas sem ninguém dar por ele.
 
-O terceiro é o mais importante. A regra da vida entre 0 e 150 teria de ser escrita em todas as funções que mudam a vida: na que ataca, na que cura, na que aplica um veneno. Basta uma dessas funções esquecer a regra para o Pokémon ficar num estado impossível. Os dados estão num sítio e as regras estão espalhadas por outros.
+O terceiro é o mais importante. A regra da vida entre 0 e 150 teria de ser escrita em todas as funções que mudam a vida. Isso inclui a que ataca, a que cura e a que aplica um veneno. Basta uma dessas funções esquecer a regra para o Pokémon ficar num estado impossível. Os dados estão num sítio e as regras estão espalhadas por outros.
 
 A programação orientada a objetos resolve o primeiro e o terceiro problemas ao pôr a regra dentro do próprio Pokémon, de forma que qualquer alteração da vida passe por ela. É o caminho que este guia percorre até ao fim da parte 2. O segundo problema, o do nome mal escrito, também existe com classes: numa classe, `bulbasaur.vidda = 100` cria um atributo novo sem dar erro, tal como o dicionário criou uma chave nova.
 
@@ -114,7 +136,7 @@ Pensa numa forma de fazer bolos. A forma não é um bolo, não se come, e só ex
 
 No mundo dos Pokémon, a classe `Pokemon` diz que todo o Pokémon tem nome, tipo, vida e ataque. O Charmander com 90 de vida que tens na equipa é um objeto dessa classe, e o Bulbasaur com 110 de vida é outro objeto da mesma classe.
 
-Já usaste objetos em Python sem lhes dares esse nome. Uma lista é um objeto da classe `list`, e quando escreves `numeros.append(5)` estás a pedir a esse objeto que faça uma ação:
+Já usaste objetos em Python sem lhes dares esse nome. Uma lista é um objeto da classe `list`, e quando escreves `numeros.append(5)` estás a pedir a esse objeto que faça uma ação. Antes de correres o programa, prevê o que mostram as duas linhas:
 
 ```python
 numeros = [3, 1, 2]
@@ -128,7 +150,7 @@ print(numeros)
 [3, 1, 2, 5]
 ```
 
-A novidade deste tema é criares as tuas próprias classes. Esta é a primeira versão da classe `Pokemon`, só com dados:
+A novidade deste tema é criares as tuas próprias classes. Esta é a primeira versão da classe `Pokemon`, só com dados. Antes de a correres, prevê o que mostram as quatro linhas, sobretudo as duas últimas:
 
 ```python
 class Pokemon:
@@ -158,13 +180,13 @@ Bulbasaur 70
 Charmander 90
 ```
 
-A linha `class Pokemon:` começa a classe, e tudo o que está indentado debaixo dela pertence à classe. A primeira linha indentada é a docstring da classe, entre três aspas, que diz o que a classe representa, e o `def` que vem a seguir tem a sua, como qualquer função. O nome de uma classe escreve-se, por convenção, com maiúscula inicial e sem sublinhados, como `Pokemon` ou `PokemonFogo`, para se distinguir à primeira vista das variáveis e das funções, que se escrevem em minúsculas. Nos nossos programas, os nomes das classes também não levam acentos, embora o Python os aceite: escreve-se `Pokemon` e `Ginasio`, e não `Pokémon` nem `Ginásio`.
+A linha `class Pokemon:` começa a classe, e tudo o que está indentado debaixo dela pertence à classe. A primeira linha indentada é a docstring da classe, entre três aspas, que diz o que a classe representa. O `def` que vem a seguir tem a sua, como qualquer função. O nome de uma classe escreve-se, por convenção, com maiúscula inicial e sem sublinhados, como `Pokemon` ou `PokemonFogo`. Assim distingue-se à primeira vista das variáveis e das funções, que se escrevem em minúsculas. Nos nossos programas, os nomes das classes também não levam acentos, embora o Python os aceite: escreve-se `Pokemon` e `Ginasio`, e não `Pokémon` nem `Ginásio`.
 
 A linha `charmander = Pokemon("Charmander", "Fogo", 90, 40)` cria um objeto novo e guarda-o na variável `charmander`. Escreve-se o nome da classe seguido de parênteses, como se a classe fosse uma função, e os valores entre parênteses são os dados iniciais do objeto. A linha seguinte cria outro objeto, independente do primeiro.
 
 Para ler um dado de um objeto, escreve-se o nome da variável, um ponto e o nome do dado: `charmander.nome`. Para o alterar, usa-se a mesma escrita do lado esquerdo de um `=`: `bulbasaur.vida = bulbasaur.vida - charmander.ataque`.
 
-Repara nas duas últimas linhas da saída. A vida do Bulbasaur desceu para 70, mas a vida do Charmander continuou em 90. Cada objeto tem os seus próprios valores, e mudar um objeto não muda os outros objetos da mesma classe, tal como pôr chocolate num bolo não põe chocolate nos outros bolos feitos com a mesma forma.
+Repara nas duas últimas linhas da saída. A vida do Bulbasaur desceu para 70, mas a vida do Charmander continuou em 90. Cada objeto tem os seus próprios valores. Mudar um objeto não muda os outros objetos da mesma classe, tal como pôr chocolate num bolo não põe chocolate nos outros bolos feitos com a mesma forma.
 
 ### Atributos: o que cada objeto guarda
 
@@ -176,24 +198,24 @@ Nas aulas, a palavra propriedade foi usada só no sentido que tem em Python, que
 
 ### O construtor: dar a cada objeto o seu estado inicial
 
-O método `__init__`, com dois sublinhados de cada lado, é o **construtor** da classe. É um método especial: normalmente não o chamas pelo nome, é o Python que o chama sozinho, sempre que crias um objeto novo. Serve para dar a cada objeto o seu estado inicial. Na parte 3 vais ver a exceção: uma classe-filha a chamar o construtor da classe-mãe.
+O método `__init__`, com dois sublinhados de cada lado, é o **construtor** da classe. É um método especial: normalmente não o chamas pelo nome, é o Python que o chama sozinho, sempre que crias um objeto novo. Serve para dar a cada objeto o seu estado inicial. Na parte 3, com a herança, vais ver a exceção: uma classe que parte de outra, a classe-filha, chama o construtor da outra, a classe-mãe.
 
 Quando o Python executa `Pokemon("Charmander", "Fogo", 90, 40)`, acontece isto, por esta ordem:
 
 1. O Python cria um objeto novo da classe `Pokemon`, ainda sem nenhum atributo.
 2. O Python chama o construtor `__init__`, e passa-lhe o objeto novo como primeiro argumento e os quatro valores dos parênteses como os argumentos seguintes. Dentro do construtor, o objeto novo chama-se `self`, e os valores chamam-se `nome`, `tipo`, `vida` e `ataque`.
-3. As quatro linhas do construtor que começam por `self.` guardam os valores no objeto: `self.nome = nome` cria no objeto o atributo `nome`, com o valor `"Charmander"`, e as outras três fazem o mesmo para o tipo, a vida e o ataque.
+3. As quatro linhas do construtor que começam por `self.` guardam os valores no objeto. A linha `self.nome = nome` cria no objeto o atributo `nome`, com o valor `"Charmander"`, e as outras três fazem o mesmo para o tipo, a vida e o ataque.
 4. O construtor termina, e a expressão `Pokemon(...)` dá como resultado o objeto já preenchido, que fica guardado na variável `charmander`.
 
 O construtor não tem `return`. Quem devolve o objeto é o Python, no passo 4.
 
-Vale a pena olhar com cuidado para a linha `self.nome = nome`, porque tem o mesmo nome dos dois lados e isso confunde muita gente. Do lado direito, `nome` é o parâmetro do construtor: uma variável que só existe enquanto o construtor está a correr, como qualquer parâmetro de uma função do 10.º ano. Do lado esquerdo, `self.nome` é o atributo `nome` do objeto, que fica guardado no objeto depois de o construtor acabar. A linha guarda no atributo, que fica, o valor que chegou pelo parâmetro, que vai desaparecer. Usar o mesmo nome dos dois lados é uma convenção que ajuda a ler, e não uma obrigação da linguagem.
+Olha com cuidado para a linha `self.nome = nome`, porque tem o mesmo nome dos dois lados e isso confunde muita gente. Do lado direito, `nome` é o parâmetro do construtor: uma variável que só existe enquanto o construtor está a correr, como qualquer parâmetro de uma função do 10.º ano. Do lado esquerdo, `self.nome` é o atributo `nome` do objeto, que fica guardado no objeto depois de o construtor acabar. A linha guarda no atributo, que fica, o valor que chegou pelo parâmetro, que vai desaparecer. Usar o mesmo nome dos dois lados é uma convenção que ajuda a ler, e não uma obrigação da linguagem.
 
 ### self: o objeto que está a ser usado
 
 A classe `Pokemon` escreve-se uma só vez, e serve para todos os Pokémon. Quando a escreves, não sabes que Pokémon a vão usar: pode ser o Charmander, o Bulbasaur ou um que ainda não existe. O parâmetro **`self`** é a forma de dizer, dentro da classe, "o objeto que estiver a ser usado neste momento".
 
-Um método é uma função que pertence a uma classe, e a secção seguinte trata dos métodos com mais pormenor. Por agora, olha para este, que mostra a vida do Pokémon:
+Um método é uma função que pertence a uma classe, e a secção seguinte trata dos métodos com mais pormenor. Por agora, olha para este, que mostra a vida do Pokémon. Antes de correres o programa, prevê as três linhas e pensa no que a segunda chamada faz de diferente:
 
 ```python
 class Pokemon:
@@ -232,7 +254,7 @@ O nome `self` é uma convenção. A linguagem aceitaria outro nome, mas todos os
 
 ### Métodos: o que cada objeto sabe fazer
 
-Um **método** é uma função definida dentro de uma classe. Escreve-se com `def`, como as funções do 10.º, mas indentado dentro da classe, e o primeiro parâmetro é sempre o `self`. Os métodos são o comportamento do objeto: o que ele sabe fazer. Os atributos dizem o que o objeto tem; os métodos dizem o que ele faz.
+Um **método** é uma função definida dentro de uma classe. Escreve-se com `def`, como as funções do 10.º, mas indentado dentro da classe, e o primeiro parâmetro é o `self`. Um método que recebe o `self` chama-se **método do objeto**. Os métodos são o comportamento do objeto: o que ele sabe fazer. Os atributos dizem o que o objeto tem; os métodos dizem o que ele faz.
 
 Um método pode ler os atributos do próprio objeto, através do `self`, como o `verificar_vida` faz com `self.nome` e `self.vida`. Pode também alterá-los, como vais ver já a seguir, e pode devolver um valor com `return`, como qualquer função.
 
@@ -240,7 +262,7 @@ Para chamar um método, escreve-se o objeto, um ponto, o nome do método e os pa
 
 ### Um método que recebe outro objeto
 
-Atacar envolve dois Pokémon: o que ataca e o que é atacado. O método `atacar` recebe o atacante no `self`, como sempre, e o atacado num segundo parâmetro, a que chamámos `alvo`:
+Atacar envolve dois Pokémon: o que ataca e o que é atacado. O método `atacar` recebe o atacante no `self`, como sempre, e o atacado num segundo parâmetro, a que chamámos `alvo`. Antes de correres o programa, prevê a vida de cada Pokémon depois de cada ataque:
 
 ```python
 class Pokemon:
@@ -293,7 +315,7 @@ Agora olha para a última linha da saída: o Bulbasaur ficou com -10 de vida. É
 
 Há funções que estão ligadas a uma classe mas que não precisam de nenhum objeto para fazer o seu trabalho. Pensa numa função que prende um valor entre um mínimo e um máximo: recebe 200 e devolve 150, recebe -30 e devolve 0, recebe 75 e devolve 75. Essa conta é útil para a vida de um Pokémon, mas não precisa de saber de que Pokémon se trata: tudo o que precisa chega pelos parâmetros.
 
-Um método assim chama-se **método estático**. Escreve-se dentro da classe, com a linha `@staticmethod` imediatamente antes do `def`, e não recebe `self`:
+Um método assim chama-se **método estático**. Escreve-se dentro da classe, com a linha `@staticmethod` imediatamente antes do `def`, e não recebe `self`. Antes de correres o programa, prevê as cinco linhas, sobretudo as duas últimas:
 
 ```python
 VIDA_MINIMA = 0
@@ -339,58 +361,17 @@ print(mew.vida)
 
 A linha `@staticmethod` chama-se um **decorador**. Um decorador é uma marca que se põe por cima de um método para mudar a forma como ele funciona. Este diz ao Python: "quando alguém chamar este método, não lhe passes o objeto". É por isso que o `limitar` não tem `self` na lista de parâmetros.
 
-Um método estático chama-se pelo nome da classe: `Pokemon.limitar(200, 0, 150)`. As três primeiras linhas da saída mostram o método a funcionar sem nenhum Pokémon criado. As constantes `VIDA_MINIMA` e `VIDA_MAXIMA` estão escritas em maiúsculas, fora da classe, no início do ficheiro, como no 10.º: são valores que não mudam durante o programa, e dar-lhes nome evita ter o 150 espalhado pelo código.
+Um método estático chama-se pelo nome da classe: `Pokemon.limitar(200, 0, 150)`. As três primeiras linhas da saída mostram o método a funcionar sem nenhum Pokémon criado. As constantes `VIDA_MINIMA` e `VIDA_MAXIMA` estão escritas em maiúsculas, como no 10.º ano, fora da classe, no início do ficheiro. São valores que não mudam durante o programa. Dar-lhes nome evita ter o 150 espalhado pelo código.
 
-O construtor usa o método estático para que a vida inicial fique sempre dentro dos limites: o Mew foi criado com 999 e ficou com 150, que é a quarta linha da saída.
+O construtor usa o método estático para que a vida inicial fique sempre dentro dos limites. O Mew foi criado com 999 e ficou com 150, que é a quarta linha da saída.
 
-Para decidires se um método deve ser estático, faz esta pergunta: este método precisa de saber qual é o objeto? Se o método usa `self.` para ler ou mudar um atributo, precisa, e é um método normal, com `self`. Se tudo o que o método usa chega pelos parâmetros, não precisa, e pode ser estático. O `verificar_vida` precisa de saber de que Pokémon mostrar a vida; o `limitar` não.
+Para decidires se um método deve ser estático, faz esta pergunta: este método precisa de saber qual é o objeto? Se o método usa `self.` para ler ou mudar um atributo, precisa, e é um método do objeto, com `self`. Se tudo o que o método usa chega pelos parâmetros, não precisa, e pode ser estático. O `verificar_vida` precisa de saber de que Pokémon mostrar a vida; o `limitar` não.
 
 Podes perguntar porque é que o `limitar` fica dentro da classe, se não usa nada do objeto. Uma função normal, escrita fora da classe, também fazia esta conta, e também estaria certa. Pô-la na classe, como método estático, diz a quem lê que a conta faz parte das regras dos Pokémon, e a chamada `Pokemon.limitar(...)` mostra logo de onde ela vem.
 
 A última linha da saída volta a mostrar -500. O construtor aplicou a regra na criação do Mew, mas a linha `mew.vida = -500` mudou o atributo diretamente, sem passar por regra nenhuma. Uma regra que só se aplica onde alguém se lembrou de a chamar não protege o objeto. A parte 2 resolve isto.
 
-### Erros frequentes com classes e métodos
-
-**Esquecer o `self` na definição de um método.** Se escreveres `def verificar_vida():`, sem nada entre os parênteses, e depois chamares `pikachu.verificar_vida()`, o erro é:
-
-```text
-TypeError: Pokemon.verificar_vida() takes 0 positional arguments but 1 was given
-```
-
-A mensagem diz que o método não aceita argumentos mas recebeu um. O argumento é o objeto `pikachu`, que o Python passa sempre ao método, sem tu o escreveres. A correção é pôr o `self` como primeiro parâmetro. Nas versões antigas do Python, a mensagem começa só por `verificar_vida()`, sem o nome da classe.
-
-**Esquecer o `self.` no construtor.** Com `nome = nome` em vez de `self.nome = nome`, o construtor dá o valor do parâmetro ao próprio parâmetro, e nada fica guardado no objeto. O erro só aparece mais tarde, quando alguém tenta ler o atributo:
-
-```text
-AttributeError: 'Pokemon' object has no attribute 'nome'
-```
-
-Quando vires esta mensagem sobre um atributo que tens a certeza de ter escrito no construtor, procura lá uma linha sem `self.`.
-
-**Criar um objeto com o número errado de valores.** Numa classe cujo construtor pede o nome e a vida, `Pokemon("Pikachu")` só dá um dos dois valores:
-
-```text
-TypeError: Pokemon.__init__() missing 1 required positional argument: 'vida'
-```
-
-A mensagem diz o nome do parâmetro que ficou sem valor. O `self` não conta, porque é o Python que o dá. Nas versões antigas do Python, a mensagem começa só por `__init__()`, sem o nome da classe.
-
-**Ler um atributo na classe em vez de no objeto.** `Pokemon.nome` não funciona, porque o nome não pertence à classe: pertence a cada objeto, e cada objeto tem o seu:
-
-```text
-AttributeError: type object 'Pokemon' has no attribute 'nome'
-```
-
-A forma, sozinha, não tem recheio. O recheio está em cada bolo.
-
-### Verifica se percebeste: classes e objetos
-
-Responde por escrito, com as tuas palavras, antes de passares à parte 2.
-
-1. Qual é a diferença entre a classe `Pokemon` e o objeto guardado na variável `charmander`?
-2. Quando escreves `Pokemon("Pikachu", "Elétrico", 100, 30)`, que método corre sem o chamares, e que valor recebe o `self` desse método?
-3. Porque é que, dentro do construtor, se escreve `self.nome = nome` e não apenas `nome = nome`?
-4. Um método que recebe uma vida e devolve essa vida em percentagem de 150 precisa de `self`? Que tipo de método seria, e como o chamavas?
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 2: Proteger o estado do objeto
 
@@ -398,15 +379,15 @@ Responde por escrito, com as tuas palavras, antes de passares à parte 2.
 
 A parte 1 acabou com dois Pokémon em estados impossíveis: um Bulbasaur com -10 de vida, depois de um ataque, e um Mew com -500, depois de uma alteração direta. No primeiro caso, a classe não tinha regra nenhuma para a vida. No segundo, tinha a regra no construtor, mas havia um caminho para mudar a vida que não passava por ela.
 
-Uma regra como "a vida está sempre entre 0 e 150" tem de ser verdadeira durante toda a existência do objeto, desde que é criado até deixar de ser usado. A uma regra destas também se chama **invariante** do objeto. O objetivo desta parte é que o único caminho para mudar a vida passe pela regra, para que o estado do objeto nunca fique impossível, seja quem for que escreva o código que usa a classe.
+Uma regra como "a vida está sempre entre 0 e 150" tem de ser verdadeira durante toda a existência do objeto, desde que é criado até deixar de ser usado. A uma regra destas também se chama **invariante** do objeto. O objetivo desta parte é que o único caminho para mudar a vida passe pela regra. Assim, o estado do objeto nunca fica impossível, seja quem for que escreva o código que usa a classe.
 
-Para isso são precisas duas coisas: um sítio por onde todas as alterações passam, que vai ser o set, e uma forma de avisar quem usa a classe de que não deve mexer diretamente no valor guardado, que vai ser o privado.
+Para isso são precisas duas coisas. A primeira é um sítio por onde todas as alterações passam, que vai ser o set. A segunda é uma forma de avisar quem usa a classe de que não deve mexer diretamente no valor guardado, que vai ser o privado.
 
 ### Get e set: ler e alterar através de métodos
 
 Nas aulas, o get e o set foram escritos logo como propriedade, com `@property`, que vais ver daqui a duas secções. Aqui aparecem primeiro como dois métodos normais, para se perceber o que a propriedade faz por baixo.
 
-A primeira ideia é não deixar ninguém mexer na vida diretamente e oferecer dois métodos: um para ler a vida e outro para a mudar. Ao método que lê chama-se **get** (em inglês, obter) e ao que muda chama-se **set** (em inglês, definir). O set é o sítio onde a regra vive: recebe o valor pedido, corrige-o se for preciso, e só depois o guarda.
+A primeira ideia é não deixar ninguém mexer na vida diretamente e oferecer dois métodos: um para ler a vida e outro para a mudar. Ao método que lê chama-se **get** (em inglês, obter) e ao que muda chama-se **set** (em inglês, definir). O set é o sítio onde a regra vive: recebe o valor pedido, corrige-o se for preciso, e só depois o guarda. Antes de correres o programa seguinte, prevê os dois valores que ele escreve.
 
 ```python
 VIDA_MINIMA = 0
@@ -446,7 +427,7 @@ print(pikachu.get_vida())
 150
 ```
 
-Para este exemplo ficar curto, a classe só tem nome e vida. O valor da vida fica guardado num atributo chamado `_vida`, com um sublinhado à frente; a secção seguinte explica porquê. O `get_vida` devolve esse valor. O `set_vida` recebe o valor pedido, e antes de o guardar compara-o com os limites: se for menor do que o mínimo passa a ser o mínimo, se for maior do que o máximo passa a ser o máximo. Esta regra não dá erro com um valor fora dos limites: corrige-o para o limite mais próximo. É a regra que usámos nas aulas.
+Para este exemplo ficar curto, a classe só tem nome e vida. O valor da vida fica guardado num atributo chamado `_vida`, com um sublinhado à frente; a secção seguinte explica porquê. O `get_vida` devolve esse valor. O `set_vida` recebe o valor pedido e, antes de o guardar, compara-o com os limites. Se for menor do que o mínimo, passa a ser o mínimo. Se for maior do que o máximo, passa a ser o máximo. Esta regra não dá erro com um valor fora dos limites: corrige-o para o limite mais próximo. É a regra que usámos nas aulas.
 
 Repara que o construtor não escreve `self._vida = vida`: chama `self.set_vida(vida)`. Assim, a regra também se aplica ao valor inicial.
 
@@ -458,11 +439,13 @@ Esta versão funciona, mas tem dois defeitos. O primeiro é que é difícil de l
 
 Os atributos e métodos de uma classe podem ser de dois tipos. Os **públicos** são para ser usados por qualquer código, dentro ou fora da classe: o `nome` de um Pokémon, o método `atacar`. Os **privados** são para uso interno da classe: quem usa a classe de fora não lhes deve tocar, porque existem apenas para a classe fazer o seu trabalho. O `_vida`, onde o valor está guardado, é privado: de fora, a vida deve ser mudada pelo set, e nunca diretamente.
 
-Há linguagens de programação com palavras próprias para marcar o que é público e o que é privado, a que se chama modificadores de acesso, e nessas linguagens o compilador recusa um programa que use de fora um atributo privado. Em Python não há essas palavras. O papel de modificador de acesso é feito pela forma como o nome começa:
+Há linguagens de programação com palavras próprias para marcar o que é público e o que é privado, a que se chama modificadores de acesso. Nessas linguagens, o compilador recusa um programa que use de fora um atributo privado. Em Python não há essas palavras. O papel de modificador de acesso é feito pela forma como o nome começa:
 
 - um nome sem sublinhado à frente, como `nome`, é **público**;
 - um nome com um sublinhado à frente, como `_ataque`, é **privado por convenção**: é um aviso para os outros programadores, que diz "isto é interno, não uses de fora". O Python não impede nada; é um acordo entre quem escreve a classe e quem a usa;
 - um nome com dois sublinhados à frente, como `__vida`, é também privado, e aqui o Python faz uma coisa a mais: muda o nome do atributo.
+
+Antes de correres o programa seguinte, prevê o que escrevem as quatro últimas linhas e se alguma dá erro.
 
 ```python
 class Pokemon:
@@ -500,15 +483,15 @@ A primeira linha lê um atributo público, como deve ser.
 
 A segunda lê um atributo privado por convenção. Funciona: o Python deixa. Mas o código que está fora da classe não devia fazê-lo, e quem o fizer está a quebrar o acordo. Se um dia o autor da classe mudar a forma de guardar o ataque, este código deixa de funcionar, e a culpa não é do autor da classe.
 
-A quarta linha mostra a mudança de nome. Dentro da classe `Pokemon`, quando se escreve `self.__vida`, o Python guarda o atributo com outro nome: junta ao nome um sublinhado e o nome da classe, e o atributo passa a chamar-se `_Pokemon__vida`. A esta mudança de nome chama-se, em inglês, **name mangling**. Por isso, fora da classe, `pikachu.__vida` não existe, e o Python diz que o objeto não tem esse atributo. Os nomes que também acabam em dois sublinhados, como o `__init__`, são outra coisa: são métodos especiais do Python, não são privados e não mudam de nome.
+A quarta linha mostra a mudança de nome. Dentro da classe `Pokemon`, quando se escreve `self.__vida`, o Python guarda o atributo com outro nome. Junta ao nome um sublinhado e o nome da classe, e o atributo passa a chamar-se `_Pokemon__vida`. A esta mudança de nome chama-se, em inglês, **name mangling**. Por isso, fora da classe, `pikachu.__vida` não existe, e o Python diz que o objeto não tem esse atributo. Os nomes que também acabam em dois sublinhados, como o `__init__`, são outra coisa: são métodos especiais do Python, não são privados e não mudam de nome.
 
-A terceira linha mostra que a mudança de nome também não é uma proteção a sério: quem souber o nome novo, `_Pokemon__vida`, chega ao valor. Os dois sublinhados são um aviso mais forte do que um só, e evitam que uma classe-filha estrague sem querer um atributo da classe-mãe com o mesmo nome, como vais ver na parte 3.
+A terceira linha mostra que a mudança de nome também não é uma proteção a sério: quem souber o nome novo, `_Pokemon__vida`, chega ao valor. Os dois sublinhados são um aviso mais forte do que um só. Evitam também que uma classe construída a partir desta estrague sem querer um atributo com o mesmo nome, como vais ver na parte 3, sobre herança.
 
 Em Python, público e privado são convenções entre programadores: o Python não impede ninguém de usar um nome privado. Por isso, a regra da vida fica protegida de outra maneira, que é tornar o caminho que passa pela regra o mais fácil de usar. É isso que as propriedades fazem.
 
 ### Propriedades: o get e o set com cara de atributo
 
-Uma **propriedade** é um atributo público que, quando é lido, chama um método get, e quando é alterado, chama um método set. Quem usa a classe escreve `pikachu.vida` e `pikachu.vida = 50`, como se `vida` fosse um atributo normal, mas por baixo o Python chama os métodos, e a regra aplica-se sempre.
+Uma **propriedade** é um atributo público que, quando é lido, chama um método get, e quando é alterado, chama um método set. Quem usa a classe escreve `pikachu.vida` e `pikachu.vida = 50`, como se `vida` fosse um atributo normal, mas por baixo o Python chama os métodos, e a regra aplica-se sempre. Antes de correres o programa seguinte, prevê as três linhas que ele escreve.
 
 ```python
 VIDA_MINIMA = 0
@@ -559,7 +542,13 @@ O decorador `@property`, por cima do primeiro, transforma esse método no get da
 
 O decorador `@vida.setter`, por cima do segundo, diz ao Python que este método é o set da propriedade `vida`. Lê-se "o set da propriedade vida". Sempre que alguém escreve `pikachu.vida = algum_valor`, o Python chama este método e passa-lhe o valor do lado direito do `=` no parâmetro `valor`. O set tem de ter exatamente o mesmo nome do get; é esse nome que junta os dois na mesma propriedade.
 
-Agora a linha `pikachu.vida = pikachu.vida - 130` faz, por esta ordem: lê `pikachu.vida`, o que chama o get e dá 100; calcula 100 - 130, que dá -30; e guarda -30 em `pikachu.vida`, o que chama o set, que corrige para 0 e guarda 0 em `_vida`. A escrita é tão simples como a de um atributo normal, e a regra aplicou-se.
+Agora a linha `pikachu.vida = pikachu.vida - 130` faz três coisas, por esta ordem:
+
+1. Lê `pikachu.vida`, o que chama o get e dá 100.
+2. Calcula 100 - 130, que dá -30.
+3. Guarda -30 em `pikachu.vida`, o que chama o set, que corrige para 0 e guarda 0 em `_vida`.
+
+A escrita é tão simples como a de um atributo normal, e a regra aplicou-se.
 
 A terceira linha da saída mostra o Mew criado com 999 e guardado com 150. O construtor escreve `self.vida = vida`, sem sublinhado, e por isso também passa pelo set.
 
@@ -577,11 +566,11 @@ Daqui sai uma regra sobre o que escrever em cada sítio:
 | Dentro da classe, no construtor e nos métodos normais | `self.vida` | Também passa pelo set, e a regra aplica-se aqui também |
 | Dentro do get e do set, e só aí | `self._vida` | É aqui que o valor fica guardado. O set não pode escrever `self.vida`, porque isso voltava a chamar o próprio set |
 
-A última linha da tabela tem uma razão que vale a pena perceber. Se o set escrevesse `self.vida = valor`, essa linha chamava o set outra vez, que chamava o set outra vez, e assim sem fim, até o Python desistir com um erro. Está na secção de erros frequentes desta parte.
+A última linha da tabela precisa de uma explicação. Se o set escrevesse `self.vida = valor`, essa linha chamava o set outra vez, que chamava o set outra vez, e assim sem fim, até o Python desistir com um erro. O erro está em [Erros frequentes](#erros-frequentes), no grupo da parte 2.
 
 ### O construtor também passa pelo set
 
-É tentador escrever no construtor `self._vida = vida`, diretamente no armazém, porque parece mais direto. Mas assim a regra não se aplica à vida inicial:
+É tentador escrever no construtor `self._vida = vida`, diretamente no armazém, porque parece mais direto. Mas assim a regra não se aplica à vida inicial. Antes de correres o programa, prevê a vida do Mew antes e depois de lhe somares 1:
 
 ```python
 VIDA_MINIMA = 0
@@ -626,7 +615,7 @@ O Mew nasceu com 999 de vida, que é um estado impossível. Na linha seguinte, a
 
 ### A classe Pokemon completa
 
-Esta é a classe `Pokemon` do mini-projeto das aulas, com as duas propriedades, a da vida e a do ataque, e os métodos para verificar a vida, calcular o dano e atacar. É a primeira parte do ficheiro [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py):
+Esta é a classe `Pokemon` do mini-projeto das aulas. Tem as duas propriedades, a da vida e a do ataque, e os métodos para verificar a vida, calcular o dano e atacar. É a primeira parte do ficheiro [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py):
 
 ```python
 VIDA_MINIMA = 0
@@ -707,7 +696,7 @@ class Pokemon:
         alvo.verificar_vida()
 ```
 
-As linhas entre três aspas, logo a seguir a cada `class` e a cada `def`, são as docstrings, que já conheces das funções do 10.º: um texto que explica o que a classe ou o método faz. Não mudam o comportamento do programa, mas quem lê o código agradece.
+As linhas entre três aspas, logo a seguir a cada `class` e a cada `def`, são as docstrings. Já as conheces das funções do 10.º ano: um texto que explica o que a classe ou o método faz. Não mudam o comportamento do programa, mas ajudam quem lê o código.
 
 A propriedade do ataque segue a mesma ideia da vida, com outros limites: o ataque fica sempre entre 1 e 50. Com o mínimo em 1, e não em 0, um ataque tira sempre alguma vida. Na parte 4 vais ver que isto garante que um combate acaba sempre.
 
@@ -717,7 +706,7 @@ O `calcular_dano` parece inútil, porque só devolve o ataque. Existe para ser r
 
 O `atacar` começa por verificar dois casos em que não há ataque: um Pokémon KO não pode atacar, e não vale a pena atacar um Pokémon que já está KO. Nesses casos, o `return` sozinho sai do método sem fazer mais nada. Depois pede o dano ao `calcular_dano`, tira-o à vida do alvo e mostra a vida do alvo. A linha `alvo.vida = alvo.vida - dano` passa pelo set da vida do alvo, e por isso a vida nunca fica negativa: é a correção do problema dos -10 da parte 1.
 
-Com esta classe, experimenta um Geodude criado com valores fora dos limites. Para o programa seguinte funcionar, guarda-o numa pasta onde esteja também uma cópia do ficheiro `pokemon.py`, porque a primeira linha vai buscar a classe a esse ficheiro:
+Com esta classe, experimenta um Geodude criado com valores fora dos limites. Para o programa seguinte funcionar, guarda-o numa pasta onde esteja também uma cópia do ficheiro `pokemon.py`. A primeira linha, `from pokemon import Pokemon`, vai buscar a classe a esse ficheiro: lê-se "do ficheiro `pokemon`, traz a classe `Pokemon`". Antes de o correres, prevê a saída:
 
 ```python
 from pokemon import Pokemon
@@ -745,38 +734,7 @@ O Geodude foi pedido com 300 de vida e 0 de ataque, e ficou com 150 e 1, porque 
 
 Os dois sets desta classe fazem a mesma conta: prender um valor entre dois limites. Com o método estático `limitar` da parte 1, cada set podia ter uma linha só, como `self._vida = Pokemon.limitar(valor, VIDA_MINIMA, VIDA_MAXIMA)`. As duas formas estão certas. O código das aulas escreve a conta dentro de cada set, que é mais fácil de ler da primeira vez.
 
-### Erros frequentes ao proteger o estado
-
-**No set, guardar em `self.vida` em vez de `self._vida`.** O set chama-se sempre que alguém escreve `self.vida = ...`. Se a última linha do set for `self.vida = valor`, essa linha chama o set, que chega outra vez à mesma linha, que chama o set outra vez. O Python repete isto cerca de mil vezes e desiste:
-
-```text
-RecursionError: maximum recursion depth exceeded
-```
-
-Nas versões antigas, a mensagem acaba com `in comparison`. Quando vires `RecursionError` numa classe com propriedades, procura um set que escreve no próprio nome da propriedade.
-
-**Esquecer o set, ou dar-lhe um nome diferente do get.** Se a classe tem o `@property` da vida mas não tem um método com `@vida.setter` e o mesmo nome `vida`, a propriedade só se pode ler. A primeira linha que tenta mudá-la, que costuma ser a do construtor, dá erro. Nas versões recentes do Python, a mensagem é:
-
-```text
-AttributeError: property 'vida' of 'Pokemon' object has no setter
-```
-
-e nas versões antigas é:
-
-```text
-AttributeError: can't set attribute
-```
-
-**Escrever no privado a partir de fora.** `pikachu._vida = -500` não dá erro nenhum, e por isso é o erro mais perigoso desta lista: o Pokémon fica num estado impossível e ninguém é avisado. O sublinhado existe para te dizer que não o faças.
-
-**Escrever no privado dentro do construtor.** Já o viste na secção sobre o construtor: `self._vida = vida` no construtor salta o set, e o objeto pode nascer num estado impossível. Dentro da classe, fora do get e do set, escreve-se sempre `self.vida`.
-
-### Verifica se percebeste: proteger o estado
-
-1. Na classe `Pokemon` completa, a linha `geodude.vida = geodude.vida - 500` chama dois métodos. Quais, por que ordem, e com que valores?
-2. Porque é que dentro do set se escreve `self._vida`, e em todos os outros métodos da classe se escreve `self.vida`?
-3. Para quem usa a classe de fora, que diferença há entre um atributo chamado `_ataque` e um atributo chamado `__ataque`? Algum dos dois impede mesmo o acesso?
-4. Se a regra mudasse para "a vida máxima é 200", quantas linhas da classe completa terias de mudar? Quais?
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 3: Herança
 
@@ -784,7 +742,7 @@ AttributeError: can't set attribute
 
 Nos jogos, os tipos dão vantagens: o fogo tira o dobro da vida às plantas, a água tira o dobro ao fogo e as plantas tiram o dobro à água. A classe `Pokemon` da parte 2 não sabe nada disto: o `calcular_dano` devolve sempre o ataque.
 
-Uma solução seria encher o `calcular_dano` da classe `Pokemon` de condições: se o tipo for fogo e o alvo for planta, o dobro; senão, se o tipo for água e o alvo for fogo, o dobro; e assim por diante. Funciona com três tipos, mas cada tipo novo acrescenta mais condições ao mesmo método, e as regras de todos os tipos ficam misturadas no mesmo sítio.
+Uma solução seria encher o `calcular_dano` da classe `Pokemon` de condições. Se o tipo for fogo e o alvo for planta, o dobro; senão, se o tipo for água e o alvo for fogo, o dobro; e assim por diante. Funciona com três tipos, mas cada tipo novo acrescenta mais condições ao mesmo método, e as regras de todos os tipos ficam misturadas no mesmo sítio.
 
 A alternativa é criar uma classe para cada tipo, que aproveita tudo o que a classe `Pokemon` já tem e só muda o que é diferente. É isso a herança.
 
@@ -814,7 +772,7 @@ class PokemonFogo(Pokemon):
         return dano
 ```
 
-O nome da mãe vai entre parênteses a seguir ao nome da filha: `class PokemonFogo(Pokemon):`. Esta linha faz a filha herdar todos os métodos da mãe, incluindo as duas propriedades, o `verificar_vida` e o `atacar`, que a filha não escreveu. Os atributos são outra coisa: só passam a existir num objeto quando o construtor da mãe corre sobre ele, e a secção seguinte mostra como o construtor da filha o chama.
+O nome da mãe vai entre parênteses a seguir ao nome da filha: `class PokemonFogo(Pokemon):`. Esta linha faz a filha herdar todos os métodos da mãe, incluindo as duas propriedades, o `verificar_vida` e o `atacar`, que a filha não escreveu. Os atributos são outra coisa. Só passam a existir num objeto quando o construtor da mãe corre sobre ele, e a secção seguinte mostra como o construtor da filha o chama. Antes de correres o programa seguinte, prevê as quatro linhas da saída.
 
 ```python
 from pokemon import PokemonFogo, PokemonPlanta
@@ -880,7 +838,7 @@ A classe `PokemonAgua` é igual à `PokemonFogo`, com o tipo `"Água"` e a vanta
 
 ### Reescrever um método
 
-A classe `PokemonFogo` tem um método `calcular_dano`, e a mãe também. Quando uma filha define um método com o mesmo nome de um método da mãe, os objetos da filha passam a usar a versão da filha. A isto chama-se **reescrever** um método, e em inglês diz-se override. Os objetos da mãe continuam a usar a versão da mãe, e os de outra filha também, a não ser que essa filha reescreva o método, como fazem as três filhas com o `calcular_dano`.
+A classe `PokemonFogo` tem um método `calcular_dano`, e a mãe também. Quando uma filha define um método com o mesmo nome de um método da mãe, os objetos da filha passam a usar a versão da filha. A isto chama-se **reescrever** um método, e em inglês diz-se override. Os objetos da mãe continuam a usar a versão da mãe. Os de outra filha também, a não ser que essa filha reescreva o método, como fazem as três filhas com o `calcular_dano`. Antes de correres o programa seguinte, prevê o dano de cada ataque.
 
 ```python
 from pokemon import Pokemon, PokemonFogo, PokemonPlanta
@@ -915,7 +873,7 @@ Parece mais simples escrever `dano = self.ataque`, e hoje o resultado seria o me
 
 Olha outra vez para o `atacar` da classe `Pokemon`. Está escrito só na mãe, e tem a linha `dano = self.calcular_dano(alvo)`. Como é que o Charmander tirou o dobro ao Bulbasaur, se o `atacar` é da mãe?
 
-A resposta está na forma como o Python procura um método. Quando escreves `self.calcular_dano(alvo)`, o Python procura o método `calcular_dano` começando pela classe do objeto que está no `self`, e só se não o encontrar lá é que sobe para a classe-mãe. Segue a chamada `charmander.atacar(bulbasaur)`, passo a passo:
+A resposta está na forma como o Python procura um método. Quando escreves `self.calcular_dano(alvo)`, o Python procura o método `calcular_dano` começando pela classe do objeto que está no `self`. Só se não o encontrar lá é que sobe para a classe-mãe. Segue a chamada `charmander.atacar(bulbasaur)`, passo a passo:
 
 1. O Python procura `atacar` na classe do Charmander, `PokemonFogo`. Não o encontra, sobe para a mãe, `Pokemon`, encontra-o e corre-o, com o Charmander no `self` e o Bulbasaur no `alvo`.
 2. Dentro do `atacar`, chega a `self.calcular_dano(alvo)`. O `self` é o Charmander, que é um `PokemonFogo`. O Python procura `calcular_dano` em `PokemonFogo`, encontra-o lá, e corre a versão da filha.
@@ -928,7 +886,7 @@ A resposta está na forma como o Python procura um método. Quando escreves `sel
 
 A classe `PokemonPlanta` tem um método que as outras não têm: `recuperar`, que soma a regeneração à vida. Repara no comentário dentro dele: o método escreve `self.vida`, a propriedade, e não `self._vida`. O set foi herdado da mãe e continua a impedir que a vida passe de 150, também quando é uma filha a mudá-la. Uma planta com 145 de vida e 20 de regeneração fica com 150, e não com 165.
 
-A procura de métodos só sobe da filha para a mãe. Nunca desce da mãe para as filhas, nem vai de lado para uma filha irmã. Por isso, um Charmander não sabe recuperar:
+A procura de métodos só sobe da filha para a mãe. Nunca desce da mãe para as filhas, nem vai de lado para uma filha irmã. Por isso, um Charmander não sabe recuperar. Antes de correres o programa, prevê o que acontece quando ele tenta:
 
 ```python
 from pokemon import PokemonFogo
@@ -945,7 +903,7 @@ O Python procurou `recuperar` em `PokemonFogo`, depois em `Pokemon`, e não o en
 
 ### O privado de dois sublinhados e as classes-filhas
 
-Na parte 2 viste que, com dois sublinhados, o Python muda o nome do atributo e lhe junta o nome da classe. Com herança, isto tem uma consequência, que o ficheiro das aulas deixava anotada num comentário. Neste exemplo, a mãe guarda a vida em `__vida`, com dois sublinhados, e a filha tenta usar esse atributo diretamente:
+Na parte 2 viste que, com dois sublinhados, o Python muda o nome do atributo e lhe junta o nome da classe. Com herança, isto tem uma consequência, que o ficheiro das aulas deixava anotada num comentário. Neste exemplo, a mãe guarda a vida em `__vida`, com dois sublinhados, e a filha tenta usar esse atributo diretamente. Antes de correres o programa, prevê o que escreve o `print` e o que acontece na chamada a `recuperar`:
 
 ```python
 VIDA_MAXIMA = 150
@@ -1000,7 +958,7 @@ AttributeError: 'PokemonPlanta' object has no attribute '_PokemonPlanta__vida'. 
 
 O que aconteceu foi isto. Dentro da classe `Pokemon`, o Python transformou `self.__vida` em `self._Pokemon__vida`, e foi com esse nome que a vida ficou guardada. Dentro da classe `PokemonPlanta`, o Python transformou `self.__vida` em `self._PokemonPlanta__vida`, com o nome da filha, e esse atributo não existe. Cada classe junta o seu próprio nome, e por isso a filha não chega ao atributo de dois sublinhados da mãe. A própria mensagem de erro, nas versões recentes, sugere o nome verdadeiro.
 
-É este mesmo mecanismo que protege a mãe, como a parte 2 tinha anunciado. Se a filha só escrevesse `self.__vida = 999`, sem ler o valor antes, não havia erro: o Python criava um atributo da filha, `_PokemonPlanta__vida`, e a vida verdadeira, guardada em `_Pokemon__vida`, ficava igual. A filha não estragava o atributo da mãe, mas também não mudava a vida, e o programa não avisava ninguém.
+É este mesmo mecanismo que protege a mãe, como a parte 2 tinha anunciado. Se a filha só escrevesse `self.__vida = 999`, sem ler o valor antes, não havia erro. O Python criava um atributo da filha, `_PokemonPlanta__vida`, e a vida verdadeira, guardada em `_Pokemon__vida`, ficava igual. A filha não estragava o atributo da mãe, mas também não mudava a vida, e o programa não avisava ninguém.
 
 Voltando ao erro do `recuperar`, a correção não é escrever `_Pokemon__vida` na filha, o que funcionava mas quebrava o acordo do privado. A correção é a filha usar a propriedade, que é pública:
 
@@ -1018,7 +976,7 @@ class PokemonPlanta(Pokemon):
         self.vida = self.vida + self.regeneracao
 ```
 
-Para o experimentar, troca no programa anterior a classe `PokemonPlanta` por esta e acrescenta no fim a linha `print(bulbasaur.vida)`. A saída passa a ser esta:
+Para o experimentar, troca no programa anterior a classe `PokemonPlanta` por esta e acrescenta no fim a linha `print(bulbasaur.vida)`. Prevê as duas linhas que o programa escreve, e compara com a saída:
 
 ```text
 100
@@ -1027,39 +985,7 @@ Para o experimentar, troca no programa anterior a classe `PokemonPlanta` por est
 
 Com esta versão, a chamada a `recuperar` já não dá erro e deixa a vida em 120, e o set da mãe continua a aplicar a regra. O código das aulas faz assim: guarda a vida em `_vida`, com um só sublinhado, e usa a propriedade `vida` em todo o lado, incluindo nas filhas.
 
-### Erros frequentes com herança
-
-**Esquecer o `super().__init__` no construtor da filha.** Se o construtor da filha não chamar o da mãe, os atributos que a mãe cria nunca chegam a existir. Com uma filha que só escreve `self.tipo = "Fogo"` no construtor, o `print(charmander.tipo)` funciona e escreve `Fogo`, mas o `charmander.verificar_vida()` dá:
-
-```text
-AttributeError: 'PokemonFogo' object has no attribute '_vida'. Did you mean: 'vida'?
-```
-
-O `verificar_vida` leu `self.vida`, o get foi procurar `self._vida`, e esse atributo nunca foi criado, porque quem o cria é o set, chamado pelo construtor da mãe, que não correu.
-
-**Esquecer o `return` no método reescrito.** Se o `calcular_dano` de uma filha calcular o dano e não o devolver, o método devolve `None`. Com o `calcular_dano` do `PokemonFogo` sem a linha `return dano`, um ataque do Charmander ao Bulbasaur escreve duas linhas, a segunda estranha, e só depois dá erro:
-
-```text
-É super eficaz!
-Charmander ataca Bulbasaur e tira None de vida.
-```
-
-```text
-TypeError: unsupported operand type(s) for -: 'int' and 'NoneType'
-```
-
-A palavra `None` na segunda linha é a pista: o `atacar` recebeu `None` como dano, escreveu-o, e depois não conseguiu fazer a conta `alvo.vida - dano`, porque não se subtrai `None` a um número. A primeira linha mostra que o `calcular_dano` correu e até dobrou o dano; só não o devolveu.
-
-**Chamar um método que só outra filha tem.** Já o viste com o `charmander.recuperar()`. A procura sobe da filha para a mãe, e não vai de lado.
-
-**Usar herança onde não há "é um".** Este erro merece uma secção própria, na parte 4, porque se confunde com a composição.
-
-### Verifica se percebeste: herança
-
-1. Num objeto `PokemonAgua`, de que classe vem o método `verificar_vida` que ele usa? E o `calcular_dano`?
-2. Porque é que o construtor de `PokemonAgua` não pede o tipo?
-3. Se no `calcular_dano` do `PokemonAgua` trocasses `dano = super().calcular_dano(alvo)` por `dano = self.ataque`, o resultado dos combates mudava hoje? E se a regra do dano na classe-mãe mudasse?
-4. Porque é que `bulbasaur.recuperar()` funciona e `charmander.recuperar()` dá erro?
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 4: Composição e agregação
 
@@ -1069,7 +995,7 @@ Até aqui, os atributos dos objetos guardavam números e textos: a vida, o ataqu
 
 Estas relações são do tipo "tem um", ou "tem vários": um treinador tem vários Pokémon, um ginásio tem um líder. São diferentes da herança, que é do tipo "é um". Um treinador não é um Pokémon; tem Pokémon.
 
-Às relações "tem" entre um objeto e os objetos que ele guarda chamamos relações entre um **todo** e as suas **partes**. O treinador é o todo, e os Pokémon da equipa são as partes. Há duas formas de relação entre um todo e as suas partes, a agregação e a composição. No código escrevem-se da mesma maneira, e a diferença entre elas está no que a relação significa: quem cria a parte, se a parte pode ser partilhada, e se a parte sobrevive quando o todo desaparece. Para perceberes essa diferença, precisas primeiro de perceber o que uma variável guarda quando guarda um objeto. As duas secções seguintes tratam disso, com o treinador e a sua equipa.
+Às relações "tem" entre um objeto e os objetos que ele guarda chamamos relações entre um **todo** e as suas **partes**. O treinador é o todo, e os Pokémon da equipa são as partes. Há duas formas de relação entre um todo e as suas partes, a agregação e a composição. No código escrevem-se da mesma maneira. A diferença entre elas está no que a relação significa: quem cria a parte, se a parte pode ser partilhada, e se a parte sobrevive quando o todo desaparece. Para perceberes essa diferença, precisas primeiro de perceber o que uma variável guarda quando guarda um objeto. As duas secções seguintes tratam disso, com o treinador e a sua equipa.
 
 ### O Treinador e a sua equipa
 
@@ -1099,7 +1025,7 @@ class Treinador:
 
 O treinador tem dois atributos: o nome, que é um texto, e a equipa, que é uma lista e começa vazia. O método `capturar` recebe um Pokémon e acrescenta-o à equipa. Repara que o `capturar` não cria nenhum Pokémon: recebe um que alguém criou antes e passou por parâmetro.
 
-O método `escolher_pokemon` percorre a equipa pela ordem em que os Pokémon foram capturados e devolve o primeiro que ainda tem vida. Se chegar ao fim da lista sem encontrar nenhum, devolve `None`, que quer dizer "não há nenhum". Quem chamar este método tem de estar preparado para receber `None`.
+O método `escolher_pokemon` percorre a equipa pela ordem em que os Pokémon foram capturados e devolve o primeiro que ainda tem vida. Se chegar ao fim da lista sem encontrar nenhum, devolve `None`, que quer dizer "não há nenhum". Quem chamar este método tem de estar preparado para receber `None`. Antes de correres o programa seguinte, prevê as cinco linhas da saída.
 
 ```python
 from pokemon import PokemonFogo, PokemonPlanta
@@ -1138,7 +1064,7 @@ charmander     ─────┐
 ash.equipa[0]  ─────┘
 ```
 
-Para perguntar se dois caminhos levam ao mesmo objeto, usa-se o operador `is`, que já usaste com `None`. `a is b` dá `True` se `a` e `b` forem o mesmo objeto, e `False` se forem objetos diferentes, mesmo que sejam parecidos.
+Para perguntar se dois caminhos levam ao mesmo objeto, usa-se o operador `is`, que já usaste com `None`. `a is b` dá `True` se `a` e `b` forem o mesmo objeto, e `False` se forem objetos diferentes, mesmo que sejam parecidos. Antes de correres o programa seguinte, prevê as três linhas que ele escreve.
 
 ```python
 from pokemon import PokemonFogo
@@ -1162,7 +1088,7 @@ True
 
 A primeira linha confirma que o primeiro Pokémon da equipa e a variável `charmander` são o mesmo objeto. As duas seguintes mostram a consequência: uma mudança feita por um dos caminhos vê-se pelo outro, porque só há um Charmander. Mudou-se a vida pela variável, e a equipa viu 10; mudou-se pela equipa, e a variável viu 75.
 
-Compara com dois objetos diferentes, criados com os mesmos valores:
+Compara com dois objetos diferentes, criados com os mesmos valores. Prevê as três linhas antes de correres o programa:
 
 ```python
 from pokemon import PokemonFogo
@@ -1203,7 +1129,7 @@ A relação entre o treinador e os Pokémon da equipa é uma agregação, e o c�
 - o mesmo Pokémon pode ser apontado por outros caminhos além da equipa, como a variável `charmander`, que continua a apontar para ele;
 - quando o treinador desaparece, o Pokémon continua a existir.
 
-A terceira característica vê-se neste programa:
+A terceira característica vê-se neste programa. Antes de o correres, prevê se o Charmander continua a existir depois do `del ash`:
 
 ```python
 from pokemon import PokemonFogo
@@ -1222,7 +1148,7 @@ Charmander tem 90/150 de vida.
 
 O `del ash` apagou o único caminho para o treinador, e o Python libertou-o, com a sua lista `equipa`. O Charmander não foi com ele, porque a variável `charmander` ainda aponta para ele. O Pokémon existia antes do treinador e continua a existir depois.
 
-Fora da programação, há agregações por todo o lado. Uma playlist e as músicas: a mesma música pode estar em várias playlists, e apagar uma playlist não apaga as músicas. Uma turma e os alunos: os alunos existiam antes de a turma ser formada, um aluno pode estar também num clube da escola, e quando a turma acaba os alunos continuam a existir.
+Fora da programação, há agregações por todo o lado. Uma playlist e as músicas: a mesma música pode estar em várias playlists, e apagar uma playlist não apaga as músicas. Uma turma e os alunos: os alunos existiam antes de a turma ser formada e um aluno pode estar também num clube da escola. Quando a turma acaba, os alunos continuam a existir.
 
 No ginásio, o líder e os desafiantes também são agregação. São treinadores que já existem antes de o ginásio ser criado, que o ginásio recebe por parâmetro, e que continuam a existir se o ginásio fechar. O mesmo treinador pode até desafiar vários ginásios, e o laboratório mostra-o.
 
@@ -1243,7 +1169,7 @@ As três características estão lá:
 - o registo fica guardado só na lista `combates` do ginásio. Nenhuma variável de fora aponta para ele, e o ginásio não o entrega a mais ninguém;
 - quando o ginásio desaparece, a lista `combates` vai com ele, e os registos, que só eram apontados por essa lista, deixam de ter caminho e vão também.
 
-Fora da programação, uma casa e as suas divisões são uma composição: a cozinha de uma casa foi construída com a casa, não é partilhada com a casa do lado, e se a casa for demolida a cozinha não fica a existir sozinha. Um livro e as suas páginas também: as páginas foram feitas para aquele livro e não fazem sentido soltas.
+Fora da programação, uma casa e as suas divisões são uma composição. A cozinha de uma casa foi construída com a casa e não é partilhada com a casa do lado. Se a casa for demolida, a cozinha não fica a existir sozinha. Um livro e as suas páginas também: as páginas foram feitas para aquele livro e não fazem sentido soltas.
 
 ### As perguntas que decidem
 
@@ -1271,7 +1197,7 @@ Aplicadas ao mundo do ginásio, as perguntas dão isto:
 | `Ginasio` | Os `desafiantes` | Sim, são treinadores que vêm de fora | Fora do ginásio, que os recebe em `combater` | Agregação |
 | `Ginasio` | Os registos em `combates` | Não, são o histórico daquele ginásio | O próprio ginásio, em `combater` | Composição |
 
-Há casos em que olhar só para quem cria engana. O último caso da parte 4 é um deles, e mostra que, além de quem cria a parte, é preciso ver quem a guarda e com quem ela desaparece.
+Há casos em que olhar só para quem cria engana. O último caso do exemplo guiado é um deles, e mostra que, além de quem cria a parte, é preciso ver quem a guarda e com quem ela desaparece.
 
 ### No código, as duas parecem iguais
 
@@ -1287,13 +1213,13 @@ self.combates.append(Combate(desafiante.nome, atacante.nome, vencedor.nome))
 
 Nas duas, o todo tem uma lista e acrescenta-lhe um objeto com `append`. O Python não tem uma palavra para agregação nem outra para composição. As duas escrevem-se com um atributo que guarda uma referência, ou uma lista de referências.
 
-A diferença está no desenho, e vê-se em dois sítios do código. O primeiro é onde a parte é criada: na primeira linha, o `pokemon` chega por parâmetro, já criado por alguém de fora; na segunda, o `Combate(...)` é criado ali mesmo, dentro do ginásio. O segundo é o que o todo faz com as suas partes: numa composição, o todo não entrega as suas partes a outros objetos, porque, se o fizer, alguém de fora passa a ter um caminho para elas, e elas deixam de desaparecer com o todo.
+A diferença está no desenho, e vê-se em dois sítios do código. O primeiro é onde a parte é criada. Na primeira linha, o `pokemon` chega por parâmetro, já criado por alguém de fora. Na segunda, o `Combate(...)` é criado ali mesmo, dentro do ginásio. O segundo é o que o todo faz com as suas partes. Numa composição, o todo não entrega as suas partes a outros objetos. Se o fizer, alguém de fora passa a ter um caminho para elas, e elas deixam de desaparecer com o todo.
 
-Como o Python não faz cumprir esta diferença, quem decide é quem desenha as classes, e quem escreve o código tem de respeitar a decisão. O código das aulas tem comentários como `# AGREGAÇÃO` e `# COMPOSIÇÃO` ao lado dos atributos, e é para isso que servem: dizem a quem lê qual foi a decisão, que o código sozinho não mostra.
+Como o Python não faz cumprir esta diferença, quem decide é quem desenha as classes, e quem escreve o código tem de respeitar a decisão. O código das aulas tem comentários como `# AGREGAÇÃO` e `# COMPOSIÇÃO` ao lado dos atributos. Servem para dizer a quem lê qual foi a decisão, que o código sozinho não mostra.
 
 ### O desenho em UML: losango vazio e losango cheio
 
-A **UML** é uma forma de desenhar programas orientados a objetos que se usa em todo o mundo. Num diagrama de classes, cada classe é um retângulo com o nome da classe, os atributos e os métodos, e as relações entre classes são linhas com um símbolo numa das pontas:
+A **UML** é uma forma de desenhar programas orientados a objetos que se usa em todo o mundo. Num diagrama de classes, cada classe é um retângulo com o nome da classe, os atributos e os métodos. As relações entre classes são linhas com um símbolo numa das pontas:
 
 - a agregação desenha-se com um **losango vazio** na ponta do lado do todo;
 - a composição desenha-se com um **losango cheio** na ponta do lado do todo;
@@ -1339,9 +1265,9 @@ classDiagram
     Pokemon <|-- PokemonPlanta
 ```
 
-Se estiveres a ler este guia num sítio que não desenha o diagrama, é isto que ele mostra. Entre o `Ginasio` e o `Treinador` há uma linha com um losango vazio junto ao `Ginasio`, com a legenda "lider e desafiantes": o ginásio é o todo e os treinadores são partes, em agregação. Entre o `Ginasio` e o `Combate` há uma linha com um losango cheio junto ao `Ginasio`: o ginásio é o todo e os registos são partes, em composição. Entre o `Treinador` e o `Pokemon` há um losango vazio junto ao `Treinador`: agregação. E de cada uma das três classes-filhas sai uma linha com um triângulo vazio que aponta para a classe `Pokemon`: herança.
+Se estiveres a ler este guia num sítio que não desenha o diagrama, é isto que ele mostra. Entre o `Ginasio` e o `Treinador` há uma linha com um losango vazio junto ao `Ginasio`, com a legenda "lider e desafiantes". O ginásio é o todo e os treinadores são partes, em agregação. Entre o `Ginasio` e o `Combate` há uma linha com um losango cheio junto ao `Ginasio`: o ginásio é o todo e os registos são partes, em composição. Entre o `Treinador` e o `Pokemon` há um losango vazio junto ao `Treinador`: agregação. E de cada uma das três classes-filhas sai uma linha com um triângulo vazio que aponta para a classe `Pokemon`: herança.
 
-Para te lembrares de qual é qual: no losango cheio, o todo é dono da parte do princípio ao fim, porque a cria e a leva consigo; no losango vazio, o todo tem a parte mas não é dono dela, porque a parte veio de fora, pode estar noutros todos e pode ir para outro lado.
+Para te lembrares de qual é qual, pensa em quem é dono da parte. No losango cheio, o todo é dono da parte do princípio ao fim, porque a cria e a leva consigo. No losango vazio, o todo tem a parte mas não é dono dela. A parte veio de fora, pode estar noutros todos e pode ir para outro lado.
 
 ### É um ou tem um: herança, agregação ou composição
 
@@ -1360,25 +1286,25 @@ A pergunta que evita este erro é a das frases em português. "Um treinador é u
 
 A herança só serve quando "é um" é verdade sempre, e quando um objeto da filha pode ser usado em qualquer sítio onde se usa um objeto da mãe. Um Charmander pode lutar em qualquer combate onde luta um Pokémon, e por isso a herança serve. Quando tiveres dúvidas entre herança e "tem um", começa por "tem um": é mais fácil de mudar mais tarde.
 
-### Exemplo guiado: o ginásio Pokémon
+## Exemplo guiado: o ginásio Pokémon
 
 Este exemplo junta tudo o que a parte 4 explicou, num programa completo. É o código do ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), e o [laboratório](03-objetos-e-composicao-laboratorio.md) mostra como o construir no computador, passo a passo.
 
-#### Passo 1: O problema
+### Passo 1: O problema
 
 Numa cidade há um ginásio, e o ginásio tem um líder. Os treinadores vêm ao ginásio desafiar o líder. Em cada desafio, luta o primeiro Pokémon com vida de cada treinador. Os dois atacam à vez, a começar pelo Pokémon do desafiante, até um deles ficar KO; o treinador do Pokémon que ficou de pé vence. O ginásio guarda o registo de cada combate: quem desafiou, com que Pokémon, e quem venceu. No fim, deve ser possível mostrar o histórico do ginásio.
 
-#### Passo 2: As classes e as relações
+### Passo 2: As classes e as relações
 
 Os substantivos do problema dão as classes candidatas: ginásio, cidade, líder, treinador, Pokémon, combate. A cidade é só um nome, e fica como atributo de texto do ginásio. O líder é um treinador, e não precisa de classe própria. O Pokémon já tem classe, com as filhas. Ficam três classes novas: `Treinador`, `Ginasio` e `Combate`, que representa o registo de um combate.
 
-As relações entre elas decidem-se com as duas perguntas, e já estão na tabela da secção [As perguntas que decidem](#as-perguntas-que-decidem): a equipa do treinador, o líder e os desafiantes são agregação; os registos dos combates são composição. O diagrama da secção sobre UML desenha estas mesmas relações.
+As relações entre elas decidem-se com as duas perguntas, e já estão na tabela da secção [As perguntas que decidem](#as-perguntas-que-decidem). A equipa do treinador, o líder e os desafiantes são agregação, e os registos dos combates são composição. O diagrama da secção sobre UML desenha estas mesmas relações.
 
-#### Passo 3: O Treinador
+### Passo 3: O Treinador
 
 A classe `Treinador` já está escrita e explicada na secção [O Treinador e a sua equipa](#o-treinador-e-a-sua-equipa). Não muda nada.
 
-#### Passo 4: O Combate
+### Passo 4: O Combate
 
 ```python
 class Combate:
@@ -1399,7 +1325,7 @@ Um `Combate` guarda três textos: o nome do desafiante, o nome do Pokémon com q
 
 Repara que o registo guarda nomes, e não os objetos. Um registo é uma fotografia do que aconteceu: não precisa de apontar para o treinador nem para o Pokémon, que vão continuar a mudar depois do combate. O Pokémon pode perder vida noutro combate, ou recuperá-la, e a fotografia de um combate antigo não deve mudar por isso.
 
-#### Passo 5: O Ginasio, o construtor e o histórico
+### Passo 5: O Ginasio, o construtor e o histórico
 
 Neste passo, a classe `Ginasio` fica com o construtor e com o método que mostra o histórico. O método `combater`, que é o maior, fica para o passo 6, e no ficheiro completo aparece entre estes dois.
 
@@ -1426,7 +1352,7 @@ O construtor recebe a cidade e o líder. O líder é um `Treinador` criado fora 
 
 O `mostrar_historico` escreve um título e percorre a lista de registos, escrevendo o resumo de cada um. O `\n` no início do título escreve uma linha em branco antes dele, para separar o histórico do que vem antes. O ginásio mostra os seus registos, mas não os entrega: quem chama o `mostrar_historico` recebe texto no ecrã, e não os objetos `Combate`.
 
-#### Passo 6: O método combater
+### Passo 6: O método combater
 
 O método `combater` fica dentro da classe `Ginasio`, entre o construtor e o `mostrar_historico`. O comentário no início do bloco lembra onde está o resto da classe:
 
@@ -1471,7 +1397,7 @@ Um `while True` só é seguro se houver a certeza de que um `break` acaba por ac
 
 A última linha é a composição. Depois do ciclo, o ginásio cria um `Combate` com os nomes do desafiante, do Pokémon do desafiante e do vencedor, e guarda-o na sua lista `combates`. O registo nasce dentro do ginásio e fica no ginásio.
 
-#### Passo 7: Prever e executar
+### Passo 7: Prever e executar
 
 Este é o programa principal, no fim do ficheiro `ginasio.py`:
 
@@ -1492,7 +1418,7 @@ if __name__ == "__main__":
     print(f"\n{ash.nome} continua com {len(ash.equipa)} Pokémon; {misty.nome} continua com {len(misty.equipa)}.")
 ```
 
-Antes de executar, prevê o primeiro combate numa tabela, uma linha por ataque. A Misty tem um Starmie, de água, com 120 de vida e 35 de ataque. O Ash tem um Charmander, de fogo, com 90 de vida e 40 de ataque, e um Bulbasaur, de planta, com 110 de vida, 25 de ataque e 20 de regeneração. O Charmander luta primeiro, porque é o primeiro da equipa do Ash. A água tem vantagem contra o fogo, e por isso o Starmie tira ao Charmander o dobro do seu ataque, 70.
+Antes de executar, prevê o primeiro combate numa tabela, uma linha por ataque. A Misty tem um Starmie, de água, com 120 de vida e 35 de ataque. O Ash tem um Charmander, de fogo, com 90 de vida e 40 de ataque. Tem também um Bulbasaur, de planta, com 110 de vida, 25 de ataque e 20 de regeneração. O Charmander luta primeiro, porque é o primeiro da equipa do Ash. A água tem vantagem contra o fogo, e por isso o Starmie tira ao Charmander o dobro do seu ataque, 70.
 
 | Ataque | Quem ataca | Dano | Vida do Charmander | Vida do Starmie |
 | --- | --- | ---: | ---: | ---: |
@@ -1504,7 +1430,7 @@ Antes de executar, prevê o primeiro combate numa tabela, uma linha por ataque. 
 
 No quarto ataque, o Charmander fica KO, e o vencedor é a Misty.
 
-No segundo combate, o Ash volta a desafiar. O `escolher_pokemon` do Ash salta o Charmander, que tem 0 de vida, e escolhe o Bulbasaur. O da Misty escolhe o Starmie, que continua com os 40 de vida com que ficou: ninguém o curou, porque o ginásio trabalha com os Pokémon verdadeiros dos treinadores, e não com cópias. É a agregação a mostrar-se outra vez. O Bulbasaur é de planta e tem vantagem contra a água: tira o dobro do seu ataque, 50, e o Starmie fica KO logo no primeiro ataque. O vencedor é o Ash.
+No segundo combate, o Ash volta a desafiar. O `escolher_pokemon` do Ash salta o Charmander, que tem 0 de vida, e escolhe o Bulbasaur. O da Misty escolhe o Starmie, que continua com os 40 de vida com que ficou. Ninguém o curou, porque o ginásio trabalha com os Pokémon verdadeiros dos treinadores, e não com cópias. É a agregação a mostrar-se outra vez. O Bulbasaur é de planta e tem vantagem contra a água: tira o dobro do seu ataque, 50, e o Starmie fica KO logo no primeiro ataque. O vencedor é o Ash.
 
 A saída do programa é esta. A primeira linha está em branco, por causa do `\n` do título do combate:
 
@@ -1536,7 +1462,7 @@ Ash continua com 2 Pokémon; Misty continua com 1.
 
 Compara a saída com a tua tabela. O "É super eficaz!" aparece antes da linha do ataque, porque é escrito dentro do `calcular_dano`, e o `atacar` chama o `calcular_dano` antes de escrever a sua linha.
 
-#### Passo 8: O que sobrevive quando o ginásio desaparece
+### Passo 8: O que sobrevive quando o ginásio desaparece
 
 A última linha da saída foi escrita depois de `del cerulean`. Antes do `del`, os caminhos eram estes:
 
@@ -1547,7 +1473,7 @@ cerulean  ──→  Ginasio de Cerulean
                   combates ──────→  dois objetos Combate (só o ginásio aponta para eles)
 ```
 
-O `del cerulean` apagou a variável `cerulean`, que era o único caminho para o ginásio. O Python libertou o ginásio e, com ele, as suas listas. Os dois registos de `Combate` só eram apontados pela lista `combates`, e por isso ficaram sem caminho e foram libertados também: é a composição, em que as partes desaparecem com o todo. A Misty e o Ash continuavam a ser apontados pelas variáveis `misty` e `ash`, e por isso continuaram a existir, com as suas equipas: é a agregação, em que as partes sobrevivem ao todo. Depois do `del`, sobra isto:
+O `del cerulean` apagou a variável `cerulean`, que era o único caminho para o ginásio. O Python libertou o ginásio e, com ele, as suas listas. Os dois registos de `Combate` só eram apontados pela lista `combates`, e por isso ficaram sem caminho e foram libertados também. É a composição, em que as partes desaparecem com o todo. A Misty e o Ash continuavam a ser apontados pelas variáveis `misty` e `ash`, e por isso continuaram a existir, com as suas equipas. É a agregação, em que as partes sobrevivem ao todo. Depois do `del`, sobra isto:
 
 ```text
 misty  ──→  Treinador Misty, com o Starmie
@@ -1604,11 +1530,11 @@ class Ginasio:
             desafiante.receber_medalha(Medalha(self.cidade))
 ```
 
-A medalha é criada dentro do ginásio, pela expressão `Medalha(self.cidade)`, mas o ginásio não a guarda em lista nenhuma sua: entrega-a logo ao treinador, com o `receber_medalha`, e é o treinador que a guarda na sua lista `medalhas`. O ginásio entrega a medalha através de um método do treinador, em vez de mexer na lista dele, pela razão que viste no passo 6: cada classe faz o trabalho que lhe pertence, e quem guarda as medalhas é o treinador.
+A medalha é criada dentro do ginásio, pela expressão `Medalha(self.cidade)`, mas o ginásio não a guarda em lista nenhuma sua. Entrega-a logo ao treinador, com o `receber_medalha`, e é o treinador que a guarda na sua lista `medalhas`. O ginásio entrega a medalha através de um método do treinador, em vez de mexer na lista dele. A razão é a que viste no passo 6: cada classe faz o trabalho que lhe pertence, e quem guarda as medalhas é o treinador.
 
-Repara que a linha `self.medalhas = []` não tem comentário de agregação nem de composição. Que relação há entre o treinador e as suas medalhas é uma pergunta para discutirem na aula.
+Repara que a linha `self.medalhas = []` não tem comentário de agregação nem de composição. Que relação há entre o treinador e as suas medalhas é uma pergunta para discutires na aula.
 
-Com o programa principal do passo 7, trocando as linhas do fim, a partir do `del cerulean`, por estas, a medalha continua com o Ash depois de o ginásio desaparecer:
+Com o programa principal do passo 7, trocando as linhas do fim, a partir do `del cerulean`, por estas, vês o que acontece à medalha depois de o ginásio desaparecer. Antes de correres o programa, prevê quantas medalhas tem o Ash no fim:
 
 ```python
 if __name__ == "__main__":
@@ -1630,34 +1556,7 @@ O ginásio fechou, e a medalha continua a existir, com o treinador que a ganhou.
 
 A lição deste caso é que a pergunta "quem cria a parte?" não chega sozinha. É preciso perguntar também quem guarda a parte e com quem ela desaparece. O registo do combate é criado pelo ginásio e fica no ginásio: composição. A medalha é criada pelo ginásio e vai para o treinador: não é composição do ginásio.
 
-### Erros frequentes com composição e agregação
-
-**Pensar que a lista guarda uma cópia.** Quem pensa assim espera que, depois de `ash.capturar(charmander)`, mudar `charmander.vida` não mude o Pokémon da equipa. Muda, porque a lista guarda uma referência ao mesmo objeto. Volta à secção sobre referências e ao exemplo com `is`.
-
-**Pensar que `del` apaga o objeto.** O `del` apaga um nome. O objeto só desaparece quando já nenhum caminho leva a ele. Foi por isso que, depois de `del ash`, o Charmander continuou vivo.
-
-**Criar fora do todo a parte de uma composição e ficar com um caminho para ela.** Se alguém criasse um registo de combate fora do ginásio, o guardasse numa variável e só depois o entregasse com um método `guardar_registo(combate)`, essa variável continuava a apontar para ele, e o registo já não desaparecia com o ginásio. Na prática, passava a ser uma agregação, mesmo com o comentário a dizer composição. É por isso que, nas composições deste guia, é o próprio todo que cria as partes.
-
-**Confundir "criado fora" com "definido noutro ficheiro".** Para decidir a relação, interessa onde está escrita a expressão que cria o objeto, e o ficheiro onde a classe está definida não conta. A classe `Treinador` está definida no `ginasio.py`, no mesmo ficheiro do `Ginasio`, e mesmo assim o líder é uma agregação: o `Treinador("Misty")` está escrito no programa principal, fora dos métodos do ginásio. O `Combate(...)` está escrito dentro de um método do ginásio, e por isso o registo é criado pelo todo.
-
-**Usar herança para uma relação "tem".** `class Treinador(Pokemon):` dá ao treinador vida e ataque. A frase "um treinador é um Pokémon" é falsa, e por isso a herança não serve.
-
-**Usar o resultado de `escolher_pokemon` sem verificar `None`.** Se o treinador não tiver nenhum Pokémon com vida, `ash.escolher_pokemon().nome` dá:
-
-```text
-AttributeError: 'NoneType' object has no attribute 'nome'
-```
-
-A mensagem diz que se tentou ler `nome` num valor do tipo `NoneType`, que é o tipo do `None`. É por isso que o `combater` verifica `atacante is None or defensor is None` antes de usar os dois Pokémon.
-
-**Procurar no código uma palavra que diga se é agregação ou composição.** Não existe. A diferença está em quem cria a parte, em quem a guarda e no que acontece quando o todo desaparece.
-
-### Verifica se percebeste: composição e agregação
-
-1. Porque é que a relação entre o `Treinador` e os Pokémon da equipa é agregação? Responde com as duas perguntas.
-2. No método `combater`, que linha mostra que os registos são uma composição? O que é que nessa linha o mostra?
-3. Depois de `del cerulean`, porque é que ainda se consegue usar a variável `ash`, e porque é que já não há forma de ver o histórico de Cerulean?
-4. Imagina um ginásio que, no construtor, criasse o seu próprio líder, com `self.lider = Treinador("Misty")`, em vez de o receber por parâmetro. Que relação passava a haver entre o ginásio e o líder? O que acontecia a uma treinadora que quisesse ser líder de dois ginásios?
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 5: Métodos de classe
 
@@ -1665,7 +1564,11 @@ A mensagem diz que se tentou ler `nome` num valor do tipo `NoneType`, que é o t
 
 Até aqui conheceste dois tipos de método. O método do objeto, que é o normal, recebe o objeto no `self` e trabalha com os atributos dele: o `verificar_vida` precisa de saber de que Pokémon mostrar a vida. O método estático, marcado com `@staticmethod`, não recebe nada além dos seus parâmetros: o `limitar` da parte 1 faz a conta só com o que lhe dão.
 
-Há um terceiro tipo, que fica entre os dois. Não precisa de nenhum objeto, como o estático, mas precisa de saber uma coisa que o estático não sabe: de que classe foi chamado. Chama-se **método de classe**. Para perceberes para que serve, vale a pena começar por um problema que os outros dois não resolvem bem.
+Há um terceiro tipo, que fica entre os dois. Não precisa de nenhum objeto, como o estático, mas precisa de saber uma coisa que o estático não sabe: de que classe foi chamado. Chama-se **método de classe**.
+
+Na aula, podes ouvir "métodos de classe" para os métodos que se escrevem dentro da classe e se chamam com um objeto. Neste guia, "método de classe" é só o que leva `@classmethod`, e os que se chamam com um objeto chamam-se métodos do objeto.
+
+Para perceberes para que serve, começa por um problema que os outros dois não resolvem bem.
 
 ### Um treinador já com a equipa
 
@@ -1760,7 +1663,7 @@ class Treinador:
 
 Compara com a versão estática. Há três diferenças. A linha `@classmethod` em vez de `@staticmethod`. O primeiro parâmetro, `cls`, que o Python preenche sozinho: quem chama o método só passa o nome e a lista, como antes. E a linha que cria o treinador, que passou de `Treinador(nome)` para `cls(nome)`. Chamar `cls(nome)` é chamar o construtor da classe que está no `cls`: se for `Lider`, cria um `Lider`.
 
-O resto do método é o que fazias à mão: percorre a lista e captura cada Pokémon. Repara que usa o `capturar` do próprio treinador, e não `treinador.equipa.append`: se um dia a captura tiver uma regra, como um limite de seis Pokémon, o construtor alternativo passa a cumpri-la sem ninguém lhe mexer.
+O resto do método é o que fazias à mão: percorre a lista e captura cada Pokémon. Repara que usa o `capturar` do próprio treinador, e não `treinador.equipa.append`. Se um dia a captura tiver uma regra, como um limite de seis Pokémon, o construtor alternativo passa a cumpri-la sem ninguém lhe mexer.
 
 ### O líder, um treinador que escolhe de outra maneira
 
@@ -1833,7 +1736,7 @@ O uso mais comum de um método de classe é este: um construtor alternativo, que
 
 ### Um caso que engana: um construtor alternativo nos Pokémon
 
-O `com_equipa` funciona porque o `Treinador` e o `Lider` se criam da mesma maneira, só com o nome. Nos Pokémon não é assim: a `Pokemon` pede o nome, o tipo, a vida e o ataque, e as filhas pedem menos, porque o tipo já está escrito nelas. Este programa experimenta um construtor alternativo para Pokémon selvagens, fracos, numa versão curta das classes:
+O `com_equipa` funciona porque o `Treinador` e o `Lider` se criam da mesma maneira, só com o nome. Nos Pokémon não é assim: a `Pokemon` pede o nome, o tipo, a vida e o ataque, e as filhas pedem menos, porque o tipo já está escrito nelas. Este programa experimenta um construtor alternativo para Pokémon selvagens, fracos, numa versão curta das classes. Antes de o correres, prevê o que acontece com o Rattata e com o Vulpix:
 
 ```python
 class Pokemon:
@@ -1875,49 +1778,7 @@ O Rattata foi criado: em `Pokemon.selvagem`, o `cls` é `Pokemon`, e `cls(nome, 
 
 A regra que sai daqui: um construtor alternativo com `cls(...)` só serve às classes que se criam com os mesmos argumentos. Antes de pores um método de classe na mãe, confirma que todas as filhas que o vão usar têm o mesmo construtor que ela. É por isso que, no exemplo das aulas, o `com_equipa` está no `Treinador`, e não há nenhum construtor alternativo na `Pokemon`.
 
-### Erros frequentes com métodos de classe
-
-**Esquecer o `@classmethod`.** Sem o decorador, o método passa a ser um método do objeto, e o Python já não lhe passa a classe. Quem chama `Treinador.com_equipa("Ash", ["Charmander"])` está a dar os valores pela ordem dos parâmetros: o `"Ash"` vai para o `cls`, a lista vai para o `nome`, e o `pokemons` fica sem nada.
-
-```python
-class Treinador:
-    """Um treinador com um construtor alternativo, mas sem o decorador."""
-
-    def __init__(self, nome):
-        """Cria um treinador com um nome e a equipa vazia."""
-        self.nome = nome
-        self.equipa = []
-
-    def com_equipa(cls, nome, pokemons):
-        """Devia ser um método de classe, mas falta o @classmethod."""
-        treinador = cls(nome)
-        for pokemon in pokemons:
-            treinador.equipa.append(pokemon)
-        return treinador
-
-
-ash = Treinador.com_equipa("Ash", ["Charmander"])
-```
-
-```text
-TypeError: Treinador.com_equipa() missing 1 required positional argument: 'pokemons'
-```
-
-Nas versões antigas do Python, a mensagem começa só por `com_equipa()`. Quando um método de classe se queixa de que falta o último argumento, verifica primeiro se o decorador está lá.
-
-**Escrever o nome da classe em vez de `cls`.** Um `Treinador(nome)` dentro de um método de classe funciona, mas cria sempre um `Treinador`, e as filhas recebem objetos da classe errada, como na primeira tentativa. Dentro de um método de classe, cria-se com `cls(...)`.
-
-**Usar `cls` para chegar a um objeto.** O `cls` é a classe, e não um objeto. Dentro de um método de classe não há `self`: não há nenhum treinador em particular cujo nome ou equipa se possa ler. Se o método precisa dos atributos de um objeto, é um método do objeto.
-
-**Chamar o método por um objeto.** Funciona, como viste, mas engana quem lê. Chama-o pela classe.
-
-### Verifica se percebeste: métodos de classe
-
-1. Que diferença há entre o que recebe um método do objeto, um método estático e um método de classe?
-2. Porque é que, com o `com_equipa` estático, a Misty saía `Treinador`, mesmo chamada por `Lider`?
-3. No `com_equipa`, o que é o `cls` quando se escreve `Treinador.com_equipa(...)`? E quando se escreve `Lider.com_equipa(...)`?
-4. A `PokemonPlanta` pede a regeneração no construtor. Se a classe `Pokemon` tivesse o `selvagem` do caso que engana, o que acontecia a `PokemonPlanta.selvagem("Oddish")`?
-5. Para cada método, diz se devia ser do objeto, estático ou de classe: um método que diz se um nome de treinador é válido (não está vazio); um método que mostra a equipa de um treinador; um método que cria um líder com um Pokémon de cada tipo.
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 6: Duck typing
 
@@ -1925,7 +1786,7 @@ Nas versões antigas do Python, a mensagem começa só por `com_equipa()`. Quand
 
 Olha outra vez para o `atacar` da classe `Pokemon`, no ficheiro [pokemon.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). O que é que ele faz ao `alvo`? Lê `alvo.vida`, para saber se o alvo já está KO. Passa o alvo ao `calcular_dano`, que, nas filhas, lê `alvo.tipo`. Escreve `alvo.nome` na mensagem. Muda `alvo.vida`. E chama `alvo.verificar_vida()`.
 
-Em lado nenhum o `atacar` pergunta se o alvo é um Pokémon. Só usa estas cinco coisas: um `nome`, um `tipo`, uma `vida` que se pode ler e mudar, e um método `verificar_vida`. Que acontece se lhe dermos um alvo que tem as cinco coisas e não é um Pokémon?
+Em lado nenhum o `atacar` pergunta se o alvo é um Pokémon. Só usa estas quatro coisas: um `nome`, um `tipo`, uma `vida` que se pode ler e mudar, e um método `verificar_vida`. Que acontece se lhe dermos um alvo que tem as quatro coisas e não é um Pokémon?
 
 ### Um alvo que não é um Pokémon
 
@@ -1967,7 +1828,7 @@ Charmander ataca Boneco de palha e tira 80 de vida.
 Boneco de palha ainda aguenta 340.
 ```
 
-O Charmander atacou o boneco como se ele fosse um Pokémon. O `calcular_dano` do fogo leu `alvo.tipo`, viu `"Planta"` e dobrou o dano. O `atacar` mudou a vida do boneco e chamou o `verificar_vida` dele, que é o do boneco, e não o da `Pokemon`. O boneco tem 500 de vida, mais do que os 150 de um Pokémon: a regra da vida máxima é das propriedades da classe `Pokemon`, e o boneco não as tem, porque não é um Pokémon.
+O Charmander atacou o boneco como se ele fosse um Pokémon. O `calcular_dano` do fogo leu `alvo.tipo`, viu `"Planta"` e dobrou o dano. O `atacar` mudou a vida do boneco e chamou o `verificar_vida` dele, que é o do boneco, e não o da `Pokemon`. O boneco tem 500 de vida, mais do que os 150 de um Pokémon. A regra da vida máxima é das propriedades da classe `Pokemon`, e o boneco não as tem, porque não é um Pokémon.
 
 ### Duck typing: o que conta é o comportamento
 
@@ -2099,7 +1960,7 @@ Depois, o mesmo método, `anunciar_combates`, deu dois resultados completamente 
 
 ### Quando o objeto não tem o que é preciso
 
-O preço da liberdade do duck typing é este: se o objeto não tiver o método, o Python só descobre quando a linha que o chama corre. Este fotógrafo sabe fotografar os combates, mas não sabe anunciar:
+O preço da liberdade do duck typing é este: se o objeto não tiver o método, o Python só descobre quando a linha que o chama corre. Este fotógrafo sabe fotografar os combates, mas não sabe anunciar. Antes de correres o programa, prevê o que acontece nas duas chamadas ao `anunciar_combates`:
 
 ```python
 from pokemon import PokemonAgua, PokemonPlanta
@@ -2139,7 +2000,7 @@ A mensagem é a mesma da parte 3, quando o Charmander tentou recuperar: o objeto
 
 ### O mesmo nome não chega
 
-Ter um método com o nome certo não chega: tem de receber o que o ginásio lhe dá. Este sino tem um `anunciar`, mas sem o parâmetro do combate:
+Ter um método com o nome certo não chega: tem de receber o que o ginásio lhe dá. Este sino tem um `anunciar`, mas sem o parâmetro do combate. Prevê o que acontece quando o ginásio o chama:
 
 ```python
 from pokemon import PokemonAgua, PokemonPlanta
@@ -2183,33 +2044,17 @@ Tanto a herança como o duck typing permitem a mesma coisa: chamar o mesmo méto
 | Exemplo deste guia | `PokemonFogo` é um `Pokemon`; `Lider` é um `Treinador` | `BonecoDePalha` e os Pokémon; `Narrador` e `Placard` |
 | Quando se usa | Quando a frase "um X é um Y" é verdadeira e as classes partilham código | Quando objetos sem parentesco têm de responder à mesma chamada |
 
-O narrador e o placard não são um tipo de nada em comum: não faz sentido dizer que um narrador é um placard, nem inventar uma classe-mãe só para os juntar. O duck typing não obriga a isso. Já um `PokemonFogo` partilha com a `Pokemon` as propriedades, as regras da vida e do ataque e o `atacar`: aí, a herança evita repetir código.
+O narrador e o placard não são um tipo de nada em comum. Não faz sentido dizer que um narrador é um placard, nem inventar uma classe-mãe só para os juntar. O duck typing não obriga a isso. Já um `PokemonFogo` partilha com a `Pokemon` as propriedades, as regras da vida e do ataque e o `atacar`: aí, a herança evita repetir código.
 
 As duas convivem. O ginásio de Cerulean aceita a Misty como líder porque usa só o `nome` e o `escolher_pokemon` do líder, e o `Lider` tem os dois. Funcionaria igual com um objeto de qualquer outra classe que os tivesse. O Python não faz diferença entre as duas situações: em ambas, chama o método do objeto que lá está.
 
-### Erros frequentes com duck typing
-
-**Um nome ligeiramente diferente.** `anuncia` em vez de `anunciar`, ou `Anunciar` com maiúscula. Para o Python são métodos diferentes, e o erro é o do fotógrafo: o objeto não tem o atributo `anunciar`.
-
-**Parâmetros diferentes.** Um método com o nome certo, mas com parâmetros a mais ou a menos, como o sino. O erro aparece na chamada, com o número de argumentos.
-
-**Devolver em vez de mostrar.** Um anunciador cujo `anunciar` faz `return` de uma frase em vez de a escrever com `print`. Não há erro nenhum: o ginásio chama o método, ignora o que ele devolve, e não aparece nada no ecrã. O duck typing garante que a chamada funciona, mas não que o objeto faz o que se esperava. O contrato na docstring do `anunciar_combates` serve para isso: diz o que o método tem de fazer, e não só como se chama.
-
-**Pensar que o erro só pode estar no objeto novo.** Quando uma chamada falha com um objeto que veio de fora, confirma primeiro, na docstring ou no código de quem chama, o que é preciso, e só depois o objeto.
-
-### Verifica se percebeste: duck typing
-
-1. Que cinco coisas o `atacar` usa do alvo? Porque é que isso chega para o boneco de palha poder ser atacado?
-2. O boneco de palha tem 500 de vida. Porque é que a regra da vida máxima não o impede, e a um Pokémon impedia?
-3. O que tem uma classe de ter para ser usada como anunciador no `anunciar_combates`? Onde está isso escrito?
-4. No programa do fotógrafo, porque é que a primeira chamada ao `anunciar_combates` não deu erro e a segunda deu?
-5. Uma colega quer juntar o `Narrador` e o `Placard` numa classe-mãe `Anunciador`, só para os dois herdarem dela. É necessário? Em que caso passaria a valer a pena?
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 7: Dataclasses
 
 ### Uma classe que só guarda dados
 
-Volta ao registo de um combate, o `Combate` do passo 4 do exemplo guiado da parte 4. É a classe mais simples do ginásio. Guarda três nomes, o do desafiante, o do Pokémon com que ele lutou e o do vencedor, e tem um método, o `resumo`, que os junta numa frase. Não tem regras: não há propriedades, não há valores proibidos, não há listas. Serve para manter três dados juntos, como uma linha de uma tabela.
+Volta ao registo de um combate, o `Combate` do passo 4 do exemplo guiado do ginásio. É a classe mais simples do ginásio. Guarda três nomes, o do desafiante, o do Pokémon com que ele lutou e o do vencedor, e tem um método, o `resumo`, que os junta numa frase. Não tem regras: não há propriedades, não há valores proibidos, não há listas. Serve para manter três dados juntos, como uma linha de uma tabela.
 
 Mesmo sendo tão simples, o construtor obriga a escrever cada nome três vezes: no parâmetro, no atributo e no valor que o atributo recebe. Este é o construtor do `Combate` da parte 4:
 
@@ -2255,7 +2100,7 @@ False
 
 O número depois de `at` vai ser outro no teu computador, e muda de cada vez que executas o programa: é o sítio da memória onde o objeto ficou guardado.
 
-A primeira linha é a esperada, o vencedor do combate. A segunda mostra o que o Python escreve quando lhe pedes para mostrar um objeto de uma classe tua: de que classe é, `Combate`, no ficheiro que está a ser executado, a que o Python chama `__main__`, e em que sítio da memória está. Não diz nada sobre o que o objeto guarda. Para veres os dados, tinhas de escrever `primeiro.desafiante`, `primeiro.pokemon_desafiante` e `primeiro.vencedor`, um a um, ou chamar o `resumo`.
+A primeira linha é a esperada, o vencedor do combate. A segunda mostra o que o Python escreve quando lhe pedes para mostrar um objeto de uma classe tua. Diz de que classe é, `Combate`, no ficheiro que está a ser executado, a que o Python chama `__main__`, e em que sítio da memória está. Não diz nada sobre o que o objeto guarda. Para veres os dados, tinhas de escrever `primeiro.desafiante`, `primeiro.pokemon_desafiante` e `primeiro.vencedor`, um a um, ou chamar o `resumo`.
 
 A terceira linha diz que os dois registos não são iguais, embora guardem exatamente os mesmos três nomes. Para os objetos de uma classe tua, o `==` faz, se ninguém disser outra coisa, a mesma pergunta que o `is` da parte 4: são o mesmo objeto? Não são. São dois objetos, criados por duas chamadas ao construtor, que por acaso têm os mesmos valores. Para comparares os dados, tinhas de comparar os atributos um a um.
 
@@ -2297,7 +2142,7 @@ False
 
 O programa tem três coisas novas, todas antes dos objetos.
 
-A primeira linha, `from dataclasses import dataclass`, vai buscar o `dataclass` a um módulo chamado `dataclasses`, que vem com o Python: não é preciso instalar nada. É a mesma forma de importar que usas para ir buscar as classes de Pokémon ao `pokemon.py`, com a diferença de que este módulo não é um ficheiro teu, faz parte do Python.
+A primeira linha, `from dataclasses import dataclass`, vai buscar o `dataclass` a um módulo chamado `dataclasses`, que vem com o Python: não é preciso instalar nada. É a mesma forma de importar que usas para ir buscar as classes de Pokémon ao `pokemon.py`. A diferença é que este módulo não é um ficheiro teu: faz parte do Python.
 
 A linha `@dataclass`, por cima da classe, é um decorador, como o `@property`, o `@staticmethod` e o `@classmethod` que já usaste. Os outros três estavam por cima de um método e mudavam esse método. Este está por cima da classe e muda a classe inteira: o Python lê a classe, vê que dados ela tem e acrescenta-lhe os métodos que faltam. O que um decorador é, afinal, e o que faz a arroba, é o assunto da parte 8.
 
@@ -2307,19 +2152,19 @@ Dentro da classe, no lugar do construtor, há três linhas, uma por cada dado: `
 
 A partir dos três campos, o `@dataclass` escreveu três coisas que o programa anterior não tinha.
 
-O construtor. `Combate("Ash", "Bulbasaur", "Ash")` funciona sem nenhum `__init__` escrito por ti. O construtor que a dataclass escreve recebe um valor por cada campo, pela ordem em que os campos estão na classe, e guarda cada valor num atributo com o nome do campo. Faz o mesmo que o construtor da parte 4: `primeiro.vencedor` continua a dar `"Ash"`. Também podes dar os valores pelo nome, como numa chamada de função: `Combate(desafiante="Ash", pokemon_desafiante="Bulbasaur", vencedor="Ash")`.
+O construtor. `Combate("Ash", "Bulbasaur", "Ash")` funciona sem nenhum `__init__` escrito por ti. O construtor que a dataclass escreve recebe um valor por cada campo, pela ordem em que os campos estão na classe. Guarda cada valor num atributo com o nome do campo. Faz o mesmo que o construtor da parte 4: `primeiro.vencedor` continua a dar `"Ash"`. Também podes dar os valores pelo nome, como numa chamada de função: `Combate(desafiante="Ash", pokemon_desafiante="Bulbasaur", vencedor="Ash")`.
 
 A forma de se mostrar. O `print(primeiro)` escreve agora o nome da classe e, entre parênteses, cada campo com o seu valor. Os textos aparecem entre plicas, `'Ash'`, para se ver que são textos. É uma linha escrita para quem programa: quando um programa não faz o que esperavas, um `print` de um objeto mostra logo o que ele guarda.
 
 A comparação pelos dados. `primeiro == repetido` dá agora `True`. Numa dataclass, o `==` compara os campos, um a um, e dois objetos são iguais se todos os campos forem iguais. O `is` não mudou: `primeiro is repetido` continua a dar `False`, porque continuam a ser dois objetos. Numa dataclass, o `==` pergunta se os dois objetos guardam os mesmos dados, e o `is` continua a perguntar se são o mesmo objeto.
 
-Se encontrares estes métodos noutros textos, os nomes que o Python lhes dá são `__init__`, o construtor que já conheces, `__repr__`, a forma de se mostrar, e `__eq__`, a comparação com `==`. Não precisas de os escrever: é esse o trabalho que a dataclass faz por ti.
+Se encontrares estes métodos noutros textos, vais ver estes nomes: `__init__`, o construtor que já conheces; `__repr__`, a forma de se mostrar; e `__eq__`, a comparação com `==`. Não precisas de os escrever: é esse o trabalho que a dataclass faz por ti.
 
 ### Os campos e as anotações de tipo
 
 A parte `: str` de cada campo chama-se **anotação de tipo**: diz que tipo de valor se espera ali. É uma forma de escrever nova para ti, e numa dataclass não é opcional. É pelas anotações que o `@dataclass` descobre quais são os campos: cada linha com um nome, dois pontos e um tipo passa a ser um campo, e mais nenhuma. Os tipos são os que já conheces, como `str`, `int`, `float` e `bool`.
 
-Há uma coisa que a anotação não faz: não verifica nada. O Python não confirma que o valor dado é do tipo anotado. Este programa usa o `Combate` do `ginasio.py`, que já é uma dataclass, como vais ver na secção seguinte, e dá um número ao vencedor:
+Há uma coisa que a anotação não faz: não verifica nada. O Python não confirma que o valor dado é do tipo anotado. Este programa usa o `Combate` do `ginasio.py`, que já é uma dataclass, como vais ver na secção seguinte, e dá um número ao vencedor. Prevê o que o Python faz com ele:
 
 ```python
 from ginasio import Combate
@@ -2361,7 +2206,7 @@ class Combate:
 
 Uma dataclass continua a ser uma classe: pode ter métodos, escritos como sempre, com `self`. O `resumo` ficou igual ao da parte 4.
 
-O resto do ginásio não deu pela mudança. A linha do `combater` que cria cada registo, `Combate(desafiante.nome, atacante.nome, vencedor.nome)`, dá os três valores pela mesma ordem dos campos, e o construtor escrito pela dataclass recebe-os como o antigo. Os anunciadores da parte 6 leem os mesmos três atributos. A composição também não mudou: os registos continuam a ser criados só pelo ginásio, dentro do `combater`. A demonstração do fim do `ginasio.py` dá a mesma saída de antes. A parte 4 continua a mostrar o `Combate` com o construtor escrito à mão, porque foi assim que o escrevemos primeiro, e as duas versões fazem o mesmo dentro do ginásio.
+O resto do ginásio não deu pela mudança. A linha do `combater` que cria cada registo, `Combate(desafiante.nome, atacante.nome, vencedor.nome)`, dá os três valores pela mesma ordem dos campos, e o construtor escrito pela dataclass recebe-os como o antigo. Os anunciadores da parte 6 leem os mesmos três atributos. A composição também não mudou: os registos continuam a ser criados só pelo ginásio, dentro do `combater`. A demonstração do fim do `ginasio.py` dá a mesma saída de antes. A parte 4 continua a mostrar o `Combate` com o construtor escrito à mão, porque foi assim que o escrevemos primeiro. As duas versões fazem o mesmo dentro do ginásio.
 
 Este programa faz um combate e mostra o registo que o ginásio guardou:
 
@@ -2395,7 +2240,7 @@ A linha do registo mostra, de uma vez, tudo o que o ginásio guardou sobre o com
 
 ### Um campo com valor por omissão
 
-Um campo pode ter um **valor por omissão**: um valor que o campo recebe quando quem cria o objeto não dá nenhum. Escreve-se como uma atribuição, a seguir ao tipo. Nos jogos, uma poção cura um Pokémon, e a poção mais simples cura 20:
+Um campo pode ter um **valor por omissão**: um valor que o campo recebe quando quem cria o objeto não dá nenhum. Escreve-se como uma atribuição, a seguir ao tipo. Nos jogos, uma poção cura um Pokémon, e a poção mais simples cura 20. Antes de correres o programa, prevê as três linhas:
 
 ```python
 from dataclasses import dataclass
@@ -2424,7 +2269,7 @@ Pocao(nome='Super Poção', cura=50)
 
 A `Pocao("Poção")` só deu o nome, e a cura ficou com o valor por omissão, 20. A `Pocao("Super Poção", 50)` deu os dois valores, e o 50 ocupou o lugar do 20. Funciona como um parâmetro com valor por omissão numa função: se não o dás, vale o que está escrito na definição.
 
-Os campos com valor por omissão têm de ficar depois dos campos sem valor. Se a cura vier primeiro:
+Os campos com valor por omissão têm de ficar depois dos campos sem valor. Se a cura vier primeiro, prevê o que o Python faz ao ler a classe:
 
 ```python
 from dataclasses import dataclass
@@ -2449,7 +2294,7 @@ A mensagem diz que um argumento sem valor por omissão, o `nome`, vem a seguir a
 
 ### Quando uma dataclass não serve
 
-Uma dataclass escreve um construtor que guarda o que recebe, tal como recebe. Para o `Combate` é exatamente o que se quer. Para uma classe com regras, não é. Este programa experimenta escrever um Pokémon como dataclass, e compara-o com a classe `PokemonPlanta` do `pokemon.py`:
+Uma dataclass escreve um construtor que guarda o que recebe, tal como recebe. Para o `Combate` é exatamente o que se quer. Para uma classe com regras, não é. Este programa experimenta escrever um Pokémon como dataclass, e compara-o com a classe `PokemonPlanta` do `pokemon.py`. Antes de o correres, prevê as três linhas e se a vida e o ataque ficam dentro dos limites:
 
 ```python
 from dataclasses import dataclass
@@ -2503,79 +2348,26 @@ class Treinador:
 ValueError: mutable default <class 'list'> for field equipa is not allowed: use default_factory
 ```
 
-A palavra mutable, em inglês, quer dizer que se pode alterar, e uma lista altera-se com o `append`. O Python recusa porque a lista do valor por omissão é criada uma só vez, quando a classe é lida, e ficaria a ser a mesma lista para todos os treinadores: uma captura do Ash aparecia também na equipa da Misty. É o problema das referências da parte 4. A mensagem sugere uma solução, o `default_factory`, que não faz falta neste guia: o `Treinador`, com a equipa que começa vazia e os métodos que a mudam, continua a ser uma classe normal.
+A palavra mutable, em inglês, quer dizer que se pode alterar, e uma lista altera-se com o `append`. O Python recusa porque a lista do valor por omissão é criada uma só vez, quando a classe é lida. Ficaria a ser a mesma lista para todos os treinadores: uma captura do Ash aparecia também na equipa da Misty. É o problema das referências da parte 4. A mensagem sugere uma solução, o `default_factory`, que não faz falta neste guia. O `Treinador`, com a equipa que começa vazia e os métodos que a mudam, continua a ser uma classe normal.
 
-### Erros frequentes com dataclasses
-
-**Esquecer o tipo de um campo.** Sem a anotação, a linha deixa de ser um campo. Se a linha tiver só o nome, como `pokemon_desafiante`, o Python tenta ler uma variável com esse nome, que não existe, e a classe nem chega a ser criada:
-
-```text
-NameError: name 'pokemon_desafiante' is not defined
-```
-
-Se a linha tiver um valor sem tipo, como `vencedor = ""`, o caso é mais traiçoeiro, porque a classe é criada sem erro. O `vencedor` passa a ser um atributo da classe, e não um campo, e o construtor escrito pela dataclass só recebe os outros dois:
-
-```python
-from dataclasses import dataclass
-
-
-@dataclass
-class Combate:
-    """Registo de um combate, com um campo sem tipo."""
-
-    desafiante: str
-    pokemon_desafiante: str
-    vencedor = ""
-
-
-registo = Combate("Ash", "Bulbasaur", "Ash")
-```
-
-```text
-TypeError: Combate.__init__() takes 3 positional arguments but 4 were given
-```
-
-O construtor aceita 3 argumentos, o `self` e os dois campos, e recebeu 4, o `self` e os três valores. Nas versões antigas do Python, a mensagem começa só por `__init__()`. Quando o construtor de uma dataclass se queixa de argumentos a mais, confirma primeiro se todos os campos têm tipo.
-
-**Esquecer o `@dataclass`.** Sem o decorador, as anotações ficam na classe, mas ninguém escreve o construtor:
-
-```python
-class Combate:
-    """Registo de um combate, sem o @dataclass."""
-
-    desafiante: str
-    pokemon_desafiante: str
-    vencedor: str
-
-
-registo = Combate("Ash", "Bulbasaur", "Ash")
-```
-
-```text
-TypeError: Combate() takes no arguments
-```
-
-**Esquecer a importação.** Sem a linha `from dataclasses import dataclass`, o Python não sabe o que é `dataclass`, e o erro aparece na linha do decorador: `NameError: name 'dataclass' is not defined`.
-
-**Pensar que o tipo é verificado.** Como viste com o 42, a anotação não impede nenhum valor. Se um campo tem uma regra, a dataclass não a aplica.
-
-### Verifica se percebeste: dataclasses
-
-1. Que três coisas escreveu o `@dataclass` sozinho na classe `Combate`?
-2. Com o `Combate` da parte 4, `primeiro == repetido` dava `False`; com a dataclass, dá `True`. O que pergunta o `==` em cada caso? E o `is`, mudou?
-3. Numa dataclass, porque é que o campo tem de ser `vencedor: str`, e não só `vencedor`? O que acontece se escreveres `vencedor = ""`?
-4. Com a `Pocao` desta parte, o que mostram `print(Pocao("Hiper Poção", 200))` e `print(Pocao("Poção", "muita"))`? Porquê?
-5. Para cada classe, diz se faria sentido escrevê-la como dataclass, e porquê: a `Medalha` da parte 4, o `Pokemon` e o `Ginasio`.
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
 
 ## Parte 8: Decoradores
 
-Nota de leitura: as passagens desta parte sobre o decorador `@dataclass` usam a parte 7. São três: a lista dos decoradores que já usas, na primeira secção; o fim da secção "O que faz a arroba", com o `@dataclass` escrito sem arroba; e a pergunta 5 de "Verifica se percebeste". Se ainda não leste a parte 7, podes ler o resto desta parte e voltar a essas três passagens depois de a leres.
+Nota de leitura: as passagens desta parte sobre o decorador `@dataclass` usam a parte 7. São três. A primeira é a lista dos decoradores que já usas, na primeira secção. A segunda é o fim da secção "O que faz a arroba", com o `@dataclass` escrito sem arroba. A terceira é a pergunta 5 das perguntas da parte 8, em "Verificar o que aprendeste". Se ainda não leste a parte 7, podes ler o resto desta parte e voltar a essas três passagens depois de a leres.
 
 ### As linhas com arroba que já usas
 
-Ao longo deste guia escreveste várias linhas que começam por uma arroba: `@staticmethod` na parte 1, `@property` e `@vida.setter` na parte 2, `@classmethod` na parte 5 e `@dataclass` na parte 7. A cada uma chamámos decorador, e de cada uma dissemos o efeito: o método deixa de receber o `self`, o get e o set passam a ter cara de atributo, o método passa a receber a classe, a classe ganha um construtor. Nunca dissemos o que a arroba faz, nem porque é que uma linha escrita por cima de um `def` consegue mudar o que está por baixo.
+Ao longo deste guia escreveste várias linhas que começam por uma arroba. A cada uma chamámos decorador, e de cada uma dissemos o efeito:
 
-É isso que esta parte explica. Não vais ainda escrever decoradores que mudam o que uma função faz de cada vez que é chamada: isso fica para um tema mais à frente. Vais perceber o mecanismo dos que já usas. Para isso precisas de uma ideia primeiro, que é também a que vais usar na janela com tkinter: uma função é um valor, como um número ou uma lista.
+- `@staticmethod`, na parte 1: o método deixa de receber o `self`;
+- `@property` e `@vida.setter`, na parte 2: o get e o set passam a ter cara de atributo;
+- `@classmethod`, na parte 5: o método passa a receber a classe;
+- `@dataclass`, na parte 7: a classe ganha um construtor.
+
+Nunca dissemos o que a arroba faz, nem porque é que uma linha escrita por cima de um `def` consegue mudar o que está por baixo.
+
+É isso que esta parte explica. Não vais ainda escrever decoradores que mudam o que uma função faz de cada vez que é chamada: isso fica para o tema da iteração. Vais perceber o mecanismo dos que já usas. Para isso precisas de uma ideia primeiro. É também a que vais usar na janela com tkinter, no tema dos pacotes: uma função é um valor, como um número ou uma lista.
 
 ### Uma função é um valor
 
@@ -2609,7 +2401,7 @@ A diferença entre `saudar` e `saudar("Ash")` é a mais importante desta parte. 
 
 ### Entregar uma função a outra função
 
-Se uma função é um valor, pode ser dada como argumento a outra função, como se dá um número ou uma lista:
+Se uma função é um valor, pode ser dada como argumento a outra função, como se dá um número ou uma lista. Antes de correres o programa, prevê as quatro linhas da saída:
 
 ```python
 def saudar(nome):
@@ -2644,7 +2436,7 @@ O parâmetro `funcao` recebe uma função. Na primeira chamada, recebe a `saudar
 
 ### Um método também é um valor
 
-O mesmo vale para os métodos. Escrito sem parênteses, `charmander.atacar` é o método `atacar` já preso ao Charmander: quando for chamado, o `self` vai ser o Charmander.
+O mesmo vale para os métodos. Escrito sem parênteses, `charmander.atacar` é o método `atacar` já preso ao Charmander: quando for chamado, o `self` vai ser o Charmander. Antes de correres o programa seguinte, prevê o que ele escreve.
 
 ```python
 from pokemon import PokemonFogo, PokemonPlanta
@@ -2667,7 +2459,7 @@ Charmander ataca Bulbasaur e tira 80 de vida.
 Bulbasaur está KO (0/150).
 ```
 
-A variável `acao` guarda o ataque do Charmander, sem o fazer. Cada `acao(bulbasaur)` é um ataque do Charmander, igual a `charmander.atacar(bulbasaur)`. Com parênteses na linha da variável, o resultado é outro:
+A variável `acao` guarda o ataque do Charmander, sem o fazer. Cada `acao(bulbasaur)` é um ataque do Charmander, igual a `charmander.atacar(bulbasaur)`. Com parênteses na linha da variável, o resultado é outro. Prevê o que fica guardado em `acao`:
 
 ```python
 from pokemon import PokemonFogo, PokemonPlanta
@@ -2685,7 +2477,7 @@ Bulbasaur tem 30/150 de vida.
 Guardado em acao: None
 ```
 
-O ataque aconteceu logo, na própria linha, e o que ficou guardado foi o que o `atacar` devolve, que é `None`. Vais encontrar esta diferença mais à frente, na janela com tkinter: um botão recebe o método que deve chamar quando alguém carregar nele, e esse método escreve-se sem parênteses. Com parênteses, o ataque acontece uma vez, quando a janela é criada, e o botão fica sem nada para fazer.
+O ataque aconteceu logo, na própria linha, e o que ficou guardado foi o que o `atacar` devolve, que é `None`. Vais encontrar esta diferença no tema dos pacotes, na janela com tkinter: um botão recebe o método que deve chamar quando alguém carregar nele, e esse método escreve-se sem parênteses. Com parênteses, o ataque acontece uma vez, quando a janela é criada, e o botão fica sem nada para fazer.
 
 ### O que faz a arroba
 
@@ -2706,11 +2498,11 @@ def funcao():
 funcao = decorador(funcao)
 ```
 
-O Python cria a função, entrega-a ao decorador e guarda no mesmo nome o que o decorador devolver. Um **decorador** é, portanto, uma coisa que se pode chamar, como uma função, que recebe o que está escrito por baixo da arroba e devolve o que fica com esse nome. A arroba é só uma forma mais curta e mais legível de escrever essa linha, posta em cima, onde se vê antes de se ler o método.
+O Python cria a função, entrega-a ao decorador e guarda no mesmo nome o que o decorador devolver. Um **decorador** é, portanto, uma coisa que se pode chamar, como uma função. Recebe o que está escrito por baixo da arroba e devolve o que fica com esse nome. A arroba é só uma forma mais curta e mais legível de escrever essa linha, posta em cima, onde se vê antes de se ler o método.
 
 Os dois excertos acima só mostram a forma, não são programas para executar. Os programas que se seguem são completos, e reescrevem sem arroba os decoradores que já conheces.
 
-O método estático da parte 1, com a linha da atribuição no lugar da arroba:
+O método estático da parte 1, com a linha da atribuição no lugar da arroba. Prevê as duas linhas que o programa escreve:
 
 ```python
 class Pokemon:
@@ -2736,11 +2528,11 @@ print(Pokemon.limitar(75, 0, 150))
 75
 ```
 
-O `limitar` funciona como o da parte 1. O `staticmethod` recebeu a função e devolveu um objeto que a guarda e que sabe uma coisa: quando o método for chamado, não lhe deve passar nem o objeto nem a classe. O `staticmethod`, como o `classmethod` e o `property`, é uma classe do próprio Python, e chamá-lo é criar um desses objetos. A linha `limitar = staticmethod(limitar)` está dentro da classe, com a mesma indentação do `def`, porque é dentro da classe que o nome `limitar` tem de ficar.
+O `limitar` funciona como o da parte 1. O `staticmethod` recebeu a função e devolveu um objeto que a guarda. Esse objeto sabe uma coisa: quando o método for chamado, não lhe deve passar nem o objeto nem a classe. O `staticmethod`, como o `classmethod` e o `property`, é uma classe do próprio Python, e chamá-lo é criar um desses objetos. A linha `limitar = staticmethod(limitar)` está dentro da classe, com a mesma indentação do `def`, porque é dentro da classe que o nome `limitar` tem de ficar.
 
 O construtor alternativo da parte 5 escreve-se da mesma maneira, com `com_equipa = classmethod(com_equipa)` por baixo do `def`, e cria um `Lider` quando é chamado em `Lider`, como antes.
 
-A propriedade da parte 2 junta o get e o set que escreveste como métodos normais. O `property` recebe os dois e devolve a propriedade:
+A propriedade da parte 2 junta o get e o set que escreveste como métodos normais. O `property` recebe os dois e devolve a propriedade. Prevê as duas linhas que o programa escreve:
 
 ```python
 VIDA_MINIMA = 0
@@ -2781,9 +2573,9 @@ print(geodude.vida)
 0
 ```
 
-A última linha da classe diz: o nome `vida` passa a ser uma propriedade, cuja leitura chama o `get_vida` e cuja escrita chama o `set_vida`. Com as arrobas da parte 2, o mesmo faz-se em dois passos. O `@property`, por cima do get, faz `vida = property(vida)`, uma propriedade só com o get. O `@vida.setter`, por cima do set, pede a essa propriedade uma propriedade nova, igual mas com o set, e guarda-a no mesmo nome. É por isso que os dois métodos têm de ter o mesmo nome, `vida`, e é por isso que o segundo decorador começa por `vida.`: usa a propriedade que o primeiro deixou nesse nome.
+A última linha da classe diz: o nome `vida` passa a ser uma propriedade, cuja leitura chama o `get_vida` e cuja escrita chama o `set_vida`. Com as arrobas da parte 2, o mesmo faz-se em dois passos. O `@property`, por cima do get, faz `vida = property(vida)`, uma propriedade só com o get. O `@vida.setter`, por cima do set, pede a essa propriedade uma propriedade nova, igual mas com o set, e guarda-a no mesmo nome. É por isso que os dois métodos têm de ter o mesmo nome, `vida`. É também por isso que o segundo decorador começa por `vida.`: usa a propriedade que o primeiro deixou nesse nome.
 
-O `@dataclass` também se escreve sem arroba, mas por baixo da classe, e não de um método:
+O `@dataclass` também se escreve sem arroba, mas por baixo da classe, e não de um método. Prevê o que escreve o programa:
 
 ```python
 from dataclasses import dataclass
@@ -2840,9 +2632,234 @@ Olá, Misty!
 
 A frase aparece uma vez, antes de tudo o resto. O decorador correu quando o Python leu o `def`, a fazer `saudar = anunciar_definicao(saudar)`, e devolveu a função igual. As duas chamadas a `saudar` são chamadas à função original, e o decorador não volta a correr. Os decoradores que conheces fazem o mesmo: o `@staticmethod` trabalha uma vez, quando a classe é lida, e não de cada vez que o `limitar` é chamado.
 
-Um decorador que mudasse o que a função faz em cada chamada, por exemplo para escrever uma linha antes de cada ataque, teria de devolver outra função, escrita dentro dele, que chamasse a original. É assim que se escrevem os decoradores mais comuns, e é matéria de um tema mais à frente, quando vires as funções escritas dentro de outras funções.
+Um decorador que mudasse o que a função faz em cada chamada, por exemplo para escrever uma linha antes de cada ataque, teria de devolver outra função. Essa função seria escrita dentro dele e chamaria a original. É assim que se escrevem os decoradores mais comuns, e é matéria do tema da iteração, quando vires as funções escritas dentro de outras funções.
 
-### Erros frequentes com funções como valores e decoradores
+Os erros desta parte e as perguntas para te testares estão no fim do guia, em [Erros frequentes](#erros-frequentes) e em [Verificar o que aprendeste](#verificar-o-que-aprendeste).
+
+## Erros frequentes
+
+Os erros típicos de cada parte estão aqui, num grupo para cada parte. Em cada um, lê primeiro a última linha da mensagem de erro, que é a que diz o que aconteceu. Antes dos grupos há um erro que aparece em todo o guia.
+
+### Erros que se repetem em todo o guia
+
+**O Python não encontra o `pokemon.py`.** Se correres um programa da parte 2 em diante numa pasta que não tem o `pokemon.py`, a última linha da mensagem é:
+
+```text
+ModuleNotFoundError: No module named 'pokemon'
+```
+
+A mensagem diz que o Python não encontrou nenhum módulo com o nome `pokemon`. Acontece porque o programa começa por `from pokemon import ...` e o ficheiro `pokemon.py` não está na mesma pasta do programa. Corrige-se guardando o programa na pasta onde estão os ficheiros do exemplo, ou copiando esses ficheiros para a pasta do programa. O mesmo vale para o `ginasio.py` e para o `anunciadores.py`.
+
+### Erros com classes e métodos (parte 1)
+
+**Esquecer o `self` na definição de um método.** Se escreveres `def verificar_vida():`, sem nada entre os parênteses, e depois chamares `pikachu.verificar_vida()`, o erro é:
+
+```text
+TypeError: Pokemon.verificar_vida() takes 0 positional arguments but 1 was given
+```
+
+A mensagem diz que o método não aceita argumentos mas recebeu um. O argumento é o objeto `pikachu`, que o Python passa sempre ao método, sem tu o escreveres. A correção é pôr o `self` como primeiro parâmetro. Nas versões antigas do Python, a mensagem começa só por `verificar_vida()`, sem o nome da classe.
+
+**Esquecer o `self.` no construtor.** Com `nome = nome` em vez de `self.nome = nome`, o construtor dá o valor do parâmetro ao próprio parâmetro, e nada fica guardado no objeto. O erro só aparece mais tarde, quando alguém tenta ler o atributo:
+
+```text
+AttributeError: 'Pokemon' object has no attribute 'nome'
+```
+
+Quando vires esta mensagem sobre um atributo que tens a certeza de ter escrito no construtor, procura lá uma linha sem `self.`.
+
+**Criar um objeto com o número errado de valores.** Numa classe cujo construtor pede o nome e a vida, `Pokemon("Pikachu")` só dá um dos dois valores:
+
+```text
+TypeError: Pokemon.__init__() missing 1 required positional argument: 'vida'
+```
+
+A mensagem diz o nome do parâmetro que ficou sem valor. O `self` não conta, porque é o Python que o dá. Nas versões antigas do Python, a mensagem começa só por `__init__()`, sem o nome da classe.
+
+**Ler um atributo na classe em vez de no objeto.** `Pokemon.nome` não funciona, porque o nome não pertence à classe: pertence a cada objeto, e cada objeto tem o seu:
+
+```text
+AttributeError: type object 'Pokemon' has no attribute 'nome'
+```
+
+A forma, sozinha, não tem recheio. O recheio está em cada bolo.
+
+### Erros ao proteger o estado (parte 2)
+
+**No set, guardar em `self.vida` em vez de `self._vida`.** O set chama-se sempre que alguém escreve `self.vida = ...`. Se a última linha do set for `self.vida = valor`, essa linha chama o set, que chega outra vez à mesma linha, que chama o set outra vez. O Python repete isto cerca de mil vezes e desiste:
+
+```text
+RecursionError: maximum recursion depth exceeded
+```
+
+Nas versões antigas, a mensagem acaba com `in comparison`. Quando vires `RecursionError` numa classe com propriedades, procura um set que escreve no próprio nome da propriedade.
+
+**Esquecer o set, ou dar-lhe um nome diferente do get.** Sem um método com `@vida.setter` e o mesmo nome `vida`, a propriedade só se pode ler. A primeira linha que tenta mudá-la, que costuma ser a do construtor, dá erro. Nas versões recentes do Python, a mensagem é:
+
+```text
+AttributeError: property 'vida' of 'Pokemon' object has no setter
+```
+
+e nas versões antigas é:
+
+```text
+AttributeError: can't set attribute
+```
+
+**Escrever no privado a partir de fora.** `pikachu._vida = -500` não dá erro nenhum. Por isso é o erro mais perigoso desta lista: o Pokémon fica num estado impossível e ninguém é avisado. O sublinhado existe para te dizer que não o faças.
+
+**Escrever no privado dentro do construtor.** Já o viste na secção sobre o construtor: `self._vida = vida` no construtor salta o set, e o objeto pode nascer num estado impossível. Dentro da classe, fora do get e do set, escreve-se sempre `self.vida`.
+
+### Erros com herança (parte 3)
+
+**Esquecer o `super().__init__` no construtor da filha.** Se o construtor da filha não chamar o da mãe, os atributos que a mãe cria nunca chegam a existir. Com uma filha que só escreve `self.tipo = "Fogo"` no construtor, o `print(charmander.tipo)` funciona e escreve `Fogo`, mas o `charmander.verificar_vida()` dá:
+
+```text
+AttributeError: 'PokemonFogo' object has no attribute '_vida'. Did you mean: 'vida'?
+```
+
+O `verificar_vida` leu `self.vida`, o get foi procurar `self._vida`, e esse atributo nunca foi criado, porque quem o cria é o set, chamado pelo construtor da mãe, que não correu.
+
+**Esquecer o `return` no método reescrito.** Se o `calcular_dano` de uma filha calcular o dano e não o devolver, o método devolve `None`. Com o `calcular_dano` do `PokemonFogo` sem a linha `return dano`, um ataque do Charmander ao Bulbasaur escreve duas linhas, a segunda estranha, e só depois dá erro:
+
+```text
+É super eficaz!
+Charmander ataca Bulbasaur e tira None de vida.
+```
+
+```text
+TypeError: unsupported operand type(s) for -: 'int' and 'NoneType'
+```
+
+A palavra `None` na segunda linha é a pista. O `atacar` recebeu `None` como dano e escreveu-o. Depois não conseguiu fazer a conta `alvo.vida - dano`, porque não se subtrai `None` a um número. A primeira linha mostra que o `calcular_dano` correu e até dobrou o dano; só não o devolveu.
+
+**Chamar um método que só outra filha tem.** Já o viste com o `charmander.recuperar()`. A procura sobe da filha para a mãe, e não vai de lado.
+
+**Usar herança onde não há "é um".** Este erro está nos erros da parte 4, porque se confunde com a composição.
+
+### Erros com composição e agregação (parte 4)
+
+**Pensar que a lista guarda uma cópia.** Quem pensa assim espera que, depois de `ash.capturar(charmander)`, mudar `charmander.vida` não mude o Pokémon da equipa. Muda, porque a lista guarda uma referência ao mesmo objeto. Volta à secção sobre referências e ao exemplo com `is`.
+
+**Pensar que `del` apaga o objeto.** O `del` apaga um nome. O objeto só desaparece quando já nenhum caminho leva a ele. Foi por isso que, depois de `del ash`, o Charmander continuou vivo.
+
+**Criar fora do todo a parte de uma composição e ficar com um caminho para ela.** Imagina um registo criado fora do ginásio e guardado numa variável. Só depois é entregue ao ginásio, com um método `guardar_registo(combate)`. Essa variável continua a apontar para o registo, e ele já não desaparece com o ginásio. Na prática, passava a ser uma agregação, mesmo com o comentário a dizer composição. É por isso que, nas composições deste guia, é o próprio todo que cria as partes.
+
+**Confundir "criado fora" com "definido noutro ficheiro".** Para decidir a relação, interessa onde está escrita a expressão que cria o objeto. O ficheiro onde a classe está definida não conta. A classe `Treinador` está definida no `ginasio.py`, no mesmo ficheiro do `Ginasio`, e mesmo assim o líder é uma agregação. O `Treinador("Misty")` está escrito no programa principal, fora dos métodos do ginásio. O `Combate(...)` está escrito dentro de um método do ginásio, e por isso o registo é criado pelo todo.
+
+**Usar herança para uma relação "tem".** `class Treinador(Pokemon):` dá ao treinador vida e ataque. A frase "um treinador é um Pokémon" é falsa, e por isso a herança não serve.
+
+**Usar o resultado de `escolher_pokemon` sem verificar `None`.** Se o treinador não tiver nenhum Pokémon com vida, `ash.escolher_pokemon().nome` dá:
+
+```text
+AttributeError: 'NoneType' object has no attribute 'nome'
+```
+
+A mensagem diz que se tentou ler `nome` num valor do tipo `NoneType`, que é o tipo do `None`. É por isso que o `combater` verifica `atacante is None or defensor is None` antes de usar os dois Pokémon.
+
+**Procurar no código uma palavra que diga se é agregação ou composição.** Não existe. A diferença está em quem cria a parte, em quem a guarda e no que acontece quando o todo desaparece.
+
+### Erros com métodos de classe (parte 5)
+
+**Esquecer o `@classmethod`.** Sem o decorador, o método passa a ser um método do objeto, e o Python já não lhe passa a classe. Quem chama `Treinador.com_equipa("Ash", ["Charmander"])` está a dar os valores pela ordem dos parâmetros: o `"Ash"` vai para o `cls`, a lista vai para o `nome`, e o `pokemons` fica sem nada.
+
+```python
+class Treinador:
+    """Um treinador com um construtor alternativo, mas sem o decorador."""
+
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        self.equipa = []
+
+    def com_equipa(cls, nome, pokemons):
+        """Devia ser um método de classe, mas falta o @classmethod."""
+        treinador = cls(nome)
+        for pokemon in pokemons:
+            treinador.equipa.append(pokemon)
+        return treinador
+
+
+ash = Treinador.com_equipa("Ash", ["Charmander"])
+```
+
+```text
+TypeError: Treinador.com_equipa() missing 1 required positional argument: 'pokemons'
+```
+
+Nas versões antigas do Python, a mensagem começa só por `com_equipa()`. Quando um método de classe se queixa de que falta o último argumento, verifica primeiro se o decorador está lá.
+
+**Escrever o nome da classe em vez de `cls`.** Um `Treinador(nome)` dentro de um método de classe funciona. Mas cria sempre um `Treinador`, e as filhas recebem objetos da classe errada, como na primeira tentativa. Dentro de um método de classe, cria-se com `cls(...)`.
+
+**Usar `cls` para chegar a um objeto.** O `cls` é a classe, e não um objeto. Dentro de um método de classe não há `self`: não há nenhum treinador em particular cujo nome ou equipa se possa ler. Se o método precisa dos atributos de um objeto, é um método do objeto.
+
+**Chamar o método por um objeto.** Funciona, como viste, mas engana quem lê. Chama-o pela classe.
+
+### Erros com duck typing (parte 6)
+
+**Um nome ligeiramente diferente.** `anuncia` em vez de `anunciar`, ou `Anunciar` com maiúscula. Para o Python são métodos diferentes, e o erro é o do fotógrafo: o objeto não tem o atributo `anunciar`.
+
+**Parâmetros diferentes.** Um método com o nome certo, mas com parâmetros a mais ou a menos, como o sino. O erro aparece na chamada, com o número de argumentos.
+
+**Devolver em vez de mostrar.** Um anunciador cujo `anunciar` faz `return` de uma frase em vez de a escrever com `print`. Não há erro nenhum: o ginásio chama o método, ignora o que ele devolve, e não aparece nada no ecrã. O duck typing garante que a chamada funciona, mas não que o objeto faz o que se esperava. O contrato na docstring do `anunciar_combates` serve para isso: diz o que o método tem de fazer, e não só como se chama.
+
+**Pensar que o erro só pode estar no objeto novo.** Se uma chamada falha com um objeto de fora, vê primeiro o que a chamada precisa. Isso está na docstring ou no código de quem chama. Só depois olhas para o objeto.
+
+### Erros com dataclasses (parte 7)
+
+**Esquecer o tipo de um campo.** Sem a anotação, a linha deixa de ser um campo. Se a linha tiver só o nome, como `pokemon_desafiante`, o Python tenta ler uma variável com esse nome, que não existe, e a classe nem chega a ser criada:
+
+```text
+NameError: name 'pokemon_desafiante' is not defined
+```
+
+Se a linha tiver um valor sem tipo, como `vencedor = ""`, o caso é mais traiçoeiro, porque a classe é criada sem erro. O `vencedor` passa a ser um atributo da classe, e não um campo, e o construtor escrito pela dataclass só recebe os outros dois:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Combate:
+    """Registo de um combate, com um campo sem tipo."""
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor = ""
+
+
+registo = Combate("Ash", "Bulbasaur", "Ash")
+```
+
+```text
+TypeError: Combate.__init__() takes 3 positional arguments but 4 were given
+```
+
+O construtor aceita 3 argumentos, o `self` e os dois campos, e recebeu 4, o `self` e os três valores. Nas versões antigas do Python, a mensagem começa só por `__init__()`. Quando o construtor de uma dataclass se queixa de argumentos a mais, confirma primeiro se todos os campos têm tipo.
+
+**Esquecer o `@dataclass`.** Sem o decorador, as anotações ficam na classe, mas ninguém escreve o construtor:
+
+```python
+class Combate:
+    """Registo de um combate, sem o @dataclass."""
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
+
+
+registo = Combate("Ash", "Bulbasaur", "Ash")
+```
+
+```text
+TypeError: Combate() takes no arguments
+```
+
+**Esquecer a importação.** Sem a linha `from dataclasses import dataclass`, o Python não sabe o que é `dataclass`, e o erro aparece na linha do decorador: `NameError: name 'dataclass' is not defined`.
+
+**Pensar que o tipo é verificado.** Como viste com o 42, a anotação não impede nenhum valor. Se um campo tem uma regra, a dataclass não a aplica.
+
+### Erros com funções como valores e decoradores (parte 8)
 
 **Parênteses a mais quando se entrega uma função.** `para_todos(saudar(), treinadores)` chama a `saudar` na própria linha, sem nome, e dá `TypeError: saudar() missing 1 required positional argument: 'nome'`. Com um método, como em `acao = charmander.atacar(bulbasaur)`, não há erro: a ação acontece logo e fica guardado `None`. Quando entregas uma função ou um método, escreve só o nome.
 
@@ -2876,7 +2893,108 @@ A mensagem diz que um objeto `None` não se pode chamar. O `def` foi lido sem pr
 
 **Pensar que o decorador corre em cada chamada.** Corre uma vez, quando o `def` ou a `class` é lido, como mostrou o `anunciar_definicao`.
 
-### Verifica se percebeste: decoradores
+## Palavras novas deste guia
+
+- Paradigma de programação: uma maneira de organizar um programa, como a estruturada ou a orientada a objetos.
+- Classe: a descrição de um tipo de coisa, que diz que dados tem e o que sabe fazer.
+- Objeto, ou instância: uma coisa concreta criada a partir de uma classe, com os seus próprios valores.
+- Atributo: uma variável que pertence a um objeto.
+- Estado: os valores de todos os atributos de um objeto num dado momento.
+- Construtor: o método `__init__`, que o Python chama ao criar um objeto, para lhe dar o estado inicial.
+- `self`: dentro de um método, o objeto que está a ser usado.
+- Método: uma função definida dentro de uma classe, que recebe o objeto no `self`.
+- Método do objeto: o método normal, que recebe o objeto no `self` e trabalha com os atributos dele.
+- Método estático: um método marcado com `@staticmethod`, que não recebe `self` porque não precisa de nenhum objeto.
+- Decorador: uma marca com `@` por cima de um `def` ou de uma `class`, que muda a forma como o que está por baixo funciona. Em rigor, é uma coisa que se pode chamar. Recebe o que está por baixo e devolve o que fica com esse nome. `@d` por cima de `def f` é o mesmo que `f = d(f)` por baixo.
+- Invariante: uma regra que tem de ser verdadeira durante toda a existência do objeto.
+- Get e set: o método que lê um valor e o método que o altera, aplicando a regra.
+- Modificador de acesso: o que marca um nome como público ou privado. Em Python, é a forma como o nome começa: sem sublinhado, com um ou com dois.
+- Público: um nome para ser usado por qualquer código, sem sublinhado à frente.
+- Privado: um nome para uso interno da classe, com um ou dois sublinhados à frente. Em Python é uma convenção, que não impede o acesso.
+- Name mangling: a mudança de nome que o Python faz aos atributos com dois sublinhados, juntando-lhes o nome da classe.
+- Propriedade: um atributo público cuja leitura chama um get e cuja alteração chama um set, feito com `@property`.
+- Herança: a relação "é um" entre uma classe-filha e uma classe-mãe, em que a filha recebe tudo o que a mãe tem.
+- Classe-filha e classe-mãe: a classe-filha é construída a partir da classe-mãe e recebe os seus atributos e métodos. Também se diz subclasse e superclasse.
+- Reescrever um método: definir na filha um método com o mesmo nome de um método da mãe. Em inglês, override.
+- `super()`: dá acesso à classe-mãe, para correr a versão da mãe de um método.
+- Referência: o que uma variável, uma lista ou um atributo guarda quando guarda um objeto, que é um caminho para ele, e não uma cópia.
+- `is`: o operador que pergunta se dois caminhos levam ao mesmo objeto.
+- `del`: a instrução que apaga um nome, e não o objeto. O objeto só desaparece quando já nenhum caminho leva a ele.
+- Todo e parte: numa relação "tem", o objeto que guarda e o objeto guardado.
+- Agregação: relação em que as partes existem por si, criadas fora, podem estar em vários todos e sobrevivem ao todo. Losango vazio em UML.
+- Composição: relação em que as partes pertencem ao todo, criadas por ele, não partilhadas, e desaparecem com ele. Losango cheio em UML.
+- Método de classe: um método marcado com `@classmethod`, que recebe a classe por onde foi chamado, em vez de um objeto.
+- `cls`: num método de classe, o nome do parâmetro que recebe a classe, como o `self` recebe o objeto.
+- Construtor alternativo: um método de classe que cria e devolve um objeto de outra forma, além do `__init__`.
+- Duck typing: usar um objeto pelo que ele sabe fazer, os seus atributos e métodos, e não pela classe a que pertence.
+- Contrato de um método: o que a docstring diz que o objeto recebido tem de ter e de fazer. Em duck typing, é o único sítio onde isso está escrito.
+- Dataclass: uma classe que serve sobretudo para guardar dados, marcada com `@dataclass`, para a qual o Python escreve o construtor, a forma de se mostrar e a comparação com `==`.
+- Campo: numa dataclass, cada dado que os objetos guardam, escrito com o nome, dois pontos e o tipo.
+- Anotação de tipo: a indicação do tipo de valor esperado, depois de dois pontos, como em `vencedor: str`. O Python não a verifica.
+- Valor por omissão: o valor que um campo recebe quando quem cria o objeto não dá nenhum.
+- Função como valor: uma função, ou um método, usada pelo nome, sem parênteses, que se pode guardar numa variável ou entregar a outra função, que a chama mais tarde.
+- UML: uma forma de desenhar programas orientados a objetos, com diagramas de classes.
+
+## Verificar o que aprendeste
+
+Responde por escrito, com as tuas palavras, sem olhar para o texto. Se uma pergunta te deixar com dúvidas, volta à parte indicada. As perguntas estão agrupadas por parte, e podes fazer as de cada parte logo depois de a leres.
+
+### Perguntas da parte 1: classes e objetos
+
+1. Qual é a diferença entre a classe `Pokemon` e o objeto guardado na variável `charmander`?
+2. Quando escreves `Pokemon("Pikachu", "Elétrico", 100, 30)`, que método corre sem o chamares, e que valor recebe o `self` desse método?
+3. Porque é que, dentro do construtor, se escreve `self.nome = nome` e não apenas `nome = nome`?
+4. Um método que recebe uma vida e devolve essa vida em percentagem de 150 precisa de `self`? Que tipo de método seria, e como o chamavas?
+
+### Perguntas da parte 2: proteger o estado
+
+1. Na classe `Pokemon` completa, a linha `geodude.vida = geodude.vida - 500` chama dois métodos. Quais, por que ordem, e com que valores?
+2. Porque é que dentro do set se escreve `self._vida`, e em todos os outros métodos se escreve `self.vida`?
+3. Para quem usa a classe de fora, que diferença há entre um atributo chamado `_ataque` e um atributo chamado `__ataque`? Algum dos dois impede mesmo o acesso?
+4. Se a regra mudasse para "a vida máxima é 200", quantas linhas da classe completa terias de mudar? Quais?
+
+### Perguntas da parte 3: herança
+
+1. Num objeto `PokemonAgua`, de que classe vem o método `verificar_vida` que ele usa? E o `calcular_dano`?
+2. Porque é que o construtor de `PokemonAgua` não pede o tipo?
+3. Se no `calcular_dano` do `PokemonAgua` trocasses `dano = super().calcular_dano(alvo)` por `dano = self.ataque`, o resultado dos combates mudava hoje? E se a regra do dano na classe-mãe mudasse?
+4. Porque é que `bulbasaur.recuperar()` funciona e `charmander.recuperar()` dá erro?
+
+### Perguntas da parte 4: composição e agregação
+
+1. Porque é que a relação entre o `Treinador` e os Pokémon da equipa é agregação? Responde com as duas perguntas.
+2. No método `combater`, que linha mostra que os registos são uma composição? O que é que nessa linha o mostra?
+3. Depois de `del cerulean`, porque é que ainda se consegue usar a variável `ash`, e porque é que já não há forma de ver o histórico de Cerulean?
+4. Imagina um ginásio que, no construtor, criasse o seu próprio líder, com `self.lider = Treinador("Misty")`, em vez de o receber por parâmetro. Que relação passava a haver entre o ginásio e o líder? O que acontecia a uma treinadora que quisesse ser líder de dois ginásios?
+
+### Perguntas da parte 5: métodos de classe
+
+1. Que diferença há entre o que recebe um método do objeto, um método estático e um método de classe?
+2. Porque é que, com o `com_equipa` estático, a Misty saía `Treinador`, mesmo chamada por `Lider`?
+3. No `com_equipa`, o que é o `cls` quando se escreve `Treinador.com_equipa(...)`? E quando se escreve `Lider.com_equipa(...)`?
+4. A `PokemonPlanta` pede a regeneração no construtor. Se a classe `Pokemon` tivesse o `selvagem` do caso que engana, o `PokemonPlanta.selvagem("Oddish")` serviria? Porquê?
+5. Para cada método, diz se devia ser do objeto, estático ou de classe:
+   - um método que diz se um nome de treinador é válido (não está vazio);
+   - um método que mostra a equipa de um treinador;
+   - um método que cria um líder com um Pokémon de cada tipo.
+
+### Perguntas da parte 6: duck typing
+
+1. Que quatro coisas o `atacar` usa do alvo? Porque é que isso chega para o boneco de palha poder ser atacado?
+2. O boneco de palha tem 500 de vida. Porque é que a regra da vida máxima não o impede, e a um Pokémon impedia?
+3. O que tem uma classe de ter para ser usada como anunciador no `anunciar_combates`? Onde está isso escrito?
+4. No programa do fotógrafo, porque é que a primeira chamada ao `anunciar_combates` não deu erro e a segunda deu?
+5. Uma colega quer juntar o `Narrador` e o `Placard` numa classe-mãe `Anunciador`, só para os dois herdarem dela. É necessário? Em que caso passaria a valer a pena?
+
+### Perguntas da parte 7: dataclasses
+
+1. Que três coisas escreveu o `@dataclass` sozinho na classe `Combate`?
+2. Com o `Combate` da parte 4, `primeiro == repetido` dava `False`; com a dataclass, dá `True`. O que pergunta o `==` em cada caso? E o `is`, mudou?
+3. Numa dataclass, porque é que o campo tem de ser `vencedor: str`, e não só `vencedor`? O que acontece se escreveres `vencedor = ""`?
+4. Com a `Pocao` desta parte, o que mostram `print(Pocao("Hiper Poção", 200))` e `print(Pocao("Poção", "muita"))`? Porquê?
+5. Para cada classe, diz se faria sentido escrevê-la como dataclass, e porquê: a `Medalha` da parte 4, o `Pokemon` e o `Ginasio`.
+
+### Perguntas da parte 8: decoradores
 
 1. Que diferença há entre `saudar` e `saudar("Ash")`? O que fica guardado em `x` em cada caso, se escreveres `x = saudar` ou `x = saudar("Ash")`?
 2. Reescreve sem arroba o `@classmethod` que está por cima do `com_equipa`, no `ginasio.py`. Onde fica a linha nova, e com que indentação?
@@ -2884,49 +3002,10 @@ A mensagem diz que um objeto `None` não se pode chamar. O `def` foi lido sem pr
 4. Porque é que, com o `@property` e o `@vida.setter`, os dois métodos têm de ter o mesmo nome?
 5. Um colega diz que o `@dataclass` é diferente dos outros, porque não está por cima de um método. Em que é diferente, e em que é igual?
 
-## A seguir
+## O que vem a seguir
 
-O [laboratório](03-objetos-e-composicao-laboratorio.md) leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar, e depois a acrescentar-lhe o líder, os anunciadores e o registo como dataclass. A [ficha de exercícios](03-objetos-e-composicao-exercicios.md) tem exercícios das oito partes deste guia, para fazeres sem ajuda.
+Para praticar este tema, faz o [laboratório](03-objetos-e-composicao-laboratorio.md) e depois a [ficha de exercícios](03-objetos-e-composicao-exercicios.md). O laboratório leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar. Depois acrescenta-lhe o líder, os anunciadores e o registo como dataclass. A parte 8 explica um mecanismo e não constrói nada novo no ginásio, por isso não tem fase própria no laboratório. A ficha tem exercícios das oito partes deste guia, para fazeres sem ajuda.
 
-Este tema acaba aqui. O tema seguinte é o dos erros: as exceções que o ginásio ainda não usa, o depurador do VS Code e o registo do que um programa faz. A primeira janela com tkinter vem mais à frente, quando o exemplo dos Pokémon passar a ser uma aplicação completa, e é lá que vais voltar a usar um método sem parênteses.
-
-## Vocabulário
-
-| Palavra | O que quer dizer |
-| --- | --- |
-| Paradigma de programação | Uma maneira de organizar um programa, como a estruturada ou a orientada a objetos |
-| Classe | A descrição de um tipo de coisa: que dados tem e o que sabe fazer |
-| Objeto, ou instância | Uma coisa concreta criada a partir de uma classe, com os seus próprios valores |
-| Atributo | Uma variável que pertence a um objeto |
-| Estado | Os valores de todos os atributos de um objeto num dado momento |
-| Construtor | O método `__init__`, que o Python chama ao criar um objeto, para lhe dar o estado inicial |
-| `self` | Dentro de um método, o objeto que está a ser usado |
-| Método | Uma função definida dentro de uma classe, que recebe o objeto no `self` |
-| Método estático | Um método marcado com `@staticmethod`, que não recebe `self` porque não precisa de nenhum objeto |
-| Decorador | O que se escreve com `@` por cima de um `def` ou de uma `class`: uma coisa que se pode chamar, que recebe o que está por baixo e devolve o que fica com esse nome. `@d` por cima de `def f` é o mesmo que `f = d(f)` por baixo |
-| Invariante | Uma regra que tem de ser verdadeira durante toda a existência do objeto |
-| Get e set | O método que lê um valor e o método que o altera, aplicando a regra |
-| Modificador de acesso | O que marca um nome como público ou privado. Em Python, é a forma como o nome começa: sem sublinhado, com um ou com dois |
-| Público | Um nome para ser usado por qualquer código, sem sublinhado à frente |
-| Privado | Um nome para uso interno da classe, com um ou dois sublinhados à frente. Em Python é uma convenção, que não impede o acesso |
-| Name mangling | A mudança de nome que o Python faz aos atributos com dois sublinhados, juntando-lhes o nome da classe |
-| Propriedade | Um atributo público cuja leitura chama um get e cuja alteração chama um set, feito com `@property` |
-| Herança | A relação "é um" entre uma classe-filha e uma classe-mãe, em que a filha recebe tudo o que a mãe tem |
-| Reescrever um método | Definir na filha um método com o mesmo nome de um método da mãe. Em inglês, override |
-| `super()` | Dá acesso à classe-mãe, para correr a versão da mãe de um método |
-| Referência | O que uma variável, uma lista ou um atributo guarda quando guarda um objeto: um caminho para ele, e não uma cópia |
-| Todo e parte | Numa relação "tem", o objeto que guarda e o objeto guardado |
-| Agregação | Relação em que as partes existem por si: criadas fora, podem estar em vários todos, sobrevivem ao todo. Losango vazio em UML |
-| Composição | Relação em que as partes pertencem ao todo: criadas por ele, não partilhadas, desaparecem com ele. Losango cheio em UML |
-| Método de classe | Um método marcado com `@classmethod`, que recebe a classe por onde foi chamado, em vez de um objeto |
-| `cls` | Num método de classe, o nome do parâmetro que recebe a classe, como o `self` recebe o objeto |
-| Construtor alternativo | Um método de classe que cria e devolve um objeto de outra forma, além do `__init__` |
-| Duck typing | Usar um objeto pelo que ele sabe fazer, os seus atributos e métodos, e não pela classe a que pertence |
-| Dataclass | Uma classe que serve sobretudo para guardar dados, marcada com `@dataclass`, para a qual o Python escreve o construtor, a forma de se mostrar e a comparação com `==` |
-| Campo | Numa dataclass, cada dado que os objetos guardam, escrito com o nome, dois pontos e o tipo |
-| Anotação de tipo | A indicação do tipo de valor esperado, depois de dois pontos, como em `vencedor: str`. O Python não a verifica |
-| Valor por omissão | O valor que um campo recebe quando quem cria o objeto não dá nenhum |
-| Função como valor | Uma função, ou um método, usada pelo nome, sem parênteses: pode guardar-se numa variável ou entregar-se a outra função, que a chama mais tarde |
-| UML | Uma forma de desenhar programas orientados a objetos, com diagramas de classes |
+Este tema acaba aqui. O tema seguinte é [Exceções, depuração e logging](04-excecoes-depuracao-e-logging.md): as exceções que o ginásio ainda não usa, o depurador do VS Code e o registo do que um programa faz. A primeira janela com tkinter vem mais à frente, no tema dos pacotes, quando o exemplo dos Pokémon passar a ser uma aplicação completa. É lá que vais voltar a usar um método sem parênteses.
 
 ![Rodapé](../imagens/rodape.png)
