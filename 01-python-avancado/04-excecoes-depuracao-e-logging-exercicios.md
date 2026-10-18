@@ -216,7 +216,7 @@ O programa escreve `Psyduck`, e devia escrever `Starmie`.
 
 **a)** Antes de abrires o depurador, escreve a tua hipótese: que linha achas que está mal, e o que esperas ver no `escolhido` ao longo do ciclo, se tiveres razão.
 
-**b)** Põe um ponto de paragem na linha `if pokemon.vida > 0:` e executa com o depurador. Em cada volta do ciclo, regista o nome do `pokemon` e o nome do `escolhido`, numa tabela com uma linha por volta.
+**b)** Põe um ponto de paragem na linha `if pokemon.vida > 0:` e executa com o depurador. Em cada volta do ciclo, regista o nome do `pokemon` e o nome do `escolhido` (ou `None`, quando ainda não há nenhum), numa tabela com uma linha por volta.
 
 **c)** A tabela confirma a tua hipótese? Corrige a linha que está mal e confirma que o programa escreve `Starmie`.
 
@@ -244,15 +244,15 @@ Treina: trocar os `print` de depuração por mensagens do registo, com o nível 
 Esta função trata uma lista de Pokémon, e tem `print` espalhados, que alguém pôs para perceber o que ela fazia:
 
 ```python
-# centro.py: o tratamento dos Pokémon do Centro, com print de depuração.
+# centro.py: o tratamento dos Pokémon do Centro, com print espalhados.
 def tratar(pokemons, cura):
     """Cura cada Pokémon da lista e devolve quantos ficaram com a vida cheia."""
-    print("DEBUG: a começar o tratamento")
+    print("a começar o tratamento")
     cheios = 0
     for pokemon in pokemons:
-        print("DEBUG:", pokemon.nome, "tinha", pokemon.vida)
+        print(pokemon.nome, "tinha", pokemon.vida)
         if pokemon.vida == 0:
-            print("AVISO:", pokemon.nome, "estava KO e não pode ser tratado")
+            print(pokemon.nome, "estava KO e não pode ser tratado")
             continue
         pokemon.vida = pokemon.vida + cura
         if pokemon.vida == 150:

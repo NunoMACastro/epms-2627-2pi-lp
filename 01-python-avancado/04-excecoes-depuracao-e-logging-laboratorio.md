@@ -62,6 +62,7 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 - O VS Code com a extensão Python da Microsoft, para escrever os ficheiros, executar os programas e depurá-los. Confirma que a tens: no ícone das extensões da barra lateral, escreve `Python` na caixa de pesquisa. A extensão da Microsoft deve aparecer como instalada.
 - Os ficheiros `pokemon.py`, `ginasio.py` e `anunciadores.py` da [pasta 03 dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/), que o laboratório copia na preparação. O [README do exemplo](../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
 - Papel, ou um ficheiro de texto, para as previsões e as respostas.
+- O `ginasio.py` que copias já tem uma classe `Combate`, escrita com `@dataclass`, que o laboratório não muda. É por isso que o ficheiro começa por `from dataclasses import dataclass`. Deixa essa linha como está.
 
 ## Se alguma coisa falhar
 
@@ -69,7 +70,7 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 2. Guardaste o ficheiro antes de executar? O Python executa o que está guardado no disco. Guarda e executa outra vez.
 3. Os ficheiros estão todos na mesma pasta? O `ginasio.py` importa do `erros.py` e do `pokemon.py`, e só os encontra se estiverem na mesma pasta que ele.
 4. Apareceu uma mensagem de erro que não esperavas? Lê a última linha: diz o tipo de erro e o que aconteceu. Procura essa linha em [Problemas frequentes](#problemas-frequentes).
-5. Cada fase parte do ficheiro como ficou na paragem anterior. Se te perderes, a paragem da fase 3 e a da fase 6 mostram como o `ginasio.py` deve estar.
+5. Cada fase parte do ficheiro como ficou na paragem anterior. Se te perderes, compara o teu `ginasio.py` com o [ginasio.py](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04. Na paragem da fase 6, o teu é igual a ele. Na paragem da fase 3, é igual a ele sem as linhas do logger, que só entram na fase 6. O texto do início e a demonstração do fim do exemplo são diferentes em qualquer dos casos, porque não os mudas.
 
 ## Preparar o projeto
 
@@ -361,13 +362,13 @@ A linha dos desafiantes e dos combates aparece três vezes, embora só tenha hav
 
 ### Paragem 3
 
-O `Ginasio` recusa um combate sem Pokémon com vida com uma exceção, e fica como estava. Neste ponto, o teu `ginasio.py` tem as duas exceções, a constante, o `capturar` com a verificação e o `combater` novo. O `capturas.py` e o `combates.py` mostram as saídas dos passos 4 da fase 2 e 3 da fase 3.
+O `Ginasio` recusa um combate sem Pokémon com vida com uma exceção, e fica como estava. Neste ponto, o teu `ginasio.py` tem as duas exceções, a constante, o `capturar` com a verificação e o `combater` novo. O `capturas.py` e o `combates.py` mostram as saídas dos passos 4 da fase 2 e 3 da fase 3. Para o conferires, compara-o com o [ginasio.py](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04, sem as linhas do logger: o `import logging`, o `logger = logging.getLogger(__name__)` e as quatro linhas que começam por `logger.`. O texto do início e a demonstração do fim do exemplo também são diferentes, porque não os mudas.
 
 ## Fase 4: Investigar um erro de cálculo com o depurador
 
 Um erro de lógica não tem mensagem de erro: o programa corre até ao fim e dá o resultado errado. Para o encontrar, segue-se uma rotina de cinco passos. Primeiro, observas e reproduzes o erro: escreves o caso que falhou, o resultado esperado e o obtido, e dizes que tipo de erro é. Depois, escreves uma hipótese. Em terceiro lugar, verificas a hipótese, olhando para os valores do programa enquanto corre. Em quarto, corriges a causa. Por fim, voltas a testar todos os casos, também os que já passavam.
 
-O depurador do VS Code é a ferramenta do terceiro passo. Corre o programa e deixa-o parar numa linha que escolhes, para veres os valores das variáveis e avançares uma linha de cada vez. É como a tabela de traço que fazias no papel, mas feita pelo computador, com os valores verdadeiros. Os controlos de que precisas, nesta fase e na seguinte, são estes:
+O depurador do VS Code é a ferramenta do terceiro passo. Corre o programa e deixa-o parar numa linha que escolhes, para veres os valores das variáveis e avançares uma linha de cada vez. É como a tabela com os valores das variáveis, linha a linha, que podes fazer no papel, mas feita pelo computador, com os valores verdadeiros. Os controlos de que precisas, nesta fase e na seguinte, são estes:
 
 | Para quê | Como |
 | --- | --- |
@@ -431,7 +432,7 @@ O que deves ver: o ponto vermelho na margem, a linha `dano = super().calcular_da
 
 O que deves ver: `'Fogo'` para a primeira e `False` para a segunda. Isto quer dizer que o tipo do alvo é `'Fogo'`, com maiúscula, e que a comparação com `"fogo"`, em minúsculas, dá falso.
 
-6. Avança com F10, linha a linha, até ao `return`. Regista, para cada passo, a linha marcada a amarelo e o valor do `dano`, numa tabela. O que deves ver:
+6. Avança com F10, linha a linha, até ao `return`. Regista, depois de cada F10, a linha marcada a amarelo e o valor do `dano`, numa tabela. O que deves ver:
 
 | Depois de | Linha marcada a amarelo | `dano` |
 | --- | --- | --- |
@@ -439,7 +440,7 @@ O que deves ver: `'Fogo'` para a primeira e `False` para a segunda. Isto quer di
 | F10 | `if alvo.tipo == "fogo":` | 30 |
 | F10 | `return dano` | 30 |
 
-O depurador salta do `if` diretamente para o `return`: as duas linhas do bloco do `if` não correm. Isto confirma a hipótese do passo 3.
+O depurador salta do `if` diretamente para o `return`: as duas linhas do bloco do `if` não correm. Isto confirma a hipótese de exemplo, a de que a condição do `if` dá falso.
 
 7. Corrige a causa. Carrega em Shift+F5 para parar a depuração. A comparação é com `"fogo"`, em minúsculas, e o tipo está guardado como `"Fogo"`. Para o Python, os dois textos são diferentes, e a condição é simplesmente falsa: não há erro nenhum, só um resultado errado. É por isso que o Python não deu nenhuma mensagem de erro. Em `investigar.py`, substitui o método `calcular_dano` da classe `PokemonAgua` por este. A linha `class PokemonAgua(Pokemon):` do bloco só mostra onde o método fica: não a copies.
 
@@ -486,13 +487,13 @@ Bulbasaur tem 80/150 de vida.
 
 Os dois casos passam: o que mudou foi só a grafia de um texto, e o dobro aplica-se agora só contra o fogo.
 
-9. Responde por escrito: a tua hipótese do passo 3 estava certa? Se não estava, o que é que o depurador te mostrou que não esperavas? E qual era a causa?
+9. Responde por escrito: a hipótese que escreveste antes de abrir o depurador estava certa? Se não estava, o que é que o depurador te mostrou que não esperavas? E qual era a causa?
 
-A resposta: se a tua hipótese era a do passo 3, estava certa, e o depurador confirmou-a no passo 6. Se era outra, o que interessa é dizer o que o depurador mostrou de diferente. A causa era a comparação com `"fogo"`, em minúsculas, quando o tipo está guardado como `"Fogo"`. O Python não deu mensagem de erro porque, para ele, comparar dois textos diferentes não é um erro: o resultado é só `False`.
+A resposta: se a tua hipótese era que a condição do `if` dava falso, estava certa, e o depurador confirmou-a na tabela que fizeste com o F10. Se era outra, o que interessa é dizer o que o depurador mostrou de diferente. A causa era a comparação com `"fogo"`, em minúsculas, quando o tipo está guardado como `"Fogo"`. O Python não deu mensagem de erro porque, para ele, comparar dois textos diferentes não é um erro: o resultado é só `False`.
 
 ### Paragem 4
 
-O `investigar.py` corrigido mostra o dobro do dano contra o fogo e o dano normal contra a planta. Tens escritas a hipótese e a tabela do passo 6.
+O `investigar.py` corrigido mostra o dobro do dano contra o fogo e o dano normal contra a planta. Tens escritas a hipótese e a tabela que fizeste com o F10.
 
 Pensa antes de continuares: o erro desapareceria se tivesses acrescentado ao `calcular_dano` um `if` para o Squirtle, em vez de corrigires a comparação? A resposta: o resultado desse caso passava a estar certo, mas a causa ficava lá, à espera de outro Pokémon de água contra outro Pokémon de fogo. Corrigir a causa é mudar a instrução que produz o erro, e não o sítio onde ele se vê.
 
@@ -594,7 +595,7 @@ O `print` é para quem usa o programa, e o registo é para quem o mantém. O mó
 
 As mensagens ficam no código, escritas por um logger. Quem decide que nível mínimo se mostra, e como se escreve cada linha, é o programa principal, com uma chamada ao `logging.basicConfig`. Assim, para ver mais ou menos mensagens, não se mexe no ginásio. Para saber mais, lê as secções "Os cinco níveis", "O registo do ginásio" e "Quem configura é o programa" do [guia](04-excecoes-depuracao-e-logging.md).
 
-1. Em `ginasio.py`, substitui as linhas desde `from dataclasses import dataclass` até `TAMANHO_MAXIMO_DA_EQUIPA = 6` por estas. Trazem o módulo `logging` e criam o logger do ficheiro.
+1. Em `ginasio.py`, substitui as linhas desde `from dataclasses import dataclass` até `TAMANHO_MAXIMO_DA_EQUIPA = 6` por estas. Trazem o módulo `logging` e criam o logger do ficheiro. A linha `from dataclasses import dataclass` repete-se porque está dentro do que substituis, e fica igual.
 
 ```python
 import logging
@@ -726,7 +727,7 @@ Pensa antes de continuares: porque é que o `basicConfig` está no `registo.py`,
 
 ## Fase 7: O registo num ficheiro
 
-O `basicConfig` pode mandar o registo para um ficheiro, em vez do ecrã, com o parâmetro `filename`. O formato pode acrescentar a data e a hora de cada mensagem, com `%(asctime)s`. Num ficheiro, a hora é o que permite saber quando aconteceu cada coisa, dias depois. Cada execução acrescenta as suas linhas ao fim do ficheiro, sem apagar as anteriores. Para saber mais, lê a secção "Guardar o registo num ficheiro" do [guia](04-excecoes-depuracao-e-logging.md).
+O `basicConfig` pode mandar o registo para um ficheiro, em vez do ecrã, com o parâmetro `filename`. O formato pode acrescentar a data e a hora de cada mensagem, com `%(asctime)s`. Num ficheiro, a hora é o que permite saber quando aconteceu cada coisa, dias depois. Cada execução acrescenta as suas linhas ao fim do ficheiro, sem apagar as anteriores. Um registo é lido por outras pessoas e guarda-se durante muito tempo. Por isso nunca leva palavras-passe, códigos de acesso nem dados pessoais. Para saber mais, lê as secções "Guardar o registo num ficheiro" e "O que nunca se regista" do [guia](04-excecoes-depuracao-e-logging.md).
 
 1. No `registo.py`, substitui a linha do `basicConfig` por esta. Manda o registo para o ficheiro `ginasio.log` e acrescenta a hora de cada mensagem.
 
@@ -769,7 +770,7 @@ O ficheiro `erros.py` não está na mesma pasta que o `ginasio.py`, ou tem outro
 
 ### `ImportError: cannot import name 'EquipaCheia' from 'erros'`
 
-O ficheiro foi encontrado, mas não tem uma classe com esse nome. A mensagem acaba com o caminho do ficheiro. Confirma a grafia, com as maiúsculas: `EquipaCheia`.
+O ficheiro foi encontrado, mas não tem uma classe com esse nome. A mensagem inclui o caminho do ficheiro. Nas versões recentes do Python, quando há um nome parecido, acaba também com uma sugestão, `Did you mean: ...?`, que quer dizer "querias dizer...?". Confirma a grafia, com as maiúsculas: `EquipaCheia`.
 
 ### `NameError: name 'EquipaCheia' is not defined`, quando se captura com a equipa cheia
 
@@ -783,7 +784,7 @@ Uma das classes do `erros.py` não tem a classe-mãe entre parênteses, e por is
 
 É a mesma causa do problema anterior, vista de outro lado. Acontece a seguir ao `TypeError: EquipaCheia() takes no arguments`, quando isso se passa dentro de um `try`. O `except` tem o nome de uma classe que não é uma exceção, e o Python não consegue apanhar com ela. O Python mostra então as duas mensagens, separadas pela frase `During handling of the above exception, another exception occurred`. Corrige a classe no `erros.py`.
 
-### O teste da fase 3 escreve "Não há combate: um dos treinadores não tem Pokémon com vida." sem o nome do desafiante
+### O teste da fase 3 escreve "Não há combate: um dos treinadores não tem Pokémon com vida." sem a cidade
 
 O `combater` ainda tem o `print` e o `return` da versão anterior. Tira-os e põe o `raise` no lugar deles.
 
@@ -850,7 +851,7 @@ Recusado: Ash já tem este Charmander na equipa.
 2
 ```
 
-Antes de escreveres o código, decide duas coisas. A primeira: o terceiro `capturar` junta um Charmander criado de novo, com os mesmos valores do primeiro, e tem de ser aceite. Que pergunta faz a verificação, "é o mesmo objeto?" ou "tem os mesmos valores?", e como se escreve? A segunda: um treinador com a equipa cheia tenta capturar um Pokémon que já tem. Qual das duas exceções deve ser lançada, e o que decide isso no teu código? Pista: pensa no que o `==` faz com dois objetos de uma classe que não é uma dataclass. Pensa também em qual dos dois motivos de recusa dá mais informação a quem chamou.
+Antes de escreveres o código, decide duas coisas. A primeira: o terceiro `capturar` junta um Charmander criado de novo, com os mesmos valores do primeiro, e tem de ser aceite. Que pergunta faz a verificação, "é o mesmo objeto?" ou "tem os mesmos valores?", e como se escreve? A segunda: um treinador com a equipa cheia tenta capturar um Pokémon que já tem. Qual das duas exceções deve ser lançada, e o que decide isso no teu código? Pista: pensa no que o `==` faz com dois objetos de uma classe normal, escrita sem `@dataclass`. Pensa também em qual dos dois motivos de recusa dá mais informação a quem chamou.
 
 ## Antes de terminares
 

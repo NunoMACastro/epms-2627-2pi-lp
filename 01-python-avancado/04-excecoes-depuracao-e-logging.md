@@ -16,7 +16,7 @@ Os programas deste guia que usam o ginásio importam do `pokemon.py`, do `ginasi
 
 Antes de executares um programa, escreve o que achas que ele vai mostrar, e só depois compara. Se escreveres a previsão depois de ver o resultado, a comparação concorda sempre contigo e não te ensina nada. Todos os programas foram executados em Python 3.14 e em Python 3.9, e as saídas mostradas são as reais. As saídas são iguais nas duas versões.
 
-Nas mensagens de erro, as secções sobre exceções e sobre logging mostram só a última linha. A secção sobre ler a mensagem de erro inteira mostra-a toda. O nome do ficheiro aparece no lugar do caminho completo, que no teu computador é outro. Nas versões recentes do Python, a mensagem tem também linhas com acentos circunflexos (`^^^^`) e com til (`~~~~`) por baixo do código, a apontar a parte da linha que falhou. Nas versões antigas essas linhas não aparecem.
+Nas mensagens de erro, as secções sobre exceções e sobre logging mostram só a última linha. O único caso diferente é a secção "Registar uma exceção", onde o registo escreve o traceback inteiro. A secção sobre ler a mensagem de erro inteira também a mostra toda. O nome do ficheiro aparece no lugar do caminho completo, que no teu computador é outro. Nas versões recentes do Python, a mensagem tem também linhas com acentos circunflexos (`^^^^`) e com til (`~~~~`) por baixo do código, a apontar a parte da linha que falhou. Nas versões antigas essas linhas não aparecem.
 
 ## Neste guia
 
@@ -26,30 +26,31 @@ Nas mensagens de erro, as secções sobre exceções e sobre logging mostram só
 4. Uma recusa que ninguém ouve
 5. raise: uma recusa que não se pode ignorar
 6. Apanhar a recusa: try, except e else
-7. Quando o except apanha de mais
-8. Uma exceção própria
-9. As exceções do ginásio
-10. Uma família de exceções
-11. finally: o que corre sempre
-12. Um erro tem um sintoma e uma causa
-13. Ler um traceback com três andares
-14. Um erro sem mensagem
-15. O depurador do VS Code
-16. A pilha de chamadas no depurador
-17. O print é para quem usa o programa; o registo é para quem o mantém
-18. Os cinco níveis
-19. O registo do ginásio
-20. Quem configura é o programa
-21. Mudar o nível sem mudar o código
-22. Sem configuração
-23. Registar uma exceção
-24. Guardar o registo num ficheiro
-25. O que nunca se regista
-26. Exemplo guiado: o dano a dobrar
-27. Erros frequentes
-28. Palavras novas deste guia
-29. Verificar o que aprendeste
-30. O que vem a seguir
+7. Uma pausa: tuplos
+8. Quando o except apanha de mais
+9. Uma exceção própria
+10. As exceções do ginásio
+11. Uma família de exceções
+12. finally: o que corre sempre
+13. Um erro tem um sintoma e uma causa
+14. Ler um traceback com três andares
+15. Um erro sem mensagem
+16. O depurador do VS Code
+17. A pilha de chamadas no depurador
+18. O print é para quem usa o programa; o registo é para quem o mantém
+19. Os cinco níveis
+20. O registo do ginásio
+21. Quem configura é o programa
+22. Mudar o nível sem mudar o código
+23. Sem configuração
+24. Registar uma exceção
+25. Guardar o registo num ficheiro
+26. O que nunca se regista
+27. Exemplo guiado: o dano a dobrar
+28. Erros frequentes
+29. Palavras novas deste guia
+30. Verificar o que aprendeste
+31. O que vem a seguir
 
 ## O que vais aprender
 
@@ -64,10 +65,10 @@ No fim deste guia, consegues:
 
 ## O que já sabes e vais usar
 
-- Classes, objetos, atributos e métodos: explicados no guia [Objetos, composição e comportamento](03-objetos-e-composicao.md).
-- Herança: explicada nesse mesmo guia. Uma exceção própria é uma classe-filha, e a herança é a base dela.
-- O ginásio Pokémon, com o `Treinador`, o `Lider` e o `Ginasio`, e o método de classe `com_equipa`: explicados nesse guia.
-- Os anunciadores do ginásio e o `Combate`, que é uma dataclass: explicados nesse guia. Os ficheiros da pasta 04 dos exemplos já os têm, e aqui usas o ginásio com eles sem os alterar.
+- Classes, objetos, atributos e métodos: explicados na parte 1 do guia [Objetos, composição e comportamento](03-objetos-e-composicao.md).
+- Herança: explicada na parte 3 desse guia. Uma exceção própria é uma classe-filha, e a herança é a base dela.
+- O ginásio Pokémon, com o `Treinador`, o `Lider` e o `Ginasio`, e o método de classe `com_equipa`: explicados nas partes 4 e 5 desse guia.
+- Os anunciadores do ginásio e o `Combate`, que é uma dataclass: explicados nas partes 6 e 7 desse guia. Os ficheiros da pasta 04 dos exemplos já os têm, e aqui usas o ginásio com eles sem os alterar.
 - A função `type` com `.__name__`, que dá o nome da classe de um objeto, e a linha `if __name__ == "__main__":`: do 10.º ano e do guia 03.
 - Exceções, do 10.º ano: o que é uma exceção e como se lê a última linha de uma mensagem de erro.
 - O `try` com `except`, do 10.º ano, para apanhar um erro conhecido, como o `ValueError` de um `int("abc")`.
@@ -247,13 +248,13 @@ O `else` de um `try` corre quando o bloco do `try` acaba sem exceção nenhuma. 
 
 Leitura guiada: em cada volta do ciclo, o Python tenta o `capturar` dentro do `try`. Nas duas primeiras voltas não há exceção, por isso salta o `except` e corre o `else`. Na terceira, o `capturar` lança o `ValueError`, o Python salta o resto do `try` e entra no `except`, e o `else` não corre. O ciclo continua até ao fim, e o `print` da equipa corre.
 
-## Quando o except apanha de mais
+## Uma pausa: tuplos
 
-O `ValueError` não é só do `capturar`. O `int` também o lança, quando o texto não é um número. No programa desta secção, cada pedido de captura traz dois dados, o nome do Pokémon e o nível escrito em texto, e o `try` tem as duas linhas.
+O programa da secção seguinte usa um tipo de valor que ainda não viste, o tuplo. Explica-se aqui, e depois voltas ao `except`.
 
-Antes do programa, repara na forma como os pedidos estão escritos: `pedidos = [("Pikachu", "5"), ("Charmander", "cinco")]`. A lista tem dois elementos, e cada um deles é um conjunto de valores entre parênteses, separados por vírgulas, como `("Pikachu", "5")`. Um conjunto de valores escrito assim chama-se **tuplo**. Um tuplo é parecido com uma lista: guarda vários valores por ordem, e lê-se cada um pela posição, com `[0]` para o primeiro e `[1]` para o segundo. A diferença é que um tuplo não se muda depois de criado: não tem `append` nem `remove`. Serve por isso para juntar valores que andam sempre juntos, como o nome e o nível do mesmo pedido. Um tuplo com dois valores também se chama um **par**.
+Os pedidos desse programa escrevem-se assim: `pedidos = [("Pikachu", "5"), ("Charmander", "cinco")]`. A lista tem dois elementos, e cada um deles é um conjunto de valores entre parênteses, separados por vírgulas, como `("Pikachu", "5")`. Um conjunto de valores escrito assim chama-se **tuplo**. Um tuplo é parecido com uma lista: guarda vários valores por ordem, e lê-se cada um pela posição, com `[0]` para o primeiro e `[1]` para o segundo. A diferença é que um tuplo não se muda depois de criado: não tem `append` nem `remove`. Serve por isso para juntar valores que andam sempre juntos, como o nome e o nível do mesmo pedido. Um tuplo com dois valores também se chama um **par**.
 
-O `for` do programa escreve-se com dois nomes: `for nome, texto_do_nivel in pedidos:`. Em cada volta, o `for` tira da lista o pedido seguinte, que é um par. Reparte os dois valores pelos dois nomes, pela ordem em que estão. O primeiro valor do par fica em `nome` e o segundo em `texto_do_nivel`. Repartir os valores de um tuplo por vários nomes chama-se **desempacotar** o tuplo. A tabela mostra o que cada nome tem em cada volta:
+O `for` desse programa escreve-se com dois nomes: `for nome, texto_do_nivel in pedidos:`. Em cada volta, o `for` tira da lista o pedido seguinte, que é um par. Reparte os dois valores pelos dois nomes, pela ordem em que estão. O primeiro valor do par fica em `nome` e o segundo em `texto_do_nivel`. Repartir os valores de um tuplo por vários nomes chama-se **desempacotar** o tuplo. A tabela mostra o que cada nome tem em cada volta:
 
 | Volta | `nome` | `texto_do_nivel` |
 | --- | --- | --- |
@@ -269,6 +270,10 @@ for pedido in pedidos:
 ```
 
 Com os dois nomes no `for`, essas duas linhas deixam de ser precisas, e cada valor ganha logo um nome que diz o que é. A regra é haver tantos nomes como valores em cada tuplo: dois nomes para pares, como aqui, e quatro nomes se cada tuplo tiver quatro valores. Se os números não baterem certo, o Python lança um `ValueError`, com uma mensagem a dizer que há valores a mais ou a menos para desempacotar.
+
+## Quando o except apanha de mais
+
+O `ValueError` não é só do `capturar`. O `int` também o lança, quando o texto não é um número. No programa desta secção, cada pedido de captura é um par como os da secção anterior, com o nome do Pokémon e o nível escrito em texto. O `try` tem as duas linhas.
 
 Antes de executares o programa, prevê o que escreve para cada um dos dois pedidos.
 
@@ -574,15 +579,17 @@ Leitura guiada: o ciclo faz duas tentativas com o mesmo desafiante. A primeira a
 
 O **sintoma** é o que se vê: uma mensagem de erro, um número errado, um combate que nunca acaba. A **causa** é a linha de código que está mal. Os dois raramente estão no mesmo sítio. Um valor errado pode entrar num objeto numa linha, e só rebentar dez linhas depois, noutro método, quando alguém o usa.
 
-**Depurar** é encontrar a causa a partir do sintoma. A tentação é mudar logo o código no sítio do sintoma, para ver se o erro desaparece. Às vezes resulta, e a causa fica lá, à espera do próximo sintoma. A forma que funciona é uma rotina de cinco passos:
+**Depurar** é encontrar a causa a partir do sintoma. A tentação é mudar logo o código no sítio do sintoma, para ver se o erro desaparece. Às vezes resulta, e a causa fica lá, à espera do próximo sintoma.
+
+Os erros são de três tipos, e dizer qual é ajuda a escolher o instrumento. Um **erro de escrita** é recusado pelo Python antes de o programa correr, como uma indentação mal feita. Um **erro de execução** para o programa a meio, com uma mensagem, como o `AttributeError` da secção seguinte. Um **erro de lógica** deixa o programa correr até ao fim e dá o resultado errado, como o do dano a dobrar, mais abaixo.
+
+Para encontrar a causa, a forma que funciona é uma rotina de cinco passos:
 
 1. **Observar e reproduzir o erro.** Escreve o caso que falhou, o resultado que esperavas e o resultado que obtiveste. O resultado esperado tira-se do que o programa devia fazer, e não do código que falha. Diz também que tipo de erro é: de escrita, de execução ou de lógica. Encontra uma forma de fazer o erro acontecer sempre, com o programa mais curto possível.
 2. **Formular uma hipótese.** Antes de mexer no código, escreve numa frase o que achas que está a acontecer e porquê. A frase tem de ser uma que os valores possam confirmar ou desmentir, e diz o que esperas ver se tiveres razão.
 3. **Verificar a hipótese.** Segue os valores no caso mais curto que ainda mostra o erro, e olha para os valores verdadeiros, e não para os que achas que lá estão. A mensagem de erro, o `print` e o depurador servem para isto.
 4. **Corrigir a causa.** Muda a instrução que produz o erro, uma causa de cada vez, e não o sítio onde o erro se vê.
 5. **Voltar a testar tudo.** Corre outra vez todos os casos, também os que já passavam, e explica o que mudou.
-
-Os erros são de três tipos, e dizer qual é ajuda a escolher o instrumento. Um **erro de escrita** é recusado pelo Python antes de o programa correr, como uma indentação mal feita. Um **erro de execução** para o programa a meio, com uma mensagem, como o `AttributeError` da secção seguinte. Um **erro de lógica** deixa o programa correr até ao fim e dá o resultado errado, como o do dano a dobrar, mais abaixo.
 
 A mensagem de um erro de execução é uma pista, e não a resposta. A linha que ela aponta mostra onde o programa rebentou, e a causa pode ter nascido noutra linha, antes.
 
@@ -677,11 +684,11 @@ O Bulbasaur tem 25 de ataque, e a planta só tem vantagem contra a água. Contra
 
 Se já viste a causa, ótimo. Num programa de 20 linhas, ler com atenção às vezes chega. O exemplo guiado, mais abaixo, usa este erro para mostrar o depurador, porque é um erro pequeno, em que podes confirmar cada passo. Num programa de 500 linhas, ler não chega.
 
-Leitura guiada: o ataque do Bulbasaur é 25, e o `calcular_dano` começa por pedir ao `Pokemon` o dano normal, que é o ataque. Depois vem o `if`, que escreve a mensagem quando o alvo é de água. Repara no sítio da linha `dano = dano * 2`: está ao nível do `if`, e não dentro dele. É por isso que corre sempre.
+Leitura guiada: o ataque do Bulbasaur é 25, e o `calcular_dano` começa por pedir ao `Pokemon` o dano normal, que é o ataque. Depois vem o `if`, que escreve a mensagem quando o alvo é de água, a linha `dano = dano * 2` e, por fim, o `return`. A causa do erro fica para o exemplo guiado, mais abaixo.
 
 ## O depurador do VS Code
 
-Um **depurador** é uma ferramenta que corre o programa e o deixa parar onde quiseres. Nessa paragem vês o valor de cada variável e avanças uma linha de cada vez. É como a tabela de traço que fazias no papel, mas feita pelo computador, com os valores verdadeiros.
+Um **depurador** é uma ferramenta que corre o programa e o deixa parar onde quiseres. Nessa paragem vês o valor de cada variável e avanças uma linha de cada vez. É como a tabela com os valores das variáveis, linha a linha, que podes fazer no papel, mas feita pelo computador, com os valores verdadeiros.
 
 O VS Code tem um depurador para Python, que vem com a extensão Python da Microsoft. As ideias são estas:
 
@@ -707,7 +714,7 @@ O botão de executar, o triângulo no canto de cima, corre o programa sem o depu
 
 ## A pilha de chamadas no depurador
 
-O depurador também ajuda nos erros com traceback. Por omissão, quando há uma exceção que ninguém apanha, o depurador do VS Code não deixa o programa acabar. Para na linha onde a exceção rebentou, e marca-a. Com o programa do Ash e do texto `"Pikachu"` aberto, carrega em F5, sem nenhum ponto de paragem.
+O depurador também ajuda nos erros com traceback. Por omissão, quando há uma exceção que ninguém apanha, o depurador do VS Code não deixa o programa acabar. Para na linha onde a exceção rebentou, e marca-a. Abre o `combate.py`, o programa do Ash e do texto `"Pikachu"`, e carrega em F5, sem nenhum ponto de paragem.
 
 O programa para no `if pokemon.vida > 0:` do `escolher_pokemon`, com a exceção descrita por cima da linha. A pilha de chamadas mostra os três andares do traceback: `escolher_pokemon`, `combater` e `<module>`. No painel das variáveis, o `pokemon` é `'Pikachu'`, um texto.
 
@@ -1048,33 +1055,33 @@ Leitura guiada: o `entrar` compara primeiro o código e guarda o resultado em `c
 
 ## Exemplo guiado: o dano a dobrar
 
-Este exemplo percorre os cinco passos da rotina de depuração num erro de lógica, com o depurador do VS Code. O erro é o da secção "Um erro sem mensagem". Um Bulbasaur, com 25 de ataque, ataca um Charmander. A planta só tem vantagem contra a água, por isso o ataque devia tirar 25 de vida. O programa tira 50. Vamos encontrar a linha que está mal.
+Este exemplo percorre os cinco passos da rotina de depuração num erro de lógica, com o depurador do VS Code. Tem sete etapas, que cobrem os cinco passos. As etapas 1 e 2 são os passos 1 e 2, e as etapas 3, 4 e 5 são o passo 3. A etapa 6 é o passo 4, e a etapa 7 é o passo 5. O erro é o da secção "Um erro sem mensagem". Um Bulbasaur, com 25 de ataque, ataca um Charmander. A planta só tem vantagem contra a água, por isso o ataque devia tirar 25 de vida. O programa tira 50. Vamos encontrar a linha que está mal.
 
-### Passo 1: Observar e reproduzir o erro
+### Etapa 1: Observar e reproduzir o erro
 
-O programa da secção "Um erro sem mensagem" já reproduz o erro. É curto e dá sempre o mesmo resultado. Guarda-o num ficheiro, `investigar.py`, na pasta 04 dos exemplos.
+O programa da secção "Um erro sem mensagem" já reproduz o erro. É curto e dá sempre o mesmo resultado. Guarda-o num ficheiro, `investigar.py`, na pasta copiada.
 
 Escreve agora o caso, o resultado esperado e o obtido. O caso é o Bulbasaur, com 25 de ataque, a atacar o Charmander. O resultado esperado tira-se das regras do jogo, e não do código que falha. A planta só tem vantagem contra a água, por isso o Charmander devia perder 25 de vida. O resultado obtido é 50, e a mensagem "É super eficaz!" não aparece. O programa corre até ao fim e dá o resultado errado, por isso é um erro de lógica.
 
-### Passo 2: Formular uma hipótese
+### Etapa 2: Formular uma hipótese
 
 O dano é o dobro do que devia, e o "É super eficaz!" não aparece. A multiplicação por 2 está a acontecer sem a condição da vantagem. Hipótese: no `calcular_dano` da `PokemonPlanta`, o `dano * 2` corre mesmo quando o `if` é falso. Se a hipótese estiver certa, quando o programa passar pelo `calcular_dano`, o `if` vai dar falso e, mesmo assim, o `dano` vai passar de 25 a 50.
 
 Escreve a hipótese antes de abrires o depurador. Se escreveres depois, vais olhar para os valores à procura do que já sabes, e não do que lá está.
 
-### Passo 3: Pôr o ponto de paragem
+### Etapa 3: Pôr o ponto de paragem
 
 O ponto de paragem fica na primeira linha que interessa: `dano = super().calcular_dano(alvo)`, a primeira linha do corpo do `calcular_dano`. Clica na margem, à esquerda do número dessa linha, e confirma que aparece o ponto vermelho.
 
-### Passo 4: Executar com o depurador
+### Etapa 4: Executar com o depurador
 
 Carrega em F5. O programa corre até ao ponto de paragem e para. A linha `dano = super().calcular_dano(alvo)` fica marcada a amarelo: é a próxima a correr, e ainda não correu.
 
 No painel das variáveis aparecem `self` e `alvo`. Abre o `alvo`, com a seta, e confirma: `nome` é `'Charmander'` e `tipo` é `'Fogo'`. A variável `dano` ainda não aparece, porque a linha que a cria ainda não correu. Na pilha de chamadas, o andar de cima é o `calcular_dano`. Por baixo dele está o `atacar`, que o chamou, e no fim o `<module>`, o programa principal.
 
-### Passo 5: Avançar linha a linha
+### Etapa 5: Avançar linha a linha
 
-Carrega em F10 três vezes, e vê o que muda a cada passo:
+Carrega em F10 três vezes, e vê o que muda a cada vez:
 
 | Depois de | Linha marcada a amarelo | `dano` no painel das variáveis |
 | --- | --- | --- |
@@ -1083,15 +1090,15 @@ Carrega em F10 três vezes, e vê o que muda a cada passo:
 | F10 | `dano = dano * 2` | 25 |
 | F10 | `return dano` | 50 |
 
-A segunda linha da tabela é a que confirma a hipótese. O `if` foi avaliado, a condição deu falso, porque o tipo do alvo é `'Fogo'`, e a linha do `print` foi saltada, como devia. Mas a linha seguinte a correr é o `dano = dano * 2`, e a seguir o dano passa a 50. Se quiseres ver a condição a dar falso, escreve `alvo.tipo == "Água"` no painel Vigiar: o VS Code mostra `False`.
+A linha que confirma a hipótese é a que aparece com o segundo F10: `dano = dano * 2`. O `if` foi avaliado, a condição deu falso, porque o tipo do alvo é `'Fogo'`, e a linha do `print` foi saltada, como devia. Mesmo assim, a linha seguinte a correr é o `dano = dano * 2`, e a seguir o dano passa a 50. Se quiseres ver a condição a dar falso, escreve `alvo.tipo == "Água"` no painel Vigiar: o VS Code mostra `False`.
 
-### Passo 6: Corrigir a causa
+### Etapa 6: Corrigir a causa
 
 O `dano = dano * 2` corre sempre porque não está dentro do `if`. Está com a mesma indentação do `if`, e não com a do `print`. Para o Python, o bloco do `if` tem uma linha só, o `print`, e a multiplicação é a linha seguinte da função, que corre em qualquer caso. O sintoma estava no ecrã, no número 50. A causa são quatro espaços em falta, uma linha acima do `return`.
 
 Carrega em Shift+F5 para parar a depuração antes de mudares o código. Depois indenta o `dano = dano * 2`, para ficar dentro do `if`, por baixo do `print`. É assim que está na `PokemonPlanta` do `pokemon.py`. Mudaste a instrução que produzia o erro, e uma só.
 
-### Passo 7: Voltar a testar tudo
+### Etapa 7: Voltar a testar tudo
 
 Executa outra vez o mesmo programa:
 
@@ -1288,7 +1295,7 @@ Lê cada mensagem do registo como se fosse publicada. Se tiver um código, uma c
 2. O que quer dizer "most recent call last"? Em que andar está a função onde o erro rebentou?
 3. No exemplo guiado, porque é que a hipótese se escreve antes de abrir o depurador?
 4. Que diferença há entre o F10 e o F11? Numa linha `dano = self.calcular_dano(alvo)`, qual usavas para ver o que o `calcular_dano` faz?
-5. No passo 5 do exemplo guiado, que linha da tabela confirmou a hipótese, e porquê?
+5. Na etapa 5 do exemplo guiado, que linha da tabela confirmou a hipótese, e porquê?
 
 ### Logging
 
