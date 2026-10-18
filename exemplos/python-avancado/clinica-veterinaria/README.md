@@ -6,11 +6,11 @@ Este exemplo junta, numa clínica veterinária, a matéria do tema até aqui: he
 
 ## O que está nesta pasta
 
-- `clinica.py`: as classes `Animal`, `Cao`, `Gato`, `Consulta` e `Clinica`, e uma demonstração no fim, que só corre quando executas o ficheiro diretamente. O `Cao` e o `Gato` herdam do `Animal` e reescrevem o som. A idade do animal é uma propriedade, e o seu set usa um método estático. O método de classe `recem_nascido` cria um animal com 0 anos da classe por onde é chamado. A `Clinica` recebe animais criados fora dela (agregação) e cria as suas consultas (composição).
+- `clinica.py`: as classes `Animal`, `Cao`, `Gato`, `Consulta` e `Clinica`, e uma demonstração no fim, que só corre quando executas o ficheiro diretamente. O `Cao` e o `Gato` herdam do `Animal` e reescrevem o som. O `Cao` reescreve também o preço da consulta, e usa o `super()` para pedir à classe-mãe o preço base. A idade do animal é uma propriedade, e o seu set usa um método estático. O método de classe `recem_nascido` cria um animal com 0 anos da classe por onde é chamado. A `Clinica` recebe animais criados fora dela (agregação) e cria as suas consultas (composição).
 
 ## Como correr
 
-A partir da pasta do exemplo:
+Se não tens este repositório no teu computador, copia o `clinica.py` para uma pasta tua, como fizeste com o `pokemon.py`. Depois abre o terminal na pasta do exemplo, ou nessa pasta tua, e escreve:
 
 ```bash
 python3 clinica.py
@@ -47,6 +47,8 @@ Consultas da Clínica Patudos:
 
 Rex, 0 anos: Ão ão!
 ```
+
+O Rex paga 45 euros e o Tareco 30 porque o `Cao` reescreve o `preco_consulta`. Pede à classe-mãe o preço base, que é 30, com o `super()`, e soma-lhe 15 da vacina. O `Gato` não o reescreve, e por isso paga o preço base.
 
 ## Versões com que foi testado
 

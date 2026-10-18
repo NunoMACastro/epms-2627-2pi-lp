@@ -181,7 +181,7 @@ Baga Pecha
 
 Treina: escrever uma classe-filha que reescreve um método com `super()` (guia, [O construtor da filha chama o da mãe](03-objetos-e-composicao.md#o-construtor-da-filha-chama-o-da-mãe), [Reescrever um método](03-objetos-e-composicao.md#reescrever-um-método) e [super() dentro de um método reescrito](03-objetos-e-composicao.md#super-dentro-de-um-método-reescrito)).
 
-Escreve a classe `PokemonEletrico`, filha de `Pokemon`. Um `PokemonEletrico` é sempre do tipo `"Elétrico"`, e por isso o construtor pede só o nome, a vida e o ataque. O dano segue estas regras:
+Escreve a classe `PokemonEletrico`, filha de `Pokemon`. Um `PokemonEletrico` é sempre do tipo `"Elétrico"`, e por isso o construtor pede só o nome, a vida e o ataque. Reescreve o método `calcular_dano(alvo)`, que devolve o dano, segundo estas regras:
 
 - contra um Pokémon do tipo `"Água"`, tira o dobro do dano base, e antes do ataque escreve "É super eficaz!";
 - contra um Pokémon do tipo `"Planta"`, tira metade do dano base, arredondada para baixo, e antes do ataque escreve "Não é muito eficaz...";
@@ -615,7 +615,7 @@ Os exercícios 17, 20, 21 e 23 são uma introdução aos decoradores. Os exercí
 
 Nesta ficha, precisas de saber ler o que faz a arroba nos decoradores que já usas e de usar uma função como valor, sem a chamar. Estes quatro exercícios chegam para isso.
 
-Na numeração faltam o 18, o 19 e o 22. São três exercícios de decoradores para quem quiser praticar mais, e estão em [Para ires mais longe](#para-ires-mais-longe). São opcionais. Se no exercício 21 não souberes por onde começar, lê primeiro o exercício 19, que tem um decorador parecido, já escrito.
+Na numeração faltam o 18, o 19 e o 22. São três exercícios de decoradores para quem quiser praticar mais, e estão em [Para ires mais longe](#para-ires-mais-longe). São opcionais.
 
 ### Exercício 17: Função ou chamada?
 
@@ -634,7 +634,7 @@ print(funcao())
 print(funcao)
 ```
 
-**a)** Sem executar, escreve o que achas que mostra cada `print`.
+**a)** Sem executar, escreve o que achas que mostra cada `print`. Na terceira linha, o Python mostra a função na forma `<function ... at 0x...>`, com um número depois de `at` que muda de execução para execução. Na previsão, basta escreveres `<function ...>`.
 
 **b)** Qual das duas variáveis, `mensagem` ou `funcao`, guarda um texto? E qual guarda a própria função? Executa e confirma.
 
@@ -992,7 +992,7 @@ print(acordar)
 acordar()
 ```
 
-**a)** Comparado com o `tarefa` do exercício 19, na secção anterior, o que falta neste decorador?
+**a)** Comparado com o `tarefa` do exercício 19, mais acima, o que falta neste decorador?
 
 **b)** Sem executar, diz o que achas que mostra o `print(acordar)`. Executa e explica a última linha da mensagem de erro.
 

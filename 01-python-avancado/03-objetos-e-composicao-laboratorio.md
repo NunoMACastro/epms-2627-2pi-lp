@@ -30,6 +30,8 @@ Pelo caminho, vês no computador ideias que são difíceis só de ler. A equipa 
 | 8 | `ginasio.py`: o método `anunciar_combates`; ficheiros novos `anunciadores.py` e `anunciar.py` | Os mesmos combates anunciados de duas maneiras |
 | 9 | `ginasio.py`: o `Combate` passa a dataclass | O mesmo ginásio, com o registo escrito em menos linhas |
 
+Escrever os teus próprios decoradores e usar funções como valores não tem fase neste laboratório: praticam-se na ficha de exercícios.
+
 Em todas as fases trabalhas da mesma maneira. Antes de executares, escreves no papel, ou num ficheiro de texto, o que esperas ver. Depois executas e comparas. Quando a saída é diferente da tua previsão, explica a diferença antes de continuares. Uma previsão escrita depois de veres o resultado concorda sempre contigo e não te ensina nada.
 
 As previsões e as perguntas têm a resposta logo a seguir. Responde primeiro, por escrito, e só depois lê a resposta.
@@ -352,7 +354,7 @@ O combate é um ciclo que se repete até um Pokémon ficar KO. Vais usar um `whi
 
 Um `while True` só é seguro se houver a certeza de que um `break` acaba por acontecer. Aqui há, porque o ataque de um Pokémon nunca é menor do que 1, e cada ataque tira pelo menos 1 de vida. No fim, o ginásio cria o registo e guarda-o na lista `combates`. É a composição. Para saber mais, lê o [passo 6 do exemplo guiado](03-objetos-e-composicao.md#passo-6-o-método-combater) do guia.
 
-1. Escreve o método `combater` dentro da classe `Ginasio`, entre o construtor e o `mostrar_historico`. Cuidado com a indentação: o método tem quatro espaços, as linhas dentro dele têm oito, e as linhas dentro do `while` e dos `if` têm doze ou dezasseis.
+1. Escreve o método `combater` dentro da classe `Ginasio`, entre o construtor e o `mostrar_historico`. Cuidado com a indentação: o método tem quatro espaços, as linhas dentro dele têm oito, e as linhas dentro do `while` e dos `if` têm doze ou dezasseis. A linha `class Ginasio:` e o comentário do bloco só mostram onde o método fica: escreve só o `def` e o que está debaixo dele, dentro da classe que já tens. Se escreveres também a linha `class`, crias uma segunda classe `Ginasio`, que apaga a primeira.
 
 ```python
 class Ginasio:
@@ -635,7 +637,7 @@ Um método de classe leva por cima a linha `@classmethod`. Essa marca chama-se d
 
 Um `Lider` é um treinador, e por isso herda da classe `Treinador`. Escolhe de outra maneira: um treinador escolhe o primeiro Pokémon da equipa com vida, e um líder escolhe o que tem mais vida. Para saber mais, lê as secções [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [O líder, um treinador que escolhe de outra maneira](03-objetos-e-composicao.md#o-líder-um-treinador-que-escolhe-de-outra-maneira) do guia.
 
-1. Na classe `Treinador` do teu `ginasio.py`, acrescenta o método de classe `com_equipa`, entre o construtor e o `capturar`. Não te esqueças da linha `@classmethod` por cima do `def`.
+1. Na classe `Treinador` do teu `ginasio.py`, acrescenta o método de classe `com_equipa`, entre o construtor e o `capturar`. Não te esqueças da linha `@classmethod` por cima do `def`. A linha `class Treinador:` e o comentário do bloco só mostram onde o método fica. Escreve só o `@classmethod` e o `def`, com o que está debaixo dele, dentro da classe que já tens. Se escreveres também a linha `class`, crias uma segunda classe `Treinador`, que apaga a primeira.
 
 ```python
 class Treinador:
@@ -873,7 +875,7 @@ Basta que o ginásio peça uma só coisa a quem anuncia: um método `anunciar`, 
 
 O Python só verifica se o método existe quando a linha que o chama corre. Como nada confirma o que o ginásio espera, esse contrato escreve-se na docstring do método. Para saber mais, lê a secção [Duck typing: o que conta é o comportamento](03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) do guia.
 
-1. Acrescenta à classe `Ginasio` o método `anunciar_combates`, no fim da classe, depois do `mostrar_historico`.
+1. Acrescenta à classe `Ginasio` o método `anunciar_combates`, no fim da classe, depois do `mostrar_historico`. A linha `class Ginasio:` e o comentário do bloco só mostram onde o método fica: escreve só o `def` e o que está debaixo dele, dentro da classe que já tens. Se escreveres também a linha `class`, crias uma segunda classe `Ginasio`, que apaga a primeira.
 
 ```python
 class Ginasio:
@@ -1099,7 +1101,7 @@ Há uma linha a usar a classe antes de ela ser definida. As linhas de teste e o 
 
 ### `AttributeError: 'Treinador' object has no attribute 'capturar'`
 
-O método existe no ficheiro, mas não está dentro da classe. Um método tem de estar indentado quatro espaços em relação à linha `class`. Se o `def capturar` começar na margem, é uma função solta, e não um método do treinador.
+O método existe no ficheiro, mas não está dentro da classe. Um método tem de estar indentado quatro espaços em relação à linha `class`. Se o `def capturar` começar na margem, é uma função solta, e não um método do treinador. Este erro aparece quando saem da indentação o `def capturar` e todos os métodos a seguir. Aparece também quando o método que saiu é o último da classe, como o `escolher_pokemon`. Se sair só o `def capturar` e os métodos a seguir ficarem onde estavam, o Python não executa nada e dá `IndentationError: unindent does not match any outer indentation level`, apontado à linha do método seguinte.
 
 ### `TypeError: Treinador.capturar() takes 1 positional argument but 2 were given`
 
@@ -1116,6 +1118,10 @@ Alguém apagou a linha `if __name__ == "__main__":` do `pokemon.py` e tirou a in
 ### O programa não para
 
 Carrega em Ctrl+C no terminal para o interromper. Um combate que nunca acaba vem quase sempre do ciclo `while True` do `combater`. Confirma que tens os dois `break`, que as condições são `defensor.vida == 0` e `atacante.vida == 0`, e que não mudaste o ataque mínimo no `pokemon.py`. Com ataque mínimo 1, cada ataque tira pelo menos 1 de vida, e o combate acaba sempre.
+
+### `TypeError: Ginasio() takes no arguments`
+
+A classe ficou sem o construtor, porque o ficheiro tem duas linhas `class Ginasio:`. Escreveste a linha `class` do bloco do método, que só mostrava onde ele fica, e a segunda classe, só com esse método, apaga a primeira, que tinha o construtor. O mesmo acontece com o `Treinador`, na fase 7, e a mensagem pode dizer `Treinador() takes no arguments` ou `Lider() takes no arguments`. Procura no ficheiro as linhas que começam por `class`, deixa uma só para cada classe e põe o método dentro dela, com quatro espaços.
 
 ### A saída tem os números certos mas as linhas em branco não coincidem
 

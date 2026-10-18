@@ -25,7 +25,7 @@ python3 ginasio.py
 
 No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
 
-O que deves ver: a demonstração do ginásio, com os treinadores, os combates anunciados e o resultado de cada um. Na versão 04, aparecem também as recusas do ginásio e as linhas do registo dos combates.
+O que deves ver: a demonstração do ginásio, com os combates entre os treinadores e o histórico, que diz quem ganhou cada um. Na versão 04, aparecem também as recusas do ginásio e as linhas do registo dos combates.
 
 ## Versões com que foi testado
 
