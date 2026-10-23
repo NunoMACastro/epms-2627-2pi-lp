@@ -119,7 +119,7 @@ Vencedor: Inês
 Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho, e usa só a pista da regra em que estás preso.
 
 - Regra 3: nos Pokémon das aulas, a vida também nunca passa de 150, mesmo com `bulbasaur.vida = 200`. Como é que o programa garante isso, sem repetir a verificação em cada método?
-- Regra 4: diz em voz alta "um kart leve é um kart" e "um kart leve tem um kart". Qual das duas frases é verdadeira? Como é que o fogo e a água dos Pokémon partilham o que têm em comum?
+- Regra 4: compara as relações "um kart leve é um kart" e "um kart leve tem um kart". Qual das duas frases é verdadeira? Como é que o fogo e a água dos Pokémon partilham o que têm em comum?
 - Regra 5: no ginásio das aulas, o `Lider` também se criava numa linha, já com a equipa. Quem escreve `KartLeve.com_turbo("Foguete")` está a pedir um kart de que classe? Como é que o código que cria o kart fica a saber isso?
 - Regras 6, 7 e 9: para cada coisa que um piloto ou uma corrida guarda, faz as duas perguntas do guia. Faz sentido sem o todo? Quem a cria?
 - Regra 10: antes de escreveres a banana, pensa num kart normal e num kart pesado, os dois a 70. Com que velocidade fica cada um depois de escorregar? Quem sabe de que tipo é o kart: a banana ou o próprio kart?

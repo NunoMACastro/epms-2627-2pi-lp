@@ -2,7 +2,7 @@
 
 # Linguagens de Programação · 11.º PI
 
-Materiais de Linguagens de Programação do 11.º ano do curso de Programador/a de Informática. Cada material é publicado quando fica pronto, e podes lê-lo antes de ser dado na aula.
+Materiais de Linguagens de Programação do 11.º ano do curso de Programador/a de Informática. Podes ler estes materiais antes de serem dados na aula.
 
 ## Por onde começar
 
@@ -17,8 +17,6 @@ Começa pelo índice da área de [Python avançado](01-python-avancado/README.md
 | Área | Módulo |
 | --- | --- |
 | [Python avançado](01-python-avancado/README.md) | 10794, Programação avançada com Python |
-
-As outras três áreas do ano, com o SQL e a cloud, aparecem aqui quando tiverem o primeiro material.
 
 ## Como estudar
 
