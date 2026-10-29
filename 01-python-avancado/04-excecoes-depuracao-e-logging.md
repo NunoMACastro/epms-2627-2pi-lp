@@ -31,26 +31,27 @@ Nas mensagens de erro, as secções sobre exceções e sobre logging mostram só
 9. Uma exceção própria
 10. As exceções do ginásio
 11. Uma família de exceções
-12. finally: o que corre sempre
-13. Um erro tem um sintoma e uma causa
-14. Ler um traceback com três andares
-15. Um erro sem mensagem
-16. O depurador do VS Code
-17. A pilha de chamadas no depurador
-18. O print é para quem usa o programa; o registo é para quem o mantém
-19. Os cinco níveis
-20. O registo do ginásio
-21. Quem configura é o programa
-22. Mudar o nível sem mudar o código
-23. Sem configuração
-24. Registar uma exceção
-25. Guardar o registo num ficheiro
-26. O que nunca se regista
-27. Exemplo guiado: o dano a dobrar
-28. Erros frequentes
-29. Palavras novas deste guia
-30. Verificar o que aprendeste
-31. O que vem a seguir
+12. Uma exceção com dados
+13. finally: o que corre sempre
+14. Um erro tem um sintoma e uma causa
+15. Ler um traceback com três andares
+16. Um erro sem mensagem
+17. O depurador do VS Code
+18. A pilha de chamadas no depurador
+19. O print é para quem usa o programa; o registo é para quem o mantém
+20. Os cinco níveis
+21. O registo do ginásio
+22. Quem configura é o programa
+23. Mudar o nível sem mudar o código
+24. Sem configuração
+25. Registar uma exceção
+26. Guardar o registo num ficheiro
+27. O que nunca se regista
+28. Exemplo guiado: o dano a dobrar
+29. Erros frequentes
+30. Palavras novas deste guia
+31. Verificar o que aprendeste
+32. O que vem a seguir
 
 ## O que vais aprender
 
@@ -58,6 +59,7 @@ No fim deste guia, consegues:
 
 - fazer um método recusar um pedido com `raise`, e apanhar a recusa com `try`, `except`, `else` e `finally`;
 - criar exceções próprias, com uma classe-mãe comum, e escolher a ordem dos `except`;
+- dar a uma exceção própria um construtor que guarda os dados da recusa, quando quem a apanha precisa deles;
 - ler um traceback e dizer onde o erro rebentou e onde está a causa;
 - seguir a rotina de cinco passos para encontrar um erro, e usar o depurador do VS Code para ver os valores do programa, linha a linha;
 - escolher o nível de uma mensagem do registo e configurar o `logging` no programa principal, para o ecrã ou para um ficheiro;
@@ -532,6 +534,77 @@ A última linha mostra que as recusas não deixaram rasto. O Gary tem os seis Po
 Apanhar a classe-mãe ou a classe-filha é uma escolha. O `except ErroDoGinasio` serve quando a reação é a mesma para todos os erros do ginásio, como aqui, em que só se mostra a mensagem. O `except EquipaCheia` serve quando a reação é própria desse caso, como sugerir ao treinador que liberte um Pokémon. E quando há dois `except` com tipos da mesma família, o da classe-filha tem de vir primeiro, como mostra a secção dos erros frequentes.
 
 Leitura guiada: o ciclo percorre três pedidos, e o `try` envolve tanto o combate como as capturas. O `if` escolhe o que fazer, e o `except ErroDoGinasio` é o único que apanha as recusas dos dois lados. Na linha do `print`, `type(erro)` dá a classe da exceção apanhada e `.__name__` o nome dela. É por isso que a mesma linha mostra `SemPokemonComVida` num pedido e `EquipaCheia` no outro. Os três números do fim contam a equipa do Gary, os combates do ginásio e os desafiantes dele.
+
+## Uma exceção com dados
+
+Até aqui, as exceções próprias só tinham a docstring, e a mensagem era escrita por quem lançava a exceção, dentro do `raise`. Isso chega quando quem apanha a exceção só quer mostrar a mensagem. Às vezes precisa de mais. Pode precisar de saber que Pokémon ficou de fora, para o guardar noutro sítio, ou quem é o treinador, para lhe sugerir que liberte um Pokémon. Esses dados estão escritos na mensagem, mas tirá-los de lá não é boa ideia: uma mensagem é para ler, e não para desmontar.
+
+Uma exceção própria é uma classe, e por isso pode ter um construtor, como as classes do tema 03. O construtor recebe os dados da recusa, guarda-os em atributos e escreve a mensagem a partir deles. Depois entrega a mensagem à classe-mãe, com `super().__init__(mensagem)`, como o construtor do `PokemonFogo` entregava o nome, a vida e o ataque ao construtor da `Pokemon`. É o `Exception` que guarda a mensagem e a mostra no `print`, e por isso a mensagem tem de lhe chegar.
+
+No programa seguinte, a `EquipaCheia` recebe o treinador e o nome do Pokémon. A função `capturar_todos` captura uma lista de Pokémon, e o `try` está fora dela: o `except` não sabe em que volta do ciclo a captura falhou. Antes de executares, prevê as três linhas que o programa escreve.
+
+```python
+# Uma exceção com dados: a EquipaCheia guarda o treinador e o Pokémon que ficou de fora.
+class EquipaCheia(Exception):
+    """Um treinador tentou capturar um Pokémon com a equipa já completa.
+
+    Guarda o treinador e o nome do Pokémon que ficou de fora, e escreve ela
+    própria a mensagem a partir deles.
+    """
+
+    def __init__(self, treinador, nome_do_pokemon):
+        """Guarda os dados da recusa e entrega a mensagem à classe-mãe."""
+        self.treinador = treinador
+        self.nome_do_pokemon = nome_do_pokemon
+        mensagem = f"A equipa de {treinador.nome} está cheia: {nome_do_pokemon} ficou de fora."
+        super().__init__(mensagem)
+
+
+class Treinador:
+    """Versão curta: a equipa só leva dois Pokémon, e a recusa é EquipaCheia."""
+
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        self.equipa = []
+
+    def capturar(self, nome_do_pokemon):
+        """Junta o Pokémon à equipa; com a equipa cheia, lança EquipaCheia."""
+        if len(self.equipa) >= 2:
+            raise EquipaCheia(self, nome_do_pokemon)
+        self.equipa.append(nome_do_pokemon)
+
+
+def capturar_todos(treinador, nomes):
+    """Captura os Pokémon da lista, pela ordem, até a lista acabar."""
+    for nome in nomes:
+        treinador.capturar(nome)
+
+
+ash = Treinador("Ash")
+try:
+    capturar_todos(ash, ["Pikachu", "Bulbasaur", "Squirtle", "Charmander"])
+except EquipaCheia as erro:
+    print(erro)
+    print(f"Ficou de fora: {erro.nome_do_pokemon}.")
+    print(f"Para o capturar, {erro.treinador.nome} tem de libertar um destes: {erro.treinador.equipa}")
+```
+
+O resultado é:
+
+```text
+A equipa de Ash está cheia: Squirtle ficou de fora.
+Ficou de fora: Squirtle.
+Para o capturar, Ash tem de libertar um destes: ['Pikachu', 'Bulbasaur']
+```
+
+A primeira linha é a mensagem, que a própria exceção escreveu. As outras duas usam os atributos da exceção apanhada: `erro.nome_do_pokemon` é o Pokémon que ficou de fora, e `erro.treinador` é o objeto `Treinador` inteiro, com o nome e a equipa. O Charmander nem chegou a ser tentado, porque a exceção parou o ciclo do `capturar_todos` na volta do Squirtle. Só a exceção sabia em que volta ia.
+
+O `raise` também ficou mais curto: `raise EquipaCheia(self, nome_do_pokemon)`. Quem lança passa só os dados, e a frase fica escrita num único sítio, a classe da exceção. Se o programa lançar a `EquipaCheia` em três métodos diferentes, a mensagem sai sempre igual.
+
+Uma exceção com dados não substitui as que só têm a docstring. As do `erros.py` do exemplo ficam como estão, porque quem as apanha só mostra a mensagem. O construtor vale a pena quando quem apanha a exceção precisa de usar os dados, e não só de os ler.
+
+Leitura guiada: começa pela classe `EquipaCheia`. O construtor guarda os dois dados em atributos, monta a mensagem com uma f-string e entrega-a à classe-mãe, na última linha. O `capturar` lança a exceção com `self`, que é o próprio treinador, e com o nome do Pokémon. A função `capturar_todos` não tem `try`: deixa a exceção subir. No fim do programa, a chamada ao `capturar_todos` está dentro do `try`, e o `except` usa a mensagem e os dois atributos da exceção.
 
 ## finally: o que corre sempre
 
@@ -1207,6 +1280,36 @@ A mensagem diz que as exceções têm de descender de `BaseException`, que é a 
 
 `raise EquipaCheia()` funciona, mas quem apanha a exceção não tem nada para mostrar: um `print(erro)` escreve uma linha vazia. Escreve sempre na mensagem o que aconteceu, com os dados que ajudam a perceber: quem, o quê, e porque não foi possível.
 
+### Esquecer o super().__init__ numa exceção com dados
+
+Numa exceção com construtor, a mensagem só chega ao `Exception` pelo `super().__init__(mensagem)`. Neste programa, o construtor monta a mensagem e esquece-se de a entregar. Antes de executares, prevê o que o `print` escreve.
+
+```python
+# Uma exceção com dados que se esqueceu do super().__init__.
+class EquipaCheia(Exception):
+    """Guarda o treinador e o Pokémon, mas não entrega a mensagem à classe-mãe."""
+
+    def __init__(self, nome_do_treinador, nome_do_pokemon):
+        """Guarda os dados da recusa e monta a mensagem, mas não a entrega."""
+        self.nome_do_treinador = nome_do_treinador
+        self.nome_do_pokemon = nome_do_pokemon
+        mensagem = f"A equipa de {nome_do_treinador} está cheia: {nome_do_pokemon} ficou de fora."
+
+
+try:
+    raise EquipaCheia("Ash", "Squirtle")
+except EquipaCheia as erro:
+    print(erro)
+```
+
+O resultado é:
+
+```text
+('Ash', 'Squirtle')
+```
+
+Não há mensagem de erro, e o programa parece funcionar. O que aparece é um tuplo, como os da secção "Uma pausa: tuplos", com os argumentos com que a exceção foi criada. Quando ninguém entrega uma mensagem ao `Exception`, o `print` mostra esses argumentos. Se o primeiro argumento for um objeto, como o treinador da secção "Uma exceção com dados", aparece um texto como `<__main__.Treinador object at 0x...>`, com um número que muda de execução para execução. A variável `mensagem` foi criada e nunca foi usada. Corrige-se com `super().__init__(mensagem)` no fim do construtor.
+
 ### Executar sem o depurador
 
 O botão do triângulo, no canto de cima, e o Ctrl+F5 correm o programa normalmente: os pontos de paragem são ignorados, e o programa corre até ao fim. Para parar nos pontos de paragem, usa o F5, ou a opção de depurar.
@@ -1259,6 +1362,7 @@ Lê cada mensagem do registo como se fosse publicada. Se tiver um código, uma c
 - `else` de um `try`: o bloco que corre quando o `try` acaba sem exceção.
 - `finally`: o bloco que corre sempre, com ou sem exceção.
 - Exceção própria: uma classe criada por ti, filha de `Exception`, com um nome que diz o problema.
+- Exceção com dados: uma exceção própria com construtor, que guarda em atributos os dados da recusa e entrega a mensagem à classe-mãe com `super().__init__(mensagem)`.
 - Tuplo: um conjunto de valores entre parênteses, separados por vírgulas, que se lê pela posição e não se muda depois de criado. Um tuplo com dois valores chama-se par.
 - Desempacotar: repartir os valores de um tuplo por vários nomes, como em `for nome, texto_do_nivel in pedidos:`.
 - `isinstance`: a função que pergunta se um objeto é de uma classe, ou de uma classe-filha dela, e devolve `True` ou `False`.
@@ -1288,6 +1392,7 @@ Lê cada mensagem do registo como se fosse publicada. Se tiver um código, uma c
 3. Para que serve o `else` de um `try`? Porque não se põe simplesmente essa linha dentro do `try`?
 4. A `EquipaCheia` e a `SemPokemonComVida` são filhas de `ErroDoGinasio`. Escreve dois `except` para um programa que quer mostrar "Liberta um Pokémon primeiro." quando a equipa está cheia, e a mensagem da exceção para qualquer outro erro do ginásio. Por que ordem ficam?
 5. Porque é que o `capturar` lança a exceção, em vez de escrever ele próprio a mensagem no ecrã?
+6. Na secção "Uma exceção com dados", o `except` está fora do `capturar_todos`. Como fica a saber que Pokémon ficou de fora? E porque é que as exceções do `erros.py` não precisam de construtor?
 
 ### Encontrar a causa de um erro
 

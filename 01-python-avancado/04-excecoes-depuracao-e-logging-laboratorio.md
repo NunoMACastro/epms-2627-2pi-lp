@@ -6,7 +6,7 @@ Laboratório do tema Exceções, depuração e logging, do módulo 10794, Progra
 
 ## O que vais construir
 
-No fim, o teu ginásio é igual à versão 04 do exemplo dos Pokémon. O `Treinador` recusa a captura de um sétimo Pokémon, e o `Ginasio` recusa um combate sem Pokémon com vida. As duas recusas são exceções próprias, que estão num ficheiro novo, o `erros.py`. O ginásio regista também os combates, e o programa que o usa escolhe o que quer ver desse registo. Pelo caminho, investigas dois erros com o depurador. Num desafio final, acrescentas uma exceção tua.
+No fim, o teu ginásio é igual à versão 04 do exemplo dos Pokémon. O `Treinador` recusa a captura de um sétimo Pokémon, e o `Ginasio` recusa um combate sem Pokémon com vida. As duas recusas são exceções próprias, que estão num ficheiro novo, o `erros.py`. O ginásio regista também os combates, e o programa que o usa escolhe o que quer ver desse registo. Pelo caminho, investigas dois erros com o depurador. Em dois desafios finais, acrescentas uma exceção tua e dás dados à `EquipaCheia`.
 
 A pasta de trabalho acaba assim:
 
@@ -853,11 +853,48 @@ Recusado: Ash já tem este Charmander na equipa.
 
 Antes de escreveres o código, decide duas coisas. A primeira: o terceiro `capturar` junta um Charmander criado de novo, com os mesmos valores do primeiro, e tem de ser aceite. Que pergunta faz a verificação, "é o mesmo objeto?" ou "tem os mesmos valores?", e como se escreve? A segunda: um treinador com a equipa cheia tenta capturar um Pokémon que já tem. Qual das duas exceções deve ser lançada, e o que decide isso no teu código? Pista: pensa no que o `==` faz com dois objetos de uma classe normal, escrita sem `@dataclass`. Pensa também em qual dos dois motivos de recusa dá mais informação a quem chamou.
 
+2. A `EquipaCheia` do teu `erros.py` só tem a docstring, e a mensagem é escrita no `raise` do `capturar`. Dá-lhe dados, como na secção "Uma exceção com dados" do [guia](04-excecoes-depuracao-e-logging.md#uma-exceção-com-dados).
+
+- No `erros.py`, a `EquipaCheia` passa a ter um construtor que recebe o treinador e o Pokémon que ficou de fora. Guarda-os nos atributos `treinador` e `pokemon`, e escreve ela própria a mensagem, com o mesmo texto que tem hoje: "Ash já tem 6 Pokémon e não pode capturar Charmander."
+- No `capturar` do `ginasio.py`, o `raise` passa só o treinador e o Pokémon.
+
+Para testar, cria o ficheiro `fora_da_equipa.py`:
+
+```python
+# fora_da_equipa.py: testa a EquipaCheia com dados, do desafio 2.
+from erros import EquipaCheia
+from pokemon import PokemonFogo
+from ginasio import Treinador
+
+pokemons = []
+for nome in ["Ponyta", "Vulpix", "Growlithe", "Magmar", "Ninetales", "Arcanine", "Charmander"]:
+    pokemons.append(PokemonFogo(nome, 50, 20))
+try:
+    ash = Treinador.com_equipa("Ash", pokemons)
+except EquipaCheia as erro:
+    print(erro)
+    print(f"Ficou de fora: {erro.pokemon.nome}.")
+    print(f"Na equipa de {erro.treinador.nome} ficaram {len(erro.treinador.equipa)} Pokémon.")
+```
+
+Quando estiver certo, o teste mostra:
+
+```text
+Ash já tem 6 Pokémon e não pode capturar Charmander.
+Ficou de fora: Charmander.
+Na equipa de Ash ficaram 6 Pokémon.
+```
+
+Corre também outra vez o `capturas.py`, da fase 2. Tem de mostrar exatamente o mesmo que mostrava antes da mudança, porque a mensagem não mudou.
+
+Antes de escreveres o código, decide duas coisas. A primeira: a mensagem tem o número 6, que o `capturar` escrevia com a constante `TAMANHO_MAXIMO_DA_EQUIPA`, do `ginasio.py`. Dentro do `erros.py`, de onde vem esse número? Pista: o `ginasio.py` já importa o `erros.py`. Pensa no que acontece se o `erros.py` também importar o `ginasio.py`, e no que a equipa do treinador já te diz. A segunda: quando a exceção é lançada, o `com_equipa` ainda não devolveu o treinador, e a variável `ash` nunca chega a ser criada. Então, como é que o teste chega ao treinador e à equipa dele?
+
 ## Antes de terminares
 
 - [ ] A pasta `ginasio-com-erros` tem o `erros.py` e o `ginasio.py` na versão final, e os ficheiros de teste: `teste_erros.py`, `capturas.py`, `combates.py`, `investigar.py` já corrigido, `pilha.py` já corrigido e `registo.py`.
 - [ ] Tens as previsões, a hipótese e a tabela da fase 4. Tens também as respostas às perguntas das fases 2 a 7, escritas por ti, em papel ou num ficheiro de texto, conforme o professor indicar.
-- [ ] Se fizeste o desafio, o `erros.py` e o `ginasio.py` têm a `PokemonRepetido`, e o `repetido.py` mostra as três linhas do enunciado.
+- [ ] Se fizeste o desafio 1, o `erros.py` e o `ginasio.py` têm a `PokemonRepetido`, e o `repetido.py` mostra as três linhas do enunciado.
+- [ ] Se fizeste o desafio 2, a `EquipaCheia` tem o construtor com os dados, o `fora_da_equipa.py` mostra as três linhas do enunciado, e o `capturas.py` mostra o mesmo que antes.
 - [ ] Consegues explicar, por palavras tuas, porque é que um método recusa com `raise` em vez de `print`. Consegues explicar também a diferença entre o sítio onde um erro rebenta e o sítio onde está a causa.
 
 ![Rodapé](../imagens/rodape.png)
