@@ -1,4 +1,4 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Ficha de exercícios: Testes de comportamento com pytest
 
@@ -6,7 +6,7 @@ Ficha do tema Testes de comportamento com pytest, do módulo 10794, Programaçã
 
 ## O que precisas de saber
 
-O [guia do tema](05-testes-com-pytest.md) e o [laboratório](05-testes-com-pytest-laboratorio.md). Cada exercício diz, em "Treina", a secção do guia de que precisa.
+O [guia do tema](../05-testes-com-pytest.md) e o [laboratório](../laboratorios/05-testes-com-pytest-laboratorio.md). Cada exercício diz, em "Treina", a secção do guia de que precisa.
 
 ## Como trabalhar
 
@@ -78,7 +78,7 @@ O construtor tem um valor por omissão: `PokemonEmTreino("Eevee")` cria um Eevee
 
 ### Exercício 1: Prever o resultado do pytest
 
-Treina: ler o que o pytest mostra quando um teste falha (guia, [Um teste que falha](05-testes-com-pytest.md#um-teste-que-falha)).
+Treina: ler o que o pytest mostra quando um teste falha (guia, [Um teste que falha](../05-testes-com-pytest.md#um-teste-que-falha)).
 
 Um colega escreveu estes quatro testes, no ficheiro `test_previsao.py`:
 
@@ -125,7 +125,7 @@ def test_cento_e_vinte_pontos_deixam_vinte():
 
 ### Exercício 2: Os primeiros testes do treino
 
-Treina: escrever testes com as três partes, preparar, fazer e confirmar (guia, [Preparar, fazer, confirmar](05-testes-com-pytest.md#preparar-fazer-confirmar)).
+Treina: escrever testes com as três partes, preparar, fazer e confirmar (guia, [Preparar, fazer, confirmar](../05-testes-com-pytest.md#preparar-fazer-confirmar)).
 
 Cria o ficheiro `test_treino.py` e escreve nele dois testes para o `ganhar_experiencia`:
 
@@ -138,7 +138,7 @@ Corre `python3 -m pytest test_treino.py` e confirma que os dois passam.
 
 ### Exercício 3: As fronteiras do treino
 
-Treina: escolher casos de fronteira (guia, [Os casos de fronteira](05-testes-com-pytest.md#os-casos-de-fronteira-o-ko-e-os-limites-da-vida)).
+Treina: escolher casos de fronteira (guia, [Os casos de fronteira](../05-testes-com-pytest.md#os-casos-de-fronteira-o-ko-e-os-limites-da-vida)).
 
 O treino tem duas regras com fronteiras: um nível sobe aos 100 pontos, e o nível não passa de 100. Acrescenta ao `test_treino.py` pelo menos quatro testes de fronteira do `ganhar_experiencia`, dois para cada regra. Na docstring de cada teste, diz que fronteira ele testa.
 
@@ -148,7 +148,7 @@ Corre os testes e confirma que passam todos.
 
 ### Exercício 4: Uma recusa, e o que fica depois dela
 
-Treina: confirmar uma exceção com `pytest.raises` e o estado depois da recusa (guia, [Testar uma recusa](05-testes-com-pytest.md#testar-uma-recusa-pytestraises) e [Depois da recusa, o estado](05-testes-com-pytest.md#depois-da-recusa-o-estado)).
+Treina: confirmar uma exceção com `pytest.raises` e o estado depois da recusa (guia, [Testar uma recusa](../05-testes-com-pytest.md#testar-uma-recusa-pytestraises) e [Depois da recusa, o estado](../05-testes-com-pytest.md#depois-da-recusa-o-estado)).
 
 A docstring do `ganhar_experiencia` diz que os pontos têm de ser mais do que zero, e que o método recusa os outros com `ValueError`, sem mudar nada. Acrescenta ao `test_treino.py` dois testes de erro: um com 0 pontos e outro com -10. Cada teste confirma a exceção e confirma que o nível e a experiência ficaram como estavam.
 
@@ -160,7 +160,7 @@ Corre os testes e confirma que passam todos.
 
 ### Exercício 5: Três versões erradas
 
-Treina: confirmar que os testes distinguem o código certo do errado (guia, [Um teste tem de distinguir o certo do errado](05-testes-com-pytest.md#um-teste-tem-de-distinguir-o-certo-do-errado) e o exemplo guiado).
+Treina: confirmar que os testes distinguem o código certo do errado (guia, [Um teste tem de distinguir o certo do errado](../05-testes-com-pytest.md#um-teste-tem-de-distinguir-o-certo-do-errado) e o exemplo guiado).
 
 Três colegas escreveram o `ganhar_experiencia` de outra forma, e cada um enganou-se numa coisa. As três versões têm erros de propósito. Esta é a parte do corpo do método que muda em cada uma, a partir do `while`.
 
@@ -204,7 +204,7 @@ Versão C:
 
 ### Exercício 6: Uma fixture, ou não
 
-Treina: usar uma fixture só quando poupa repetição que importa (guia, [Uma fixture prepara o que vários testes repetem](05-testes-com-pytest.md#uma-fixture-prepara-o-que-vários-testes-repetem)).
+Treina: usar uma fixture só quando poupa repetição que importa (guia, [Uma fixture prepara o que vários testes repetem](../05-testes-com-pytest.md#uma-fixture-prepara-o-que-vários-testes-repetem)).
 
 Guarda este ficheiro, `test_fixture.py`, na pasta da ficha:
 
@@ -260,7 +260,7 @@ def test_eevee_comeca_no_nivel_um():
 
 ### Exercício 7: O teste antes da correção
 
-Treina: escrever o teste de um defeito antes de o corrigir (guia, [Um teste antes da correção](05-testes-com-pytest.md#um-teste-antes-da-correção)).
+Treina: escrever o teste de um defeito antes de o corrigir (guia, [Um teste antes da correção](../05-testes-com-pytest.md#um-teste-antes-da-correção)).
 
 Chegou um relato: "Um Pikachu no nível 100 comeu um doce raro e ficou no nível 101." O defeito está no `usar_doce_raro` do `treino.py`.
 
@@ -361,4 +361,4 @@ Concluíste a ficha quando:
 2. Consegues explicar, por palavras tuas, porque é que um teste que passa com o código certo e com o código errado não serve para nada?
 3. Num programa teu, que comportamento escolhias para escrever o primeiro teste de fronteira, e porquê?
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

@@ -1,8 +1,8 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Laboratório: Testes de comportamento com pytest
 
-Laboratório do tema Testes de comportamento com pytest, do módulo 10794, Programação avançada com Python. Vais escrever, fase a fase, os testes do ginásio Pokémon do tema 04, e usá-los para encontrar um defeito e para ver que mudanças partem o código. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](05-testes-com-pytest.md) tem a teoria completa, para quem quiser saber mais.
+Laboratório do tema Testes de comportamento com pytest, do módulo 10794, Programação avançada com Python. Vais escrever, fase a fase, os testes do ginásio Pokémon do tema 04, e usá-los para encontrar um defeito e para ver que mudanças partem o código. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](../05-testes-com-pytest.md) tem a teoria completa, para quem quiser saber mais.
 
 ## O que vais construir
 
@@ -39,7 +39,7 @@ As saídas mostradas são as do Python 3.14, com o pytest 9.1. No Python 3.9, co
 
 ## Palavras que vais usar
 
-- Teste: um pedaço de código que executa uma parte do programa e compara o resultado com o resultado esperado. Para saber mais, vê a secção "Testar a olhar para o ecrã" do [guia](05-testes-com-pytest.md).
+- Teste: um pedaço de código que executa uma parte do programa e compara o resultado com o resultado esperado. Para saber mais, vê a secção "Testar a olhar para o ecrã" do [guia](../05-testes-com-pytest.md).
 - `assert`: a instrução que confirma que uma condição é verdadeira. Se for falsa, lança a exceção `AssertionError`.
 - Função de teste: uma função cujo nome começa por `test_`, num ficheiro cujo nome também começa por `test_`.
 - pytest: o programa que encontra as funções de teste, corre-as uma a uma e diz quais passaram e quais falharam, com os valores verdadeiros.
@@ -56,7 +56,7 @@ As saídas mostradas são as do Python 3.14, com o pytest 9.1. No Python 3.9, co
 - O Python 3, para executar os programas. Confirma que o tens com o comando `python3 --version`. Deve aparecer `Python 3.` seguido de dois números, o que quer dizer que o Python está instalado. No Windows, se `python3` não funcionar, usa `python --version` ou `py --version`.
 - O VS Code, para escrever os ficheiros e abrir o terminal.
 - O pytest. A preparação do projeto confirma se o tens, e diz como o instalar se não o tiveres.
-- Os ficheiros `pokemon.py`, `erros.py`, `anunciadores.py` e `ginasio.py` da [pasta 04 dos exemplos](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/), que o laboratório copia na preparação. São o ginásio no fim do tema 04, e o [README do exemplo](../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
+- Os ficheiros `pokemon.py`, `erros.py`, `anunciadores.py` e `ginasio.py` da [pasta 04 dos exemplos](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/), que o laboratório copia na preparação. São o ginásio no fim do tema 04, e o [README do exemplo](../../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
 - Papel, ou um ficheiro de texto, para as previsões e as respostas.
 
 ## Se alguma coisa falhar
@@ -70,7 +70,7 @@ As saídas mostradas são as do Python 3.14, com o pytest 9.1. No Python 3.9, co
 ## Preparar o projeto
 
 1. Cria uma pasta nova no teu computador, com o nome `ginasio-com-testes`, e abre-a no VS Code, com o menu File, Open Folder (Ficheiro, Abrir Pasta, em português).
-2. Copia para essa pasta os quatro ficheiros da [pasta 04 dos exemplos](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/): o `pokemon.py`, o `erros.py`, o `anunciadores.py` e o `ginasio.py`. Copia os dos exemplos, e não os teus do tema 04, para os testes deste laboratório darem exatamente os resultados indicados.
+2. Copia para essa pasta os quatro ficheiros da [pasta 04 dos exemplos](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/): o `pokemon.py`, o `erros.py`, o `anunciadores.py` e o `ginasio.py`. Copia os dos exemplos, e não os teus do tema 04, para os testes deste laboratório darem exatamente os resultados indicados.
 3. Abre o terminal do VS Code, com o menu Terminal, New Terminal (Terminal, Novo Terminal), e executa a demonstração do ginásio, para confirmares que os ficheiros estão no sítio certo:
 
 ```bash
@@ -103,7 +103,7 @@ Depois de instalar, corre outra vez `python3 -m pytest --version`, para confirma
 
 ## Fase 1: O primeiro teste
 
-Até aqui, para saber se o ginásio funcionava, executavas a demonstração e comparavas a saída com o que esperavas. Um teste faz essa comparação por ti. É uma função, com um nome que começa por `test_`, que prepara uns objetos, chama um método e confirma o resultado com `assert`. O `assert` é seguido de uma condição: se for verdadeira, não acontece nada; se for falsa, o `assert` lança um erro. Quem chama as funções de teste é o pytest. Para saber mais, lê as secções "Uma função de teste" e "Correr os testes com o pytest" do [guia](05-testes-com-pytest.md).
+Até aqui, para saber se o ginásio funcionava, executavas a demonstração e comparavas a saída com o que esperavas. Um teste faz essa comparação por ti. É uma função, com um nome que começa por `test_`, que prepara uns objetos, chama um método e confirma o resultado com `assert`. O `assert` é seguido de uma condição: se for verdadeira, não acontece nada; se for falsa, o `assert` lança um erro. Quem chama as funções de teste é o pytest. Para saber mais, lê as secções "Uma função de teste" e "Correr os testes com o pytest" do [guia](../05-testes-com-pytest.md).
 
 1. Cria o ficheiro `test_pokemon.py`, na pasta `ginasio-com-testes`. O primeiro teste confirma uma vantagem de tipo: a água tira o dobro ao fogo. O ficheiro é novo, e fica completo com este conteúdo:
 
@@ -171,7 +171,7 @@ Pensa antes de continuares: porque é que é o pytest que corre os testes, e nã
 
 ## Fase 2: Um teste que falha
 
-Um teste falha quando o resultado do código e o resultado esperado não são iguais. Quando isso acontece, o pytest mostra a linha do `assert` e os dois valores. Mas não diz qual dos dois está errado, o teste ou o código. Quem decide são as regras do jogo. Para saber mais, lê a secção "Um teste que falha" do [guia](05-testes-com-pytest.md).
+Um teste falha quando o resultado do código e o resultado esperado não são iguais. Quando isso acontece, o pytest mostra a linha do `assert` e os dois valores. Mas não diz qual dos dois está errado, o teste ou o código. Quem decide são as regras do jogo. Para saber mais, lê a secção "Um teste que falha" do [guia](../05-testes-com-pytest.md).
 
 1. Acrescenta um segundo teste, escrito por um colega, para a vantagem da planta contra a água. No `test_pokemon.py`, substitui a linha do `import` por esta, que traz também a `PokemonPlanta`:
 
@@ -276,7 +276,7 @@ Pensa antes de continuares: nos dois erros desta fase, o pytest mostrou a mesma 
 
 ## Fase 3: Preparar, fazer, confirmar
 
-Os dois testes têm a mesma forma, em três partes. Primeiro preparam o que é preciso, os dois Pokémon. Depois fazem a ação que se quer testar, uma só: calculam o dano. Por fim confirmam o resultado com um `assert`. Com as três partes à vista, um teste lê-se como uma frase, e quando falha sabes logo que ação falhou. O nome do teste diz o comportamento que se confirma, porque é o nome que o pytest mostra quando ele falha. Para saber mais, lê a secção "Preparar, fazer, confirmar" do [guia](05-testes-com-pytest.md).
+Os dois testes têm a mesma forma, em três partes. Primeiro preparam o que é preciso, os dois Pokémon. Depois fazem a ação que se quer testar, uma só: calculam o dano. Por fim confirmam o resultado com um `assert`. Com as três partes à vista, um teste lê-se como uma frase, e quando falha sabes logo que ação falhou. O nome do teste diz o comportamento que se confirma, porque é o nome que o pytest mostra quando ele falha. Para saber mais, lê a secção "Preparar, fazer, confirmar" do [guia](../05-testes-com-pytest.md).
 
 1. Substitui o conteúdo do `test_pokemon.py` por esta versão. Tem os dois testes que já tinhas, com as três partes marcadas no primeiro. Tem também mais dois: o fogo contra a planta, com vantagem, e o fogo contra a água, sem vantagem.
 
@@ -357,7 +357,7 @@ Pensa antes de continuares: um colega juntou os quatro testes num só, com os qu
 
 ## Fase 4: Casos que distinguem o certo do errado
 
-Um teste só vale alguma coisa se der um resultado diferente com o código certo e com o código errado. Se as duas versões dão o mesmo resultado, o teste passa nas duas, e não distingue nada. Os erros escondem-se sobretudo nas fronteiras das regras, onde um número ou uma comparação errados só se veem no próprio limite. Um caso de fronteira é um valor onde a regra muda, ou o valor logo a seguir. Para saber mais, lê as secções "Um teste tem de distinguir o certo do errado" e "Os casos de fronteira" do [guia](05-testes-com-pytest.md).
+Um teste só vale alguma coisa se der um resultado diferente com o código certo e com o código errado. Se as duas versões dão o mesmo resultado, o teste passa nas duas, e não distingue nada. Os erros escondem-se sobretudo nas fronteiras das regras, onde um número ou uma comparação errados só se veem no próprio limite. Um caso de fronteira é um valor onde a regra muda, ou o valor logo a seguir. Para saber mais, lê as secções "Um teste tem de distinguir o certo do errado" e "Os casos de fronteira" do [guia](../05-testes-com-pytest.md).
 
 1. Põe um erro de propósito no `pokemon.py`. No `calcular_dano` da `PokemonFogo`, tira quatro espaços à linha `dano = dano * 2`, para ela sair do `if`. O método fica assim:
 
@@ -469,7 +469,7 @@ Pensa antes de continuares: para testar o limite de 50 do ataque, porque é que 
 
 ## Fase 5: As recusas, com pytest.raises
 
-O ginásio recusa pedidos com exceções próprias: a `EquipaCheia` à sétima captura, e a `SemPokemonComVida` quando um treinador não tem Pokémon com vida para combater. Se um teste chamasse o método e a exceção fosse lançada, o teste parava, e o pytest dava-o como falhado. O `pytest.raises` diz o contrário: esta linha tem de lançar esta exceção. Usa-se com um `with`, como o `with open(...)` do 10.º ano. Se a linha dentro do bloco lançar a exceção indicada, o teste continua depois do bloco; se não lançar, o teste falha. Uma recusa tem também uma segunda metade: o objeto fica como estava. Essa confirma-se com `assert` depois do bloco. Para saber mais, lê as secções "Testar uma recusa: pytest.raises", "Depois da recusa, o estado" e "A equipa vazia" do [guia](05-testes-com-pytest.md).
+O ginásio recusa pedidos com exceções próprias: a `EquipaCheia` à sétima captura, e a `SemPokemonComVida` quando um treinador não tem Pokémon com vida para combater. Se um teste chamasse o método e a exceção fosse lançada, o teste parava, e o pytest dava-o como falhado. O `pytest.raises` diz o contrário: esta linha tem de lançar esta exceção. Usa-se com um `with`, como o `with open(...)` do 10.º ano. Se a linha dentro do bloco lançar a exceção indicada, o teste continua depois do bloco; se não lançar, o teste falha. Uma recusa tem também uma segunda metade: o objeto fica como estava. Essa confirma-se com `assert` depois do bloco. Para saber mais, lê as secções "Testar uma recusa: pytest.raises", "Depois da recusa, o estado" e "A equipa vazia" do [guia](../05-testes-com-pytest.md).
 
 1. Cria o ficheiro `test_ginasio.py`, com este conteúdo. O `import pytest`, no início, é o que dá acesso ao `pytest.raises`.
 
@@ -577,7 +577,7 @@ Pensa antes de continuares: o primeiro teste tem o `pytest.raises` e um `assert`
 
 ## Fase 6: Uma fixture para o ginásio
 
-O teste do combate recusado cria a Misty e o ginásio. Os testes seguintes dos combates precisam do mesmo ginásio, e cada um ia repetir as mesmas linhas. Criar o ginásio uma só vez, no início do ficheiro, não resolve: os testes partilhavam o mesmo objeto, e os combates de um apareciam no outro. Uma fixture resolve as duas coisas. É uma função com o decorador `@pytest.fixture`, que cria o ginásio e o devolve. Um teste que precisa do ginásio tem um parâmetro com o nome da fixture, e o pytest chama a fixture antes desse teste e entrega-lhe o que ela devolveu. Como a chama de novo para cada teste, cada um recebe um ginásio acabado de criar. Para saber mais, lê as secções "Cada teste começa do zero" e "Uma fixture prepara o que vários testes repetem" do [guia](05-testes-com-pytest.md).
+O teste do combate recusado cria a Misty e o ginásio. Os testes seguintes dos combates precisam do mesmo ginásio, e cada um ia repetir as mesmas linhas. Criar o ginásio uma só vez, no início do ficheiro, não resolve: os testes partilhavam o mesmo objeto, e os combates de um apareciam no outro. Uma fixture resolve as duas coisas. É uma função com o decorador `@pytest.fixture`, que cria o ginásio e o devolve. Um teste que precisa do ginásio tem um parâmetro com o nome da fixture, e o pytest chama a fixture antes desse teste e entrega-lhe o que ela devolveu. Como a chama de novo para cada teste, cada um recebe um ginásio acabado de criar. Para saber mais, lê as secções "Cada teste começa do zero" e "Uma fixture prepara o que vários testes repetem" do [guia](../05-testes-com-pytest.md).
 
 1. Substitui o conteúdo do `test_ginasio.py` por esta versão. Tem a fixture `cerulean`, o teste da equipa cheia como estava, o teste do combate recusado a usar a fixture, e um teste novo: um combate que o desafiante ganha.
 
@@ -659,7 +659,7 @@ Pensa antes de continuares: se o teste do combate recusado corresse depois do te
 
 ## Fase 7: Um defeito relatado: o teste primeiro
 
-Quando aparece um defeito, a rotina de cinco passos do tema 04 começa por o observar e reproduzir. Com testes, reproduzir o defeito quer dizer escrever um teste que falha por causa dele, antes de mexer no código. Depois corriges, e o mesmo teste a passar prova que a correção resolveu o defeito. O teste fica no ficheiro: é um teste de regressão, que apanha o defeito se ele voltar. Para saber mais, lê a secção "Um teste antes da correção" do [guia](05-testes-com-pytest.md).
+Quando aparece um defeito, a rotina de cinco passos do tema 04 começa por o observar e reproduzir. Com testes, reproduzir o defeito quer dizer escrever um teste que falha por causa dele, antes de mexer no código. Depois corriges, e o mesmo teste a passar prova que a correção resolveu o defeito. O teste fica no ficheiro: é um teste de regressão, que apanha o defeito se ele voltar. Para saber mais, lê a secção "Um teste antes da correção" do [guia](../05-testes-com-pytest.md).
 
 1. Imagina que um colega mudou o `combater` do `Ginasio`. Para seguires esta fase, faz tu a mesma mudança. No `ginasio.py`, no `combater`, a linha `vencedor = self.lider` passa a ser:
 
@@ -980,4 +980,4 @@ Pista: a classe-mãe pode fazer a comparação, se cada classe-filha lhe disser 
 - [ ] Se fizeste o desafio 2, o comportamento do ginásio não mudou: os treze testes passam sem terem sido mudados, e a demonstração mostra o mesmo.
 - [ ] Consegues explicar, por palavras tuas, porque é que um teste só vale alguma coisa se falhar com o código errado. Consegues explicar também porque é que se escreve o teste de um defeito antes de o corrigir.
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

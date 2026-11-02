@@ -2,7 +2,7 @@
 
 # Testes de comportamento com pytest
 
-Módulo 10794, Programação avançada com Python. Neste guia aprendes a escrever testes: pequenas funções que executam o teu código e confirmam sozinhas que ele faz o que as regras dizem. Lês o guia ao teu ritmo, de preferência em mais do que uma vez, e o que não acabares na aula acabas em casa ou na aula seguinte. Para praticar, há o [laboratório](05-testes-com-pytest-laboratorio.md) e a [ficha de exercícios](05-testes-com-pytest-exercicios.md) deste tema.
+Módulo 10794, Programação avançada com Python. Neste guia aprendes a escrever testes: pequenas funções que executam o teu código e confirmam sozinhas que ele faz o que as regras dizem. Lês o guia ao teu ritmo, de preferência em mais do que uma vez, e o que não acabares na aula acabas em casa ou na aula seguinte. Para praticar, há o [laboratório](laboratorios/05-testes-com-pytest-laboratorio.md) e a [ficha de exercícios](exercicios/05-testes-com-pytest-exercicios.md) deste tema.
 
 Até aqui, para saber se o ginásio Pokémon funcionava, executavas um programa e comparavas a saída com a tua previsão. Funciona com um programa pequeno e com paciência. Deixa de funcionar quando o programa cresce, ou quando mudas uma linha e tens de voltar a confirmar tudo. Também falha quando o erro está num número que passa despercebido no meio de trinta linhas.
 
@@ -1144,7 +1144,7 @@ Se o teste tiver o parâmetro `ginasio` e a fixture se chamar `cerulean`, o pyte
 
 ## O que vem a seguir
 
-Para praticar este tema, faz o [laboratório](05-testes-com-pytest-laboratorio.md) e depois a [ficha de exercícios](05-testes-com-pytest-exercicios.md). No laboratório, escreves a tua própria bateria de testes para o ginásio, encontras um defeito com um teste escrito antes da correção e vês que testes apanham cada mudança errada. A ficha tem exercícios com outro programa, um Pokémon em treino que sobe de nível, para fazeres sem ajuda.
+Para praticar este tema, faz o [laboratório](laboratorios/05-testes-com-pytest-laboratorio.md) e depois a [ficha de exercícios](exercicios/05-testes-com-pytest-exercicios.md). No laboratório, escreves a tua própria bateria de testes para o ginásio, encontras um defeito com um teste escrito antes da correção e vês que testes apanham cada mudança errada. A ficha tem exercícios com outro programa, um Pokémon em treino que sobe de nível, para fazeres sem ajuda.
 
 O tema seguinte é o do Python idiomático. Nele, reescreves partes do ginásio de forma mais curta e mais clara, por exemplo a escolha do Pokémon do líder. Os testes deste tema são a tua rede: depois de cada mudança, `python3 -m pytest` diz-te se o comportamento ficou igual.
 

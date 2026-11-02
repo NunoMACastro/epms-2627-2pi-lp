@@ -4,7 +4,7 @@
 
 Módulo 10794, Programação avançada com Python. Este guia reúne a matéria de programação orientada a objetos em Python deste tema. Começa na ideia de classe e de objeto. Passa pela forma de proteger o estado de um objeto e pela herança. Chega à maneira como um objeto guarda outros objetos, que é a composição e a agregação. Segue com os métodos de classe, o duck typing e as dataclasses, e acaba nos decoradores. O fio condutor é o mesmo das aulas: Pokémon, treinadores e ginásios.
 
-É um texto para leres com calma, antes ou depois de uma aula, ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. O objetivo é perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho. Há a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário. Para praticar, há o [laboratório](03-objetos-e-composicao-laboratorio.md) e a [ficha de exercícios](03-objetos-e-composicao-exercicios.md) deste tema.
+É um texto para leres com calma, antes ou depois de uma aula, ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. O objetivo é perceberes o porquê de cada linha de código. Por isso cada ideia aparece explicada por mais do que um caminho. Há a definição, um exemplo do dia a dia, o exemplo dos Pokémon e o erro de quem a percebeu ao contrário. Para praticar, há o [laboratório](laboratorios/03-objetos-e-composicao-laboratorio.md) e a [ficha de exercícios](exercicios/03-objetos-e-composicao-exercicios.md) deste tema.
 
 Este guia não dá ainda duas coisas, porque dependem de matéria que vem depois. O tkinter é a biblioteca do Python para desenhar janelas. A primeira janela feita com ele vem no tema dos pacotes, quando o exemplo dos Pokémon passar a ser uma aplicação completa, com a equipa guardada num ficheiro. Os decoradores que mudam o que uma função faz de cada vez que é chamada vêm no tema da iteração.
 
@@ -1287,7 +1287,7 @@ A herança só serve quando "é um" é verdade sempre, e quando um objeto da fil
 
 ## Exemplo guiado: o ginásio Pokémon
 
-Este exemplo junta tudo o que a parte 4 explicou, num programa completo. É o código do ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), e o [laboratório](03-objetos-e-composicao-laboratorio.md) mostra como o construir no computador, passo a passo.
+Este exemplo junta tudo o que a parte 4 explicou, num programa completo. É o código do ficheiro [ginasio.py](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py), e o [laboratório](laboratorios/03-objetos-e-composicao-laboratorio.md) mostra como o construir no computador, passo a passo.
 
 ### Passo 1: O problema
 
@@ -3031,7 +3031,7 @@ Responde por escrito, com as tuas palavras, sem olhar para o texto. Se uma pergu
 
 ## O que vem a seguir
 
-Para praticar este tema, faz o [laboratório](03-objetos-e-composicao-laboratorio.md) e depois a [ficha de exercícios](03-objetos-e-composicao-exercicios.md). O laboratório leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar. Depois acrescenta-lhe o líder, os anunciadores e o registo como dataclass. A parte 8 explica um mecanismo e não constrói nada novo no ginásio, por isso não tem fase própria no laboratório. A ficha tem exercícios das oito partes deste guia, para fazeres sem ajuda.
+Para praticar este tema, faz o [laboratório](laboratorios/03-objetos-e-composicao-laboratorio.md) e depois a [ficha de exercícios](exercicios/03-objetos-e-composicao-exercicios.md). O laboratório leva-te a construir o ginásio Pokémon no computador, uma classe de cada vez, com o `is` e o `del` a mostrarem a agregação e a composição a funcionar. Depois acrescenta-lhe o líder, os anunciadores e o registo como dataclass. A parte 8 explica um mecanismo e não constrói nada novo no ginásio, por isso não tem fase própria no laboratório. A ficha tem exercícios das oito partes deste guia, para fazeres sem ajuda.
 
 Este tema acaba aqui. O tema seguinte é [Exceções, depuração e logging](04-excecoes-depuracao-e-logging.md): as exceções que o ginásio ainda não usa, o depurador do VS Code e o registo do que um programa faz. A primeira janela com tkinter vem mais à frente, no tema dos pacotes, quando o exemplo dos Pokémon passar a ser uma aplicação completa. É lá que vais voltar a usar um método sem parênteses.
 

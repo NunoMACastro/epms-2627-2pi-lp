@@ -1,4 +1,4 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Ficha de exercícios: Objetos, composição e comportamento no livro de receitas
 
@@ -6,7 +6,7 @@ Ficha do tema Objetos, composição e comportamento, do módulo 10794, Programa�
 
 ## O que precisas de saber
 
-O [guia do tema](03-objetos-e-composicao.md) e o [laboratório](03-objetos-e-composicao-laboratorio.md). Convém teres feito antes a [ficha dos karts](03-objetos-e-composicao-exercicios-karts.md), porque este exercício trabalha da mesma maneira.
+O [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md). Convém teres feito antes a [ficha dos karts](03-objetos-e-composicao-exercicios-karts.md), porque este exercício trabalha da mesma maneira.
 
 ## Como trabalhar
 
@@ -144,4 +144,4 @@ O desafio é opcional e não entra nestes critérios.
 2. Houve alguma regra que escreveste de uma maneira e tiveste de mudar porque a saída não batia certo? Qual, e o que mudaste?
 3. Se aparecesse um terceiro tipo de receita, por exemplo uma receita vegetariana, que partes do programa mudavas?
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

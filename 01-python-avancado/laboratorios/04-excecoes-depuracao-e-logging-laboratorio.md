@@ -1,8 +1,8 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Laboratório: Exceções, depuração e logging
 
-Laboratório do tema Exceções, depuração e logging, do módulo 10794, Programação avançada com Python. Vais pegar no ginásio Pokémon do tema 03 e dar-lhe três coisas novas, uma de cada vez. A primeira são exceções próprias para as recusas. A segunda é a investigação de dois erros com o depurador do VS Code. A terceira é um registo do que o ginásio faz. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](04-excecoes-depuracao-e-logging.md) tem a teoria completa, para quem quiser saber mais.
+Laboratório do tema Exceções, depuração e logging, do módulo 10794, Programação avançada com Python. Vais pegar no ginásio Pokémon do tema 03 e dar-lhe três coisas novas, uma de cada vez. A primeira são exceções próprias para as recusas. A segunda é a investigação de dois erros com o depurador do VS Code. A terceira é um registo do que o ginásio faz. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](../04-excecoes-depuracao-e-logging.md) tem a teoria completa, para quem quiser saber mais.
 
 ## O que vais construir
 
@@ -43,7 +43,7 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 - `try`, `except`, `else` e `finally`: o `try` é o bloco onde se espera uma exceção, e o `except` é o bloco que a trata, se for do tipo indicado. O `else` corre quando o `try` acaba sem exceção, e o `finally` corre sempre.
 - Docstring: o texto entre três aspas, logo a seguir ao `def` ou ao `class`, que explica o que a função ou a classe faz.
 - Herança: uma classe-filha herda tudo o que a classe-mãe tem. Em `class EquipaCheia(ErroDoGinasio)`, a classe entre parênteses é a classe-mãe.
-- Exceção própria: uma classe criada por ti, filha de `Exception`, com um nome que diz o problema. Para saber mais, vê a secção "Uma exceção própria" do [guia](04-excecoes-depuracao-e-logging.md).
+- Exceção própria: uma classe criada por ti, filha de `Exception`, com um nome que diz o problema. Para saber mais, vê a secção "Uma exceção própria" do [guia](../04-excecoes-depuracao-e-logging.md).
 - `isinstance`: a função que pergunta se um objeto é de uma classe, ou de uma classe-filha dela, e devolve `True` ou `False`.
 - Constante: um valor que o programa não muda, escrito em maiúsculas, como `TAMANHO_MAXIMO_DA_EQUIPA`.
 - Sintoma e causa: o sintoma é o que se vê de um erro, como uma mensagem ou um valor errado. A causa é a linha de código que está mal e que provoca o sintoma. Os dois raramente estão no mesmo sítio.
@@ -52,7 +52,7 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 - Traceback: a mensagem de erro completa, com o caminho de chamadas até à linha onde a exceção rebentou. Quer dizer, à letra, "o rasto para trás".
 - Andar: cada par de linhas `File` de um traceback, com o ficheiro, a linha, a função e o código.
 - Pilha de chamadas: a lista das funções e dos métodos que estão a meio, cada um à espera do que chamou.
-- Depurador e ponto de paragem: o depurador corre o programa e deixa-o parar. O ponto de paragem é a linha onde ele para, antes de a executar. Para saber mais, vê a secção "O depurador do VS Code" do [guia](04-excecoes-depuracao-e-logging.md).
+- Depurador e ponto de paragem: o depurador corre o programa e deixa-o parar. O ponto de paragem é a linha onde ele para, antes de a executar. Para saber mais, vê a secção "O depurador do VS Code" do [guia](../04-excecoes-depuracao-e-logging.md).
 - Logging, logger e nível: o logging é o registo do que um programa faz, escrito para quem o mantém. O logger é o objeto que escreve as mensagens. O nível diz a importância de cada mensagem: `DEBUG`, `INFO`, `WARNING`, `ERROR` ou `CRITICAL`.
 - `basicConfig`: a chamada que configura o registo do programa inteiro, com o nível mínimo, o formato das linhas e, se for preciso, o ficheiro.
 
@@ -60,7 +60,7 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 
 - O Python 3, para executar os programas. Confirma que o tens com o comando `python3 --version`. Deve aparecer `Python 3.` seguido de dois números, o que quer dizer que o Python está instalado. No Windows, se `python3` não funcionar, usa `python --version` ou `py --version`.
 - O VS Code com a extensão Python da Microsoft, para escrever os ficheiros, executar os programas e depurá-los. Confirma que a tens: no ícone das extensões da barra lateral, escreve `Python` na caixa de pesquisa. A extensão da Microsoft deve aparecer como instalada.
-- Os ficheiros `pokemon.py`, `ginasio.py` e `anunciadores.py` da [pasta 03 dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/), que o laboratório copia na preparação. O [README do exemplo](../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
+- Os ficheiros `pokemon.py`, `ginasio.py` e `anunciadores.py` da [pasta 03 dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/), que o laboratório copia na preparação. O [README do exemplo](../../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
 - Papel, ou um ficheiro de texto, para as previsões e as respostas.
 - O `ginasio.py` que copias já tem uma classe `Combate`, escrita com `@dataclass`, que o laboratório não muda. É por isso que o ficheiro começa por `from dataclasses import dataclass`. Deixa essa linha como está.
 
@@ -70,12 +70,12 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 2. Guardaste o ficheiro antes de executar? O Python executa o que está guardado no disco. Guarda e executa outra vez.
 3. Os ficheiros estão todos na mesma pasta? O `ginasio.py` importa do `erros.py` e do `pokemon.py`, e só os encontra se estiverem na mesma pasta que ele.
 4. Apareceu uma mensagem de erro que não esperavas? Lê a última linha: diz o tipo de erro e o que aconteceu. Procura essa linha em [Problemas frequentes](#problemas-frequentes).
-5. Cada fase parte do ficheiro como ficou na paragem anterior. Se te perderes, compara o teu `ginasio.py` com o [ginasio.py](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04. Na paragem da fase 6, o teu é igual a ele. Na paragem da fase 3, é igual a ele sem as linhas do logger, que só entram na fase 6. O texto do início e a demonstração do fim do exemplo são diferentes em qualquer dos casos, porque não os mudas.
+5. Cada fase parte do ficheiro como ficou na paragem anterior. Se te perderes, compara o teu `ginasio.py` com o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04. Na paragem da fase 6, o teu é igual a ele. Na paragem da fase 3, é igual a ele sem as linhas do logger, que só entram na fase 6. O texto do início e a demonstração do fim do exemplo são diferentes em qualquer dos casos, porque não os mudas.
 
 ## Preparar o projeto
 
 1. Cria uma pasta nova no teu computador, com o nome `ginasio-com-erros`, e abre-a no VS Code. No VS Code, o menu File, Open Folder (Ficheiro, Abrir Pasta, se estiver em português) abre uma pasta. Dar à pasta um nome sem espaços nem acentos evita problemas com os comandos.
-2. Copia para essa pasta os três ficheiros da [pasta 03 dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/): o `pokemon.py`, o `ginasio.py` e o `anunciadores.py`. Copia os dos exemplos, e não os teus do tema 03, para os testes deste laboratório darem exatamente as saídas indicadas. O VS Code mostra os ficheiros na barra lateral, à esquerda.
+2. Copia para essa pasta os três ficheiros da [pasta 03 dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/): o `pokemon.py`, o `ginasio.py` e o `anunciadores.py`. Copia os dos exemplos, e não os teus do tema 03, para os testes deste laboratório darem exatamente as saídas indicadas. O VS Code mostra os ficheiros na barra lateral, à esquerda.
 3. Abre o terminal do VS Code, que já fica na pasta aberta. Usa o menu Terminal, New Terminal (Terminal, Novo Terminal, em português), ou o atalho Ctrl+\` (a tecla do acento grave). Escreve o comando que executa a demonstração do ginásio:
 
 ```bash
@@ -96,7 +96,7 @@ Ao longo do laboratório, vais mudar o `ginasio.py` e criar ficheiros novos nest
 
 Até aqui, quando o ginásio não podia fazer o que lhe pediam, escrevia uma mensagem e saía. Quem o chamou não ficava a saber que o pedido falhou. Uma exceção própria resolve isso: é uma classe criada por ti, filha de `Exception`, que um método lança com `raise` quando recusa um pedido. Como herda de `Exception`, a classe herda tudo o que uma exceção precisa, incluindo a forma de guardar e mostrar a mensagem. Por isso o corpo pode ser só a docstring.
 
-O ginásio vai ter três exceções, em família. O `ErroDoGinasio` é a classe-mãe, e a `EquipaCheia` e a `SemPokemonComVida` são filhas dele. Com uma classe-mãe comum, um só `except ErroDoGinasio` apanha qualquer erro do ginásio, e um `except` com o nome de uma filha apanha só esse caso. Para saber mais, lê a secção "Uma exceção própria" do [guia](04-excecoes-depuracao-e-logging.md).
+O ginásio vai ter três exceções, em família. O `ErroDoGinasio` é a classe-mãe, e a `EquipaCheia` e a `SemPokemonComVida` são filhas dele. Com uma classe-mãe comum, um só `except ErroDoGinasio` apanha qualquer erro do ginásio, e um `except` com o nome de uma filha apanha só esse caso. Para saber mais, lê a secção "Uma exceção própria" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. Cria o ficheiro `erros.py`, na pasta `ginasio-com-erros`. Na barra lateral, passa o rato sobre o nome da pasta e clica no ícone do ficheiro com um sinal de mais (New File, Novo Ficheiro). Escreve o nome `erros.py` e carrega em Enter. O ficheiro é novo e fica completo, com este conteúdo:
 
@@ -163,7 +163,7 @@ Pensa antes de continuares: porque é que a `EquipaCheia` não precisa de mais c
 
 ## Fase 2: A equipa cheia
 
-Quando um método recusa um pedido, tem de o fazer antes de mexer no estado. Se o `raise` viesse depois do `append`, o Pokémon recusado ficava na equipa, e a mensagem diria uma coisa enquanto o estado diria outra. Nesta fase pões um limite de seis Pokémon na equipa do `Treinador`, guardado numa constante, e fazes o `capturar` lançar a `EquipaCheia` quando a equipa já o atingiu. Quem chama o `capturar` apanha a recusa com `try` e `except`, e o `else` corre só quando a captura correu bem. Para saber mais, lê as secções "raise: uma recusa que não se pode ignorar" e "As exceções do ginásio" do [guia](04-excecoes-depuracao-e-logging.md).
+Quando um método recusa um pedido, tem de o fazer antes de mexer no estado. Se o `raise` viesse depois do `append`, o Pokémon recusado ficava na equipa, e a mensagem diria uma coisa enquanto o estado diria outra. Nesta fase pões um limite de seis Pokémon na equipa do `Treinador`, guardado numa constante, e fazes o `capturar` lançar a `EquipaCheia` quando a equipa já o atingiu. Quem chama o `capturar` apanha a recusa com `try` e `except`, e o `else` corre só quando a captura correu bem. Para saber mais, lê as secções "raise: uma recusa que não se pode ignorar" e "As exceções do ginásio" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. Em `ginasio.py`, substitui a linha `from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta` por estas linhas. Trazem para o ficheiro as duas exceções e a constante com o limite da equipa. Ter o limite num só sítio evita repeti-lo na condição e na mensagem.
 
@@ -280,7 +280,7 @@ Pensa antes de continuares: se o `capturar` escrevesse a mensagem com `print` em
 
 ## Fase 3: O combate recusado
 
-O `combater` do tema 03 escrevia "Não há combate" e saía quando um dos treinadores não tinha Pokémon com vida. Quem o chamava não sabia se tinha havido combate. Nesta fase trocas isso por uma exceção. Há uma segunda mudança, mais subtil: a verificação passa para antes de o desafiante entrar na lista de desafiantes. Assim, um combate recusado deixa o ginásio exatamente como estava. O `finally` de um `try` corre sempre, haja ou não exceção, e vai servir para escrever, depois de cada desafio, quantos desafiantes e quantos combates o ginásio tem. Para saber mais, lê as secções "As exceções do ginásio" e "finally: o que corre sempre" do [guia](04-excecoes-depuracao-e-logging.md).
+O `combater` do tema 03 escrevia "Não há combate" e saía quando um dos treinadores não tinha Pokémon com vida. Quem o chamava não sabia se tinha havido combate. Nesta fase trocas isso por uma exceção. Há uma segunda mudança, mais subtil: a verificação passa para antes de o desafiante entrar na lista de desafiantes. Assim, um combate recusado deixa o ginásio exatamente como estava. O `finally` de um `try` corre sempre, haja ou não exceção, e vai servir para escrever, depois de cada desafio, quantos desafiantes e quantos combates o ginásio tem. Para saber mais, lê as secções "As exceções do ginásio" e "finally: o que corre sempre" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. Em `ginasio.py`, no método `combater` do `Ginasio`, substitui as linhas desde `def combater(self, desafiante):` até ao `return` (inclusive) por este bloco. O `print` com os sinais `===` e o resto do método ficam como estão. A linha `class Ginasio:` do bloco só mostra onde o método fica: não a copies.
 
@@ -362,7 +362,7 @@ A linha dos desafiantes e dos combates aparece três vezes, embora só tenha hav
 
 ### Paragem 3
 
-O `Ginasio` recusa um combate sem Pokémon com vida com uma exceção, e fica como estava. Neste ponto, o teu `ginasio.py` tem as duas exceções, a constante, o `capturar` com a verificação e o `combater` novo. O `capturas.py` e o `combates.py` mostram as saídas dos passos 4 da fase 2 e 3 da fase 3. Para o conferires, compara-o com o [ginasio.py](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04, sem as linhas do logger: o `import logging`, o `logger = logging.getLogger(__name__)` e as quatro linhas que começam por `logger.`. O texto do início e a demonstração do fim do exemplo também são diferentes, porque não os mudas.
+O `Ginasio` recusa um combate sem Pokémon com vida com uma exceção, e fica como estava. Neste ponto, o teu `ginasio.py` tem as duas exceções, a constante, o `capturar` com a verificação e o `combater` novo. O `capturas.py` e o `combates.py` mostram as saídas dos passos 4 da fase 2 e 3 da fase 3. Para o conferires, compara-o com o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04, sem as linhas do logger: o `import logging`, o `logger = logging.getLogger(__name__)` e as quatro linhas que começam por `logger.`. O texto do início e a demonstração do fim do exemplo também são diferentes, porque não os mudas.
 
 ## Fase 4: Investigar um erro de cálculo com o depurador
 
@@ -379,7 +379,7 @@ O depurador do VS Code é a ferramenta do terceiro passo. Corre o programa e dei
 
 Quando o programa está parado, a linha que vai correr a seguir aparece marcada a amarelo, e a barra lateral mostra três painéis. O painel Variáveis (Variables) tem os valores das variáveis da função onde o programa está parado, e um objeto abre-se com a seta, para ver os seus atributos. O painel Pilha de chamadas (Call Stack) tem os andares do traceback. O painel Vigiar (Watch) tem expressões que escreves tu, que o VS Code recalcula a cada passo.
 
-Em computadores portáteis e em Mac, as teclas F5, F10 e F11 podem precisar da tecla Fn. Na primeira vez que carregas em F5, o VS Code pode perguntar que depurador usar. Escolhe o de Python, e depois a opção de depurar o ficheiro que está aberto (Python Debugger e Python File, em inglês). O botão do triângulo, no canto de cima, corre o programa sem o depurador e ignora os pontos de paragem. Para depurar, usa o F5. Para saber mais, lê as secções "Um erro tem um sintoma e uma causa" e "O depurador do VS Code" do [guia](04-excecoes-depuracao-e-logging.md).
+Em computadores portáteis e em Mac, as teclas F5, F10 e F11 podem precisar da tecla Fn. Na primeira vez que carregas em F5, o VS Code pode perguntar que depurador usar. Escolhe o de Python, e depois a opção de depurar o ficheiro que está aberto (Python Debugger e Python File, em inglês). O botão do triângulo, no canto de cima, corre o programa sem o depurador e ignora os pontos de paragem. Para depurar, usa o F5. Para saber mais, lê as secções "Um erro tem um sintoma e uma causa" e "O depurador do VS Code" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. Cria o ficheiro `investigar.py`, com este conteúdo. Tem uma cópia da classe `PokemonAgua`, com um erro de propósito. Um Squirtle, de água, ataca um Charmander, de fogo, e a água devia tirar o dobro ao fogo.
 
@@ -499,7 +499,7 @@ Pensa antes de continuares: o erro desapareceria se tivesses acrescentado ao `ca
 
 ## Fase 5: Um erro que rebenta longe da causa
 
-Um erro de execução para o programa com uma mensagem, o traceback. O traceback mostra onde o erro rebentou e o caminho até lá, mas a causa pode estar numa linha que já acabou. Lê-se de baixo para cima. A última linha diz o quê. O andar de baixo diz onde rebentou, e os andares de cima dizem como se chegou lá. A pilha de chamadas é a lista das funções que estão a meio, cada uma à espera do que chamou, e o depurador mostra-a com os valores de cada andar. Para saber mais, lê as secções "Ler um traceback com três andares" e "A pilha de chamadas no depurador" do [guia](04-excecoes-depuracao-e-logging.md).
+Um erro de execução para o programa com uma mensagem, o traceback. O traceback mostra onde o erro rebentou e o caminho até lá, mas a causa pode estar numa linha que já acabou. Lê-se de baixo para cima. A última linha diz o quê. O andar de baixo diz onde rebentou, e os andares de cima dizem como se chegou lá. A pilha de chamadas é a lista das funções que estão a meio, cada uma à espera do que chamou, e o depurador mostra-a com os valores de cada andar. Para saber mais, lê as secções "Ler um traceback com três andares" e "A pilha de chamadas no depurador" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. Cria o ficheiro `pilha.py`, com este conteúdo. Tem um erro de propósito: a equipa do Ash leva o texto `"Squirtle"` no lugar de um Pokémon.
 
@@ -593,7 +593,7 @@ Pensa antes de continuares: nenhum dos três andares do traceback era a linha qu
 
 O `print` é para quem usa o programa, e o registo é para quem o mantém. O módulo `logging` do Python deixa um programa escrever mensagens de registo, cada uma com um nível que diz a importância do que aconteceu. O `DEBUG` é para pormenores que só interessam a quem investiga. O `INFO` é para o programa a funcionar como devia. O `WARNING` é para uma coisa inesperada que o programa conseguiu tratar. O `ERROR` é para uma operação que falhou, e o `CRITICAL` para uma falha tão grave que o programa não pode continuar.
 
-As mensagens ficam no código, escritas por um logger. Quem decide que nível mínimo se mostra, e como se escreve cada linha, é o programa principal, com uma chamada ao `logging.basicConfig`. Assim, para ver mais ou menos mensagens, não se mexe no ginásio. Para saber mais, lê as secções "Os cinco níveis", "O registo do ginásio" e "Quem configura é o programa" do [guia](04-excecoes-depuracao-e-logging.md).
+As mensagens ficam no código, escritas por um logger. Quem decide que nível mínimo se mostra, e como se escreve cada linha, é o programa principal, com uma chamada ao `logging.basicConfig`. Assim, para ver mais ou menos mensagens, não se mexe no ginásio. Para saber mais, lê as secções "Os cinco níveis", "O registo do ginásio" e "Quem configura é o programa" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. Em `ginasio.py`, substitui as linhas desde `from dataclasses import dataclass` até `TAMANHO_MAXIMO_DA_EQUIPA = 6` por estas. Trazem o módulo `logging` e criam o logger do ficheiro. A linha `from dataclasses import dataclass` repete-se porque está dentro do que substituis, e fica igual.
 
@@ -721,13 +721,13 @@ A resposta: as mensagens ficam no código, num só sítio, e a configuração de
 
 ### Paragem 6
 
-O ginásio regista os combates em três níveis, e o programa escolhe o que se vê. Neste ponto, o teu `ginasio.py` é igual ao da pasta 04 dos exemplos, a não ser no texto do início e na demonstração do fim, que não mudaste. Podes conferir o teu com o [ginasio.py](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo.
+O ginásio regista os combates em três níveis, e o programa escolhe o que se vê. Neste ponto, o teu `ginasio.py` é igual ao da pasta 04 dos exemplos, a não ser no texto do início e na demonstração do fim, que não mudaste. Podes conferir o teu com o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo.
 
 Pensa antes de continuares: porque é que o `basicConfig` está no `registo.py`, e não no `ginasio.py`? A resposta: o ginásio é usado por vários programas, e cada um quer o seu registo. Se o `ginasio.py` configurasse o registo, impunha a sua escolha a todos. Como o `basicConfig` só faz efeito da primeira vez que é chamado, a configuração do programa era ignorada.
 
 ## Fase 7: O registo num ficheiro
 
-O `basicConfig` pode mandar o registo para um ficheiro, em vez do ecrã, com o parâmetro `filename`. O formato pode acrescentar a data e a hora de cada mensagem, com `%(asctime)s`. Num ficheiro, a hora é o que permite saber quando aconteceu cada coisa, dias depois. Cada execução acrescenta as suas linhas ao fim do ficheiro, sem apagar as anteriores. Um registo é lido por outras pessoas e guarda-se durante muito tempo. Por isso nunca leva palavras-passe, códigos de acesso nem dados pessoais. Para saber mais, lê as secções "Guardar o registo num ficheiro" e "O que nunca se regista" do [guia](04-excecoes-depuracao-e-logging.md).
+O `basicConfig` pode mandar o registo para um ficheiro, em vez do ecrã, com o parâmetro `filename`. O formato pode acrescentar a data e a hora de cada mensagem, com `%(asctime)s`. Num ficheiro, a hora é o que permite saber quando aconteceu cada coisa, dias depois. Cada execução acrescenta as suas linhas ao fim do ficheiro, sem apagar as anteriores. Um registo é lido por outras pessoas e guarda-se durante muito tempo. Por isso nunca leva palavras-passe, códigos de acesso nem dados pessoais. Para saber mais, lê as secções "Guardar o registo num ficheiro" e "O que nunca se regista" do [guia](../04-excecoes-depuracao-e-logging.md).
 
 1. No `registo.py`, substitui a linha do `basicConfig` por esta. Manda o registo para o ficheiro `ginasio.log` e acrescenta a hora de cada mensagem.
 
@@ -853,7 +853,7 @@ Recusado: Ash já tem este Charmander na equipa.
 
 Antes de escreveres o código, decide duas coisas. A primeira: o terceiro `capturar` junta um Charmander criado de novo, com os mesmos valores do primeiro, e tem de ser aceite. Que pergunta faz a verificação, "é o mesmo objeto?" ou "tem os mesmos valores?", e como se escreve? A segunda: um treinador com a equipa cheia tenta capturar um Pokémon que já tem. Qual das duas exceções deve ser lançada, e o que decide isso no teu código? Pista: pensa no que o `==` faz com dois objetos de uma classe normal, escrita sem `@dataclass`. Pensa também em qual dos dois motivos de recusa dá mais informação a quem chamou.
 
-2. A `EquipaCheia` do teu `erros.py` só tem a docstring, e a mensagem é escrita no `raise` do `capturar`. Dá-lhe dados, como na secção "Uma exceção com dados" do [guia](04-excecoes-depuracao-e-logging.md#uma-exceção-com-dados).
+2. A `EquipaCheia` do teu `erros.py` só tem a docstring, e a mensagem é escrita no `raise` do `capturar`. Dá-lhe dados, como na secção "Uma exceção com dados" do [guia](../04-excecoes-depuracao-e-logging.md#uma-exceção-com-dados).
 
 - No `erros.py`, a `EquipaCheia` passa a ter um construtor que recebe o treinador e o Pokémon que ficou de fora. Guarda-os nos atributos `treinador` e `pokemon`, e escreve ela própria a mensagem, com o mesmo texto que tem hoje: "Ash já tem 6 Pokémon e não pode capturar Charmander."
 - No `capturar` do `ginasio.py`, o `raise` passa só o treinador e o Pokémon.
@@ -897,4 +897,4 @@ Antes de escreveres o código, decide duas coisas. A primeira: a mensagem tem o 
 - [ ] Se fizeste o desafio 2, a `EquipaCheia` tem o construtor com os dados, o `fora_da_equipa.py` mostra as três linhas do enunciado, e o `capturas.py` mostra o mesmo que antes.
 - [ ] Consegues explicar, por palavras tuas, porque é que um método recusa com `raise` em vez de `print`. Consegues explicar também a diferença entre o sítio onde um erro rebenta e o sítio onde está a causa.
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

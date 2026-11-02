@@ -1,4 +1,4 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Ficha de exercícios: Objetos, composição e comportamento em cinco temas de treino
 
@@ -6,7 +6,7 @@ Ficha opcional do tema Objetos, composição e comportamento, do módulo 10794, 
 
 ## O que precisas de saber
 
-O [guia do tema](03-objetos-e-composicao.md), o [laboratório](03-objetos-e-composicao-laboratorio.md) e, de preferência, a [ficha do livro de receitas](03-objetos-e-composicao-exercicios-receitas.md), porque estes temas trabalham da mesma maneira.
+O [guia do tema](../03-objetos-e-composicao.md), o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md) e, de preferência, a [ficha do livro de receitas](03-objetos-e-composicao-exercicios-receitas.md), porque estes temas trabalham da mesma maneira.
 
 ## Como trabalhar
 
@@ -395,4 +395,4 @@ O desafio é opcional e não entra nestes critérios.
 1. Que parte do teu programa ficou igual à do livro de receitas, e que parte tiveste de pensar de novo?
 2. Num tema com dois limites, como as cartas ou o campeonato, que valores experimentaste para confirmar a regra?
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

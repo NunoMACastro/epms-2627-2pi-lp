@@ -2,7 +2,7 @@
 
 # Exceções, depuração e logging
 
-Módulo 10794, Programação avançada com Python. Neste guia aprendes a fazer um objeto recusar um pedido sem que ninguém o possa ignorar. Aprendes também a encontrar a causa de um erro e a deixar o registo do que um programa faz. Lês o guia ao teu ritmo, de preferência em mais do que uma vez, e o que não acabares na aula acabas em casa ou na aula seguinte. Para praticar, há o [laboratório](04-excecoes-depuracao-e-logging-laboratorio.md) e a [ficha de exercícios](04-excecoes-depuracao-e-logging-exercicios.md) deste tema.
+Módulo 10794, Programação avançada com Python. Neste guia aprendes a fazer um objeto recusar um pedido sem que ninguém o possa ignorar. Aprendes também a encontrar a causa de um erro e a deixar o registo do que um programa faz. Lês o guia ao teu ritmo, de preferência em mais do que uma vez, e o que não acabares na aula acabas em casa ou na aula seguinte. Para praticar, há o [laboratório](laboratorios/04-excecoes-depuracao-e-logging-laboratorio.md) e a [ficha de exercícios](exercicios/04-excecoes-depuracao-e-logging-exercicios.md) deste tema.
 
 Até aqui, quando o ginásio Pokémon não podia fazer o que lhe pediam, escrevia uma mensagem com `print` e saía do método com `return`. Funciona enquanto há alguém a olhar para o ecrã. Deixa de funcionar quando quem chama o método é outro pedaço de código, que não lê o ecrã e continua como se nada fosse.
 
@@ -1412,7 +1412,7 @@ Lê cada mensagem do registo como se fosse publicada. Se tiver um código, uma c
 
 ## O que vem a seguir
 
-Para praticar este tema, faz o [laboratório](04-excecoes-depuracao-e-logging-laboratorio.md) e depois a [ficha de exercícios](04-excecoes-depuracao-e-logging-exercicios.md). No laboratório, acrescentas ao teu ginásio as exceções do `erros.py` e o registo, e investigas com o depurador um erro de cálculo noutro tipo de Pokémon. A ficha tem exercícios sobre exceções, sobre encontrar a causa de um erro e sobre logging, para fazeres sem ajuda.
+Para praticar este tema, faz o [laboratório](laboratorios/04-excecoes-depuracao-e-logging-laboratorio.md) e depois a [ficha de exercícios](exercicios/04-excecoes-depuracao-e-logging-exercicios.md). No laboratório, acrescentas ao teu ginásio as exceções do `erros.py` e o registo, e investigas com o depurador um erro de cálculo noutro tipo de Pokémon. A ficha tem exercícios sobre exceções, sobre encontrar a causa de um erro e sobre logging, para fazeres sem ajuda.
 
 O tema seguinte é o dos testes com pytest. Até aqui, para saber se o ginásio funciona, executavas um programa e comparavas a saída com a tua previsão. Com os testes, essa comparação passa a ser feita por código. Uma das primeiras coisas que vais testar é que o `capturar` lança mesmo a `EquipaCheia` quando a equipa está cheia.
 

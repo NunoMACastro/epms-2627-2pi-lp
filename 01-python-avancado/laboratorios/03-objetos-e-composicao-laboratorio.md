@@ -1,8 +1,8 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Laboratório: Objetos, composição e comportamento
 
-Laboratório do tema Objetos, composição e comportamento, do módulo 10794, Programação avançada com Python. Vais construir o ginásio Pokémon, uma classe de cada vez, e depois acrescentar-lhe um líder, os anunciadores dos combates e o registo de cada combate como dataclass. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](03-objetos-e-composicao.md) tem a teoria completa, para quem quiser saber mais.
+Laboratório do tema Objetos, composição e comportamento, do módulo 10794, Programação avançada com Python. Vais construir o ginásio Pokémon, uma classe de cada vez, e depois acrescentar-lhe um líder, os anunciadores dos combates e o registo de cada combate como dataclass. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](../03-objetos-e-composicao.md) tem a teoria completa, para quem quiser saber mais.
 
 ## O que vais construir
 
@@ -50,11 +50,11 @@ As previsões e as perguntas têm a resposta logo a seguir. Responde primeiro, p
 - KO: o estado de um Pokémon com a vida a 0, que já não pode lutar.
 - Importar: trazer para um ficheiro uma classe escrita noutro ficheiro da mesma pasta, com uma linha como `from pokemon import PokemonAgua`.
 - Todo e parte: numa relação "tem", o objeto que guarda e o objeto guardado. O treinador é o todo, e os Pokémon da equipa são as partes.
-- Referência: o que uma variável, uma lista ou um atributo guarda quando guarda um objeto. É um caminho para o objeto, e não uma cópia. Para saber mais, vê a secção "Uma variável guarda uma referência, não uma cópia" do [guia](03-objetos-e-composicao.md#uma-variável-guarda-uma-referência-não-uma-cópia).
+- Referência: o que uma variável, uma lista ou um atributo guarda quando guarda um objeto. É um caminho para o objeto, e não uma cópia. Para saber mais, vê a secção "Uma variável guarda uma referência, não uma cópia" do [guia](../03-objetos-e-composicao.md#uma-variável-guarda-uma-referência-não-uma-cópia).
 - `is`: o operador que pergunta se dois caminhos levam ao mesmo objeto.
 - `del`: a instrução que apaga um nome, e não o objeto. O objeto só desaparece quando já nenhum caminho leva a ele.
-- Agregação: a relação em que as partes existem por si, são criadas fora do todo, podem estar em vários todos e sobrevivem ao todo. Para saber mais, vê a secção "Agregação: o todo reúne partes que existem por si" do [guia](03-objetos-e-composicao.md#agregação-o-todo-reúne-partes-que-existem-por-si).
-- Composição: a relação em que as partes pertencem ao todo, são criadas por ele, não são partilhadas e desaparecem com ele. Para saber mais, vê a secção "Composição: o todo cria e guarda as suas partes" do [guia](03-objetos-e-composicao.md#composição-o-todo-cria-e-guarda-as-suas-partes).
+- Agregação: a relação em que as partes existem por si, são criadas fora do todo, podem estar em vários todos e sobrevivem ao todo. Para saber mais, vê a secção "Agregação: o todo reúne partes que existem por si" do [guia](../03-objetos-e-composicao.md#agregação-o-todo-reúne-partes-que-existem-por-si).
+- Composição: a relação em que as partes pertencem ao todo, são criadas por ele, não são partilhadas e desaparecem com ele. Para saber mais, vê a secção "Composição: o todo cria e guarda as suas partes" do [guia](../03-objetos-e-composicao.md#composição-o-todo-cria-e-guarda-as-suas-partes).
 - Decorador: uma marca com `@` por cima de um `def` ou de uma `class`, que muda a forma como o que está por baixo funciona. `@classmethod` e `@dataclass` são decoradores.
 - Método de classe: um método marcado com `@classmethod`, que recebe a classe por onde foi chamado, em vez de um objeto.
 - `cls`: num método de classe, o nome do parâmetro que recebe a classe, como o `self` recebe o objeto.
@@ -89,7 +89,7 @@ O laboratório começa de uma pasta vazia. Não precisas de nenhum ficheiro de o
 As classes de Pokémon já estão feitas e estão no ficheiro `pokemon.py` dos exemplos. O teu `ginasio.py` vai importá-las dele, e por isso os dois ficheiros têm de estar na mesma pasta.
 
 1. Cria uma pasta nova, chamada `ginasio-pokemon`, no sítio onde guardas os trabalhos desta disciplina, e abre-a no VS Code. Abre o terminal do VS Code e escreve `pwd`. Deve aparecer o caminho da pasta `ginasio-pokemon`, o que quer dizer que o terminal está no sítio certo.
-2. Abre o ficheiro [pokemon.py dos exemplos](../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). Se tens este repositório no teu computador, copia o ficheiro para a tua pasta. Se o estás a ler no GitHub, usa o botão de copiar o conteúdo do ficheiro, que está por cima do código. Cria na tua pasta um ficheiro novo chamado `pokemon.py`, cola o conteúdo e guarda. Também podes usar o botão de descarregar o ficheiro, ao lado do de copiar, e depois mover o ficheiro descarregado para a tua pasta.
+2. Abre o ficheiro [pokemon.py dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py). Se tens este repositório no teu computador, copia o ficheiro para a tua pasta. Se o estás a ler no GitHub, usa o botão de copiar o conteúdo do ficheiro, que está por cima do código. Cria na tua pasta um ficheiro novo chamado `pokemon.py`, cola o conteúdo e guarda. Também podes usar o botão de descarregar o ficheiro, ao lado do de copiar, e depois mover o ficheiro descarregado para a tua pasta.
 3. Confirma o nome do ficheiro. Tem de ser exatamente `pokemon.py`, tudo em minúsculas e sem acento. Se o descarregaste, o browser pode tê-lo guardado com outro nome, como `pokemon (1).py`, e nesse caso muda-lhe o nome.
 4. No terminal, executa o ficheiro, para confirmares que funciona:
 
@@ -121,7 +121,7 @@ O que o `pokemon.py` já tem, e que vais usar:
 
 Até aqui, os atributos de um objeto guardavam números e textos, como o nome e a vida de um Pokémon. Um atributo também pode guardar outro objeto, ou uma lista de objetos. Um treinador tem uma equipa de Pokémon, e por isso a classe `Treinador` vai ter um atributo `equipa`, que é uma lista de Pokémon.
 
-O treinador não cria os Pokémon. Recebe-os, já criados, com o método `capturar`. Quando um objeto, o todo, guarda outros objetos, as partes, que existem por si e foram criadas fora dele, a relação chama-se agregação. Aqui, o treinador é o todo e os Pokémon da equipa são as partes. Para saber mais, lê a secção "O Treinador e a sua equipa" do [guia](03-objetos-e-composicao.md#o-treinador-e-a-sua-equipa).
+O treinador não cria os Pokémon. Recebe-os, já criados, com o método `capturar`. Quando um objeto, o todo, guarda outros objetos, as partes, que existem por si e foram criadas fora dele, a relação chama-se agregação. Aqui, o treinador é o todo e os Pokémon da equipa são as partes. Para saber mais, lê a secção "O Treinador e a sua equipa" do [guia](../03-objetos-e-composicao.md#o-treinador-e-a-sua-equipa).
 
 1. Cria, na mesma pasta, um ficheiro novo chamado `ginasio.py`. É nele que vais construir o ginásio. Escreve o conteúdo à mão, em vez de o copiares e colares. Ao escrever, reparas em pormenores que a leitura deixa escapar, como o `self` em todos os métodos e a indentação de cada linha. Este é o ficheiro completo, por agora:
 
@@ -200,7 +200,7 @@ Pensa antes de continuares: o treinador criou o Charmander? A resposta: não. O 
 
 Quando escreves `charmander = PokemonFogo("Charmander", 90, 40)`, o Python cria o objeto e a variável `charmander` fica a apontar para ele. A variável não contém o objeto. Ao que ela guarda chama-se uma referência: um caminho para o objeto. Quando entregas `charmander` ao `capturar`, o que entra na lista é outra referência para o mesmo objeto, e não uma cópia. Passam a existir dois caminhos para um só Charmander: a variável e o primeiro lugar da lista.
 
-Há três ferramentas para ver isto. O operador `is` pergunta se dois caminhos levam ao mesmo objeto. A instrução `del` apaga um nome, e não o objeto, que só desaparece quando já nenhum caminho leva a ele. E o valor `None` é o que o `escolher_pokemon` devolve quando não encontra ninguém. Numa agregação, as partes sobrevivem ao todo, e é isso que vais ver. Para saber mais, lê a secção "Uma variável guarda uma referência, não uma cópia" do [guia](03-objetos-e-composicao.md#uma-variável-guarda-uma-referência-não-uma-cópia).
+Há três ferramentas para ver isto. O operador `is` pergunta se dois caminhos levam ao mesmo objeto. A instrução `del` apaga um nome, e não o objeto, que só desaparece quando já nenhum caminho leva a ele. E o valor `None` é o que o `escolher_pokemon` devolve quando não encontra ninguém. Numa agregação, as partes sobrevivem ao todo, e é isso que vais ver. Para saber mais, lê a secção "Uma variável guarda uma referência, não uma cópia" do [guia](../03-objetos-e-composicao.md#uma-variável-guarda-uma-referência-não-uma-cópia).
 
 1. Apaga as linhas de teste da fase 1, no fim do `ginasio.py`, e escreve estas no lugar delas:
 
@@ -251,7 +251,7 @@ O ginásio vai guardar o histórico dos combates. Cada combate fica registado nu
 
 O registo guarda nomes, que são textos, e não os objetos `Treinador` e `Pokemon`. Um registo é uma fotografia do que aconteceu. O Pokémon pode perder ou recuperar vida num combate seguinte, e a fotografia de um combate antigo não deve mudar por isso.
 
-Há outra coisa a saber desde já. Este registo vai ser criado só pelo ginásio, e só o ginásio o vai guardar. Quando o todo cria as partes e elas não existem sem ele, a relação chama-se composição. A fase 4 usa esta palavra. Para saber mais, lê o [passo 4 do exemplo guiado](03-objetos-e-composicao.md#passo-4-o-combate) do guia.
+Há outra coisa a saber desde já. Este registo vai ser criado só pelo ginásio, e só o ginásio o vai guardar. Quando o todo cria as partes e elas não existem sem ele, a relação chama-se composição. A fase 4 usa esta palavra. Para saber mais, lê o [passo 4 do exemplo guiado](../03-objetos-e-composicao.md#passo-4-o-combate) do guia.
 
 1. Escreve a classe `Combate` no `ginasio.py`, a seguir à classe `Treinador` e antes das linhas de teste. Deixa duas linhas em branco entre as classes.
 
@@ -295,7 +295,7 @@ A classe `Combate` cria um registo e descreve-o numa linha. Ainda não há giná
 
 Um ginásio tem um líder, recebe treinadores que o vêm desafiar e guarda o registo dos combates. O líder e os desafiantes são treinadores que já existem fora do ginásio. O ginásio recebe-os e guarda uma referência para cada um, tal como o treinador faz com os Pokémon. É agregação.
 
-Os registos dos combates são diferentes. É o próprio ginásio que os cria, e só ele os guarda. É composição. No código, as duas relações escrevem-se da mesma maneira, com um atributo que guarda objetos, e só os comentários dizem qual é qual. A diferença está em quem cria a parte e em quem a guarda, e vês isso no combate, na fase 5. Para saber mais, lê o [passo 5 do exemplo guiado](03-objetos-e-composicao.md#passo-5-o-ginasio-o-construtor-e-o-histórico) do guia.
+Os registos dos combates são diferentes. É o próprio ginásio que os cria, e só ele os guarda. É composição. No código, as duas relações escrevem-se da mesma maneira, com um atributo que guarda objetos, e só os comentários dizem qual é qual. A diferença está em quem cria a parte e em quem a guarda, e vês isso no combate, na fase 5. Para saber mais, lê o [passo 5 do exemplo guiado](../03-objetos-e-composicao.md#passo-5-o-ginasio-o-construtor-e-o-histórico) do guia.
 
 1. Escreve a classe `Ginasio` a seguir à classe `Combate`, só com o construtor e com o método `mostrar_historico`. O método `combater` entra na fase seguinte.
 
@@ -352,7 +352,7 @@ Falta o método `combater`. Cada classe faz o trabalho que lhe pertence. O giná
 
 O combate é um ciclo que se repete até um Pokémon ficar KO. Vais usar um `while True`, um ciclo que só acaba quando o programa chega a um `break`. Em cada volta, o Pokémon do desafiante ataca primeiro. Se o defensor ficou KO, o desafiante vence e o ciclo acaba. Senão, o defensor ataca, e o mesmo teste é feito ao atacante.
 
-Um `while True` só é seguro se houver a certeza de que um `break` acaba por acontecer. Aqui há, porque o ataque de um Pokémon nunca é menor do que 1, e cada ataque tira pelo menos 1 de vida. No fim, o ginásio cria o registo e guarda-o na lista `combates`. É a composição. Para saber mais, lê o [passo 6 do exemplo guiado](03-objetos-e-composicao.md#passo-6-o-método-combater) do guia.
+Um `while True` só é seguro se houver a certeza de que um `break` acaba por acontecer. Aqui há, porque o ataque de um Pokémon nunca é menor do que 1, e cada ataque tira pelo menos 1 de vida. No fim, o ginásio cria o registo e guarda-o na lista `combates`. É a composição. Para saber mais, lê o [passo 6 do exemplo guiado](../03-objetos-e-composicao.md#passo-6-o-método-combater) do guia.
 
 1. Escreve o método `combater` dentro da classe `Ginasio`, entre o construtor e o `mostrar_historico`. Cuidado com a indentação: o método tem quatro espaços, as linhas dentro dele têm oito, e as linhas dentro do `while` e dos `if` têm doze ou dezasseis. A linha `class Ginasio:` e o comentário do bloco só mostram onde o método fica: escreve só o `def` e o que está debaixo dele, dentro da classe que já tens. Se escreveres também a linha `class`, crias uma segunda classe `Ginasio`, que apaga a primeira.
 
@@ -562,7 +562,7 @@ if __name__ == "__main__":
 
 Na agregação, a mesma parte pode estar em mais do que um todo. Na composição, as partes desaparecem com o todo. Vais ver as duas coisas no computador.
 
-O Ash vai desafiar dois ginásios: o de Cerulean, da Misty, e o de Celadon, da Erika. A Erika tem uma Tangela, de planta, com 50 de vida, 20 de ataque e 10 de regeneração. Depois, o ginásio de Cerulean vai ser apagado com `del`, e vais ver o que sobrevive. Para saber mais, lê o [passo 8 do exemplo guiado](03-objetos-e-composicao.md#passo-8-o-que-sobrevive-quando-o-ginásio-desaparece) do guia.
+O Ash vai desafiar dois ginásios: o de Cerulean, da Misty, e o de Celadon, da Erika. A Erika tem uma Tangela, de planta, com 50 de vida, 20 de ataque e 10 de regeneração. Depois, o ginásio de Cerulean vai ser apagado com `del`, e vais ver o que sobrevive. Para saber mais, lê o [passo 8 do exemplo guiado](../03-objetos-e-composicao.md#passo-8-o-que-sobrevive-quando-o-ginásio-desaparece) do guia.
 
 1. Substitui todo o programa principal, desde a linha `if __name__ == "__main__":` até ao fim do ficheiro, por este:
 
@@ -635,7 +635,7 @@ Um método de classe leva por cima a linha `@classmethod`. Essa marca chama-se d
 
 É por isso que o método cria o objeto com `cls(nome)` e não com `Treinador(nome)`: assim, cria um objeto da classe que o chamou. Um método estático, que não recebe a classe, criaria sempre um `Treinador`, mesmo quando chamado pelo `Lider`.
 
-Um `Lider` é um treinador, e por isso herda da classe `Treinador`. Escolhe de outra maneira: um treinador escolhe o primeiro Pokémon da equipa com vida, e um líder escolhe o que tem mais vida. Para saber mais, lê as secções [O método de classe recebe a classe](03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [O líder, um treinador que escolhe de outra maneira](03-objetos-e-composicao.md#o-líder-um-treinador-que-escolhe-de-outra-maneira) do guia.
+Um `Lider` é um treinador, e por isso herda da classe `Treinador`. Escolhe de outra maneira: um treinador escolhe o primeiro Pokémon da equipa com vida, e um líder escolhe o que tem mais vida. Para saber mais, lê as secções [O método de classe recebe a classe](../03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [O líder, um treinador que escolhe de outra maneira](../03-objetos-e-composicao.md#o-líder-um-treinador-que-escolhe-de-outra-maneira) do guia.
 
 1. Na classe `Treinador` do teu `ginasio.py`, acrescenta o método de classe `com_equipa`, entre o construtor e o `capturar`. Não te esqueças da linha `@classmethod` por cima do `def`. A linha `class Treinador:` e o comentário do bloco só mostram onde o método fica. Escreve só o `@classmethod` e o `def`, com o que está debaixo dele, dentro da classe que já tens. Se escreveres também a linha `class`, crias uma segunda classe `Treinador`, que apaga a primeira.
 
@@ -873,7 +873,7 @@ O ginásio quer anunciar os combates de mais do que uma maneira. Para o público
 
 Basta que o ginásio peça uma só coisa a quem anuncia: um método `anunciar`, que recebe um combate. As classes que anunciam não precisam de ser parentes umas das outras. Só precisam de ter esse método. A isto chama-se duck typing: em Python, usa-se um objeto pelo que ele sabe fazer, e não pela classe a que pertence.
 
-O Python só verifica se o método existe quando a linha que o chama corre. Como nada confirma o que o ginásio espera, esse contrato escreve-se na docstring do método. Para saber mais, lê a secção [Duck typing: o que conta é o comportamento](03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) do guia.
+O Python só verifica se o método existe quando a linha que o chama corre. Como nada confirma o que o ginásio espera, esse contrato escreve-se na docstring do método. Para saber mais, lê a secção [Duck typing: o que conta é o comportamento](../03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) do guia.
 
 1. Acrescenta à classe `Ginasio` o método `anunciar_combates`, no fim da classe, depois do `mostrar_historico`. A linha `class Ginasio:` e o comentário do bloco só mostram onde o método fica: escreve só o `def` e o que está debaixo dele, dentro da classe que já tens. Se escreveres também a linha `class`, crias uma segunda classe `Ginasio`, que apaga a primeira.
 
@@ -1018,7 +1018,7 @@ O construtor do `Combate` obriga a escrever cada nome três vezes: no parâmetro
 
 Uma dataclass é uma classe que serve sobretudo para guardar dados, escrita de forma que o Python faça o trabalho repetitivo. Em vez do construtor, dizes quais são os dados, e o Python escreve o construtor, a forma de mostrar o objeto com `print` e a comparação com `==`. Cada dado é um campo: escreve-se com o nome, dois pontos e o tipo, como em `vencedor: str`. A parte `: str` chama-se anotação de tipo. O Python não verifica o tipo, mas é pela anotação que sabe que aquela linha é um campo.
 
-A marca `@dataclass` por cima da classe é um decorador, como o `@classmethod` da fase 7. A diferença é que este está por cima de uma classe, e muda a classe inteira. O `dataclass` vem de um módulo chamado `dataclasses`, que já vem com o Python. Para saber mais, lê as secções [A mesma classe como dataclass](03-objetos-e-composicao.md#a-mesma-classe-como-dataclass) e [O que a dataclass escreve por ti](03-objetos-e-composicao.md#o-que-a-dataclass-escreve-por-ti) do guia.
+A marca `@dataclass` por cima da classe é um decorador, como o `@classmethod` da fase 7. A diferença é que este está por cima de uma classe, e muda a classe inteira. O `dataclass` vem de um módulo chamado `dataclasses`, que já vem com o Python. Para saber mais, lê as secções [A mesma classe como dataclass](../03-objetos-e-composicao.md#a-mesma-classe-como-dataclass) e [O que a dataclass escreve por ti](../03-objetos-e-composicao.md#o-que-a-dataclass-escreve-por-ti) do guia.
 
 1. Antes de mexeres na classe `Combate`, acrescenta estas linhas ao fim do `anunciar.py`:
 
@@ -1219,4 +1219,4 @@ Pista: o `Contador` não sabe quem é o líder do ginásio, porque só recebe os
 - [ ] Consegues explicar porque é que um método de classe cria o objeto com `cls` e não com o nome da classe.
 - [ ] Consegues explicar, por palavras tuas, a diferença entre agregação e composição com o exemplo do ginásio.
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

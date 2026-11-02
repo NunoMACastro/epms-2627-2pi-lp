@@ -1,4 +1,4 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Ficha de exercícios: Objetos, composição e comportamento no Grande Prémio de Karts
 
@@ -6,7 +6,7 @@ Ficha do tema Objetos, composição e comportamento, do módulo 10794, Programa�
 
 ## O que precisas de saber
 
-O [guia do tema](03-objetos-e-composicao.md) e o [laboratório](03-objetos-e-composicao-laboratorio.md). Convém teres feito antes a [ficha principal do tema](03-objetos-e-composicao-exercicios.md), porque este exercício junta num só programa o que lá praticaste por partes. Usas também três coisas do 10.º ano que o guia não usa: a divisão inteira `//`, o resto da divisão `%` e o `range`.
+O [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md). Convém teres feito antes a [ficha principal do tema](03-objetos-e-composicao-exercicios.md), porque este exercício junta num só programa o que lá praticaste por partes. Usas também três coisas do 10.º ano que o guia não usa: a divisão inteira `//`, o resto da divisão `%` e o `range`.
 
 ## Como trabalhar
 
@@ -159,4 +159,4 @@ O desafio e a secção "Para ires mais longe" são opcionais e não entram neste
 2. Houve alguma regra que escreveste de uma maneira e tiveste de mudar porque a saída não batia certo? Qual, e o que mudaste?
 3. Se tivesses de acrescentar um quarto tipo de kart, que partes do programa mudavas?
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)

@@ -1,4 +1,4 @@
-![Cabeçalho](../imagens/cabecalho.png)
+![Cabeçalho](../../imagens/cabecalho.png)
 
 # Ficha de exercícios: Exceções, depuração e logging
 
@@ -6,7 +6,7 @@ Ficha do tema Exceções, depuração e logging, do módulo 10794, Programação
 
 ## O que precisas de saber
 
-O [guia do tema](04-excecoes-depuracao-e-logging.md) e o [laboratório](04-excecoes-depuracao-e-logging-laboratorio.md). Cada exercício diz, em "Treina", a secção do guia de que precisa.
+O [guia do tema](../04-excecoes-depuracao-e-logging.md) e o [laboratório](../laboratorios/04-excecoes-depuracao-e-logging-laboratorio.md). Cada exercício diz, em "Treina", a secção do guia de que precisa.
 
 ## Como trabalhar
 
@@ -14,7 +14,7 @@ Os exercícios de 1 a 8 são obrigatórios e estão em três grupos. As exceçõ
 
 Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti.
 
-Precisas do computador com o Python 3 e o VS Code. Cria uma pasta para esta ficha e copia para lá os quatro ficheiros da pasta [04-excecoes-depuracao-e-logging dos exemplos](../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/): o `pokemon.py`, o `ginasio.py`, o `erros.py` e o `anunciadores.py`. Vários exercícios usam as classes desses ficheiros.
+Precisas do computador com o Python 3 e o VS Code. Cria uma pasta para esta ficha e copia para lá os quatro ficheiros da pasta [04-excecoes-depuracao-e-logging dos exemplos](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/): o `pokemon.py`, o `ginasio.py`, o `erros.py` e o `anunciadores.py`. Vários exercícios usam as classes desses ficheiros.
 
 Quando um exercício pedir uma previsão, escreve-a antes de executar. Quando pedir uma explicação, responde em frases completas, com as tuas palavras. Guarda os programas e as respostas, e entrega-os como o professor indicar.
 
@@ -22,7 +22,7 @@ Quando um exercício pedir uma previsão, escreve-a antes de executar. Quando pe
 
 ### Exercício 1: Prever o caminho de um try
 
-Treina: seguir um `try` com `except`, `else` e `finally` (guia, [Apanhar a recusa: try, except e else](04-excecoes-depuracao-e-logging.md#apanhar-a-recusa-try-except-e-else) e [finally: o que corre sempre](04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre)).
+Treina: seguir um `try` com `except`, `else` e `finally` (guia, [Apanhar a recusa: try, except e else](../04-excecoes-depuracao-e-logging.md#apanhar-a-recusa-try-except-e-else) e [finally: o que corre sempre](../04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre)).
 
 Num Centro Pokémon, as poções do dia são divididas pelos treinadores que lá estão. O operador `//` é a divisão inteira, que usaste no 10.º ano, e dividir por zero lança um `ZeroDivisionError`.
 
@@ -54,7 +54,7 @@ print(dividir_pocoes(10, 0))
 
 ### Exercício 2: Uma regra que recusa a sério
 
-Treina: lançar uma exceção quando um valor não respeita uma regra (guia, [raise: uma recusa que não se pode ignorar](04-excecoes-depuracao-e-logging.md#raise-uma-recusa-que-não-se-pode-ignorar)).
+Treina: lançar uma exceção quando um valor não respeita uma regra (guia, [raise: uma recusa que não se pode ignorar](../04-excecoes-depuracao-e-logging.md#raise-uma-recusa-que-não-se-pode-ignorar)).
 
 Nas fichas do tema 03, a cura de uma baga ia de 1 a 50. Escreve uma classe `Baga` cujo construtor recebe o nome e a cura, e que lança um `ValueError` quando a cura está fora desse intervalo, antes de guardar qualquer atributo. A mensagem é "A cura de uma baga vai de 1 a 50, e a Baga Gigante pedia 80.", com o nome e a cura pedidos.
 
@@ -90,7 +90,7 @@ Depois de o teste funcionar, responde: no tema 03, a propriedade da vida corrigi
 
 ### Exercício 3: A ordem dos except
 
-Treina: escolher a ordem dos `except` numa família de exceções (guia, [Uma família de exceções](04-excecoes-depuracao-e-logging.md#uma-família-de-exceções) e [Os except pela ordem errada](04-excecoes-depuracao-e-logging.md#os-except-pela-ordem-errada)).
+Treina: escolher a ordem dos `except` numa família de exceções (guia, [Uma família de exceções](../04-excecoes-depuracao-e-logging.md#uma-família-de-exceções) e [Os except pela ordem errada](../04-excecoes-depuracao-e-logging.md#os-except-pela-ordem-errada)).
 
 A loja Pokémon tem duas exceções próprias, filhas de uma classe-mãe comum, e uma função que as lança:
 
@@ -144,7 +144,7 @@ Erro da loja: Super Poção esgotado.
 
 ### Exercício 4: Ler um traceback
 
-Treina: ler um traceback de baixo para cima e encontrar a causa (guia, [Ler um traceback com três andares](04-excecoes-depuracao-e-logging.md#ler-um-traceback-com-três-andares)).
+Treina: ler um traceback de baixo para cima e encontrar a causa (guia, [Ler um traceback com três andares](../04-excecoes-depuracao-e-logging.md#ler-um-traceback-com-três-andares)).
 
 Este programa, guardado no ficheiro `liga.py`, usa o ginásio da pasta 04:
 
@@ -181,7 +181,7 @@ Responde, sem executar:
 
 ### Exercício 5: Uma hipótese antes do depurador
 
-Treina: escrever uma hipótese e confirmá-la com o depurador (guia, [Um erro tem um sintoma e uma causa](04-excecoes-depuracao-e-logging.md#um-erro-tem-um-sintoma-e-uma-causa) e [Exemplo guiado: o dano a dobrar](04-excecoes-depuracao-e-logging.md#exemplo-guiado-o-dano-a-dobrar)).
+Treina: escrever uma hipótese e confirmá-la com o depurador (guia, [Um erro tem um sintoma e uma causa](../04-excecoes-depuracao-e-logging.md#um-erro-tem-um-sintoma-e-uma-causa) e [Exemplo guiado: o dano a dobrar](../04-excecoes-depuracao-e-logging.md#exemplo-guiado-o-dano-a-dobrar)).
 
 Este `Lider` devia escolher sempre o Pokémon da equipa com mais vida, como o do guia do tema 03:
 
@@ -224,7 +224,7 @@ O programa escreve `Psyduck`, e devia escrever `Starmie`.
 
 ### Exercício 6: Escolher o nível
 
-Treina: escolher o nível de uma mensagem pelo que ela significa (guia, [Os cinco níveis](04-excecoes-depuracao-e-logging.md#os-cinco-níveis)).
+Treina: escolher o nível de uma mensagem pelo que ela significa (guia, [Os cinco níveis](../04-excecoes-depuracao-e-logging.md#os-cinco-níveis)).
 
 Um programa de um Centro Pokémon regista o que acontece. Para cada acontecimento, escolhe o nível da mensagem, entre `DEBUG`, `INFO`, `WARNING`, `ERROR` e `CRITICAL`. Justifica numa frase: quem precisa de saber, e o programa continuou ou não?
 
@@ -239,7 +239,7 @@ Um programa de um Centro Pokémon regista o que acontece. Para cada aconteciment
 
 ### Exercício 7: De print para logging
 
-Treina: trocar os `print` de depuração por mensagens do registo, com o nível certo (guia, [O registo do ginásio](04-excecoes-depuracao-e-logging.md#o-registo-do-ginásio) e [Quem configura é o programa](04-excecoes-depuracao-e-logging.md#quem-configura-é-o-programa)).
+Treina: trocar os `print` de depuração por mensagens do registo, com o nível certo (guia, [O registo do ginásio](../04-excecoes-depuracao-e-logging.md#o-registo-do-ginásio) e [Quem configura é o programa](../04-excecoes-depuracao-e-logging.md#quem-configura-é-o-programa)).
 
 Esta função trata uma lista de Pokémon, e tem `print` espalhados, que alguém pôs para perceber o que ela fazia:
 
@@ -289,7 +289,7 @@ Depois muda o nível do `basicConfig` para `logging.DEBUG`. O teste tem de mostr
 
 ### Exercício 8: O que não se regista
 
-Treina: reconhecer dados que não podem ficar num registo (guia, [O que nunca se regista](04-excecoes-depuracao-e-logging.md#o-que-nunca-se-regista)).
+Treina: reconhecer dados que não podem ficar num registo (guia, [O que nunca se regista](../04-excecoes-depuracao-e-logging.md#o-que-nunca-se-regista)).
 
 Estas linhas são de um registo de uma aplicação de inscrições na Liga, com treinadores reais. Os dados da primeira linha são inventados, e o telefone está tapado, mas imagina que eram verdadeiros:
 
@@ -387,4 +387,4 @@ Concluíste a ficha quando:
 2. Consegues explicar, por palavras tuas, a diferença entre o sítio onde um erro rebenta e o sítio onde está a causa?
 3. Em que situação usarias `WARNING` e em que situação usarias `ERROR`? Dá um exemplo do ginásio.
 
-![Rodapé](../imagens/rodape.png)
+![Rodapé](../../imagens/rodape.png)
