@@ -98,7 +98,7 @@ O que deves ver: uma linha como `pytest 9.1.1`, com a versão instalada. No Pyth
 python3 -m pip install pytest
 ```
 
-Depois de instalar, corre outra vez `python3 -m pytest --version`, para confirmares. Se a instalação for recusada, por exemplo com `externally-managed-environment` ou com um erro de permissões, fala com o professor antes de continuares.
+Depois de instalar, corre outra vez `python3 -m pytest --version`, para confirmares. Se a instalação for recusada, por exemplo com `externally-managed-environment` ou com um erro de permissões, fala com o professor antes de continuares. Se o `pip` escrever `Defaulting to user installation` ou um aviso que acaba em `not on PATH`, não são erros: vê os [problemas frequentes](#problemas-frequentes).
 
 ## Fase 1: O primeiro teste
 
@@ -929,6 +929,14 @@ O pytest não está instalado no Python que estás a usar. Instala-o com `python
 ### `error: externally-managed-environment`, ao instalar
 
 Em alguns computadores, o Python do sistema não deixa instalar nada com o `pip`. Não tentes contornar a mensagem: fala com o professor, que te diz como fazer nesse computador.
+
+### `Defaulting to user installation because normal site-packages is not writeable`, ao instalar
+
+Não é um erro. A conta com que entraste no computador não pode instalar programas para todas as contas, e o `pip` instalou o pytest só para a tua. Funciona na mesma. Confirma com `python3 -m pytest --version` (no Windows, `py -m pytest --version`), como no passo 4 da preparação.
+
+### Um aviso que acaba em `which is not on PATH`, ao instalar
+
+Também não é um erro. O `pip` avisa que o comando `pytest`, escrito sozinho, não funciona no terminal, porque ficou numa pasta onde o terminal não procura comandos. Este laboratório usa sempre `python3 -m pytest` (no Windows, `py -m pytest`), que chama o pytest através do Python e não precisa dessa pasta. Não mudes nada no computador: confirma a versão e continua.
 
 ### `collected 0 items` e `no tests ran`
 
