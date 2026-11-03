@@ -33,7 +33,7 @@ Ao correres os programas e os testes, aparecem também duas pastas. A `__pycache
 | 7 | O `ginasio.py` e o `test_ginasio.py` | Um defeito encontrado com um teste escrito antes da correção |
 | 8 | O `ginasio.py`, o `pokemon.py` e o `test_pokemon.py` | Três mudanças erradas, e o teste que faltava |
 
-Em todas as fases trabalhas da mesma maneira. Antes de executares, escreves no papel, ou num ficheiro de texto, o que esperas ver. Depois executas e comparas. Quando o resultado é diferente do que previste, explica a diferença antes de continuares: é essa explicação que mais te ensina.
+Em todas as fases trabalhas da mesma maneira. Antes de executares, prevês o que vais ver. Depois executas e comparas. Quando o resultado é diferente do que previste, procura a explicação antes de continuares: é ela que mais te ensina.
 
 As saídas mostradas são as do Python 3.14, com o pytest 9.1. No Python 3.9, com o pytest 8.4, são iguais, menos onde o texto diz. A primeira vez que corres o pytest, o laboratório mostra a saída inteira, com o caminho da pasta encurtado. Nas outras, mostra-a a partir da linha `collected`, porque as linhas de cima dizem o sistema, as versões e a pasta, e no teu computador são outras. O tempo da última linha, como `in 0.01s`, muda de execução para execução. Quando aparece um objeto, como `<ginasio.Ginasio object at 0x10ae4b390>`, o número depois de `at` também muda.
 
@@ -57,7 +57,6 @@ As saídas mostradas são as do Python 3.14, com o pytest 9.1. No Python 3.9, co
 - O VS Code, para escrever os ficheiros e abrir o terminal.
 - O pytest. A preparação do projeto confirma se o tens, e diz como o instalar se não o tiveres.
 - Os ficheiros `pokemon.py`, `erros.py`, `anunciadores.py` e `ginasio.py` da [pasta 04 dos exemplos](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/), que o laboratório copia na preparação. São o ginásio no fim do tema 04, e o [README do exemplo](../../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
-- Papel, ou um ficheiro de texto, para as previsões e as respostas.
 
 ## Se alguma coisa falhar
 
@@ -224,7 +223,7 @@ FAILED test_pokemon.py::test_planta_contra_agua_tira_o_dobro - assert 50 == 25
 
 Lê de baixo para cima, como um traceback. A última linha diz que um falhou e um passou, e aparece a vermelho. A linha `FAILED` diz qual foi o teste. Na secção `FAILURES`, o `>` aponta a linha onde o teste parou, e a linha `E` mostra a comparação com os valores verdadeiros: `assert 50 == 25`. O valor da esquerda é o que o código deu, e o da direita é o que o teste esperava. A secção `Captured stdout call` mostra o que o teste escreveu com `print`: o "É super eficaz!" do `calcular_dano`. "stdout" é o nome técnico da saída normal de um programa, o ecrã. O pytest guarda o que os testes escrevem e só o mostra quando um teste falha.
 
-3. Decide quem está errado, o teste ou o código, e escreve a tua resposta antes de leres a seguinte.
+3. Decide quem está errado, o teste ou o código, antes de leres a resposta.
 
 A resposta: o teste. As regras do jogo dizem que a planta tem vantagem contra a água, e uma vantagem dobra o dano. O dano certo é 50, e foi o que o código deu. O valor esperado tira-se das regras, e não do código. Se mudasses o teste só para ele passar, sem confirmar a regra, o teste deixava de confirmar o que quer que fosse.
 
@@ -401,7 +400,7 @@ FAILED test_pokemon.py::test_fogo_contra_agua_tira_so_o_ataque - assert 80 == 40
 
 Só o teste do fogo contra a água apanhou o erro.
 
-2. Responde por escrito: porque é que o teste do fogo contra a planta passou, se o `calcular_dano` do fogo está errado?
+2. Pensa: porque é que o teste do fogo contra a planta passou, se o `calcular_dano` do fogo está errado?
 
 A resposta: contra a planta, o fogo tem vantagem, e o dobro está certo. A versão certa dá 80, e a versão errada também dá 80. Esse teste não distingue as duas. Só um alvo sem vantagem, como a água, dá resultados diferentes: 40 com o código certo, 80 com o errado. Sem o teste do fogo contra a água, este erro passava despercebido com quatro testes a passar.
 
@@ -770,7 +769,7 @@ Pensa antes de continuares: porque é que o teste se escreveu antes da correçã
 
 ## Fase 8: Mudanças que partem o código
 
-Os testes servem para dar por uma mudança que parte o código, mesmo quando quem a fez não deu por nada. Nesta fase fazes três mudanças erradas, uma de cada vez. Antes de correres os testes, dizes qual deles vai falhar. Se nenhum falhar, encontraste um sítio do código que nenhum teste guarda, e escreves o teste que falta.
+Os testes servem para dar por uma mudança que parte o código, mesmo quando quem a fez não deu por nada. Nesta fase fazes três mudanças erradas, uma de cada vez. Antes de correres os testes, prevês qual deles vai falhar. Se nenhum falhar, encontraste um sítio do código que nenhum teste guarda, e escreves o teste que falta.
 
 1. Primeira mudança. No `ginasio.py`, no `capturar` do `Treinador`, troca o `>=` da condição por `>`, para a linha ficar `if len(self.equipa) > TAMANHO_MAXIMO_DA_EQUIPA:`. Antes de correres `python3 -m pytest`, prevê que teste falha e porquê.
 
@@ -975,7 +974,7 @@ Pista: a classe-mãe pode fazer a comparação, se cada classe-filha lhe disser 
 
 - [ ] A pasta `ginasio-com-testes` tem os quatro ficheiros do ginásio, iguais aos da pasta 04, e os dois ficheiros de testes.
 - [ ] `python3 -m pytest` diz `13 passed`.
-- [ ] Tens as previsões e as respostas das fases 1 a 8, escritas por ti, em papel ou num ficheiro de texto, conforme o professor indicar.
+- [ ] O `test_ginasio.py` tem o teste do líder que vence, da fase 7, e o `test_pokemon.py` tem o da planta KO, da fase 8.
 - [ ] Se fizeste o desafio 1, o teste do anunciador passa, e não usa o `Narrador` nem o `Placard`.
 - [ ] Se fizeste o desafio 2, o comportamento do ginásio não mudou: os treze testes passam sem terem sido mudados, e a demonstração mostra o mesmo.
 - [ ] Consegues explicar, por palavras tuas, porque é que um teste só vale alguma coisa se falhar com o código errado. Consegues explicar também porque é que se escreve o teste de um defeito antes de o corrigir.

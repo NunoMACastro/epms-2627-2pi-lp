@@ -14,7 +14,7 @@ A ficha tem um só exercício, o livro de receitas, e um desafio opcional. Se qu
 
 O enunciado não te diz como escrever o programa. Diz-te as regras, e cada regra pede-te uma decisão: que classes crias, o que cada uma guarda e sabe fazer, e como as ligas umas às outras. Os nomes que o programa final usa, como `Receita` ou `acrescentar`, são obrigatórios. Os outros nomes escolhes tu.
 
-Lê as regras todas antes de começares. Depois começa pela receita e testa-a sozinha, antes de passares à receita de forno e ao livro.
+Lê as regras todas antes de começares.
 
 ## Exercício 1: O livro de receitas
 
@@ -105,6 +105,7 @@ Não há receitas.
 
 Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho, e usa só a pista da regra em que estás preso.
 
+- Por onde começar: a receita pode ser testada sozinha, antes de haver a receita de forno e o livro.
 - Regra 2: nos karts, a velocidade nunca passava de 100, mesmo com `kart.velocidade = 500`. Como é que o programa o garantia, sem repetir a verificação em cada método? Aqui, em vez de corrigir o valor, o tempo fica como estava.
 - Regra 3: compara as frases "uma receita de forno é uma receita" e "uma receita de forno tem uma receita". Qual das duas é verdadeira?
 - Regras 2, 3 e 6: o livro tem de saber se um tempo cumpre a regra antes de criar a receita. Onde pões essa verificação para ela ficar escrita uma só vez e servir ao livro e ao set?
@@ -125,7 +126,7 @@ print(livro.acrescentar_vegetariana("R08", "Salada de grão", 15))
 livro.mostrar()
 ```
 
-Antes de executares, escreve a última linha que esperas. Depois responde: que métodos do livro tiveste de mudar para a lista mostrar a receita nova?
+Antes de executares, prevê a última linha. Responde também, num comentário no início do ficheiro: que métodos do livro tiveste de mudar para a lista mostrar a receita nova?
 
 ## Critérios de conclusão
 
@@ -134,7 +135,7 @@ Concluíste a ficha quando:
 - o teu programa acaba com as linhas do enunciado, sem mudanças, e mostra exatamente a saída indicada;
 - a regra do tempo e a da temperatura estão escritas cada uma num só sítio, e o que as duas receitas têm em comum também;
 - o livro mostra as receitas sem perguntar de que tipo é cada uma;
-- consegues explicar a um colega, regra a regra, o que decidiste e porquê.
+- consegues explicar, regra a regra, o que decidiste e porquê.
 
 O desafio é opcional e não entra nestes critérios.
 

@@ -34,7 +34,7 @@ ginasio-com-erros/
 | 6 | O registo, no `ginasio.py`, e o `registo.py` | O ginásio regista os combates, e o nível escolhe-se no programa |
 | 7 | O `registo.py` | O registo vai para um ficheiro, com a hora de cada mensagem |
 
-Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, escreves no papel, ou num ficheiro de texto, o que esperas ver. Depois executas e comparas. Quando o resultado é diferente do que previste, explica a diferença antes de continuares: é essa explicação que mais te ensina. Todos os programas deste laboratório foram executados em Python 3.9 e em Python 3.14, com as mesmas saídas.
+Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, prevês o que vais ver. Depois executas e comparas. Quando o resultado é diferente do que previste, procura a explicação antes de continuares: é ela que mais te ensina. Todos os programas deste laboratório foram executados em Python 3.9 e em Python 3.14, com as mesmas saídas.
 
 ## Palavras que vais usar
 
@@ -61,7 +61,6 @@ Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, e
 - O Python 3, para executar os programas. Confirma que o tens com o comando `python3 --version`. Deve aparecer `Python 3.` seguido de dois números, o que quer dizer que o Python está instalado. No Windows, se `python3` não funcionar, usa `python --version` ou `py --version`.
 - O VS Code com a extensão Python da Microsoft, para escrever os ficheiros, executar os programas e depurá-los. Confirma que a tens: no ícone das extensões da barra lateral, escreve `Python` na caixa de pesquisa. A extensão da Microsoft deve aparecer como instalada.
 - Os ficheiros `pokemon.py`, `ginasio.py` e `anunciadores.py` da [pasta 03 dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/), que o laboratório copia na preparação. O [README do exemplo](../../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
-- Papel, ou um ficheiro de texto, para as previsões e as respostas.
 - O `ginasio.py` que copias já tem uma classe `Combate`, escrita com `@dataclass`, que o laboratório não muda. É por isso que o ficheiro começa por `from dataclasses import dataclass`. Deixa essa linha como está.
 
 ## Se alguma coisa falhar
@@ -137,7 +136,7 @@ print(erro)
 
 Leitura guiada: a primeira linha faz duas perguntas, uma por cada filha: cada uma é um `ErroDoGinasio`? A segunda pergunta se o próprio `ErroDoGinasio` é uma exceção. As últimas duas linhas criam uma exceção com uma mensagem e mostram-na com `print`.
 
-3. Antes de executares, escreve a tua previsão das três linhas. Depois, no terminal, corre:
+3. Antes de executares, prevê as três linhas. Depois, no terminal, corre:
 
 ```bash
 python3 teste_erros.py
@@ -217,7 +216,7 @@ print(len(brock.equipa))
 
 Leitura guiada: o ciclo percorre os oito nomes e tenta capturar cada um dentro de um `try`. Se o `capturar` lança a `EquipaCheia`, o `except` escreve a mensagem. Se não lança, o `else` escreve que o Pokémon foi capturado. O último `print` conta os Pokémon que ficaram na equipa.
 
-4. Antes de executares, escreve quantas linhas "capturado" vão aparecer, quais são os Pokémon recusados e qual é o número da última linha. Depois executa:
+4. Antes de executares, prevê quantas linhas "capturado" vão aparecer, quais são os Pokémon recusados e qual é o número da última linha. Depois executa:
 
 ```bash
 python3 capturas.py
@@ -239,7 +238,7 @@ Recusado: Brock já tem 6 Pokémon e não pode capturar Omanyte.
 
 Isto quer dizer que a equipa aceitou seis Pokémon e recusou os dois últimos. Se aparecer outra coisa, vê os [problemas frequentes](#problemas-frequentes).
 
-5. Responde por escrito: porque é que a última linha diz 6, e não 8, se o ciclo tentou oito capturas?
+5. Pensa: porque é que a última linha diz 6, e não 8, se o ciclo tentou oito capturas?
 
 A resposta: porque o `raise` para o `capturar` antes do `append`. As duas capturas recusadas não chegaram a mexer na equipa. O ciclo continuou, porque o `except` apanhou as duas exceções.
 
@@ -352,7 +351,7 @@ Desafiantes: 1, combates: 1
 
 Isto quer dizer que o primeiro desafio é um combate a sério, e que os outros dois são recusados. O Brock é recusado porque o Geodude não tem vida. O Gary é recusado porque o Vulpix ficou KO no primeiro combate.
 
-4. Responde por escrito às três perguntas.
+4. Pensa nas três perguntas seguintes, antes de leres cada resposta.
 
 O Brock foi recusado e não entrou na lista de desafiantes. Que linha do teu `combater` garante isso? A resposta: a linha `if desafiante not in self.desafiantes:` com o `append` por baixo, porque está depois do `raise`. Quando o combate é recusado, o método para antes de chegar lá.
 
@@ -366,9 +365,9 @@ O `Ginasio` recusa um combate sem Pokémon com vida com uma exceção, e fica co
 
 ## Fase 4: Investigar um erro de cálculo com o depurador
 
-Um erro de lógica não tem mensagem de erro: o programa corre até ao fim e dá o resultado errado. Para o encontrar, segue-se uma rotina de cinco passos. Primeiro, observas e reproduzes o erro: escreves o caso que falhou, o resultado esperado e o obtido, e dizes que tipo de erro é. Depois, escreves uma hipótese. Em terceiro lugar, verificas a hipótese, olhando para os valores do programa enquanto corre. Em quarto, corriges a causa. Por fim, voltas a testar todos os casos, também os que já passavam.
+Um erro de lógica não tem mensagem de erro: o programa corre até ao fim e dá o resultado errado. Para o encontrar, segue-se uma rotina de cinco passos. Primeiro, observas e reproduzes o erro: escreves o caso que falhou, o resultado esperado e o obtido, e dizes que tipo de erro é. Depois, escreves uma hipótese. Em terceiro lugar, verificas a hipótese, olhando para os valores do programa enquanto corre. Em quarto, corriges a causa. Por fim, voltas a testar todos os casos, também os que já passavam. O que a rotina manda escrever, o sintoma, a hipótese e o que mudou, fica num comentário no fim do ficheiro que investigas, com `#` no início de cada linha. Assim, o código não muda de linha, e os números das linhas continuam a ser os do laboratório.
 
-O depurador do VS Code é a ferramenta do terceiro passo. Corre o programa e deixa-o parar numa linha que escolhes, para veres os valores das variáveis e avançares uma linha de cada vez. É como a tabela com os valores das variáveis, linha a linha, que podes fazer no papel, mas feita pelo computador, com os valores verdadeiros. Os controlos de que precisas, nesta fase e na seguinte, são estes:
+O depurador do VS Code é a ferramenta do terceiro passo. Corre o programa e deixa-o parar numa linha que escolhes, para veres os valores das variáveis e avançares uma linha de cada vez. É como a tabela com os valores das variáveis, linha a linha, que podes fazer à mão, mas feita pelo computador, com os valores verdadeiros. Os controlos de que precisas, nesta fase e na seguinte, são estes:
 
 | Para quê | Como |
 | --- | --- |
@@ -411,7 +410,7 @@ squirtle.atacar(charmander)
 
 Leitura guiada: a classe `PokemonAgua` herda da `Pokemon` e reescreve o `calcular_dano`. Começa por pedir à classe-mãe o dano normal, que é o ataque. Depois, se o tipo do alvo for o que a condição diz, escreve a mensagem e dobra o dano. No fim, o programa cria um Squirtle e um Charmander e faz o Squirtle atacar.
 
-2. Observa e reproduz o erro. Executa o programa normalmente, com `python3 investigar.py`, e regista o sintoma: quanto devia tirar o ataque, quanto tirou, e o que falta na saída. O que deves ver:
+2. Observa e reproduz o erro. Executa o programa normalmente, com `python3 investigar.py`, e regista o sintoma num comentário no fim do `investigar.py`: quanto devia tirar o ataque, quanto tirou, e o que falta na saída. O que deves ver:
 
 ```text
 Squirtle ataca Charmander e tira 30 de vida.
@@ -420,19 +419,19 @@ Charmander tem 60/150 de vida.
 
 A resposta: o caso é o Squirtle, com 30 de ataque, a atacar o Charmander. A água tira o dobro ao fogo, por isso devia tirar 60, com a mensagem "É super eficaz!". Tirou 30, e a mensagem não apareceu. O programa correu até ao fim e deu o resultado errado, por isso é um erro de lógica.
 
-3. Antes de abrires o depurador, escreve a tua hipótese: o que achas que está a acontecer, em que linha, e o que esperas ver no depurador se tiveres razão. Escreve-a antes, porque, se a escreveres depois, vais olhar para os valores à procura do que já sabes.
+3. Antes de abrires o depurador, escreve a tua hipótese no mesmo comentário. Diz o que achas que está a acontecer, em que linha, e o que esperas ver no depurador se tiveres razão. Escreve-a antes, porque, se a escreveres depois, vais olhar para os valores à procura do que já sabes.
 
 A resposta: uma hipótese que serve é que a condição do `if` está a dar falso, e por isso as duas linhas do bloco do `if` não correm. Se for isso, no depurador o `if` salta diretamente para o `return`, e o `dano` fica em 30. Outras hipóteses bem escritas também servem, mesmo erradas: o que conta é estarem escritas antes e dizerem o que esperas ver.
 
-4. Verifica a hipótese. Põe um ponto de paragem na linha `dano = super().calcular_dano(alvo)`, clicando na margem à esquerda do número dessa linha. Com o `investigar.py` aberto no editor, carrega em F5. Quando o programa parar, abre o `alvo` no painel das variáveis e regista o valor do `tipo`.
+4. Verifica a hipótese. Põe um ponto de paragem na linha `dano = super().calcular_dano(alvo)`, clicando na margem à esquerda do número dessa linha. Com o `investigar.py` aberto no editor, carrega em F5. Quando o programa parar, abre o `alvo` no painel das variáveis e repara no valor do `tipo`.
 
 O que deves ver: o ponto vermelho na margem, a linha `dano = super().calcular_dano(alvo)` marcada a amarelo, e o `tipo` do `alvo` a valer `'Fogo'`. Isto quer dizer que o programa parou antes de a linha correr, e que o tipo está guardado com a maiúscula do `pokemon.py`. Se o programa correr até ao fim sem parar, executaste sem o depurador: vê os [problemas frequentes](#problemas-frequentes).
 
-5. No painel Vigiar, acrescenta duas expressões: `alvo.tipo` e `alvo.tipo == "fogo"`. Para acrescentar uma, clica no sinal de mais do painel, escreve a expressão e carrega em Enter. Regista o que o VS Code mostra para cada uma.
+5. No painel Vigiar, acrescenta duas expressões: `alvo.tipo` e `alvo.tipo == "fogo"`. Para acrescentar uma, clica no sinal de mais do painel, escreve a expressão e carrega em Enter. Repara no que o VS Code mostra para cada uma.
 
 O que deves ver: `'Fogo'` para a primeira e `False` para a segunda. Isto quer dizer que o tipo do alvo é `'Fogo'`, com maiúscula, e que a comparação com `"fogo"`, em minúsculas, dá falso.
 
-6. Avança com F10, linha a linha, até ao `return`. Regista, depois de cada F10, a linha marcada a amarelo e o valor do `dano`, numa tabela. O que deves ver:
+6. Avança com F10, linha a linha, até ao `return`. Regista no comentário, depois de cada F10, a linha marcada a amarelo e o valor do `dano`, uma linha por passo, como numa tabela. O que deves ver:
 
 | Depois de | Linha marcada a amarelo | `dano` |
 | --- | --- | --- |
@@ -467,7 +466,7 @@ Squirtle ataca Charmander e tira 60 de vida.
 Charmander tem 30/150 de vida.
 ```
 
-Falta o caso que já funcionava, o de um alvo que não é de fogo. Na linha do `import`, acrescenta `PokemonPlanta`, e no fim do ficheiro acrescenta duas linhas:
+Falta o caso que já funcionava, o de um alvo que não é de fogo. Na linha do `import`, acrescenta `PokemonPlanta`, e a seguir à última linha do programa, antes do comentário, acrescenta duas linhas:
 
 ```python
 from pokemon import Pokemon, PokemonFogo, PokemonPlanta
@@ -487,13 +486,13 @@ Bulbasaur tem 80/150 de vida.
 
 Os dois casos passam: o que mudou foi só a grafia de um texto, e o dobro aplica-se agora só contra o fogo.
 
-9. Responde por escrito: a hipótese que escreveste antes de abrir o depurador estava certa? Se não estava, o que é que o depurador te mostrou que não esperavas? E qual era a causa?
+9. Acaba o comentário com a resposta a três perguntas: a hipótese que escreveste antes de abrir o depurador estava certa? Se não estava, o que é que o depurador te mostrou que não esperavas? E qual era a causa?
 
-A resposta: se a tua hipótese era que a condição do `if` dava falso, estava certa, e o depurador confirmou-a na tabela que fizeste com o F10. Se era outra, o que interessa é dizer o que o depurador mostrou de diferente. A causa era a comparação com `"fogo"`, em minúsculas, quando o tipo está guardado como `"Fogo"`. O Python não deu mensagem de erro porque, para ele, comparar dois textos diferentes não é um erro: o resultado é só `False`.
+A resposta: se a tua hipótese era que a condição do `if` dava falso, estava certa, e o depurador confirmou-a nas linhas que registaste com o F10. Se era outra, o que interessa é dizer o que o depurador mostrou de diferente. A causa era a comparação com `"fogo"`, em minúsculas, quando o tipo está guardado como `"Fogo"`. O Python não deu mensagem de erro porque, para ele, comparar dois textos diferentes não é um erro: o resultado é só `False`.
 
 ### Paragem 4
 
-O `investigar.py` corrigido mostra o dobro do dano contra o fogo e o dano normal contra a planta. Tens escritas a hipótese e a tabela que fizeste com o F10.
+O `investigar.py` corrigido mostra o dobro do dano contra o fogo e o dano normal contra a planta. O comentário no fim do ficheiro tem o sintoma, a hipótese escrita antes de abrires o depurador, as linhas que registaste com o F10 e a causa.
 
 Pensa antes de continuares: o erro desapareceria se tivesses acrescentado ao `calcular_dano` um `if` para o Squirtle, em vez de corrigires a comparação? A resposta: o resultado desse caso passava a estar certo, mas a causa ficava lá, à espera de outro Pokémon de água contra outro Pokémon de fogo. Corrigir a causa é mudar a instrução que produz o erro, e não o sítio onde ele se vê.
 
@@ -541,11 +540,11 @@ AttributeError: 'str' object has no attribute 'vida'
 
 O traceback tem os caminhos completos do teu computador no lugar dos nomes simples dos ficheiros. As linhas com `~` e `^` só aparecem nas versões recentes do Python. Se o teu `ginasio.py` for diferente do do laboratório, os números das linhas dele podem ser outros. A última linha está em inglês: `'str' object has no attribute 'vida'` quer dizer "um objeto `str` não tem o atributo `vida`", e `str` é o tipo dos textos. É um erro de execução.
 
-3. Lê o traceback de baixo para cima e responde, antes de abrires o depurador: em que linha do `pilha.py` começou o caminho até ao erro? Por que funções passou? Em que linha do `ginasio.py` rebentou?
+3. Lê o traceback de baixo para cima e pensa, antes de abrires o depurador: em que linha do `pilha.py` começou o caminho até ao erro? Por que funções passou? Em que linha do `ginasio.py` rebentou?
 
 A resposta: o caminho começou na linha 9 do `pilha.py`, o segundo `cerulean.combater(ash)`. Passou pelo `combater` e pelo `escolher_pokemon`. Rebentou no `if pokemon.vida > 0:` do `escolher_pokemon`, onde o `pokemon` era um texto.
 
-4. Verifica a causa com o depurador. Com o `pilha.py` aberto no editor, executa com o F5, sem nenhum ponto de paragem. Por omissão, quando há uma exceção que ninguém apanha, o depurador não deixa o programa acabar: para na linha onde a exceção rebentou e marca-a. No painel da pilha de chamadas, clica em cada andar. Para o andar do `combater`, regista o que está na `equipa` do `desafiante`.
+4. Verifica a causa com o depurador. Com o `pilha.py` aberto no editor, executa com o F5, sem nenhum ponto de paragem. Por omissão, quando há uma exceção que ninguém apanha, o depurador não deixa o programa acabar: para na linha onde a exceção rebentou e marca-a. No painel da pilha de chamadas, clica em cada andar. No andar do `combater`, repara no que está na `equipa` do `desafiante`.
 
 O que deves ver: o programa parado no `if pokemon.vida > 0:`, com a exceção descrita por cima da linha, e três andares na pilha: `escolher_pokemon`, `combater` e `<module>`. No andar `escolher_pokemon`, o `pokemon` vale `'Squirtle'`. No andar `combater`, abrindo o `desafiante`, a `equipa` tem dois elementos: o Charmander, que é um objeto, e o texto `'Squirtle'`. No andar `<module>`, estás no programa principal, onde o `ash` foi criado.
 
@@ -577,7 +576,7 @@ Squirtle ataca Starmie e tira 30 de vida.
 Starmie está KO (0/150).
 ```
 
-7. Responde por escrito às duas perguntas.
+7. Pensa nas duas perguntas seguintes, antes de leres cada resposta.
 
 O erro está na linha onde a equipa foi criada, e o primeiro combate correu bem. Porque é que só rebentou no segundo? A resposta: o `escolher_pokemon` devolve o primeiro Pokémon com vida e para. No primeiro combate, o Charmander tinha vida e foi devolvido antes de o ciclo chegar ao texto. No segundo, o Charmander já estava KO, o ciclo passou para o elemento seguinte, e foi aí que rebentou. Um erro pode ficar escondido enquanto o caminho do programa não passa por ele.
 
@@ -715,7 +714,7 @@ Isto quer dizer que o `INFO` do início e do fim, e o `WARNING` do combate recus
 Recusado: Não há combate em Celadon: um dos treinadores não tem Pokémon com vida.
 ```
 
-7. Responde por escrito: para ver as mensagens de `DEBUG`, mudaste uma palavra no `registo.py` e nenhuma no `ginasio.py`. Porque é que isso é uma vantagem em relação a acrescentar e apagar `print`?
+7. Pensa: para ver as mensagens de `DEBUG`, mudaste uma palavra no `registo.py` e nenhuma no `ginasio.py`. Porque é que isso é uma vantagem em relação a acrescentar e apagar `print`?
 
 A resposta: as mensagens ficam no código, num só sítio, e a configuração decide o que se vê. Não é preciso acrescentar `print` para investigar, nem apagá-los depois, nem lembrar onde estavam quando o erro volta. Não se mexe no ginásio para o investigar.
 
@@ -752,7 +751,7 @@ O que deves ver: seis linhas, três por execução, com a data e a hora à frent
 
 Estas são as três linhas da primeira execução, e a segunda execução acrescenta outras três por baixo. O ficheiro não é apagado entre execuções.
 
-4. Responde por escrito: quantas linhas tem o ficheiro, e porquê? O que aparece no ecrã, e o que deixou de aparecer?
+4. Pensa: quantas linhas tem o ficheiro, e porquê? O que aparece no ecrã, e o que deixou de aparecer?
 
 A resposta: seis, porque cada execução escreve as três linhas do registo, as duas de `INFO` e a de `WARNING`, e acrescenta-as ao fim do ficheiro. No ecrã ficam só os `print`: o combate e o "Recusado". As linhas do registo deixaram de aparecer, porque foram para o ficheiro.
 
@@ -892,7 +891,7 @@ Antes de escreveres o código, decide duas coisas. A primeira: a mensagem tem o 
 ## Antes de terminares
 
 - [ ] A pasta `ginasio-com-erros` tem o `erros.py` e o `ginasio.py` na versão final, e os ficheiros de teste: `teste_erros.py`, `capturas.py`, `combates.py`, `investigar.py` já corrigido, `pilha.py` já corrigido e `registo.py`.
-- [ ] Tens as previsões, a hipótese e a tabela da fase 4. Tens também as respostas às perguntas das fases 2 a 7, escritas por ti, em papel ou num ficheiro de texto, conforme o professor indicar.
+- [ ] O `investigar.py` acaba com o comentário da fase 4: o sintoma, a hipótese escrita antes de abrires o depurador, as linhas que registaste com o F10 e a causa.
 - [ ] Se fizeste o desafio 1, o `erros.py` e o `ginasio.py` têm a `PokemonRepetido`, e o `repetido.py` mostra as três linhas do enunciado.
 - [ ] Se fizeste o desafio 2, a `EquipaCheia` tem o construtor com os dados, o `fora_da_equipa.py` mostra as três linhas do enunciado, e o `capturas.py` mostra o mesmo que antes.
 - [ ] Consegues explicar, por palavras tuas, porque é que um método recusa com `raise` em vez de `print`. Consegues explicar também a diferença entre o sítio onde um erro rebenta e o sítio onde está a causa.

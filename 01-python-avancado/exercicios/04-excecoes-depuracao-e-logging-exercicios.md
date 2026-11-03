@@ -16,7 +16,7 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 
 Precisas do computador com o Python 3 e o VS Code. Cria uma pasta para esta ficha e copia para lá os quatro ficheiros da pasta [04-excecoes-depuracao-e-logging dos exemplos](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/): o `pokemon.py`, o `ginasio.py`, o `erros.py` e o `anunciadores.py`. Vários exercícios usam as classes desses ficheiros.
 
-Quando um exercício pedir uma previsão, escreve-a antes de executar. Quando pedir uma explicação, responde em frases completas, com as tuas palavras. Guarda os programas e as respostas, e entrega-os como o professor indicar.
+As respostas escritas vão para comentários, com `#`, no ficheiro `.py` do exercício, em frases completas e com as tuas palavras. Um exercício sem código para escrever, como o 4, o 6 e o 8, tem um ficheiro só com comentários, com o número do exercício no nome. Quando um exercício pedir uma previsão, prevê antes de executar: é a previsão, e não a execução, que mostra o que percebeste. Entrega os ficheiros como o professor indicar.
 
 ## Exceções
 
@@ -46,11 +46,9 @@ print(dividir_pocoes(10, 3))
 print(dividir_pocoes(10, 0))
 ```
 
-**a)** Sem executar, escreve as seis linhas que o programa mostra.
+**a)** Sem executar, prevê as seis linhas que o programa mostra. Se, ao executar, alguma linha for diferente, explica num comentário em que parte do `try` o teu raciocínio se afastou do programa.
 
 **b)** O `else` e o `except` têm os dois um `return`, e mesmo assim aparece "Divisão feita." nas duas chamadas. Porquê? Em que ordem aparecem a mensagem do `finally` e o número que a função devolve?
-
-**c)** Executa e compara. Se falhaste alguma linha, diz em que parte do `try` o teu raciocínio se afastou do programa.
 
 ### Exercício 2: Uma regra que recusa a sério
 
@@ -86,7 +84,7 @@ Criada: Baga Máxima
 4
 ```
 
-Depois de o teste funcionar, responde: no tema 03, a propriedade da vida corrigia os valores fora dos limites, e o 500 passava a 150. Aqui, a baga com 80 é recusada. Em que situação preferias cada uma das duas formas?
+Responde também, num comentário no fim do ficheiro: no tema 03, a propriedade da vida corrigia os valores fora dos limites, e o 500 passava a 150. Aqui, a baga com 80 é recusada. Em que situação preferias cada uma das duas formas?
 
 ### Exercício 3: A ordem dos except
 
@@ -128,7 +126,7 @@ for artigo, preco, stock, dinheiro in compras:
         print("Junta mais moedas e volta.")
 ```
 
-**a)** Sem executar, escreve as três linhas que o programa mostra. A frase "Junta mais moedas e volta." aparece alguma vez? Porquê?
+**a)** Sem executar, prevê as três linhas que o programa mostra. A frase "Junta mais moedas e volta." aparece alguma vez? Explica porquê num comentário.
 
 **b)** Muda o `try` para que, quando falta dinheiro, apareça "Junta mais moedas e volta.", e, para qualquer outro erro da loja, a mensagem da exceção. Muda também o `print` da compra feita para um `else`. Quando estiver certo, o programa mostra:
 
@@ -214,11 +212,11 @@ print(misty.escolher_pokemon().nome)
 
 O programa escreve `Psyduck`, e devia escrever `Starmie`.
 
-**a)** Antes de abrires o depurador, escreve a tua hipótese: que linha achas que está mal, e o que esperas ver no `escolhido` ao longo do ciclo, se tiveres razão.
+Encontra a causa com o depurador e corrige-a, até o programa escrever `Starmie`. A investigação fica num comentário no fim do ficheiro, com `#`, para o código não mudar de linha. O comentário tem:
 
-**b)** Põe um ponto de paragem na linha `if pokemon.vida > 0:` e executa com o depurador. Em cada volta do ciclo, regista o nome do `pokemon` e o nome do `escolhido` (ou `None`, quando ainda não há nenhum), numa tabela com uma linha por volta.
-
-**c)** A tabela confirma a tua hipótese? Corrige a linha que está mal e confirma que o programa escreve `Starmie`.
+1. A tua hipótese, escrita antes de abrires o depurador: que linha achas que está mal, e o que esperas ver no `escolhido` ao longo do ciclo, se tiveres razão.
+2. Uma tabela, com uma linha por volta do ciclo, com o nome do `pokemon` e o nome do `escolhido` (ou `None`, quando ainda não há nenhum). Os valores são os que o depurador mostra quando para num ponto de paragem na linha `if pokemon.vida > 0:`.
+3. Se a tabela confirmou ou desmentiu a hipótese, e a linha que mudaste para corrigir a causa.
 
 ## Logging
 
@@ -285,7 +283,7 @@ Quando estiver certo, o teste mostra:
 1
 ```
 
-Depois muda o nível do `basicConfig` para `logging.DEBUG`. O teste tem de mostrar, antes da linha do aviso, três linhas de `DEBUG`: a do começo do tratamento, a do Squirtle e a do Charmander. E outra, a do Psyduck, entre o aviso e a linha do fim. Responde: porque é que o `basicConfig` está no `teste_centro.py`, e não no `centro.py`?
+Com o `basicConfig` no nível `logging.DEBUG`, o teste tem de mostrar três linhas de `DEBUG` antes da linha do aviso. São a do começo do tratamento, a do Squirtle e a do Charmander. E outra, a do Psyduck, entre o aviso e a linha do fim. Num comentário no fim do `teste_centro.py`, responde: porque é que o `basicConfig` está no `teste_centro.py`, e não no `centro.py`?
 
 ### Exercício 8: O que não se regista
 
@@ -306,9 +304,9 @@ Estas linhas são de um registo de uma aplicação de inscrições na Liga, com 
 
 ## Apoio
 
-- Exercício 1: segue cada chamada à parte, linha a linha, e escreve as linhas que aparecem por ordem, sem saltar nenhum bloco. Se tiveres dúvidas na alínea b, executa o programa e compara a ordem das linhas com a que escreveste.
-- Exercício 2: a verificação faz-se antes de guardar os atributos. Escreve primeiro, numa frase, quando é que uma cura está fora do intervalo, e só depois a condição. O teste tem os valores 0 e 1, 50 e 80: ajudam a ver se os extremos estão certos.
-- Exercício 3: para a alínea a, escreve ao lado de cada compra qual das três saídas da função ela usa, antes de olhares para os `except`. Para a alínea b, lembra-te de que o Python entra no primeiro `except` que corresponde.
+- Exercício 1: segue cada chamada à parte, linha a linha, e prevê as linhas que aparecem por ordem, sem saltar nenhum bloco. Se tiveres dúvidas na alínea b, executa o programa e compara a ordem das linhas com a que previste.
+- Exercício 2: a verificação faz-se antes de guardar os atributos. Pensa primeiro, numa frase, quando é que uma cura está fora do intervalo, e só depois escreve a condição. O teste tem os valores 0 e 1, 50 e 80: ajudam a ver se os extremos estão certos.
+- Exercício 3: para a alínea a, descobre primeiro qual das três saídas da função cada compra usa, e só depois olha para os `except`. Para a alínea b, lembra-te de que o Python entra no primeiro `except` que corresponde.
 - Exercício 4: lê o traceback de baixo para cima. A última linha diz o quê, o andar de baixo diz onde rebentou, e os de cima dizem como se chegou lá. A linha que o traceback aponta mostra onde o erro rebentou, e a causa pode estar noutra linha do teu programa.
 - Exercício 5: escreve a hipótese numa frase que os valores do painel das variáveis possam confirmar ou desmentir. Para a tabela, com o ponto de paragem dentro do ciclo, o F5 continua até à volta seguinte, e não precisas de avançar linha a linha.
 - Exercício 6: para cada acontecimento, pergunta primeiro quem precisa de saber, entre quem usa o programa e quem o mantém. Depois pergunta se o programa continuou. Dois dos acontecimentos admitem mais de uma resposta, se a justificares.
@@ -370,15 +368,15 @@ Quando estiver certo, o teste mostra:
 
 Pista: escreve primeiro as quatro classes de exceções, e depois o `inscrever`, com as três verificações antes de juntar o nome. O logger fica no início do `liga.py`, sem `basicConfig`, porque quem configura é o programa de teste.
 
-Antes de escreveres o `inscrever`, decide a ordem das três verificações. Com a Liga cheia, o Ash pede para se inscrever outra vez: deve receber `NomeRepetido` ou `LigaCheia`? O teste não verifica este caso. Escreve a tua escolha e a razão, e confirma que o teu código faz o que escolheste.
+Decide a ordem das três verificações. Com a Liga cheia, o Ash pede para se inscrever outra vez: deve receber `NomeRepetido` ou `LigaCheia`? O teste não verifica este caso. Escreve a tua escolha e a razão num comentário, junto do `inscrever`, e confirma que o teu código faz o que escolheste.
 
 ## Critérios de conclusão
 
 Concluíste a ficha quando:
 
 - os testes dos exercícios 2, 3 e 7 mostram exatamente as linhas indicadas no enunciado;
-- as tuas previsões do exercício 1 e as respostas do exercício 4 foram escritas antes de executares;
-- a hipótese do exercício 5 foi escrita antes de abrires o depurador, e a tabela tem os valores que o depurador mostrou;
+- as respostas escritas estão em comentários, no ficheiro de cada exercício;
+- o comentário no fim do ficheiro do exercício 5 tem a hipótese, escrita antes de abrires o depurador, e a tabela com os valores que o depurador mostrou;
 - as justificações dos exercícios 6 e 8 dizem quem precisa de saber e porquê, e não só o nível ou a resposta.
 
 ## Autoavaliação

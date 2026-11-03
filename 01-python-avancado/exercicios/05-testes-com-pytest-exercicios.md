@@ -16,7 +16,7 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 
 Precisas do computador com o Python 3, o VS Code e o pytest, que o laboratório te ensinou a confirmar e a instalar. Cria uma pasta para esta ficha, `treino-com-testes`, e guarda lá o `treino.py` do cenário e os teus ficheiros de testes. Corre os testes nessa pasta, com `python3 -m pytest`, ou com o nome do ficheiro a seguir, para correr só esse.
 
-Quando um exercício pedir uma previsão, escreve-a antes de executar. Quando pedir uma explicação, responde em frases completas, com as tuas palavras. Guarda os ficheiros e as respostas, e entrega-os como o professor indicar.
+As respostas escritas vão para comentários, com `#`, no ficheiro de testes do exercício, junto do teste a que dizem respeito ou no fim do ficheiro. Escreve-as em frases completas, com as tuas palavras. Quando um exercício pedir uma previsão, prevê antes de executar: é a previsão, e não a execução, que mostra o que percebeste. Entrega os ficheiros como o professor indicar.
 
 ## O cenário
 
@@ -115,13 +115,9 @@ def test_cento_e_vinte_pontos_deixam_vinte():
     assert eevee.experiencia == 20
 ```
 
-**a)** Sem executar, diz que testes passam e que testes falham, e escreve a última linha que o pytest vai mostrar.
+**a)** Sem executar, prevê que testes passam e que testes falham, e a última linha que o pytest vai mostrar. Para cada teste que falha, prevê também a linha que começa por `E       assert`, com os dois valores. Para confirmares, guarda o ficheiro e corre `python3 -m pytest test_previsao.py`.
 
-**b)** Para cada teste que falha, escreve a linha que começa por `E       assert`, com os dois valores.
-
-**c)** Em cada teste que falha, o erro está no teste ou no código? Justifica com a regra do treino.
-
-**d)** Guarda o ficheiro, corre `python3 -m pytest test_previsao.py` e compara com as tuas respostas.
+**b)** Em cada teste que falha, o erro está no teste ou no código? Justifica com a regra do treino, num comentário junto desse teste.
 
 ### Exercício 2: Os primeiros testes do treino
 
@@ -132,9 +128,9 @@ Cria o ficheiro `test_treino.py` e escreve nele dois testes para o `ganhar_exper
 - um Vulpix no nível 5 ganha 40 pontos;
 - um Eevee, no nível 1, ganha 250 pontos de uma vez.
 
-Cada teste tem as três partes, um nome que diz o comportamento e uma docstring. Os resultados esperados tiras tu da regra do treino, antes de correres os testes. Decide também o que cada teste tem de confirmar no fim.
+Cada teste tem as três partes, um nome que diz o comportamento e uma docstring. Os resultados esperados tiras tu da regra do treino, e não do que o código dá. Decide também o que cada teste tem de confirmar no fim.
 
-Corre `python3 -m pytest test_treino.py` e confirma que os dois passam.
+No fim, `python3 -m pytest test_treino.py` mostra os dois testes a passar.
 
 ### Exercício 3: As fronteiras do treino
 
@@ -142,9 +138,7 @@ Treina: escolher casos de fronteira (guia, [Os casos de fronteira](../05-testes-
 
 O treino tem duas regras com fronteiras: um nível sobe aos 100 pontos, e o nível não passa de 100. Acrescenta ao `test_treino.py` pelo menos quatro testes de fronteira do `ganhar_experiencia`, dois para cada regra. Na docstring de cada teste, diz que fronteira ele testa.
 
-Antes de escreveres os testes, faz uma tabela com uma linha por teste: o nível de partida, os pontos, o nível esperado e a experiência esperada.
-
-Corre os testes e confirma que passam todos.
+No fim, os testes passam todos.
 
 ### Exercício 4: Uma recusa, e o que fica depois dela
 
@@ -152,9 +146,7 @@ Treina: confirmar uma exceção com `pytest.raises` e o estado depois da recusa 
 
 A docstring do `ganhar_experiencia` diz que os pontos têm de ser mais do que zero, e que o método recusa os outros com `ValueError`, sem mudar nada. Acrescenta ao `test_treino.py` dois testes de erro: um com 0 pontos e outro com -10. Cada teste confirma a exceção e confirma que o nível e a experiência ficaram como estavam.
 
-Decide com que Pokémon preparas cada teste, e explica a escolha na docstring.
-
-Corre os testes e confirma que passam todos.
+Decide com que Pokémon preparas cada teste, e explica a escolha na docstring. No fim, os testes passam todos.
 
 ## Escolher e organizar os testes
 
@@ -194,13 +186,9 @@ Versão C:
             self.experiencia = 0
 ```
 
-**a)** Para cada versão, diz numa frase o que ela faz de errado, comparada com a regra do treino.
+**a)** Para cada versão, diz numa frase o que ela faz de errado, comparada com a regra do treino. Responde num comentário no fim do `test_treino.py`.
 
-**b)** Para cada versão, prevê quais dos teus testes dos exercícios 2 a 4 falham.
-
-**c)** Experimenta: no `treino.py`, troca as linhas do `while` em diante por uma versão, corre `python3 -m pytest test_treino.py`, e anota os testes que falham. Faz o mesmo com as outras duas. No fim, volta a pôr o `treino.py` como no cenário.
-
-**d)** Se alguma versão passou em todos os teus testes, escreve o teste que a apanha, e acrescenta-o ao `test_treino.py`. Confirma que ele falha com essa versão e passa com o código do cenário.
+**b)** Os teus testes dos exercícios 2 a 4 têm de apanhar as três versões. Com cada uma delas no `treino.py`, no lugar das linhas do `while` em diante, pelo menos um teste do `test_treino.py` falha. Antes de experimentares, prevê quais. Se alguma versão passar em todos os teus testes, acrescenta ao `test_treino.py` o teste que a apanha: falha com essa versão e passa com o código do cenário. No comentário da alínea a), junta a cada versão os testes que a apanharam. No fim, o `treino.py` fica como no cenário.
 
 ### Exercício 6: Uma fixture, ou não
 
@@ -250,13 +238,9 @@ def test_eevee_comeca_no_nivel_um():
     assert eevee.nivel == 1
 ```
 
-**a)** Corre `python3 -m pytest test_fixture.py` e confirma que os quatro passam.
+**a)** Reescreve o ficheiro com uma fixture para a preparação que se repete. Decide que testes a pedem e que nome lhe dás. Os testes têm de continuar a confirmar exatamente o mesmo, e os quatro passam com `python3 -m pytest test_fixture.py`, antes e depois da mudança.
 
-**b)** Reescreve o ficheiro com uma fixture para a preparação que se repete. Decide que testes a pedem e que nome lhe dás. Os testes têm de continuar a confirmar exatamente o mesmo.
-
-**c)** Corre outra vez e confirma que os quatro passam.
-
-**d)** Explica por que razão um dos testes não pede a fixture. Explica também porque é que os três testes que a pedem não se estragam uns aos outros, embora todos deem pontos ao Pidgey.
+**b)** Num comentário no fim do `test_fixture.py`, explica por que razão um dos testes não pede a fixture. Explica também porque é que os três testes que a pedem não se estragam uns aos outros, embora todos deem pontos ao Pidgey.
 
 ### Exercício 7: O teste antes da correção
 
@@ -264,22 +248,18 @@ Treina: escrever o teste de um defeito antes de o corrigir (guia, [Um teste ante
 
 Chegou um relato: "Um Pikachu no nível 100 comeu um doce raro e ficou no nível 101." O defeito está no `usar_doce_raro` do `treino.py`.
 
-**a)** Antes de mexeres no `treino.py`, acrescenta ao `test_treino.py` o teste que reproduz o relato. O resultado esperado tira-se da docstring do `usar_doce_raro`.
+**a)** Acrescenta ao `test_treino.py` o teste que reproduz o relato, e corrige a causa no `usar_doce_raro`. O resultado esperado tira-se da docstring do `usar_doce_raro`. O teste escreve-se antes da correção: com o defeito, falha, e depois da correção os testes do `test_treino.py` passam todos. Num comentário junto do teste, escreve a mensagem com que ele falhou, e explica porque é que essa mensagem mostra que o teste reproduz o relato.
 
-**b)** Corre `python3 -m pytest test_treino.py`. Confirma que o teste novo falha, e escreve a mensagem com que falha. Explica porque é que essa mensagem mostra que o teste reproduz o relato.
-
-**c)** Corrige a causa no `usar_doce_raro`. Corre os testes todos do `test_treino.py`, e confirma que passam.
-
-**d)** O `usar_doce_raro` também tem de funcionar fora do nível 100. Escreve mais um teste, para um caso normal, que confirme as duas coisas que a docstring promete.
+**b)** O `usar_doce_raro` também tem de funcionar fora do nível 100. Escreve mais um teste, para um caso normal, que confirme as duas coisas que a docstring promete.
 
 ## Apoio
 
 - Exercício 1: para cada teste, faz a conta pela regra, com o nível e a experiência antes e depois. Num teste que falha, o pytest mostra o valor que o código deu à esquerda, e o valor que o teste esperava à direita.
-- Exercício 2: antes de escreveres os `assert`, lista tudo o que o `ganhar_experiencia` pode mudar num Pokémon.
-- Exercício 3: numa fronteira, testa o último valor que ainda não muda nada e o primeiro que já muda. Para o nível máximo, pergunta-te o que faz a regra mudar: os pontos, o nível de partida, ou os dois.
+- Exercício 2: antes de escreveres os `assert`, pensa em tudo o que o `ganhar_experiencia` pode mudar num Pokémon.
+- Exercício 3: numa fronteira, testa o último valor que ainda não muda nada e o primeiro que já muda. Para o nível máximo, pergunta-te o que faz a regra mudar: os pontos, o nível de partida, ou os dois. Ajuda decidir, para cada teste, o nível de partida, os pontos, o nível esperado e a experiência esperada, antes de o escreveres.
 - Exercício 4: o `pytest.raises` confirma a exceção. O que fica no Pokémon confirmas tu, com `assert`, depois do bloco. Imagina um erro que mexesse na experiência antes de lançar a exceção: o teu teste dava por ele?
 - Exercício 5: para cada versão, procura o nível de partida e os pontos em que a versão errada e a do cenário dão resultados diferentes. Começa pelas fronteiras das duas regras.
-- Exercício 6: o nome da fixture diz o que ela prepara, e não como. Para a alínea d), pergunta-te quantas vezes o pytest chama a fixture, se três testes a pedem.
+- Exercício 6: o nome da fixture diz o que ela prepara, e não como. Para a alínea b), pergunta-te quantas vezes o pytest chama a fixture, se três testes a pedem.
 - Exercício 7: a docstring diz duas coisas para o nível 100. Uma confirma-se com `pytest.raises`, e a outra com um `assert`.
 
 ## Desafio opcional
@@ -333,7 +313,7 @@ def test_sessenta_pontos_nao_sobem():
     assert eevee.nivel == 1
 ```
 
-Mostra-lhe que seis testes a passar não querem dizer que o código está certo. Escreve uma versão errada do `ganhar_experiencia`, diferente das três do exercício 5, que passe nos seis testes do colega e não cumpra a regra do treino. Depois escreve os testes que faltam ao colega para a apanhar, com o menor número de testes que conseguires, e explica a escolha. No fim, volta a pôr o `treino.py` como estava.
+Mostra-lhe que seis testes a passar não querem dizer que o código está certo. Escreve uma versão errada do `ganhar_experiencia`, diferente das três do exercício 5, que passe nos seis testes do colega e não cumpra a regra do treino. Depois escreve os testes que faltam ao colega para a apanhar, com o menor número de testes que conseguires, e explica a escolha num comentário junto deles. No fim, volta a pôr o `treino.py` como estava.
 
 ## Para ires mais longe
 
@@ -341,19 +321,17 @@ Até aqui, escreveste os testes para código que já existia. Também se pode fa
 
 O `PokemonEmTreino` vai ter um método novo, `pontos_para_o_proximo_nivel`, sem parâmetros, com esta docstring: "Devolve quantos pontos faltam para o próximo nível. No nível 100, não há próximo nível, e devolve 0."
 
-1. Num ficheiro novo, `test_proximo_nivel.py`, escreve pelo menos três testes para o método, a partir da docstring. Escolhe um caso normal e as fronteiras.
-2. Corre-os antes de escreveres o método. Escreve a mensagem com que falham, e explica-a.
-3. Escreve o método no `treino.py`, até os testes passarem. Corre também os outros ficheiros de testes, para confirmares que não partiste nada.
+Num ficheiro novo, `test_proximo_nivel.py`, escreve pelo menos três testes para o método, a partir da docstring: um caso normal e as fronteiras. Os testes vêm antes do método, e por isso começam por falhar. Num comentário no `test_proximo_nivel.py`, escreve a mensagem com que falham, e explica-a. Depois escreve o método no `treino.py`, até os testes passarem, sem partir os outros ficheiros de testes.
 
 ## Critérios de conclusão
 
 Concluíste a ficha quando:
 
-- as tuas previsões do exercício 1 foram escritas antes de executares;
+- o `test_previsao.py` tem, junto de cada teste que falha, a justificação de onde está o erro, no teste ou no código;
 - o `test_treino.py` tem os testes dos exercícios 2 a 4, com as três partes, nomes que dizem o comportamento e docstrings, e passam todos com o código do cenário;
 - cada uma das três versões do exercício 5 faz falhar pelo menos um dos teus testes;
 - o `test_fixture.py` usa uma fixture nos testes que repetiam a preparação, e os quatro testes passam;
-- o teste do exercício 7 falhou antes da correção e passa depois dela, e o `usar_doce_raro` está corrigido no `treino.py`.
+- o teste do exercício 7 tem num comentário a mensagem com que falhou antes da correção, passa depois dela, e o `usar_doce_raro` está corrigido no `treino.py`.
 
 ## Autoavaliação
 

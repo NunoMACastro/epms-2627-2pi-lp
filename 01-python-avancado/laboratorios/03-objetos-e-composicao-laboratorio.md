@@ -32,9 +32,9 @@ Pelo caminho, vês no computador ideias que são difíceis só de ler. A equipa 
 
 Escrever os teus próprios decoradores e usar funções como valores não tem fase neste laboratório: praticam-se na ficha de exercícios.
 
-Em todas as fases trabalhas da mesma maneira. Antes de executares, escreves no papel, ou num ficheiro de texto, o que esperas ver. Depois executas e comparas. Quando a saída é diferente da tua previsão, explica a diferença antes de continuares. Uma previsão escrita depois de veres o resultado concorda sempre contigo e não te ensina nada.
+Em todas as fases trabalhas da mesma maneira. Antes de executares, prevês o que vais ver. Depois executas e comparas. Quando a saída é diferente da tua previsão, procura a razão da diferença antes de continuares. Uma previsão feita depois de veres o resultado concorda sempre contigo e não te ensina nada.
 
-As previsões e as perguntas têm a resposta logo a seguir. Responde primeiro, por escrito, e só depois lê a resposta.
+As previsões e as perguntas têm a resposta logo a seguir. Responde primeiro, de cabeça, e só depois lê a resposta.
 
 ## Palavras que vais usar
 
@@ -70,7 +70,6 @@ As previsões e as perguntas têm a resposta logo a seguir. Responde primeiro, p
 - O Python 3, a partir da versão 3.9, para executar os programas. Confirma que o tens com `python3 --version`. Deve aparecer um número como `Python 3.9.6` ou `Python 3.14.8`, que quer dizer que o Python está instalado e qual é a versão. No Windows, se `python3` não funcionar, experimenta `python --version` ou `py --version`. O laboratório foi ensaiado em Python 3.9 e em Python 3.14, com a mesma saída, e diz onde uma mensagem de erro muda de versão para versão.
 - O VS Code, para escreveres os ficheiros e abrires o terminal. Do 10.º ano, já sabes criar uma pasta e um ficheiro nele e abrir o terminal do VS Code na pasta.
 - O ficheiro `pokemon.py` dos exemplos, com as classes de Pokémon já escritas. A secção "Preparar o projeto" diz como o copiar e como confirmar que funciona.
-- Papel, ou um ficheiro de texto, para escreveres as previsões e as respostas às perguntas.
 
 O laboratório usa o que já sabes do 10.º ano: as variáveis, as listas, o ciclo `for`, as funções com `return`, as f-strings e a docstring. Das listas, usa `append`, `len`, `in` e `not in`. Usa também o que já viste sobre classes: construtor, `self`, métodos, propriedades e herança. O resto explica-se aqui, quando aparece.
 
@@ -171,7 +170,7 @@ print("Primeiro a lutar:", ash.escolher_pokemon().nome)
 
 Leitura guiada: o teste cria o Ash e entrega-lhe dois Pokémon, criados ali mesmo, fora do treinador. Depois escreve quantos Pokémon a equipa tem e o nome do primeiro que vai lutar. As linhas de teste ficam sempre depois das classes. O Python lê o ficheiro de cima para baixo, e uma linha que use `Treinador` antes de a classe ser definida dá erro.
 
-3. Antes de executares, escreve a tua previsão das duas linhas que o teste vai mostrar.
+3. Antes de executares, prevê as duas linhas que o teste vai mostrar.
 
 4. Executa o ficheiro no terminal:
 
@@ -217,7 +216,7 @@ charmander.verificar_vida()
 
 Leitura guiada: o teste cria o Charmander numa variável e entrega-o ao Ash. A primeira linha com `print` pergunta se o primeiro lugar da equipa e a variável são o mesmo objeto. Depois muda a vida pela variável e pede ao Ash que escolha um Pokémon. Por fim apaga o nome `ash` e usa o Charmander.
 
-2. Antes de executares, escreve a tua previsão das três linhas que o teste vai mostrar. A segunda é a mais difícil: pensa no que o `escolher_pokemon` devolve quando nenhum Pokémon da equipa tem vida.
+2. Antes de executares, prevê as três linhas que o teste vai mostrar. A segunda é a mais difícil: pensa no que o `escolher_pokemon` devolve quando nenhum Pokémon da equipa tem vida.
 
 3. Executa `python3 ginasio.py` e compara. O que deves ver:
 
@@ -229,7 +228,7 @@ Charmander está KO (0/150).
 
 A primeira linha confirma que há um só Charmander, com dois caminhos. A segunda mostra a consequência: a vida mudou por um caminho e o outro viu-a, por isso o Ash ficou sem Pokémon com vida. A terceira mostra que o Charmander sobreviveu ao `del ash`.
 
-4. Responde por escrito a estas três perguntas.
+4. Responde de cabeça a estas três perguntas.
 
 - **a)** A linha `charmander.vida = 0` mudou a vida através da variável `charmander`, e não através da equipa. Porque é que o `escolher_pokemon` do Ash deixou de encontrar um Pokémon com vida?
 - **b)** Depois de `del ash`, porque é que a última linha ainda consegue usar o Charmander?
@@ -331,7 +330,7 @@ print(len(cerulean.desafiantes), len(cerulean.combates))
 cerulean.mostrar_historico()
 ```
 
-3. Antes de executares, escreve a tua previsão. Repara que o `mostrar_historico` começa com um `\n`. Depois executa `python3 ginasio.py` e compara. A saída deve ser esta, com uma linha em branco antes do título do histórico:
+3. Antes de executares, prevê o que o teste vai mostrar. Repara que o `mostrar_historico` começa com um `\n`. Depois executa `python3 ginasio.py` e compara. A saída deve ser esta, com uma linha em branco antes do título do histórico:
 
 ```text
 True
@@ -406,9 +405,9 @@ if __name__ == "__main__":
 
 Leitura guiada: o programa cria a Misty com um Starmie e o Ash com um Charmander e um Bulbasaur. Depois cria o ginásio de Cerulean e o Ash desafia-o duas vezes. Mostra o histórico, apaga o ginásio com `del` e escreve quantos Pokémon cada treinador ainda tem. Os dois comentários dizem o que o `del` faz aos registos.
 
-3. Antes de executares, faz no papel a tabela do primeiro combate, com uma linha por ataque, com o dano e a vida dos dois Pokémon depois de cada ataque. Os dados são estes. A Misty tem um Starmie, de água, com 120 de vida e 35 de ataque. O Ash tem um Charmander, de fogo, com 90 de vida e 40 de ataque. Tem também um Bulbasaur, de planta, com 110 de vida, 25 de ataque e 20 de regeneração. O Charmander luta primeiro, porque é o primeiro da equipa. A água tem vantagem contra o fogo. Escreve também quem achas que ganha o segundo combate, e porquê.
+3. Antes de executares, prevê de cabeça o primeiro combate, ataque a ataque: o dano de cada ataque e a vida com que ficam os dois Pokémon. Os dados são estes. A Misty tem um Starmie, de água, com 120 de vida e 35 de ataque. O Ash tem um Charmander, de fogo, com 90 de vida e 40 de ataque. Tem também um Bulbasaur, de planta, com 110 de vida, 25 de ataque e 20 de regeneração. O Charmander luta primeiro, porque é o primeiro da equipa. A água tem vantagem contra o fogo. Prevê também quem ganha o segundo combate, e porquê.
 
-4. Executa `python3 ginasio.py` e compara com a tua tabela. A saída é esta. A primeira linha está em branco, por causa do `\n` do título do combate:
+4. Executa `python3 ginasio.py` e compara com a tua previsão. A saída é esta. A primeira linha está em branco, por causa do `\n` do título do combate:
 
 ```text
 
@@ -436,7 +435,7 @@ Histórico do ginásio de Cerulean:
 Ash continua com 2 Pokémon; Misty continua com 1.
 ```
 
-A tua tabela do primeiro combate devia ser esta:
+O primeiro combate, ataque a ataque, foi este:
 
 | Ataque | Quem ataca | Dano | Vida do Charmander | Vida do Starmie |
 | --- | --- | ---: | ---: | ---: |
@@ -448,7 +447,7 @@ A tua tabela do primeiro combate devia ser esta:
 
 No quarto ataque, o Charmander fica KO, e a Misty vence. No segundo combate, o `escolher_pokemon` do Ash salta o Charmander, que tem 0 de vida, e escolhe o Bulbasaur. O da Misty escolhe o Starmie, que continua com os 40 de vida com que ficou. Ninguém o curou, porque o ginásio trabalha com os Pokémon verdadeiros das equipas, e não com cópias. O Bulbasaur, de planta, tem vantagem contra a água e tira 50, e o Starmie fica KO logo no primeiro ataque. O Ash vence. O "É super eficaz!" aparece antes da linha do ataque, porque é escrito dentro do cálculo do dano, que o `atacar` faz antes de escrever a sua linha.
 
-5. Responde por escrito: se o programa principal tivesse um terceiro `cerulean.combater(ash)`, logo a seguir aos outros dois, o que escrevia esse terceiro combate? Porquê? Que relação entre classes explica isto?
+5. Responde de cabeça: se o programa principal tivesse um terceiro `cerulean.combater(ash)`, logo a seguir aos outros dois, o que escrevia esse terceiro combate? Porquê? Que relação entre classes explica isto?
 
 A resposta: não há terceiro combate. O método escreve "Não há combate: um dos treinadores não tem Pokémon com vida." e sai sem criar registo. O `escolher_pokemon` do Ash devolve o Bulbasaur, mas o da Misty devolve `None`. O Starmie é o mesmo objeto que ficou KO no segundo combate e continua com a vida a 0. É a agregação: a equipa da Misty guarda o Starmie que foi criado fora, e o ginásio guarda uma referência à Misty, e não cópias. Para confirmares, acrescenta a linha, executa e volta a apagá-la. O histórico continua com os dois combates.
 
@@ -590,7 +589,7 @@ if __name__ == "__main__":
 
 Leitura guiada: o programa cria os três treinadores e os dois ginásios. O Ash desafia Cerulean duas vezes e Celadon uma vez. O `print()` sozinho escreve uma linha em branco. A linha com `in` pergunta se o Ash está na lista de desafiantes de cada ginásio. A linha com `is` pergunta se o treinador da lista de Cerulean e o da lista de Celadon são o mesmo objeto. O `del cerulean` apaga o ginásio, e as duas últimas linhas mostram o que ficou.
 
-2. Antes de executares, escreve as tuas previsões. Que Pokémon do Ash luta em Celadon, e com quanta vida começa? Quem ganha? O que escrevem as duas linhas com `in` e com `is`? O que mostra o histórico de Celadon depois de `del cerulean`?
+2. Antes de executares, prevê o que vais ver. Que Pokémon do Ash luta em Celadon, e com quanta vida começa? Quem ganha? O que escrevem as duas linhas com `in` e com `is`? O que mostra o histórico de Celadon depois de `del cerulean`?
 
 3. Executa `python3 ginasio.py` e compara. Os dois combates de Cerulean são iguais aos da fase 5. A partir do combate de Celadon, a saída é esta:
 
@@ -613,7 +612,7 @@ Ash continua com 2 Pokémon
 
 Em Celadon luta o Bulbasaur, com 110 de vida: o Charmander ficou KO no primeiro combate de Cerulean, e o Bulbasaur não levou nenhum ataque no segundo. O Ash ganha em dois ataques do Bulbasaur, com a Tangela a atacar uma vez pelo meio. Não há "É super eficaz!" em Celadon: o Bulbasaur e a Tangela são os dois de planta, e nenhum tem vantagem sobre o outro.
 
-4. Responde por escrito.
+4. Responde de cabeça.
 
 - **a)** A linha com `is` escreveu `True`. O que quer isto dizer sobre o treinador que está na lista de desafiantes de Cerulean e o que está na de Celadon? Que característica da agregação mostra?
 - **b)** Depois de `del cerulean`, o histórico de Celadon continua completo, e o Ash continua com os dois Pokémon. E os registos dos dois combates de Cerulean: ainda há alguma forma de lhes chegar? Que característica da composição mostra a tua resposta?
@@ -694,7 +693,7 @@ if __name__ == "__main__":
 
 Leitura guiada: o programa cria a Erika como `Lider` e o Ash como `Treinador`, cada um com a equipa dada numa só linha. A função `type` devolve a classe de um objeto, e o `.__name__` dá o nome dessa classe. As três linhas com `print` mostram a classe e o tamanho da equipa de cada um e o Pokémon que cada um escolhe. Depois, o Ash desafia o ginásio de Celadon duas vezes.
 
-4. Antes de executares, escreve a tua previsão das três primeiras linhas. Não precisas de prever os combates ataque a ataque.
+4. Antes de executares, prevê as três primeiras linhas. Não precisas de prever os combates ataque a ataque.
 
 5. Executa `python3 ginasio.py` e compara. A saída é esta:
 
@@ -727,7 +726,7 @@ Histórico do ginásio de Celadon:
 
 As três primeiras linhas dizem que a Erika é um `Lider` com dois Pokémon e que o Ash é um `Treinador` com dois. Dizem também que a Erika escolhe o Gloom e que o Ash escolhe o Squirtle. A Erika escolhe o Gloom porque, como líder, escolhe o Pokémon com mais vida: 80, contra os 50 da Tangela. O Ash escolhe o Squirtle porque é o primeiro da equipa com vida.
 
-6. Responde por escrito.
+6. Responde de cabeça.
 
 - **a)** No `com_equipa` não há nenhuma linha com a palavra `Lider`. Que linha faz com que a Erika saia um `Lider`?
 - **b)** No primeiro combate, a Erika lutou com o Gloom. No segundo, lutou com a Tangela. Porque é que mudou de Pokémon? Procura, na saída do primeiro combate, a vida com que o Gloom acabou.
@@ -998,7 +997,7 @@ E atenção! Ash entrou com Charmander...
 
 No primeiro combate, a Erika escolhe o Gloom, que tem mais vida, e o Charmander ganha logo, porque o fogo tira o dobro à planta. No segundo, o Gloom já está KO, e a Erika escolhe a Tangela. O Psyduck, de água, não tem vantagem contra a planta, e perde. No terceiro, a Tangela só tem 10 de vida, e o Charmander ganha.
 
-6. Responde por escrito.
+6. Responde de cabeça.
 
 - **a)** O `ginasio.py` não tem nenhuma linha que fale de `Narrador` ou de `Placard`. Como é que o `anunciar_combates` consegue usar os dois?
 - **b)** Acrescenta, no fim do `anunciar.py`, a linha `celadon.anunciar_combates(ash)`, que entrega o treinador Ash ao ginásio como se fosse um anunciador. Antes de executar, prevê o que acontece e em que momento. Executa, compara e apaga a linha.
@@ -1031,7 +1030,7 @@ print(celadon.combates[0] is celadon.combates[2])
 
 Leitura guiada: o primeiro e o terceiro combates de Celadon foram entre o Ash e a Erika, ganhos pelo Ash, com o Charmander. As três linhas mostram um registo, perguntam se os dois são iguais pelos dados e perguntam se são o mesmo objeto.
 
-2. Executa `python3 anunciar.py` e copia para as tuas notas as três últimas linhas da saída. Devem ser parecidas com estas, com outro número depois de `at`:
+2. Executa `python3 anunciar.py` e repara nas três últimas linhas da saída. Devem ser parecidas com estas, com outro número depois de `at`:
 
 ```text
 <ginasio.Combate object at 0x100cc0590>
@@ -1067,7 +1066,7 @@ True
 False
 ```
 
-6. Responde por escrito.
+6. Responde de cabeça.
 
 - **a)** O `combater` cria os registos com `Combate(desafiante.nome, atacante.nome, vencedor.nome)`, e não mudaste essa linha. Porque é que continua a funcionar com a dataclass?
 - **b)** O primeiro e o terceiro combates aconteceram em alturas diferentes, mas, com a dataclass, o `==` diz que são iguais. O que é que um registo guarda, e o que não guarda, que faz com que os dois sejam iguais? E o `is`, o que continua a dizer?
@@ -1213,8 +1212,8 @@ Pista: o `Contador` não sabe quem é o líder do ginásio, porque só recebe os
 
 - [ ] O `ginasio.py` tem as classes `Treinador`, `Lider`, `Combate` e `Ginasio`, com o `Combate` escrito como dataclass, e corre com `python3 ginasio.py`.
 - [ ] O `anunciadores.py` e o `anunciar.py` funcionam: `python3 anunciar.py` mostra o placard e o narrador.
-- [ ] Escreveste as previsões antes de executar e, onde falhaste, sabes dizer porquê.
-- [ ] Tens por escrito as tuas respostas às perguntas das fases 2, 5, 6, 7, 8 e 9. Entrega-as ao professor, com os ficheiros, conforme ele indicar. Se só fizeste até à fase 6, entrega o `ginasio.py` dessa fase.
+- [ ] Previste antes de executar e, onde falhaste, sabes dizer porquê.
+- [ ] Entregaste ao professor o `ginasio.py`, o `anunciadores.py` e o `anunciar.py`, conforme ele indicar. Se só fizeste até à fase 6, entrega o `ginasio.py` dessa fase.
 - [ ] Se fizeste os desafios, o `ginasio.py` tem o `vitorias_de` e o `anunciadores.py` tem o `Contador`.
 - [ ] Consegues explicar porque é que um método de classe cria o objeto com `cls` e não com o nome da classe.
 - [ ] Consegues explicar, por palavras tuas, a diferença entre agregação e composição com o exemplo do ginásio.

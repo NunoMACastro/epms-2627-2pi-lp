@@ -27,7 +27,7 @@ Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exer
 | Desafio opcional | Partes 1 a 4 | |
 | Para ires mais longe, opcional | Partes 4 e 8 | 18, 19 e 22 e dois exercícios sem número |
 
-Duas regras para toda a ficha. A primeira: quando um exercício te pedir para prever o que um programa escreve, escreve a previsão antes de executar. Se só a escreveres depois, concordas sempre com o computador e não aprendes nada. A segunda: quando um exercício te pedir para explicar, responde em frases completas, com as tuas palavras, como se estivesses a explicar a um colega que faltou à aula.
+Duas regras para toda a ficha. A primeira: quando um exercício te pedir para prever o que um programa escreve, prevê antes de executar. Se só pensares no resultado depois de o veres, concordas sempre com o computador e não aprendes nada. A segunda: quando um exercício te pedir para explicar ou justificar, a resposta vai para um comentário, com `#`, no ficheiro do exercício. Põe-na no início do ficheiro, ou junto da linha a que diz respeito, e começa-a pela letra da alínea. Um exercício sem código, como o 7, tem um ficheiro só com comentários, com o número do exercício no nome. Responde em frases completas, com as tuas palavras, de forma que um colega que faltou à aula te perceba.
 
 ## O cenário
 
@@ -60,11 +60,9 @@ print(oran.descricao())
 print(sitrus.descricao())
 ```
 
-**a)** Sem executar, escreve as duas linhas que o programa mostra.
+**a)** Prevê, sem executar, as duas linhas que o programa mostra, e confirma executando. Se falhaste alguma, escreve num comentário em que linha do código o teu raciocínio se afastou do programa.
 
 **b)** Na segunda chamada ao método `descricao`, que objeto está no `self`? Como é que o Python sabe?
-
-**c)** Executa o programa e compara com a tua previsão. Se falhaste alguma linha, diz em que linha do código o teu raciocínio se afastou do programa.
 
 ### Exercício 2: Um método que recebe um Pokémon
 
@@ -98,7 +96,7 @@ Pikachu come a Baga Sitrus.
 Pikachu tem 150/150 de vida.
 ```
 
-Depois de o teste funcionar, responde: o Pikachu tinha 145 de vida e comeu uma baga que cura 30. Porque é que ficou com 150, e não com 175, se o teu método não tem nenhum `if`? Esta pergunta usa a parte 2 do guia: se ainda não a leste, responde-lhe quando fizeres o grupo seguinte.
+Responde também, num comentário: o Pikachu tinha 145 de vida e comeu uma baga que cura 30. Porque é que ficou com 150, e não com 175, se o teu método não tem nenhum `if`? Esta pergunta usa a parte 2 do guia: se ainda não a leste, responde-lhe quando fizeres o grupo seguinte.
 
 ### Exercício 3: Estático ou do objeto
 
@@ -110,7 +108,7 @@ Queremos acrescentar três métodos à classe `Baga`:
 - `cura_mais_do_que(outra)`, que recebe outra baga e devolve `True` se esta baga cura mais do que a outra;
 - `e_forte()`, que devolve `True` se esta baga cura 30 ou mais.
 
-**a)** Para cada um dos três, diz se deve ser um método estático ou um método normal, com `self`. Justifica cada resposta com a pergunta do guia: este método precisa de saber qual é o objeto?
+**a)** Para cada um dos três, decide se deve ser um método estático ou um método normal, com `self`. Justifica cada escolha com a pergunta do guia: este método precisa de saber qual é o objeto?
 
 **b)** Escreve só a primeira linha de cada um dos três métodos, com o decorador por cima, se for preciso.
 
@@ -139,11 +137,11 @@ print(oran._Baga__cura)
 print(oran.__cura)
 ```
 
-**a)** Sem executar, diz, para cada uma das quatro linhas com `print`, se funciona ou dá erro. Para as que funcionam, escreve o que mostram.
+**a)** Prevê, sem executar, se cada uma das quatro linhas com `print` funciona ou dá erro, e o que mostram as que funcionam. Confirma executando.
 
 **b)** O método `descricao` usa `self.__cura` e funciona. A última linha usa `oran.__cura` e não funciona. Explica a diferença.
 
-**c)** Executa e confirma as tuas previsões. Um colega diz que, com os dois sublinhados, ninguém consegue mudar a cura de uma baga a partir de fora da classe. Troca a última linha do programa, a que dá erro, por linhas tuas. Essas linhas têm de mudar a cura da `oran` para 99 e de mostrar a mudança com o método `descricao`, que tem de escrever `Baga Oran (cura 99)`. O que mostra isto sobre a proteção que os dois sublinhados dão?
+**c)** Um colega diz que, com os dois sublinhados, ninguém consegue mudar a cura de uma baga a partir de fora da classe. Troca a última linha do programa, a que dá erro, por linhas tuas. Essas linhas têm de mudar a cura da `oran` para 99 e de mostrar a mudança com o método `descricao`, que tem de escrever `Baga Oran (cura 99)`. O que mostra isto sobre a proteção que os dois sublinhados dão?
 
 ### Exercício 5: Uma propriedade para um texto
 
@@ -220,7 +218,7 @@ Pikachu ataca Charmander e tira 25 de vida.
 Charmander tem 75/150 de vida.
 ```
 
-A tua classe não tem nenhum método `atacar`, e mesmo assim o `pikachu.atacar(...)` funciona e usa a tua regra do dano. Explica numa frase porquê.
+A tua classe não tem nenhum método `atacar`, e mesmo assim o `pikachu.atacar(...)` funciona e usa a tua regra do dano. Explica numa frase porquê, num comentário.
 
 ## Composição e agregação
 
@@ -228,7 +226,7 @@ A tua classe não tem nenhum método `atacar`, e mesmo assim o `pikachu.atacar(.
 
 Treina: classificar uma relação com as perguntas do guia (guia, [As perguntas que decidem](../03-objetos-e-composicao.md#as-perguntas-que-decidem) e [É um ou tem um: herança, agregação ou composição](../03-objetos-e-composicao.md#é-um-ou-tem-um-herança-agregação-ou-composição)). Para o losango, vê [O desenho em UML: losango vazio e losango cheio](../03-objetos-e-composicao.md#o-desenho-em-uml-losango-vazio-e-losango-cheio).
 
-Para cada uma das cinco relações, decide se é herança, agregação ou composição. Na justificação, usa a frase "é um" ou "tem", e, nas relações "tem", responde às duas perguntas: a parte faz sentido sem o todo? Quem cria a parte? Nas que forem agregação ou composição, diz também como é o losango em UML e de que lado fica.
+Para cada uma das cinco relações, decide se é herança, agregação ou composição. Responde num ficheiro só com comentários. Na justificação, usa a frase "é um" ou "tem", e, nas relações "tem", responde às duas perguntas: a parte faz sentido sem o todo? Quem cria a parte? Nas que forem agregação ou composição, diz também como é o losango em UML e de que lado fica.
 
 | | Relação |
 | --- | --- |
@@ -293,7 +291,7 @@ bulbasaur.verificar_vida()
 
 **a)** Dos dois atributos `pacientes` e `fichas`, qual é uma agregação e qual é uma composição? Para cada um, aponta a linha do código que o mostra e explica porquê.
 
-**b)** Escreve o que prevês que o programa mostra, e só depois executa e compara.
+**b)** Prevê, sem executar, o que o programa mostra, e confirma executando.
 
 **c)** Depois de `del centro`, que objetos continuam a existir, e que objetos deixaram de poder ser usados? Explica com as palavras agregação e composição.
 
@@ -323,9 +321,7 @@ class Pokedex:
 
 Num ficheiro novo, com a importação `from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta` no início, escreve a classe `Pokedex` e uma cópia da classe `Treinador`.
 
-**a)** Altera a classe `Treinador` de forma que cada treinador crie a sua própria Pokédex, num atributo chamado `pokedex`. O método `capturar`, além de juntar o Pokémon à equipa, tem de o registar na Pokédex do treinador.
-
-**b)** Testa com estas linhas, no fim do ficheiro:
+**a)** Altera a classe `Treinador` de forma que cada treinador crie a sua própria Pokédex, num atributo chamado `pokedex`. O método `capturar`, além de juntar o Pokémon à equipa, tem de o registar na Pokédex do treinador. Testa com estas linhas, no fim do ficheiro:
 
 ```python
 ash = Treinador("Ash")
@@ -346,7 +342,7 @@ Misty 1
 False
 ```
 
-**c)** No ginásio do guia, os registos de combate eram criados num método, o `combater`. Aqui, a Pokédex é criada no construtor. Explica porque é que, neste caso, o construtor é o sítio certo, e porque é que a Pokédex não deve chegar ao treinador por parâmetro.
+**b)** No ginásio do guia, os registos de combate eram criados num método, o `combater`. Aqui, a Pokédex é criada no construtor. Explica porque é que, neste caso, o construtor é o sítio certo, e porque é que a Pokédex não deve chegar ao treinador por parâmetro.
 
 ### Exercício 10: Tirar um Pokémon da equipa
 
@@ -377,7 +373,7 @@ Charmander não está na equipa de Ash.
 Charmander tem 90/150 de vida.
 ```
 
-Depois de o teste funcionar, responde: o Charmander deixou de estar na equipa, mas a última linha ainda o consegue usar. Porquê? Relaciona a tua resposta com a agregação.
+Responde também, num comentário: o Charmander deixou de estar na equipa, mas a última linha ainda o consegue usar. Porquê? Relaciona a tua resposta com a agregação.
 
 ## Métodos de classe
 
@@ -416,11 +412,11 @@ print(BagaRara.sitrus().descricao())
 print(type(BagaRara.oran()).__name__, type(BagaRara.sitrus()).__name__)
 ```
 
-**a)** Sem executar, escreve as quatro linhas que o programa mostra.
+**a)** Prevê, sem executar, as quatro linhas que o programa mostra, e confirma executando.
 
 **b)** Em `BagaRara.oran()`, o que está no `cls`? E que objeto cria a linha `return cls("Baga Oran", 10)`?
 
-**c)** Executa e compara. A terceira linha não diz "rara", embora o método tenha sido chamado por `BagaRara`. Explica porquê, e diz que mudanças faria no `sitrus` para ele passar a criar uma `BagaRara` quando é chamado por `BagaRara`.
+**c)** A terceira linha não diz "rara", embora o método tenha sido chamado por `BagaRara`. Explica porquê, e diz que mudanças farias no `sitrus` para ele passar a criar uma `BagaRara` quando é chamado por `BagaRara`.
 
 ### Exercício 12: Uma baga feita de duas
 
@@ -450,7 +446,7 @@ BagaRara
 Baga Oran (cura 10) Baga Sitrus (cura 30)
 ```
 
-Depois de o teste funcionar, responde: o `mistura` não lê nenhum atributo de um objeto que esteja no `self`. Que pergunta do guia, em "Escolher o tipo de método", te diz que é um método de classe, e não um método estático?
+Responde também, num comentário: o `mistura` não lê nenhum atributo de um objeto que esteja no `self`. Que pergunta do guia, em "Escolher o tipo de método", te diz que é um método de classe, e não um método estático?
 
 ## Duck typing
 
@@ -497,11 +493,11 @@ tratar(pikachu, [])
 tratar(pikachu, [Pedra(), Baga("Baga Oran", 10)])
 ```
 
-**a)** Sem executar, escreve tudo o que o programa mostra, até ao fim ou até ao erro. Se achas que há um erro, escreve a última linha da mensagem.
+**a)** Prevê, sem executar, tudo o que o programa mostra, até ao fim ou até ao erro. Se achas que há um erro, prevê também a última linha da mensagem. Confirma executando.
 
 **b)** A `Baga` e a `Pocao` não são da mesma família. Porque é que a função `tratar` funciona com as duas?
 
-**c)** Executa e compara. Na terceira chamada, a Baga Oran chegou a ser usada? Porquê? Que nome tem de ter o método da `Pedra` para a terceira chamada funcionar até ao fim?
+**c)** Na terceira chamada, a Baga Oran chegou a ser usada? Porquê? Que nome tem de ter o método da `Pedra` para a terceira chamada funcionar até ao fim?
 
 ### Exercício 14: Um líder que não é um treinador
 
@@ -509,7 +505,7 @@ Treina: escrever uma classe que tem o que outra classe espera dela, sem herança
 
 O ginásio de Pallet não tem líder: tem uma máquina de treino. A máquina não é um treinador, e a classe dela não herda de `Treinador`. Chama-se "Máquina de treino" e tem sempre um só Pokémon, que ela própria cria quando é criada. É um `PokemonAgua` chamado "Robô de água", com 60 de vida e 20 de ataque.
 
-**a)** Abre o `ginasio.py` e lê o método `combater` da classe `Ginasio`. Faz uma lista do que o ginásio usa do seu líder: que atributos lê e que métodos chama. Só isso é que a máquina precisa de ter.
+**a)** No `ginasio.py`, o método `combater` da classe `Ginasio` usa o seu líder. Escreve, num comentário no início do ficheiro da alínea b), a lista do que o ginásio usa do líder: que atributos lê e que métodos chama. Só isso é que a máquina precisa de ter.
 
 **b)** Num ficheiro novo, na pasta onde está o `ginasio.py`, escreve a classe `MaquinaDeTreino`, com o que encontraste na alínea a). Quando o Robô de água já não tiver vida, a máquina não tem Pokémon para lutar. No início do ficheiro, importa o que precisas:
 
@@ -568,17 +564,15 @@ print(primeira)
 print(primeira == segunda, primeira is segunda)
 ```
 
-**a)** Antes de executar, escreve o que achas que as duas últimas linhas vão mostrar.
+**a)** A primeira linha tem de ser exatamente `Charmander entrou com 20 de vida`. Prevê, antes de executares, o que vão mostrar as duas últimas, e confirma executando.
 
-**b)** Executa e compara. A primeira linha tem de ser exatamente `Charmander entrou com 20 de vida`.
-
-**c)** Que tipo deste a cada campo? Na segunda linha da saída, como se vê qual dos campos é um texto e qual é um número?
+**b)** Que tipo deste a cada campo? Na segunda linha da saída, como se vê qual dos campos é um texto e qual é um número?
 
 ### Exercício 16: Dataclass ou classe normal
 
 Treina: decidir quando uma dataclass serve (guia, [Quando uma dataclass não serve](../03-objetos-e-composicao.md#quando-uma-dataclass-não-serve)).
 
-**a)** Para cada uma destas quatro classes, diz se faria sentido escrevê-la como dataclass. Justifica cada resposta com o que a classe guarda e com as regras que tem.
+**a)** Para cada uma destas quatro classes, decide se faria sentido escrevê-la como dataclass. Justifica cada resposta com o que a classe guarda e com as regras que tem.
 
 | | Classe |
 | --- | --- |
@@ -634,9 +628,9 @@ print(funcao())
 print(funcao)
 ```
 
-**a)** Sem executar, escreve o que achas que mostra cada `print`. Na terceira linha, o Python mostra a função na forma `<function ... at 0x...>`, com um número depois de `at` que muda de execução para execução. Na previsão, basta escreveres `<function ...>`.
+**a)** Prevê, sem executar, o que mostra cada `print`, e confirma executando. Na terceira linha, o Python mostra a função na forma `<function ... at 0x...>`, com um número depois de `at` que muda de execução para execução. Na previsão, basta `<function ...>`.
 
-**b)** Qual das duas variáveis, `mensagem` ou `funcao`, guarda um texto? E qual guarda a própria função? Executa e confirma.
+**b)** Qual das duas variáveis, `mensagem` ou `funcao`, guarda um texto? E qual guarda a própria função?
 
 ### Exercício 20: Quando corre o decorador?
 
@@ -669,9 +663,9 @@ abrir_porta()
 ligar_luz()
 ```
 
-**a)** Sem executar, escreve todas as linhas que o programa mostra, pela ordem certa.
+**a)** Prevê, sem executar, todas as linhas que o programa mostra, pela ordem certa, e confirma executando.
 
-**b)** Executa e compara. Quantas vezes aparece "Li a função"? Porque é que não aparece outra vez quando se chama `ligar_luz()`?
+**b)** Quantas vezes aparece "Li a função"? Porque é que não aparece outra vez quando se chama `ligar_luz()`?
 
 ### Exercício 21: O teu primeiro decorador
 
@@ -742,7 +736,7 @@ Baga Oran (cura 10)
 
 **a)** Reescreve a classe sem nenhuma linha começada por arroba, de forma que as duas linhas de teste continuem a mostrar exatamente o mesmo.
 
-**b)** Na tua versão, apaga só a linha que substitui o `@property`. Antes de executar, prevê o que mostra a última linha do teste. Executa e explica o que viste. Depois volta a pôr a linha.
+**b)** Na tua versão, apaga só a linha que substitui o `@property`. Prevê o que mostra a última linha do teste, e confirma executando. Explica num comentário o que viste, e volta a pôr a linha.
 
 **c)** As duas versões fazem o mesmo. Diz uma vantagem da versão com arroba para quem lê a classe.
 
@@ -750,20 +744,20 @@ Baga Oran (cura 10)
 
 Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho.
 
-- Exercício 1: segue o programa linha a linha e escreve o valor de `oran.cura` e de `sitrus.cura` depois de cada linha. Repara na linha que muda uma cura antes das chamadas ao `descricao`.
+- Exercício 1: segue o programa linha a linha, com o valor de `oran.cura` e de `sitrus.cura` depois de cada linha. Repara na linha que muda uma cura antes das chamadas ao `descricao`.
 - Exercício 2: o método recebe o Pokémon por parâmetro, como o `capturar` do treinador. Lê o enunciado com atenção: pede três coisas, por uma ordem.
 - Exercício 3: para cada método, faz a pergunta do guia: este método precisa de saber qual é o objeto? Lê com cuidado "incluindo os dois" na primeira linha.
-- Exercício 4: pensa no que o Python faz ao nome `__cura` dentro da classe e fora dela. Na alínea c), tenta provar ao colega que ele não tem razão, com o nome que o Python dá, por dentro, ao atributo.
+- Exercício 4: pensa no que o Python faz ao nome `__cura` dentro da classe e fora dela. Na alínea c), mostra que o colega não tem razão, com o nome que o Python dá, por dentro, ao atributo.
 - Exercício 5: segue o exemplo da vida do `Pokemon`: um get com `@property`, um set com `@vida.setter` e o valor guardado noutro atributo. A regra é sobre um texto, por isso compara com `""`.
 - Exercício 6: começa pelo construtor, que passa o tipo à classe-mãe. No `calcular_dano`, começa pelo dano base, que a mãe calcula, e só depois aplica a regra do tipo do alvo. Confirma o que o método devolve.
-- Exercício 7: para cada linha, escreve a frase com "é um" ou "tem" e vê qual é verdadeira. Nas relações "tem", responde às duas perguntas do guia antes de escolheres o losango.
+- Exercício 7: para cada linha, experimenta a frase com "é um" e com "tem" e vê qual é verdadeira. Nas relações "tem", responde às duas perguntas do guia antes de escolheres o losango.
 - Exercício 8: procura em cada método o sítio onde o objeto é criado e o sítio onde fica guardado. Na alínea b), segue as linhas do ciclo `for` pela ordem em que estão.
 - Exercício 9: compara com a linha do `combater` que cria um `Combate`. A Pokédex é criada pelo treinador, e o construtor dela não recebe argumentos.
 - Exercício 10: antes de tirar um Pokémon da lista, confirma que ele lá está, com `in`. Pensa no que a lista guarda: uma referência, e não o objeto.
 - Exercício 11: procura, em cada um dos dois métodos, o sítio onde aparece o nome de uma classe. De que classe é o objeto que cada um cria?
 - Exercício 12: um construtor alternativo cria o objeto com `cls(...)`. Os dados da baga nova vêm dos atributos das duas bagas recebidas, que só deves ler.
 - Exercício 13: segue as chamadas pela ordem, uma a uma, até ao primeiro erro. Em que momento é que o Python procura o método `usar_em`?
-- Exercício 14: na alínea a), percorre o `combater` e sublinha cada vez que aparece `self.lider`. Na alínea b), a máquina é um objeto que cria o seu Pokémon no construtor.
+- Exercício 14: na alínea a), percorre o `combater` e procura cada vez que aparece `self.lider`. Na alínea b), a máquina é um objeto que cria o seu Pokémon no construtor.
 - Exercício 15: cada campo leva o nome, dois pontos e o tipo. O `resumo` escreve-se como numa classe normal.
 - Exercício 16: para cada classe, pergunta-te se só guarda dados ou se também tem regras. Na alínea b), só precisas de um campo.
 - Exercício 17: um nome sem parênteses é a função. Com parênteses, é o que a função devolve.
@@ -806,7 +800,7 @@ O Starmie está nas duas equipas ao mesmo tempo. Quando fica KO num combate da M
 
 Altera as classes de forma que um Pokémon que já pertence a um treinador não possa ser capturado por outro. Quando alguém tenta, o `capturar` não junta o Pokémon à equipa e escreve "Starmie já pertence a Misty.". Um Pokémon libertado com o `libertar` do exercício 10 fica sem treinador, e pode voltar a ser capturado.
 
-Antes de escreveres código, decide em que objeto deve ficar guardada a informação de quem é o treinador de cada Pokémon. Decide também em que métodos essa informação tem de ser atualizada. Podes alterar a tua cópia do `pokemon.py`.
+Tens de decidir em que objeto fica guardada a informação de quem é o treinador de cada Pokémon, e em que métodos essa informação tem de ser atualizada. Podes alterar a tua cópia do `pokemon.py`.
 
 Testa com estas linhas, num ficheiro com as tuas classes:
 
@@ -837,7 +831,7 @@ Starmie já pertence a Brock.
 
 Estes exercícios são opcionais. O primeiro e o último são casos que enganam. Os outros três são exercícios de decoradores que ficaram sem lugar nos oito grupos. Guardam o número que têm nessa sequência: o 18 e o 19 vêm a seguir ao exercício 17, e o 22 a seguir ao 21.
 
-Para ler o que faz a arroba, os exercícios 17, 20, 21 e 23 chegam. Estes dão mais prática a quem a quiser. O 18 guarda funções num dicionário. O 19 faz o caminho de `f = d(f)` para `@d`, com um decorador parecido com o do exercício 21. O 22 entrega funções a outras funções. Faz cada um num ficheiro novo, como os outros exercícios de decoradores.
+Para ler o que faz a arroba, os exercícios 17, 20, 21 e 23 chegam. Estes dão mais prática a quem a quiser. O 18 guarda funções num dicionário. O 19 faz o caminho de `f = d(f)` para `@d`, com um decorador parecido com o do exercício 21. O 22 entrega funções a outras funções. Faz cada um num ficheiro novo, como os outros exercícios de decoradores. As respostas escritas vão para comentários, como no resto da ficha.
 
 ### Um histórico que se deixa estragar
 
@@ -903,7 +897,7 @@ print(conversoes["km"](3))
 print(conversoes["horas"](2))
 ```
 
-**a)** Sem executar, escreve as duas linhas que o programa mostra.
+**a)** Prevê, sem executar, as duas linhas que o programa mostra.
 
 **b)** Escreve uma função `euros_para_centimos` e acrescenta-a ao dicionário, com a chave `"euros"`. Junta uma linha que mostre quantos cêntimos são 2,5 euros (em Python, escreve-se `2.5`).
 
@@ -937,7 +931,7 @@ for passo in tarefas:
     passo()
 ```
 
-**a)** Sem executar, escreve o que o programa mostra.
+**a)** Prevê, sem executar, o que o programa mostra.
 
 **b)** Reescreve o programa com `@tarefa` por cima de cada `def`, sem as linhas de atribuição. A saída tem de ficar igual.
 
@@ -970,11 +964,11 @@ print(operacao is triplo, operacao is dobro)
 print(dobro(triplo(2)))
 ```
 
-**a)** Sem executar, escreve as quatro linhas que o programa mostra.
+**a)** Prevê, sem executar, as quatro linhas que o programa mostra, e confirma executando.
 
 **b)** Na linha `operacao = triplo`, a função `triplo` foi chamada? O que ficou guardado na variável `operacao`?
 
-**c)** Executa e compara. Depois acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Antes de executar, prevê o que acontece. Executa, explica a mensagem e apaga a linha.
+**c)** Acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Prevê o que acontece, e confirma executando. Explica a mensagem num comentário, e apaga a linha.
 
 ### O decorador que se esqueceu de uma linha
 
@@ -994,17 +988,17 @@ acordar()
 
 **a)** Comparado com o `tarefa` do exercício 19, mais acima, o que falta neste decorador?
 
-**b)** Sem executar, diz o que achas que mostra o `print(acordar)`. Executa e explica a última linha da mensagem de erro.
+**b)** Prevê, sem executar, o que mostra o `print(acordar)`, e confirma executando. Explica, num comentário, a última linha da mensagem de erro.
 
 ## Critérios de conclusão
 
 Concluíste a ficha quando:
 
 - os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 16, 21 e 23 mostram exatamente as linhas indicadas no enunciado;
-- escreveste as tuas previsões dos exercícios 1, 4, 8, 11, 13, 15, 17 e 20 antes de executares. Onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
-- as tuas justificações dos exercícios 3, 7, 8 e 16 usam as perguntas do guia, e não só a resposta final;
-- consegues explicar a um colega, sem ler, a diferença entre agregação e composição com o exemplo do ginásio;
-- consegues explicar a um colega, sem ler, a diferença entre um método estático e um método de classe com o exemplo do líder.
+- previste o que mostram os programas dos exercícios 1, 4, 8, 11, 13, 15, 17 e 20 antes de os executares. Onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
+- as tuas justificações dos exercícios 3, 7, 8 e 16 estão em comentários, no ficheiro de cada exercício, e usam as perguntas do guia, e não só a resposta final;
+- consegues explicar, sem ler, a diferença entre agregação e composição com o exemplo do ginásio;
+- consegues explicar, sem ler, a diferença entre um método estático e um método de classe com o exemplo do líder.
 
 O desafio e a secção "Para ires mais longe", incluindo os exercícios 18, 19 e 22, são opcionais e não entram nestes critérios. Se os fizeres, a regra das previsões vale também para eles.
 

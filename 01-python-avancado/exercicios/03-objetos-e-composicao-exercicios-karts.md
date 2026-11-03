@@ -14,7 +14,7 @@ A ficha tem um só exercício, o Grande Prémio de Karts, que é a parte obrigat
 
 O enunciado não te diz como escrever o programa. Diz-te as regras do jogo, e cada regra pede-te uma decisão: que classes crias, o que cada uma guarda e sabe fazer, e como as ligas umas às outras. Os nomes que o programa final usa, como `Kart`, `Piloto` ou `com_turbo`, são obrigatórios. Os outros escolhes tu.
 
-Lê as regras todas antes de começares. Depois começa pelos karts e testa-os sozinhos, antes de passares aos pilotos e à corrida. Cria um kart, põe-no a fazer as três coisas da regra 2 e mostra a velocidade e a distância com `print`. Faz o exercício todo num só ficheiro, por exemplo `karts.py`.
+Lê as regras todas antes de começares. Faz o exercício todo num só ficheiro, por exemplo `karts.py`.
 
 ## Exercício 1: Grande Prémio de Karts
 
@@ -118,6 +118,7 @@ Vencedor: Inês
 
 Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho, e usa só a pista da regra em que estás preso.
 
+- Por onde começar: os karts podem ser testados sozinhos, antes de haver pilotos e corrida. Cria um kart, põe-no a fazer as três coisas da regra 2 e mostra a velocidade e a distância com `print`.
 - Regra 3: nos Pokémon das aulas, a vida também nunca passa de 150, mesmo com `bulbasaur.vida = 200`. Como é que o programa garante isso, sem repetir a verificação em cada método?
 - Regra 4: compara as relações "um kart leve é um kart" e "um kart leve tem um kart". Qual das duas frases é verdadeira? Como é que o fogo e a água dos Pokémon partilham o que têm em comum?
 - Regra 5: no ginásio das aulas, o `Lider` também se criava numa linha, já com a equipa. Quem escreve `KartLeve.com_turbo("Foguete")` está a pedir um kart de que classe? Como é que o código que cria o kart fica a saber isso?
@@ -125,13 +126,13 @@ Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho, e usa só a pista 
 - Regra 10: antes de escreveres a banana, pensa num kart normal e num kart pesado, os dois a 70. Com que velocidade fica cada um depois de escorregar? Quem sabe de que tipo é o kart: a banana ou o próprio kart?
 - Regra 11: quem abre as caixas, e onde guarda quantas já abriu? Se o contador vai 0, 1, 2, 3, 4, 5, 6, que conta te dá as posições 0, 1, 2, 3, 0, 1, 2? E continua certa com cinco power-ups?
 - Regra 12: na parte 8 do guia, viste que o Python pode fazer alguma coisa a uma função no momento em que lê o `def`. O que podia fazer a cada power-up?
-- A saída: se um número não bate certo, procura a primeira linha em que a tua saída se afasta da do enunciado. Depois faz à mão as contas desse piloto nessa volta.
+- A saída: se um número não bate certo, procura a primeira linha em que a tua saída se afasta da do enunciado. Depois segue, uma a uma, as contas desse piloto nessa volta.
 
 ## Desafio opcional
 
 ### Um power-up novo
 
-Acrescenta um quinto power-up, `cogumelo_dourado`, que dá 50 de velocidade. Escreve-o a seguir à `estrela`, sem mudar mais nenhuma linha do programa. Antes de executares, prevê quem vai à frente no fim da volta 2, e com quantos metros. Depois executa e confirma.
+Acrescenta um quinto power-up, `cogumelo_dourado`, que dá 50 de velocidade. Escreve-o a seguir à `estrela`, sem mudar mais nenhuma linha do programa. Antes de executares, prevê quem vai à frente no fim da volta 2, e com quantos metros, e confirma executando.
 
 ## Para ires mais longe
 
@@ -139,7 +140,7 @@ Acrescenta um quinto power-up, `cogumelo_dourado`, que dá 50 de velocidade. Esc
 
 A seguir à corrida do Arco-Íris, os mesmos três pilotos correm outra, no circuito do Castelo, também com quatro voltas. Acrescenta ao fim do programa as linhas que criam esta corrida, inscrevem os três pilotos e a correm.
 
-1. Antes de executares, prevê com que velocidade e com que distância começa cada kart a corrida do Castelo. Explica porquê.
+1. Antes de executares, prevê com que velocidade e com que distância começa cada kart a corrida do Castelo. Explica porquê, num comentário por cima das linhas da corrida do Castelo.
 2. Muda o programa para que os karts comecem cada corrida como começaram a primeira, no início da pista. Confirma que a corrida do Arco-Íris continua a dar a saída do enunciado.
 
 ## Critérios de conclusão
@@ -149,7 +150,7 @@ Concluíste a ficha quando:
 - o teu programa acaba com as linhas do enunciado, sem mudanças, e mostra exatamente a saída indicada;
 - a regra dos limites da velocidade está escrita num só sítio, e o que os três tipos de kart têm em comum também;
 - acrescentar um power-up novo cumpre a regra 12;
-- consegues explicar a um colega, regra a regra, o que decidiste e porquê.
+- consegues explicar, regra a regra, o que decidiste e porquê.
 
 O desafio e a secção "Para ires mais longe" são opcionais e não entram nestes critérios.
 

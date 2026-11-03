@@ -378,7 +378,7 @@ As pistas do livro de receitas servem para todos os temas. Tenta primeiro sozinh
 
 ### Uma segunda variante
 
-Escolhe um dos temas que fizeste e acrescenta-lhe uma segunda variante, à tua escolha, com um dado a mais e a sua descrição. Tem de ser uma relação "é um" verdadeira, como as do enunciado. Não mudes o método que mostra a lista. Depois explica, numa frase, porque é que não precisaste de o mudar.
+Escolhe um dos temas que fizeste e acrescenta-lhe uma segunda variante, à tua escolha, com um dado a mais e a sua descrição. Tem de ser uma relação "é um" verdadeira, como as do enunciado. Não mudes o método que mostra a lista. Explica, numa frase, num comentário no início do ficheiro, porque é que não precisaste de o mudar.
 
 ## Critérios de conclusão
 
