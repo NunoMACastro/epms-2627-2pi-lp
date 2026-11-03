@@ -10,7 +10,7 @@ O [guia do tema](../04-excecoes-depuracao-e-logging.md) e o [laboratório](../la
 
 ## Como trabalhar
 
-Os exercícios de 1 a 8 são obrigatórios e estão em três grupos. As exceções são os exercícios 1 a 3. Encontrar a causa de um erro são os exercícios 4 e 5. O logging são os exercícios 6 a 8. Faz os exercícios pela ordem. O desafio opcional, no fim, junta exceções e logging, e é para quem acabar cedo. As pistas estão em "Apoio", depois dos exercícios: tenta cada exercício antes de as ler.
+Os exercícios de 1 a 8 são obrigatórios e estão em três grupos. As exceções são os exercícios 1 a 3. Encontrar a causa de um erro são os exercícios 4 e 5. O logging são os exercícios 6 a 8. Faz os exercícios pela ordem. O desafio opcional, no fim, junta exceções e logging, e é para quem acabar cedo. Em "Para ires mais longe", também opcional, o exercício 9 dá mais prática do `finally`. As pistas estão em "Apoio", depois dos exercícios: tenta cada exercício antes de as ler.
 
 Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti.
 
@@ -312,6 +312,7 @@ Estas linhas são de um registo de uma aplicação de inscrições na Liga, com 
 - Exercício 6: para cada acontecimento, pergunta primeiro quem precisa de saber, entre quem usa o programa e quem o mantém. Depois pergunta se o programa continuou. Dois dos acontecimentos admitem mais de uma resposta, se a justificares.
 - Exercício 7: o logger cria-se uma vez, no início do `centro.py`, com `logging.getLogger("centro")`. Cada mensagem é um método desse logger, com o nome do nível em minúsculas. Se uma linha do teste aparecer com `root` no lugar de `centro`, não estás a usar o logger.
 - Exercício 8: lê cada linha como se fosse publicada. Pergunta-te se a pessoa de que se fala se reconhece nela, e se alguém que lesse a linha podia usar aquele dado para fazer alguma coisa.
+- Exercício 9: na alínea b), procura as duas linhas que fazem o treinador sair da sala. Têm de correr em qualquer caso.
 
 ## Desafio opcional
 
@@ -370,6 +371,100 @@ Pista: escreve primeiro as quatro classes de exceções, e depois o `inscrever`,
 
 Decide a ordem das três verificações. Com a Liga cheia, o Ash pede para se inscrever outra vez: deve receber `NomeRepetido` ou `LigaCheia`? O teste não verifica este caso. Escreve a tua escolha e a razão num comentário, junto do `inscrever`, e confirma que o teu código faz o que escolheste.
 
+## Para ires mais longe
+
+Este exercício é opcional. Dá mais prática do `finally`, no uso que o guia diz no fim da secção dele. Um método ocupa uma coisa e tem de a libertar, mesmo quando o erro sobe para quem o chamou. Não usa os ficheiros dos exemplos.
+
+### Exercício 9: A sala que ficou ocupada
+
+Treina: usar o `finally` para devolver o que um método ocupou, mesmo quando há uma exceção (guia, [Uma família de exceções](../04-excecoes-depuracao-e-logging.md#uma-família-de-exceções) e [finally: o que corre sempre](../04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre)).
+
+O Centro Pokémon tem uma sala de treino que só recebe um treinador de cada vez. Quando um treinador entra, a sala fica ocupada por ele. Quando sai, a sala fica livre. Quem decide se um Pokémon pode treinar é o próprio Pokémon: o método `treinar` lança `SemEnergia` quando a energia não chega para um treino.
+
+Este programa tem um erro de propósito. Copia-o para um ficheiro `sala_de_treino.py`:
+
+```python
+# Exercício 9: a sala de treino do Centro Pokémon, que só recebe um treinador de cada vez.
+ENERGIA_POR_TREINO = 30
+
+
+class ErroDoCentro(Exception):
+    """Classe-mãe dos erros do Centro Pokémon."""
+
+
+class SalaOcupada(ErroDoCentro):
+    """Um treinador tentou entrar na sala de treino com ela ocupada."""
+
+
+class SemEnergia(ErroDoCentro):
+    """Um Pokémon não tem energia para treinar."""
+
+
+class PokemonEmTreino:
+    """Um Pokémon que sobe um nível em cada treino e gasta energia."""
+
+    def __init__(self, nome, energia):
+        """Cria o Pokémon no nível 1, com a energia dada."""
+        self.nome = nome
+        self.energia = energia
+        self.nivel = 1
+
+    def treinar(self):
+        """Gasta a energia de um treino e sobe um nível; sem energia, lança SemEnergia."""
+        if self.energia < ENERGIA_POR_TREINO:
+            raise SemEnergia(f"{self.nome} só tem {self.energia} de energia, e um treino gasta {ENERGIA_POR_TREINO}.")
+        self.energia -= ENERGIA_POR_TREINO
+        self.nivel += 1
+
+
+class SalaDeTreino:
+    """A sala de treino do Centro Pokémon, que só recebe um treinador de cada vez."""
+
+    def __init__(self):
+        """Cria a sala vazia."""
+        self.ocupada_por = None
+
+    def usar(self, treinador, pokemon):
+        """O treinador entra, o Pokémon treina, e o treinador sai."""
+        if self.ocupada_por is not None:
+            raise SalaOcupada(f"{treinador} não pode entrar: a sala está ocupada por {self.ocupada_por}.")
+        self.ocupada_por = treinador
+        print(f"{treinador} entra na sala.")
+        pokemon.treinar()
+        print(f"{pokemon.nome} subiu para o nível {pokemon.nivel}.")
+        self.ocupada_por = None
+        print(f"{treinador} sai da sala.")
+
+
+sala = SalaDeTreino()
+pedidos = [("Ash", PokemonEmTreino("Pikachu", 50)), ("Brock", PokemonEmTreino("Onix", 10)), ("Misty", PokemonEmTreino("Staryu", 40))]
+for treinador, pokemon in pedidos:
+    try:
+        sala.usar(treinador, pokemon)
+    except ErroDoCentro as erro:
+        print(f"Recusado: {erro}")
+print(f"Quem está na sala no fim: {sala.ocupada_por}")
+```
+
+**a)** Sem executar, prevê as linhas que o programa mostra, e depois executa. O Brock já não está a treinar, e mesmo assim a Misty é recusada. Explica num comentário qual é o sintoma e qual é a causa: que linhas do `usar` não chegaram a correr, e porquê?
+
+**b)** Corrige o método `usar` com um `finally`, para que o treinador saia e a sala fique livre, quer o treino corra bem, quer corra mal. O `usar` não trata o erro do treino: o "Recusado" continua a ser escrito pelo programa principal. Um `try` pode ter só o `finally`, sem `except`. Muda só o `usar`. Quando estiver certo, o programa mostra:
+
+```text
+Ash entra na sala.
+Pikachu subiu para o nível 2.
+Ash sai da sala.
+Brock entra na sala.
+Brock sai da sala.
+Recusado: Onix só tem 10 de energia, e um treino gasta 30.
+Misty entra na sala.
+Staryu subiu para o nível 2.
+Misty sai da sala.
+Quem está na sala no fim: None
+```
+
+**c)** Na saída da alínea b), "Brock sai da sala." aparece antes de "Recusado: ...". Porquê? Responde num comentário.
+
 ## Critérios de conclusão
 
 Concluíste a ficha quando:
@@ -378,6 +473,8 @@ Concluíste a ficha quando:
 - as respostas escritas estão em comentários, no ficheiro de cada exercício;
 - o comentário no fim do ficheiro do exercício 5 tem a hipótese, escrita antes de abrires o depurador, e a tabela com os valores que o depurador mostrou;
 - as justificações dos exercícios 6 e 8 dizem quem precisa de saber e porquê, e não só o nível ou a resposta.
+
+O desafio e o exercício 9, em "Para ires mais longe", são opcionais e não entram nestes critérios.
 
 ## Autoavaliação
 
