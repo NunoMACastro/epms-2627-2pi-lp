@@ -2,7 +2,7 @@
 
 # Clínica veterinária
 
-Este exemplo junta, numa clínica veterinária, a matéria do tema até aqui: herança, propriedades, métodos do objeto e estáticos, agregação e composição. Acrescenta-lhe o método de classe, o `@classmethod`, que foi o assunto novo da aula de 6 de outubro. É usado no tema [03 Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md), como revisão num contexto diferente dos Pokémon.
+Uma clínica veterinária que junta, fora dos Pokémon, a matéria do tema: herança, propriedades, métodos do objeto e estáticos, agregação e composição, e o método de classe, com o `@classmethod`. É usado no tema [03 Objetos, composição e comportamento](../../../01-python-avancado/03-objetos-e-composicao.md), para reveres os três tipos de método noutro contexto.
 
 ## O que está nesta pasta
 
@@ -10,24 +10,13 @@ Este exemplo junta, numa clínica veterinária, a matéria do tema até aqui: he
 
 ## Como correr
 
-Se não tens este repositório no teu computador, copia o `clinica.py` para uma pasta tua, como fizeste com o `pokemon.py`. Depois abre o terminal na pasta do exemplo, ou nessa pasta tua, e escreve:
+Abre o terminal na pasta onde está o `clinica.py` e escreve:
 
 ```bash
 python3 clinica.py
 ```
 
-No Windows, se `python3` não funcionar, experimenta `python` ou `py`.
-
-O que deves ver, por esta ordem:
-
-- o resultado de dois testes do método estático;
-- três animais a apresentarem-se;
-- uma idade inválida, corrigida para 0;
-- uma recusa, porque o Bobi não está registado na clínica;
-- a lista das duas consultas;
-- o Rex ainda a apresentar-se, depois de a clínica ser apagada.
-
-A saída é esta:
+O que deves ver: os dois testes do método estático, os três animais a apresentarem-se e a idade inválida do Rex, corrigida para 0. A seguir, vêm a recusa do Bobi, que não está registado, e as duas consultas. No fim, depois de a clínica ser apagada, o Rex continua a existir. A saída é esta:
 
 ```text
 True
@@ -48,10 +37,8 @@ Consultas da Clínica Patudos:
 Rex, 0 anos: Ão ão!
 ```
 
-O Rex paga 45 euros e o Tareco 30 porque o `Cao` reescreve o `preco_consulta`. Pede à classe-mãe o preço base, que é 30, com o `super()`, e soma-lhe 15 da vacina. O `Gato` não o reescreve, e por isso paga o preço base.
+## Versões e compatibilidade
 
-## Versões com que foi testado
-
-Python 3.9 e Python 3.14, a 18 de outubro de 2026, com a mesma saída nas duas.
+Precisas do Python 3.9 ou mais recente. Foram usados o Python 3.9 e o 3.14, com a mesma saída nas duas. No Windows, o comando pode ser `python` ou `py`, em vez de `python3`.
 
 ![Rodapé](../../../imagens/rodape.png)

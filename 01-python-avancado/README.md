@@ -2,7 +2,11 @@
 
 # Python avançado
 
-Nesta área organizas o Python que já conheces em objetos, tratas os erros, testas o que escreves e acabas numa pequena aplicação com três interfaces sobre as mesmas classes. Corresponde ao módulo 10794, Programação avançada com Python.
+Nesta área organizas o Python que já conheces em objetos, tratas os erros, testas o que escreves e acabas numa pequena aplicação com três interfaces sobre as mesmas classes. Corresponde ao módulo 10794, Programação avançada com Python. Cada tema tem estes documentos:
+
+- o guia, com a matéria por escrito, para estudares;
+- o laboratório, para fazeres no computador, passo a passo;
+- a ficha de exercícios, para treinares sozinho.
 
 | Tema | Guia | Laboratório | Ficha | Exemplos |
 | --- | --- | --- | --- | --- |
@@ -12,6 +16,6 @@ Nesta área organizas o Python que já conheces em objetos, tratas os erros, tes
 
 Os guias, com a matéria de cada tema, estão nesta pasta. Os laboratórios estão em [laboratorios](laboratorios/README.md), e as fichas de exercícios, em [exercicios](exercicios/README.md).
 
-Os temas não se leem por ordem de número. A turma começou pelo 03, e o 04 vem a seguir. Depois vêm o 05, dos testes, e só então o 02, o Python idiomático. Este reescreve o código do ginásio já testado. A seguir vêm o 06, o 07 e o 08. O 01 é o diagnóstico, que não se dá em aula e está nas [avaliações](../avaliacoes/diagnostico-python.md), para quem o quiser fazer.
+Os temas estudam-se pela ordem da tabela, a começar pelo 03.
 
 ![Rodapé](../imagens/rodape.png)

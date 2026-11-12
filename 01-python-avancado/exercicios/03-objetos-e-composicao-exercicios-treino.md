@@ -2,30 +2,66 @@
 
 # Ficha de exercícios: Objetos, composição e comportamento em cinco temas de treino
 
-Ficha opcional do tema Objetos, composição e comportamento, do módulo 10794, Programação avançada com Python. São cinco temas para treinares em casa o que o [livro de receitas](03-objetos-e-composicao-exercicios-receitas.md) pede. Não contam para a nota.
+Praticas, em cinco exercícios, o que o [livro de receitas](03-objetos-e-composicao-exercicios-receitas.md) pede: um registo, uma variante com um dado a mais e a coleção que os reúne. Nenhum exercício é obrigatório nem conta para a nota: fazes em casa os que quiseres. Cada exercício faz-se num só ficheiro, e não há entrega. Para rever: o [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md).
 
-## O que precisas de saber
+## O cenário
 
-O [guia do tema](../03-objetos-e-composicao.md), o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md) e, de preferência, a [ficha do livro de receitas](03-objetos-e-composicao-exercicios-receitas.md), porque estes temas trabalham da mesma maneira.
+O programa de cada exercício acaba com as linhas que o enunciado dá, sem as mudares, e mostra exatamente a saída que lá está. Os nomes que essas linhas usam são obrigatórios, e os outros escolhes tu.
 
-## Como trabalhar
+Em todos os exercícios, como no livro de receitas:
 
-Cada exercício é um tema com a mesma estrutura do livro de receitas: um registo, uma variante desse registo, com um dado a mais, e a coleção que os reúne. Como no livro, o enunciado dá as regras, as linhas com que o programa acaba e a saída exata. Os nomes que as linhas finais usam são obrigatórios, e os outros escolhes tu.
+- a regra de cada número, no registo e na variante, vale também quando alguém o muda diretamente, como em `jogo.horas = -3`: nesse caso, o número fica como estava;
+- cada registo é a ficha que a coleção faz de uma coisa que existe fora dela, como um jogo, uma carta ou uma música;
+- a coleção cria e guarda os registos, pela ordem em que entram, e eles só existem dentro dela, como os registos dos combates do ginásio;
+- antes de acrescentar, a coleção verifica os dados pela ordem da lista "O programa recusa" do exercício;
+- a coleção devolve uma mensagem a dizer se aceitou ou porque recusou, e, quando recusa, nada muda;
+- para mostrar a lista, a coleção pede a cada registo que se descreva, e, quando não há nenhum para mostrar, diz-o, como em `Não há jogos.`.
 
-Escolhe um tema, ou faz vários. As mensagens de cada recusa estão na saída de cada exercício.
+<details>
+<summary>Pista</summary>
+
+A regra de cada número tem de valer no construtor, quando alguém muda o número e quando a coleção verifica os dados. Onde a escreves para ela ficar num só sítio e servir aos três? O `type`, que já usaste no 10.º ano, diz se um valor é um número inteiro.
+
+</details>
 
 ## Exercício 1: Coleção de jogos
 
-Registas os jogos que tens e quantas horas jogaste cada um.
+Queremos um programa para registar os jogos que tens e quantas horas jogaste cada um. Para cada jogo, guardamos um código, um título e as horas jogadas. As horas são sempre um número inteiro, 0 ou mais.
 
-1. Cada jogo tem um código, um título e as horas jogadas. As horas são sempre um número inteiro, 0 ou mais. A regra escreve-se num só sítio e vale também quando alguém escreve `jogo.horas = -3`: nesse caso, as horas ficam como estavam.
-2. Um jogo multijogador tem tudo o que um jogo tem e também o número máximo de jogadores. Os jogadores são um número inteiro de 2 a 100, com a regra num só sítio.
-3. Cada jogo descreve-se numa linha, como `J01 Corrida Rápida, 12 horas`, e um jogo multijogador acrescenta `, até 8 jogadores`.
-4. A coleção cria e guarda os jogos, pela ordem em que entram. Antes de acrescentar, verifica por esta ordem o código, o título, as horas e, num jogo multijogador, os jogadores. Devolve uma mensagem a dizer se aceitou ou porque recusou.
-5. A coleção soma as horas de uma sessão a um jogo. As horas de uma sessão são um número inteiro maior do que 0.
-6. A coleção mostra os jogos todos, ou só os que têm mais horas do que um limite, pedindo a cada jogo que se descreva.
+Por exemplo:
 
-O teu programa tem de acabar com estas linhas, sem as mudar:
+| Código | Título | Horas jogadas |
+| --- | --- | ---: |
+| J01 | Corrida Rápida | 12 |
+| J03 | Quebra-Cabeças | 0 |
+
+Um jogo multijogador tem tudo o que um jogo tem, e mais o número máximo de jogadores, um número inteiro de 2 a 100. Por exemplo, o J02, Arena dos Heróis, com 30 horas jogadas, é para até 8 jogadores.
+
+As três classes são `Jogo`, `JogoMultijogador` e `ColecaoDeJogos`.
+
+Na lista, cada jogo aparece numa linha, e um jogo multijogador acrescenta o número de jogadores:
+
+```text
+J01 Corrida Rápida, 12 horas
+J02 Arena dos Heróis, 30 horas, até 8 jogadores
+```
+
+Deves poder:
+
+- acrescentar um jogo, simples ou multijogador;
+- somar a um jogo as horas de uma sessão;
+- ver os jogos todos;
+- ver só os jogos com mais horas do que um limite.
+
+O programa recusa:
+
+- um código que já existe;
+- um título vazio;
+- horas que não sejam um número inteiro, 0 ou mais;
+- um número de jogadores que não seja um número inteiro de 2 a 100;
+- ao somar horas, um código que não existe, ou horas de uma sessão que não sejam um número inteiro maior do que 0.
+
+O programa acaba com estas linhas:
 
 ```python
 teste = Jogo("J00", "Teste", 5)
@@ -56,7 +92,7 @@ print("Com mais de 10 horas:")
 colecao.mostrar_com_mais_de(10)
 ```
 
-E tem de mostrar exatamente isto:
+E mostra exatamente isto:
 
 ```text
 Teste da regra das horas: 5
@@ -86,16 +122,42 @@ J02 Arena dos Heróis, 30 horas, até 8 jogadores
 
 ## Exercício 2: Cartas colecionáveis
 
-Registas as cartas de uma coleção e a raridade de cada uma, de 1, a mais comum, a 5, a mais rara.
+Queremos um programa para registar as cartas de uma coleção e a raridade de cada uma, de 1, a mais comum, a 5, a mais rara. Para cada carta, guardamos um código, um nome e a raridade, um número inteiro de 1 a 5.
 
-1. Cada carta tem um código, um nome e a raridade, um número inteiro de 1 a 5. A regra escreve-se num só sítio e vale também quando alguém escreve `carta.raridade = 6`: nesse caso, a raridade fica como estava.
-2. Uma carta de edição limitada tem tudo o que uma carta tem e também o número de cópias da edição. As cópias são um número inteiro de 1 a 1000, com a regra num só sítio.
-3. Cada carta descreve-se numa linha, como `C001 Lobo da Neve, raridade 3`, e uma carta de edição limitada acrescenta `, edição de 250 cópias`.
-4. A coleção cria e guarda as cartas, pela ordem em que entram. Antes de acrescentar, verifica por esta ordem o código, o nome, a raridade e, numa carta de edição limitada, as cópias. Devolve uma mensagem a dizer se aceitou ou porque recusou.
-5. A coleção corrige a raridade de uma carta, com a mesma regra.
-6. A coleção mostra as cartas todas, ou só as que têm uma raridade mínima ou mais, pedindo a cada carta que se descreva.
+Por exemplo:
 
-O teu programa tem de acabar com estas linhas, sem as mudar:
+| Código | Nome | Raridade |
+| --- | --- | ---: |
+| C001 | Lobo da Neve | 3 |
+| C003 | Rato do Campo | 1 |
+
+Uma carta de edição limitada tem tudo o que uma carta tem, e mais o número de cópias da edição, um número inteiro de 1 a 1000. Por exemplo, a C002, Dragão Dourado, de raridade 5, teve uma edição de 250 cópias.
+
+As três classes são `Carta`, `CartaDeEdicaoLimitada` e `ColecaoDeCartas`.
+
+Na lista, cada carta aparece numa linha, e uma carta de edição limitada acrescenta as cópias:
+
+```text
+C001 Lobo da Neve, raridade 3
+C002 Dragão Dourado, raridade 5, edição de 250 cópias
+```
+
+Deves poder:
+
+- acrescentar uma carta, simples ou de edição limitada;
+- corrigir a raridade de uma carta, com a mesma regra;
+- ver as cartas todas;
+- ver só as cartas com raridade igual ou maior do que um mínimo.
+
+O programa recusa:
+
+- um código que já existe;
+- um nome vazio;
+- uma raridade que não seja um número inteiro de 1 a 5;
+- um número de cópias que não seja um número inteiro de 1 a 1000;
+- ao corrigir a raridade, um código que não existe, ou uma raridade fora da regra.
+
+O programa acaba com estas linhas:
 
 ```python
 teste = Carta("C000", "Teste", 3)
@@ -126,7 +188,7 @@ print("Raridade 4 ou mais:")
 colecao.mostrar_raras(4)
 ```
 
-E tem de mostrar exatamente isto:
+E mostra exatamente isto:
 
 ```text
 Teste da regra da raridade: 3
@@ -154,18 +216,51 @@ C002 Dragão Dourado, raridade 5, edição de 250 cópias
 C003 Rato do Campo, raridade 4
 ```
 
+<details>
+<summary>Pista</summary>
+
+Compara as frases "uma carta de edição limitada é uma carta" e "uma carta de edição limitada tem uma carta". Qual das duas é verdadeira?
+
+</details>
+
 ## Exercício 3: Diário de treinos
 
-Registas os treinos que fizeste e quanto tempo durou cada um.
+Queremos um programa para registar os treinos que fizeste e quanto tempo durou cada um. Para cada treino, guardamos um código, uma atividade e a duração, em minutos, um número inteiro maior do que 0.
 
-1. Cada treino tem um código, uma atividade e a duração, em minutos, um número inteiro maior do que 0. A regra escreve-se num só sítio e vale também quando alguém escreve `treino.minutos = 0`: nesse caso, a duração fica como estava.
-2. Um treino com distância, como uma corrida, tem tudo o que um treino tem e também a distância, em metros. A distância é um número inteiro maior do que 0, com a regra num só sítio.
-3. Cada treino descreve-se numa linha, como `T01 Ginásio, 45 minutos`, e um treino com distância acrescenta `, 5000 metros`.
-4. O diário cria e guarda os treinos, pela ordem em que entram. Antes de acrescentar, verifica por esta ordem o código, a atividade, a duração e, num treino com distância, os metros. Devolve uma mensagem a dizer se aceitou ou porque recusou.
-5. O diário corrige a duração de um treino, com a mesma regra.
-6. O diário mostra os treinos todos, ou só os que duraram mais do que um limite, pedindo a cada treino que se descreva.
+Por exemplo:
 
-O teu programa tem de acabar com estas linhas, sem as mudar:
+| Código | Atividade | Duração, em minutos |
+| --- | --- | ---: |
+| T01 | Ginásio | 45 |
+| T03 | Ioga | 20 |
+
+Um treino com distância, como uma corrida, tem tudo o que um treino tem, e mais a distância, em metros, um número inteiro maior do que 0. Por exemplo, o T02, Corrida, durou 30 minutos, e foram 5000 metros.
+
+As três classes são `Treino`, `TreinoComDistancia` e `DiarioDeTreinos`.
+
+Na lista, cada treino aparece numa linha, e um treino com distância acrescenta os metros:
+
+```text
+T01 Ginásio, 45 minutos
+T02 Corrida, 30 minutos, 5000 metros
+```
+
+Deves poder:
+
+- acrescentar um treino, simples ou com distância;
+- corrigir a duração de um treino, com a mesma regra;
+- ver os treinos todos;
+- ver só os treinos que duraram mais do que um limite.
+
+O programa recusa:
+
+- um código que já existe;
+- uma atividade vazia;
+- uma duração, em minutos, que não seja um número inteiro maior do que 0;
+- uma distância que não seja um número inteiro maior do que 0;
+- ao corrigir a duração de um treino, um código que não existe, ou uma duração fora da regra.
+
+O programa acaba com estas linhas:
 
 ```python
 teste = Treino("T00", "Teste", 20)
@@ -196,7 +291,7 @@ print("Mais de 30 minutos:")
 diario.mostrar_longos(30)
 ```
 
-E tem de mostrar exatamente isto:
+E mostra exatamente isto:
 
 ```text
 Teste da regra da duração: 20
@@ -224,18 +319,51 @@ T01 Ginásio, 45 minutos
 T03 Ioga, 35 minutos
 ```
 
+<details>
+<summary>Pista</summary>
+
+Um treino com distância descreve-se como um treino, com os metros no fim. Como é que a variante usa a descrição que o treino já faz e lhe acrescenta o dado a mais?
+
+</details>
+
 ## Exercício 4: Playlist
 
-Registas as músicas de uma lista e a duração de cada uma, em segundos: uma música de 3 minutos e 20 segundos tem 200 segundos.
+Queremos um programa para registar as músicas de uma lista e a duração de cada uma, em segundos: uma música de 3 minutos e 20 segundos tem 200 segundos. Para cada música, guardamos um código, um título e a duração, um número inteiro maior do que 0.
 
-1. Cada música tem um código, um título e a duração, em segundos, um número inteiro maior do que 0. A regra escreve-se num só sítio e vale também quando alguém escreve `musica.segundos = 0`: nesse caso, a duração fica como estava.
-2. Uma música de um álbum tem tudo o que uma música tem e também o número da faixa. A faixa é um número inteiro de 1 a 30, com a regra num só sítio.
-3. Cada música descreve-se numa linha, como `M01 Noite de Verão, 200 segundos`, e uma música de um álbum acrescenta `, faixa 3`.
-4. A playlist cria e guarda as músicas, pela ordem em que entram. Antes de acrescentar, verifica por esta ordem o código, o título, a duração e, numa música de um álbum, a faixa. Devolve uma mensagem a dizer se aceitou ou porque recusou.
-5. A playlist corrige a duração de uma música, com a mesma regra.
-6. A playlist mostra as músicas todas, ou só as que duram mais do que um limite, pedindo a cada música que se descreva.
+Por exemplo:
 
-O teu programa tem de acabar com estas linhas, sem as mudar:
+| Código | Título | Duração, em segundos |
+| --- | --- | ---: |
+| M01 | Noite de Verão | 200 |
+| M03 | Manhã Calma | 260 |
+
+Uma música de um álbum tem tudo o que uma música tem, e mais o número da faixa, um número inteiro de 1 a 30. Por exemplo, a M02, Tempestade, com 245 segundos, é a faixa 3 do álbum.
+
+As três classes são `Musica`, `MusicaDeAlbum` e `Playlist`.
+
+Na lista, cada música aparece numa linha, e uma música de um álbum acrescenta a faixa:
+
+```text
+M01 Noite de Verão, 200 segundos
+M02 Tempestade, 245 segundos, faixa 3
+```
+
+Deves poder:
+
+- acrescentar uma música, simples ou de um álbum;
+- corrigir a duração de uma música, com a mesma regra;
+- ver as músicas todas;
+- ver só as músicas que duram mais do que um limite.
+
+O programa recusa:
+
+- um código que já existe;
+- um título vazio;
+- uma duração, em segundos, que não seja um número inteiro maior do que 0;
+- uma faixa que não seja um número inteiro de 1 a 30;
+- ao corrigir a duração de uma música, um código que não existe, ou uma duração fora da regra.
+
+O programa acaba com estas linhas:
 
 ```python
 teste = Musica("M00", "Teste", 100)
@@ -266,7 +394,7 @@ print("Mais de 240 segundos:")
 playlist.mostrar_longas(240)
 ```
 
-E tem de mostrar exatamente isto:
+E mostra exatamente isto:
 
 ```text
 Teste da regra da duração: 100
@@ -294,18 +422,51 @@ M02 Tempestade, 245 segundos, faixa 3
 M03 Manhã Calma, 260 segundos
 ```
 
+<details>
+<summary>Pista</summary>
+
+Se a playlist perguntar a cada música de que tipo é, que linhas tens de mudar quando aparecer outro tipo de música?
+
+</details>
+
 ## Exercício 5: Campeonato
 
-Registas as equipas de um campeonato inventado por ti e os pontos de cada uma.
+Queremos um programa para registar as equipas de um campeonato inventado e os pontos de cada uma. Para cada equipa, guardamos uma sigla, um nome e os pontos, um número inteiro, 0 ou mais.
 
-1. Cada equipa tem uma sigla, um nome e os pontos, um número inteiro, 0 ou mais. A regra escreve-se num só sítio e vale também quando alguém escreve `equipa.pontos = -1`: nesse caso, os pontos ficam como estavam.
-2. Uma equipa com estádio tem tudo o que uma equipa tem e também o número de lugares do estádio. Os lugares são um número inteiro de 500 a 90 000, com a regra num só sítio.
-3. Cada equipa descreve-se numa linha, como `LBO Leões do Bairro, 12 pontos`, e uma equipa com estádio acrescenta `, estádio de 5000 lugares`.
-4. O campeonato cria e guarda as equipas, pela ordem em que entram. Antes de acrescentar, verifica por esta ordem a sigla, o nome, os pontos e, numa equipa com estádio, os lugares. Devolve uma mensagem a dizer se aceitou ou porque recusou.
-5. O campeonato soma os pontos ganhos num jogo a uma equipa. Os pontos de um jogo são um número inteiro, 0 ou mais.
-6. O campeonato mostra as equipas todas, ou só as que têm um mínimo de pontos ou mais, pedindo a cada equipa que se descreva.
+Por exemplo:
 
-O teu programa tem de acabar com estas linhas, sem as mudar:
+| Sigla | Nome | Pontos |
+| --- | --- | ---: |
+| LBO | Leões do Bairro | 12 |
+| TDV | Tubarões do Vale | 0 |
+
+Uma equipa com estádio tem tudo o que uma equipa tem, e mais o número de lugares do estádio, um número inteiro de 500 a 90000. Por exemplo, a ACR, Águias da Ribeira, com 9 pontos, tem um estádio de 5000 lugares.
+
+As três classes são `Equipa`, `EquipaComEstadio` e `Campeonato`.
+
+Na lista, cada equipa aparece numa linha, e uma equipa com estádio acrescenta os lugares:
+
+```text
+LBO Leões do Bairro, 12 pontos
+ACR Águias da Ribeira, 9 pontos, estádio de 5000 lugares
+```
+
+Deves poder:
+
+- acrescentar uma equipa, simples ou com estádio;
+- somar a uma equipa os pontos ganhos num jogo;
+- ver as equipas todas;
+- ver só as equipas com pontos iguais ou maiores do que um mínimo.
+
+O programa recusa:
+
+- uma sigla que já existe;
+- um nome vazio;
+- pontos que não sejam um número inteiro, 0 ou mais;
+- um número de lugares que não seja um número inteiro de 500 a 90000;
+- ao somar pontos, uma sigla que não existe, ou pontos de um jogo que não sejam um número inteiro, 0 ou mais.
+
+O programa acaba com estas linhas:
 
 ```python
 teste = Equipa("TST", "Teste", 5)
@@ -336,7 +497,7 @@ print("Com 10 pontos ou mais:")
 campeonato.mostrar_com_pelo_menos(10)
 ```
 
-E tem de mostrar exatamente isto:
+E mostra exatamente isto:
 
 ```text
 Teste da regra dos pontos: 5
@@ -349,7 +510,7 @@ Equipa TDV acrescentada.
 Recusada: já existe uma equipa com a sigla LBO.
 Recusada: o nome não pode ficar vazio.
 Recusada: os pontos têm de ser um número inteiro, 0 ou mais.
-Recusada: o número de lugares tem de ser um número inteiro de 500 a 90 000.
+Recusada: o número de lugares tem de ser um número inteiro de 500 a 90000.
 
 LBO Leões do Bairro, 12 pontos
 ACR Águias da Ribeira, 9 pontos, estádio de 5000 lugares
@@ -364,35 +525,23 @@ LBO Leões do Bairro, 12 pontos
 ACR Águias da Ribeira, 12 pontos, estádio de 5000 lugares
 ```
 
-## Apoio
+<details>
+<summary>Pista</summary>
 
-As pistas do livro de receitas servem para todos os temas. Tenta primeiro sozinho, e usa só a pista da regra em que estás preso.
+Os lugares têm dois limites. Antes de executares as linhas do fim, experimenta os dois valores aceites e os dois logo fora.
 
-- A regra de um número: onde a escreves para ela valer no construtor, quando alguém muda o valor e quando a coleção verifica os dados?
-- A variante: compara as frases "uma carta de edição limitada é uma carta" e "uma carta de edição limitada tem uma carta". Qual das duas é verdadeira?
-- A descrição: como é que a variante usa a descrição que a classe base já faz e lhe acrescenta o dado a mais?
-- Mostrar a lista: se a coleção perguntar a cada registo de que tipo é, que linhas tens de mudar quando aparecer outro tipo?
-- Os limites: num tema com dois limites, experimenta os dois valores aceites e os dois logo fora, antes de executares as linhas finais.
+</details>
 
-## Desafio opcional
+## Desafios
 
-### Uma segunda variante
+### Desafio 1: Uma segunda variante
 
-Escolhe um dos temas que fizeste e acrescenta-lhe uma segunda variante, à tua escolha, com um dado a mais e a sua descrição. Tem de ser uma relação "é um" verdadeira, como as do enunciado. Não mudes o método que mostra a lista. Explica, numa frase, num comentário no início do ficheiro, porque é que não precisaste de o mudar.
+Escolhe um dos exercícios que fizeste e acrescenta-lhe uma segunda variante, à tua escolha, com um dado a mais e a sua descrição. Tem de ser uma relação "é um" verdadeira, como as do enunciado. Não mudes o método que mostra a lista. Explica, numa frase, num comentário no início do ficheiro, porque é que não precisaste de o mudar.
 
 ## Critérios de conclusão
 
-Concluíste um tema quando:
-
-- o teu programa acaba com as linhas do enunciado, sem mudanças, e mostra exatamente a saída indicada;
-- cada regra de um número está escrita num só sítio, e o que o registo e a variante têm em comum também;
-- a coleção mostra os registos sem perguntar de que tipo é cada um.
-
-O desafio é opcional e não entra nestes critérios.
-
-## Autoavaliação
-
-1. Que parte do teu programa ficou igual à do livro de receitas, e que parte tiveste de pensar de novo?
-2. Num tema com dois limites, como as cartas ou o campeonato, que valores experimentaste para confirmar a regra?
+- O programa de cada exercício que fizeste acaba com as linhas do enunciado, sem mudanças, e mostra exatamente a saída indicada.
+- Cada regra de um número está escrita num só sítio, e o que o registo e a variante têm em comum também.
+- A coleção mostra os registos sem perguntar de que tipo é cada um.
 
 ![Rodapé](../../imagens/rodape.png)

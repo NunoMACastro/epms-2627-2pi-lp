@@ -2,57 +2,21 @@
 
 # Ficha de exercícios: Objetos, composição e comportamento
 
-Ficha do tema Objetos, composição e comportamento, do módulo 10794, Programação avançada com Python. Praticas sem ajuda, em oito grupos, o que o guia explica: classes e objetos, proteção do estado, herança, composição e agregação, métodos de classe, duck typing, dataclasses e decoradores. Fazes sozinho, ao teu ritmo: o que não acabares na aula, acabas em casa ou na aula seguinte.
-
-## O que precisas de saber
-
-O [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md). Cada grupo de exercícios só precisa da parte do guia que lhe corresponde, indicada na tabela de "Como trabalhar". O laboratório dá o ginásio com que os exercícios 9, 10 e 14 trabalham.
-
-## Como trabalhar
-
-A ficha tem oito grupos, um por cada parte do guia, e podes fazer os grupos em alturas diferentes. Os oito grupos são a parte obrigatória. O desafio e a secção "Para ires mais longe" são opcionais. É lá que estão os casos que enganam e três exercícios de decoradores, o 18, o 19 e o 22.
-
-Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti.
-
-| Grupo | Parte do guia | Exercícios |
-| --- | --- | --- |
-| Classes e objetos | Parte 1 | 1, 2 e 3 |
-| Proteger o estado | Parte 2 | 4 e 5 |
-| Herança | Parte 3 | 6 |
-| Composição e agregação | Parte 4 | 7, 8, 9 e 10 |
-| Métodos de classe | Parte 5 | 11 e 12 |
-| Duck typing | Parte 6 | 13 e 14 |
-| Dataclasses | Parte 7 | 15 e 16 |
-| Decoradores | Parte 8 | 17, 20, 21 e 23 |
-| Desafio opcional | Partes 1 a 4 | |
-| Para ires mais longe, opcional | Partes 4 e 8 | 18, 19 e 22 e dois exercícios sem número |
-
-Duas regras para toda a ficha. A primeira: quando um exercício te pedir para prever o que um programa escreve, prevê antes de executar. Se só pensares no resultado depois de o veres, concordas sempre com o computador e não aprendes nada. A segunda: quando um exercício te pedir para explicar ou justificar, a resposta vai para um comentário, com `#`, no ficheiro do exercício. Põe-na no início do ficheiro, ou junto da linha a que diz respeito, e começa-a pela letra da alínea. Um exercício sem código, como o 7, tem um ficheiro só com comentários, com o número do exercício no nome. Responde em frases completas, com as tuas palavras, de forma que um colega que faltou à aula te perceba.
+Praticas as classes, as propriedades, a herança, a agregação e a composição, os três tipos de método, o duck typing, as dataclasses e a arroba dos decoradores. Os exercícios 1 a 20 são obrigatórios. Cada exercício fica num ficheiro com o número dele no nome, na pasta da ficha. As respostas que um exercício pedir por escrito ficam em comentários. Quando descobres, sem executar, o que um programa mostra, explica num comentário cada linha em que falhaste. Para rever: o [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md).
 
 ## O cenário
 
-Os exercícios usam os Pokémon das aulas e do laboratório, e uma classe nova e simples, a `Baga`, que cura um Pokémon. Cria uma pasta para esta ficha e copia para lá o ficheiro [pokemon.py dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py), da mesma forma que na preparação do [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md). Vários exercícios usam as classes de Pokémon desse ficheiro, com uma linha como `from pokemon import Pokemon`, e por isso cada exercício deve ser feito num ficheiro dentro desta pasta.
-
-Os exercícios 9 e 10 pedem também a classe `Treinador`, que copias do teu `ginasio.py` do laboratório ou do [ginasio.py dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py). O exercício 14, o desafio e o primeiro exercício de "Para ires mais longe" usam o `ginasio.py` inteiro, e por isso, para esses, copia-o também para a pasta da ficha. Usa o `ginasio.py` dos exemplos, ou o teu, se já fizeste a fase 7 do laboratório, porque o exercício 14 precisa do `com_equipa`.
+Os exercícios usam os Pokémon das aulas e uma classe nova, a `Baga`: nos jogos, as bagas são frutos que curam os Pokémon. Cria uma pasta para a ficha e copia para lá o [pokemon.py](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py) e o [ginasio.py](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py) dos exemplos. Os exercícios que começam por `from pokemon import` ou `from ginasio import` só correm nessa pasta. Os exercícios 17 a 19 usam só funções.
 
 ## Classes e objetos
 
-### Exercício 1: Prever o que um programa escreve
+### Exercício 1: Uma baga que se descreve
 
-Treina: ler uma classe e seguir o `self` (guia, [self: o objeto que está a ser usado](../03-objetos-e-composicao.md#self-o-objeto-que-está-a-ser-usado)).
+Escreve a classe `Baga`. Uma baga tem um nome e uma cura, que recebe quando é criada. O método `descricao()` devolve o texto que descreve a baga, como `Baga Oran (cura 10)`.
 
-Nos jogos, as bagas são frutos que curam os Pokémon. Esta classe representa uma baga:
+Linhas de teste, no fim do ficheiro:
 
 ```python
-class Baga:
-    def __init__(self, nome, cura):
-        self.nome = nome
-        self.cura = cura
-
-    def descricao(self):
-        return f"{self.nome} (cura {self.cura})"
-
-
 oran = Baga("Baga Oran", 10)
 sitrus = Baga("Baga Sitrus", 30)
 sitrus.cura = sitrus.cura + oran.cura
@@ -60,23 +24,27 @@ print(oran.descricao())
 print(sitrus.descricao())
 ```
 
-**a)** Prevê, sem executar, as duas linhas que o programa mostra, e confirma executando. Se falhaste alguma, escreve num comentário em que linha do código o teu raciocínio se afastou do programa.
+O teste deve mostrar:
 
-**b)** Na segunda chamada ao método `descricao`, que objeto está no `self`? Como é que o Python sabe?
+```text
+Baga Oran (cura 10)
+Baga Sitrus (cura 40)
+```
+
+Rever: [O construtor dá a cada objeto o estado inicial](../03-objetos-e-composicao.md#o-construtor-dá-a-cada-objeto-o-estado-inicial) e [Um método é uma função que pertence à classe](../03-objetos-e-composicao.md#um-método-é-uma-função-que-pertence-à-classe).
+
+<details>
+<summary>Pista</summary>
+
+Se aparece uma linha `None` a seguir a cada descrição, olha para o que o teu método devolve.
+
+</details>
 
 ### Exercício 2: Um método que recebe um Pokémon
 
-Treina: escrever um método que usa outro objeto, além do `self` (guia, [Um método que recebe outro objeto](../03-objetos-e-composicao.md#um-método-que-recebe-outro-objeto)).
+Copia a classe `Baga` do exercício 1 para um ficheiro novo, com a importação `from pokemon import Pokemon` no início. Acrescenta-lhe o método `dar_a(pokemon)`: o Pokémon come a baga, e a vida dele sobe tanto quanto a cura.
 
-Copia a classe `Baga` do exercício 1 para um ficheiro novo, e acrescenta-lhe um método `dar_a(pokemon)`. Quando se dá uma baga a um Pokémon, o método faz três coisas, por esta ordem. Escreve a frase "Pikachu come a Baga Oran.", com o nome do Pokémon e o da baga. Depois soma a cura da baga à vida do Pokémon. No fim, chama o método `verificar_vida` do Pokémon.
-
-No início do ficheiro, antes da classe, importa a classe `Pokemon`:
-
-```python
-from pokemon import Pokemon
-```
-
-No fim do ficheiro, depois da classe, escreve estas linhas de teste:
+Linhas de teste, no fim do ficheiro:
 
 ```python
 pikachu = Pokemon("Pikachu", "Elétrico", 100, 30)
@@ -87,7 +55,7 @@ pikachu.vida = 145
 sitrus.dar_a(pikachu)
 ```
 
-Quando o método estiver certo, o teste mostra:
+O teste deve mostrar:
 
 ```text
 Pikachu come a Baga Oran.
@@ -96,29 +64,58 @@ Pikachu come a Baga Sitrus.
 Pikachu tem 150/150 de vida.
 ```
 
-Responde também, num comentário: o Pikachu tinha 145 de vida e comeu uma baga que cura 30. Porque é que ficou com 150, e não com 175, se o teu método não tem nenhum `if`? Esta pergunta usa a parte 2 do guia: se ainda não a leste, responde-lhe quando fizeres o grupo seguinte.
+Rever: [Um método que recebe outro objeto](../03-objetos-e-composicao.md#um-método-que-recebe-outro-objeto).
+
+<details>
+<summary>Pista</summary>
+
+Compara com o `atacar`: quem muda é o objeto que chega por parâmetro.
+
+</details>
 
 ### Exercício 3: Estático ou do objeto
 
-Treina: decidir se um método precisa do objeto (guia, [Métodos estáticos: funções que vivem na classe](../03-objetos-e-composicao.md#métodos-estáticos-funções-que-vivem-na-classe)).
+A classe `Baga` do exercício 1 vai ter mais três métodos:
 
-Queremos acrescentar três métodos à classe `Baga`:
+- `cura_valida(valor)` recebe um número e devolve `True` se ele pode ser a cura de uma baga, de 1 a 50, incluindo os dois, e `False` se não pode;
+- `cura_mais_do_que(outra)` recebe outra baga e devolve `True` se esta baga cura mais do que a outra;
+- `e_forte()` devolve `True` se esta baga cura 30 ou mais.
 
-- `cura_valida(valor)`, que recebe um número e devolve `True` se ele está entre 1 e 50, incluindo os dois, e `False` se não está. Só nesse caso o número pode ser a cura de uma baga;
-- `cura_mais_do_que(outra)`, que recebe outra baga e devolve `True` se esta baga cura mais do que a outra;
-- `e_forte()`, que devolve `True` se esta baga cura 30 ou mais.
+Escreve os três numa cópia da classe, num ficheiro novo. Ao lado de cada `def`, um comentário diz se é um método estático ou um método do objeto, e porquê.
 
-**a)** Para cada um dos três, decide se deve ser um método estático ou um método normal, com `self`. Justifica cada escolha com a pergunta do guia: este método precisa de saber qual é o objeto?
+Linhas de teste, no fim do ficheiro:
 
-**b)** Escreve só a primeira linha de cada um dos três métodos, com o decorador por cima, se for preciso.
+```python
+oran = Baga("Baga Oran", 10)
+pecha = Baga("Baga Pecha", 10)
+sitrus = Baga("Baga Sitrus", 30)
+print(Baga.cura_valida(1), Baga.cura_valida(0), Baga.cura_valida(50), Baga.cura_valida(51))
+print(sitrus.cura_mais_do_que(oran), oran.cura_mais_do_que(sitrus), oran.cura_mais_do_que(pecha))
+print(oran.e_forte(), sitrus.e_forte())
+```
 
-**c)** Escreve o método `cura_valida` completo, dentro da classe, e testa-o com `print(Baga.cura_valida(1))` e o mesmo para 0, 50 e 51. Os quatro resultados têm de ser `True`, `False`, `True` e `False`.
+O teste deve mostrar:
+
+```text
+True False True False
+True False False
+False True
+```
+
+Rever: [Métodos estáticos: funções que vivem na classe](../03-objetos-e-composicao.md#métodos-estáticos-funções-que-vivem-na-classe).
+
+<details>
+<summary>Pista</summary>
+
+Escreve primeiro o corpo de cada método e vê se ele usa o `self`.
+
+</details>
 
 ## Proteger o estado
 
-### Exercício 4: O que o privado deixa e não deixa fazer
+### Exercício 4: O que os dois sublinhados não impedem
 
-Treina: prever o efeito dos dois sublinhados (guia, [Público e privado em Python](../03-objetos-e-composicao.md#público-e-privado-em-python)).
+Nesta versão da `Baga`, a cura tem dois sublinhados à frente:
 
 ```python
 class Baga:
@@ -132,26 +129,30 @@ class Baga:
 
 oran = Baga("Baga Oran", 10)
 print(oran.descricao())
-print(oran.nome)
-print(oran._Baga__cura)
 print(oran.__cura)
 ```
 
-**a)** Prevê, sem executar, se cada uma das quatro linhas com `print` funciona ou dá erro, e o que mostram as que funcionam. Confirma executando.
+A última linha dá erro. Um colega diz que, com os dois sublinhados, ninguém consegue mudar a cura de uma baga a partir de fora da classe. Mostra-lhe que não tem razão. Troca a última linha por linhas tuas que mudem a cura da `oran` para 99, sem mexeres na classe, e que mostrem a mudança com o `descricao`. O programa passa a mostrar:
 
-**b)** O método `descricao` usa `self.__cura` e funciona. A última linha usa `oran.__cura` e não funciona. Explica a diferença.
+```text
+Baga Oran (cura 10)
+Baga Oran (cura 99)
+```
 
-**c)** Um colega diz que, com os dois sublinhados, ninguém consegue mudar a cura de uma baga a partir de fora da classe. Troca a última linha do programa, a que dá erro, por linhas tuas. Essas linhas têm de mudar a cura da `oran` para 99 e de mostrar a mudança com o método `descricao`, que tem de escrever `Baga Oran (cura 99)`. O que mostra isto sobre a proteção que os dois sublinhados dão?
+Rever: [Público e privado em Python](../03-objetos-e-composicao.md#público-e-privado-em-python).
+
+<details>
+<summary>Pista</summary>
+
+Fora da classe, `oran.__cura` é um atributo novo, que não tem nada a ver com o que a classe guardou. Que nome lhe deu o Python lá dentro?
+
+</details>
 
 ### Exercício 5: Uma propriedade para um texto
 
-Treina: escrever uma propriedade com uma regra (guia, [Propriedades: o get e o set com cara de atributo](../03-objetos-e-composicao.md#propriedades-o-get-e-o-set-com-cara-de-atributo) e [O construtor também passa pelo set](../03-objetos-e-composicao.md#o-construtor-também-passa-pelo-set)).
+Na classe `Baga` do exercício 1, o nome não pode ficar vazio. Transforma o atributo `nome` numa propriedade, com get e set. Se alguém der à baga o texto vazio, `""`, ela fica com o nome `"Baga sem nome"`, também quando é criada. Qualquer outro texto é guardado tal como vem.
 
-Na classe `Baga` do exercício 1, o nome não pode ficar vazio. Transforma o atributo `nome` numa propriedade, com get e set, que aplica esta regra. Se alguém tentar dar à baga o texto vazio, `""`, a baga fica com o nome `"Baga sem nome"`. Qualquer outro texto é guardado tal como vem.
-
-A regra tem de se aplicar também quando a baga é criada. Pensa também em onde fica guardado o valor: não pode ser no próprio `nome`.
-
-Testa com estas linhas, no fim do ficheiro:
+Linhas de teste, no fim do ficheiro:
 
 ```python
 misteriosa = Baga("", 20)
@@ -164,7 +165,7 @@ oran.nome = "Baga Pecha"
 print(oran.nome)
 ```
 
-Quando a propriedade estiver certa, o teste mostra:
+O teste deve mostrar:
 
 ```text
 Baga sem nome
@@ -173,27 +174,32 @@ Baga sem nome
 Baga Pecha
 ```
 
+Rever: [Propriedades: o get e o set com cara de atributo](../03-objetos-e-composicao.md#propriedades-o-get-e-o-set-com-cara-de-atributo) e [Onde se escreve `vida` e onde se escreve `_vida`](../03-objetos-e-composicao.md#onde-se-escreve-vida-e-onde-se-escreve-_vida).
+
+<details>
+<summary>Pista</summary>
+
+Segue o molde da vida do `Pokemon`. O valor não pode ficar guardado no próprio `nome`, porque esse é o nome da propriedade.
+
+</details>
+
 ## Herança
 
 ### Exercício 6: Um Pokémon elétrico
 
-Treina: escrever uma classe-filha que reescreve um método com `super()` (guia, [O construtor da filha chama o da mãe](../03-objetos-e-composicao.md#o-construtor-da-filha-chama-o-da-mãe), [Reescrever um método](../03-objetos-e-composicao.md#reescrever-um-método) e [super() dentro de um método reescrito](../03-objetos-e-composicao.md#super-dentro-de-um-método-reescrito)).
+Escreve a classe `PokemonEletrico`, filha de `Pokemon`. Um `PokemonEletrico` é sempre do tipo `"Elétrico"`, e por isso o construtor pede só o nome, a vida e o ataque. Reescreve o método `calcular_dano(alvo)`, que devolve o dano, com estas regras:
 
-Escreve a classe `PokemonEletrico`, filha de `Pokemon`. Um `PokemonEletrico` é sempre do tipo `"Elétrico"`, e por isso o construtor pede só o nome, a vida e o ataque. Reescreve o método `calcular_dano(alvo)`, que devolve o dano, segundo estas regras:
+- contra um Pokémon do tipo `"Água"`, o dano é o dobro do dano base, e antes do ataque aparece "É super eficaz!";
+- contra um Pokémon do tipo `"Planta"`, o dano é metade do dano base, arredondada para baixo, e antes do ataque aparece "Não é muito eficaz...";
+- contra os outros tipos, o dano é o dano base.
 
-- contra um Pokémon do tipo `"Água"`, tira o dobro do dano base, e antes do ataque escreve "É super eficaz!";
-- contra um Pokémon do tipo `"Planta"`, tira metade do dano base, arredondada para baixo, e antes do ataque escreve "Não é muito eficaz...";
-- contra os outros tipos, tira o dano base.
-
-O dano base é o que a classe-mãe calcula. Metade de 25, arredondada para baixo, é 12: o operador da divisão inteira, que usaste no 10.º, faz esta conta.
-
-No início do ficheiro, importa as classes de que precisas:
+O dano base é o que a classe-mãe calcula. No início do ficheiro, importa as classes de que precisas:
 
 ```python
 from pokemon import Pokemon, PokemonAgua, PokemonFogo, PokemonPlanta
 ```
 
-Testa com estas linhas, no fim do ficheiro:
+Linhas de teste, no fim do ficheiro:
 
 ```python
 pikachu = PokemonEletrico("Pikachu", 100, 25)
@@ -205,7 +211,7 @@ pikachu.atacar(bulbasaur)
 pikachu.atacar(charmander)
 ```
 
-Quando a classe estiver certa, o teste mostra:
+O teste deve mostrar:
 
 ```text
 É super eficaz!
@@ -218,29 +224,40 @@ Pikachu ataca Charmander e tira 25 de vida.
 Charmander tem 75/150 de vida.
 ```
 
-A tua classe não tem nenhum método `atacar`, e mesmo assim o `pikachu.atacar(...)` funciona e usa a tua regra do dano. Explica numa frase porquê, num comentário.
+Rever: [O construtor da filha chama o da mãe](../03-objetos-e-composicao.md#o-construtor-da-filha-chama-o-da-mãe) e [Reescrever um método](../03-objetos-e-composicao.md#reescrever-um-método).
+
+<details>
+<summary>Pista</summary>
+
+Começa pelo dano que a mãe calcula, e só depois aplica a regra do tipo do alvo. Para a metade arredondada para baixo, há um operador do 10.º ano.
+
+</details>
 
 ## Composição e agregação
 
 ### Exercício 7: Herança, agregação ou composição
 
-Treina: classificar uma relação com as perguntas do guia (guia, [As perguntas que decidem](../03-objetos-e-composicao.md#as-perguntas-que-decidem) e [É um ou tem um: herança, agregação ou composição](../03-objetos-e-composicao.md#é-um-ou-tem-um-herança-agregação-ou-composição)). Para o losango, vê [O desenho em UML: losango vazio e losango cheio](../03-objetos-e-composicao.md#o-desenho-em-uml-losango-vazio-e-losango-cheio).
-
-Para cada uma das cinco relações, decide se é herança, agregação ou composição. Responde num ficheiro só com comentários. Na justificação, usa a frase "é um" ou "tem", e, nas relações "tem", responde às duas perguntas: a parte faz sentido sem o todo? Quem cria a parte? Nas que forem agregação ou composição, diz também como é o losango em UML e de que lado fica.
+Para cada uma das quatro relações da tabela, decide se é herança, agregação ou composição, num ficheiro só com comentários. Justifica cada uma com a frase "é um" ou "tem". Nas relações "tem", responde às duas perguntas do guia e diz de que lado fica o losango do diagrama de classes, e se é vazio ou cheio.
 
 | | Relação |
 | --- | --- |
-| a) | Uma Pokédex e os registos que ela própria cria, cada vez que o treinador vê um Pokémon novo. Os registos só existem dentro daquela Pokédex |
-| b) | Uma liga e os ginásios que fazem parte dela. Os ginásios já existiam antes de a liga ser criada, e continuam abertos se a liga acabar |
+| a) | Uma personagem de um jogo e o inventário com que ela nasce |
+| b) | Uma equipa de um torneio de jogos online e os jogadores inscritos nela |
 | c) | A classe `PokemonEletrico`, do exercício 6, e a classe `Pokemon` |
-| d) | Uma encomenda de uma loja online e as linhas da encomenda. Cada linha diz que produto se comprou e em que quantidade, é criada pela própria encomenda quando o cliente junta um produto ao carrinho, e não faz sentido fora daquela encomenda |
-| e) | A mesma encomenda e os produtos do catálogo da loja. O mesmo produto aparece em muitas encomendas, e continua no catálogo quando uma encomenda é apagada |
+| d) | Uma liga e os ginásios que fazem parte dela. Os ginásios já existiam antes de a liga ser criada, e continuam abertos se a liga acabar |
+
+Rever: [As perguntas que decidem](../03-objetos-e-composicao.md#as-perguntas-que-decidem), [O diagrama de classes: losango vazio e losango cheio](../03-objetos-e-composicao.md#o-diagrama-de-classes-losango-vazio-e-losango-cheio) e [É um ou tem um: herança, agregação ou composição](../03-objetos-e-composicao.md#é-um-ou-tem-um-herança-agregação-ou-composição).
+
+<details>
+<summary>Pista</summary>
+
+Experimenta cada relação com as duas frases, "é um" e "tem", e fica com a que é verdadeira. Só depois escolhes o losango.
+
+</details>
 
 ### Exercício 8: Encontrar a agregação e a composição num programa
 
-Treina: reconhecer no código a agregação e a composição (guia, [No código, as duas parecem iguais](../03-objetos-e-composicao.md#no-código-as-duas-parecem-iguais)).
-
-Num Centro Pokémon, os treinadores deixam os Pokémon feridos para serem tratados. O centro guarda uma ficha de cada tratamento. Lê o programa com atenção:
+Num Centro Pokémon, os treinadores deixam os Pokémon feridos para serem tratados, e o centro guarda uma ficha de cada tratamento:
 
 ```python
 from pokemon import PokemonFogo, PokemonPlanta, VIDA_MAXIMA
@@ -289,17 +306,20 @@ charmander.verificar_vida()
 bulbasaur.verificar_vida()
 ```
 
-**a)** Dos dois atributos `pacientes` e `fichas`, qual é uma agregação e qual é uma composição? Para cada um, aponta a linha do código que o mostra e explica porquê.
+Dos atributos `pacientes` e `fichas`, um é uma agregação e o outro uma composição. Diz qual é qual num comentário, com a linha do código que o mostra.
 
-**b)** Prevê, sem executar, o que o programa mostra, e confirma executando.
+Rever: [Agregação: o todo reúne partes que existem por si](../03-objetos-e-composicao.md#agregação-o-todo-reúne-partes-que-existem-por-si) e [Composição: o todo cria e guarda as suas partes](../03-objetos-e-composicao.md#composição-o-todo-cria-e-guarda-as-suas-partes).
 
-**c)** Depois de `del centro`, que objetos continuam a existir, e que objetos deixaram de poder ser usados? Explica com as palavras agregação e composição.
+<details>
+<summary>Pista</summary>
+
+Procura em cada método o sítio onde o objeto é criado e o sítio onde fica guardado.
+
+</details>
 
 ### Exercício 9: Uma parte criada no construtor
 
-Treina: escrever uma composição em que o todo cria a parte no construtor (guia, [Composição: o todo cria e guarda as suas partes](../03-objetos-e-composicao.md#composição-o-todo-cria-e-guarda-as-suas-partes)).
-
-Cada treinador tem uma Pokédex, onde fica registado o nome de cada Pokémon diferente que ele capturou. A Pokédex de um treinador é só dele: é criada quando o treinador é criado, e mais ninguém a usa. Esta é a classe `Pokedex`, já pronta:
+Cada treinador tem uma Pokédex, onde fica o nome de cada Pokémon diferente que ele capturou. A Pokédex de um treinador é só dele: nasce com o treinador, e mais ninguém a usa. Esta é a classe `Pokedex`, já pronta:
 
 ```python
 class Pokedex:
@@ -319,9 +339,9 @@ class Pokedex:
         return len(self.registados)
 ```
 
-Num ficheiro novo, com a importação `from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta` no início, escreve a classe `Pokedex` e uma cópia da classe `Treinador`.
+Num ficheiro novo, com a importação `from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta` no início, escreve a classe `Pokedex` e uma cópia da classe `Treinador` da secção [Um objeto que guarda outros objetos](../03-objetos-e-composicao.md#um-objeto-que-guarda-outros-objetos) do guia.
 
-**a)** Altera a classe `Treinador` de forma que cada treinador crie a sua própria Pokédex, num atributo chamado `pokedex`. O método `capturar`, além de juntar o Pokémon à equipa, tem de o registar na Pokédex do treinador. Testa com estas linhas, no fim do ficheiro:
+**a)** Muda o `Treinador` de forma que cada treinador crie a sua Pokédex, num atributo `pokedex`, e que o `capturar` registe nela cada Pokémon que junta à equipa. Linhas de teste, no fim do ficheiro:
 
 ```python
 ash = Treinador("Ash")
@@ -334,7 +354,7 @@ print(misty.nome, misty.pokedex.total())
 print(ash.pokedex is misty.pokedex)
 ```
 
-Quando a alteração estiver certa, o teste mostra:
+O teste deve mostrar:
 
 ```text
 Ash 2
@@ -342,15 +362,22 @@ Misty 1
 False
 ```
 
-**b)** No ginásio do guia, os registos de combate eram criados num método, o `combater`. Aqui, a Pokédex é criada no construtor. Explica porque é que, neste caso, o construtor é o sítio certo, e porque é que a Pokédex não deve chegar ao treinador por parâmetro.
+**b)** Explica num comentário porque é que a Pokédex é criada dentro do `Treinador`, e não recebida por parâmetro como os Pokémon do `capturar`, e que relação isso faz dela.
+
+Rever: [Composição: o todo cria e guarda as suas partes](../03-objetos-e-composicao.md#composição-o-todo-cria-e-guarda-as-suas-partes).
+
+<details>
+<summary>Pista</summary>
+
+Compara com a linha do `combater` que cria um `Combate`.
+
+</details>
 
 ### Exercício 10: Tirar um Pokémon da equipa
 
-Treina: alterar uma agregação sem destruir a parte (guia, [Agregação: o todo reúne partes que existem por si](../03-objetos-e-composicao.md#agregação-o-todo-reúne-partes-que-existem-por-si)).
+Num ficheiro novo, com a importação `from pokemon import PokemonFogo, PokemonPlanta` no início, copia outra vez a classe `Treinador` do guia, sem a Pokédex do exercício 9. Acrescenta-lhe o método `libertar(pokemon)`. Se o Pokémon estiver na equipa, o método tira-o de lá e escreve "Ash liberta Charmander.", com o nome do treinador e o do Pokémon. Se não estiver, não tira nada e escreve "Charmander não está na equipa de Ash.".
 
-Num ficheiro novo, com a importação `from pokemon import PokemonFogo, PokemonPlanta` no início, escreve uma cópia da classe `Treinador` e acrescenta-lhe um método `libertar(pokemon)`. Se o Pokémon estiver na equipa, o método tira-o da equipa e escreve "Ash liberta Charmander.", com o nome do treinador e o do Pokémon. Se não estiver, não tira nada e escreve "Charmander não está na equipa de Ash.".
-
-Testa com estas linhas, no fim do ficheiro:
+Linhas de teste, no fim do ficheiro:
 
 ```python
 charmander = PokemonFogo("Charmander", 90, 40)
@@ -364,7 +391,7 @@ print(len(ash.equipa))
 charmander.verificar_vida()
 ```
 
-Quando o método estiver certo, o teste mostra:
+O teste deve mostrar:
 
 ```text
 Ash liberta Charmander.
@@ -373,13 +400,18 @@ Charmander não está na equipa de Ash.
 Charmander tem 90/150 de vida.
 ```
 
-Responde também, num comentário: o Charmander deixou de estar na equipa, mas a última linha ainda o consegue usar. Porquê? Relaciona a tua resposta com a agregação.
+Rever: [Agregação: o todo reúne partes que existem por si](../03-objetos-e-composicao.md#agregação-o-todo-reúne-partes-que-existem-por-si).
+
+<details>
+<summary>Pista</summary>
+
+O que faz o `remove` a um valor que não está na lista?
+
+</details>
 
 ## Métodos de classe
 
 ### Exercício 11: Seguir o cls
-
-Treina: prever que classe um método de classe cria, e compará-lo com um método estático (guia, [O método de classe recebe a classe](../03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Primeira tentativa: um método estático](../03-objetos-e-composicao.md#primeira-tentativa-um-método-estático)).
 
 A classe `Baga` tem agora duas formas de criar bagas conhecidas, uma de classe e outra estática. A `BagaRara` é uma filha que se descreve de outra maneira:
 
@@ -412,19 +444,22 @@ print(BagaRara.sitrus().descricao())
 print(type(BagaRara.oran()).__name__, type(BagaRara.sitrus()).__name__)
 ```
 
-**a)** Prevê, sem executar, as quatro linhas que o programa mostra, e confirma executando.
+Descobre, sem executar, as quatro linhas que o programa mostra, e confirma executando.
 
-**b)** Em `BagaRara.oran()`, o que está no `cls`? E que objeto cria a linha `return cls("Baga Oran", 10)`?
+Rever: [Primeira tentativa: um método estático](../03-objetos-e-composicao.md#primeira-tentativa-um-método-estático) e [O método de classe recebe a classe](../03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe).
 
-**c)** A terceira linha não diz "rara", embora o método tenha sido chamado por `BagaRara`. Explica porquê, e diz que mudanças farias no `sitrus` para ele passar a criar uma `BagaRara` quando é chamado por `BagaRara`.
+<details>
+<summary>Pista</summary>
+
+Procura, no `oran` e no `sitrus`, a linha que cria a baga. De que classe é o objeto que cada uma cria, quando o método é chamado por `BagaRara`?
+
+</details>
 
 ### Exercício 12: Uma baga feita de duas
 
-Treina: escrever um construtor alternativo que cria o objeto a partir de outros objetos (guia, [O método de classe recebe a classe](../03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Escolher o tipo de método](../03-objetos-e-composicao.md#escolher-o-tipo-de-método)).
+Copia as classes `Baga` e `BagaRara` do exercício 11 para um ficheiro novo, sem os métodos `oran` e `sitrus`. Acrescenta à `Baga` o método de classe `mistura(primeira, segunda)`, que recebe duas bagas e devolve uma baga nova, da classe por onde foi chamado. O nome da baga nova é "Mistura de", seguido dos nomes das duas, ligados por "e", e a cura é a soma das duas curas. As duas bagas recebidas não mudam.
 
-Copia as classes `Baga` e `BagaRara` do exercício 11 para um ficheiro novo, e apaga da `Baga` os métodos `oran` e `sitrus`. Acrescenta à `Baga` um método de classe `mistura(primeira, segunda)`, que recebe duas bagas e devolve uma baga nova, da classe por onde foi chamado. O nome da baga nova é "Mistura de", seguido dos nomes das duas, ligados por "e", e a cura é a soma das duas curas. As duas bagas que o método recebe não mudam.
-
-Testa com estas linhas, no fim do ficheiro:
+Linhas de teste, no fim do ficheiro:
 
 ```python
 oran = Baga("Baga Oran", 10)
@@ -437,7 +472,7 @@ print(type(rara).__name__)
 print(oran.descricao(), sitrus.descricao())
 ```
 
-Quando o método estiver certo, o teste mostra:
+O teste deve mostrar:
 
 ```text
 Mistura de Baga Oran e Baga Sitrus (cura 40)
@@ -446,13 +481,18 @@ BagaRara
 Baga Oran (cura 10) Baga Sitrus (cura 30)
 ```
 
-Responde também, num comentário: o `mistura` não lê nenhum atributo de um objeto que esteja no `self`. Que pergunta do guia, em "Escolher o tipo de método", te diz que é um método de classe, e não um método estático?
+Rever: [O método de classe recebe a classe](../03-objetos-e-composicao.md#o-método-de-classe-recebe-a-classe) e [Escolher o tipo de método](../03-objetos-e-composicao.md#escolher-o-tipo-de-método).
+
+<details>
+<summary>Pista</summary>
+
+Volta ao `oran` do exercício 11: o que faz a baga nova sair da classe por onde o método foi chamado?
+
+</details>
 
 ## Duck typing
 
 ### Exercício 13: Tudo o que se pode usar num Pokémon
-
-Treina: prever o que acontece quando uma função usa objetos de classes diferentes, e em que momento falha (guia, [Duck typing: o que conta é o comportamento](../03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento)). Vê também [Quando o objeto não tem o que é preciso](../03-objetos-e-composicao.md#quando-o-objeto-não-tem-o-que-é-preciso).
 
 A função `tratar` recebe um Pokémon e uma lista de coisas, e usa cada coisa no Pokémon. As três classes não têm nenhuma classe-mãe em comum:
 
@@ -493,28 +533,37 @@ tratar(pikachu, [])
 tratar(pikachu, [Pedra(), Baga("Baga Oran", 10)])
 ```
 
-**a)** Prevê, sem executar, tudo o que o programa mostra, até ao fim ou até ao erro. Se achas que há um erro, prevê também a última linha da mensagem. Confirma executando.
+**a)** O programa para com um erro. Descobre, sem executar, tudo o que ele mostra até lá, e a última linha da mensagem de erro. Depois, confirma executando.
 
-**b)** A `Baga` e a `Pocao` não são da mesma família. Porque é que a função `tratar` funciona com as duas?
+**b)** Muda a `Pedra`, sem mexeres na função `tratar`, de forma que a terceira chamada funcione até ao fim. A pedra não cura nada. As três últimas linhas passam a ser:
 
-**c)** Na terceira chamada, a Baga Oran chegou a ser usada? Porquê? Que nome tem de ter o método da `Pedra` para a terceira chamada funcionar até ao fim?
+```text
+Pikachu olha para a pedra.
+Pikachu come a Baga Oran.
+Pikachu tem 110/150 de vida.
+```
+
+Rever: [Duck typing: o que conta é o comportamento](../03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) e [Quando o objeto não tem o que é preciso](../03-objetos-e-composicao.md#quando-o-objeto-não-tem-o-que-é-preciso).
+
+<details>
+<summary>Pista</summary>
+
+Segue as três chamadas pela ordem, item a item. Em que momento é que o Python procura o método `usar_em` de cada item?
+
+</details>
 
 ### Exercício 14: Um líder que não é um treinador
 
-Treina: escrever uma classe que tem o que outra classe espera dela, sem herança (guia, [Duck typing: o que conta é o comportamento](../03-objetos-e-composicao.md#duck-typing-o-que-conta-é-o-comportamento) e [Duck typing ou herança](../03-objetos-e-composicao.md#duck-typing-ou-herança)).
+O ginásio de Pallet não tem líder: tem uma máquina de treino. A máquina não é um treinador, e a classe dela não herda de `Treinador`. O nome dela, que aparece no combate, é "Máquina de treino". Tem sempre um só Pokémon, que ela própria cria quando é criada: um `PokemonAgua` chamado "Robô de água", com 60 de vida e 20 de ataque. Quando o Robô de água já não tiver vida, a máquina não tem Pokémon para lutar.
 
-O ginásio de Pallet não tem líder: tem uma máquina de treino. A máquina não é um treinador, e a classe dela não herda de `Treinador`. Chama-se "Máquina de treino" e tem sempre um só Pokémon, que ela própria cria quando é criada. É um `PokemonAgua` chamado "Robô de água", com 60 de vida e 20 de ataque.
-
-**a)** No `ginasio.py`, o método `combater` da classe `Ginasio` usa o seu líder. Escreve, num comentário no início do ficheiro da alínea b), a lista do que o ginásio usa do líder: que atributos lê e que métodos chama. Só isso é que a máquina precisa de ter.
-
-**b)** Num ficheiro novo, na pasta onde está o `ginasio.py`, escreve a classe `MaquinaDeTreino`, com o que encontraste na alínea a). Quando o Robô de água já não tiver vida, a máquina não tem Pokémon para lutar. No início do ficheiro, importa o que precisas:
+Num ficheiro novo, escreve a classe `MaquinaDeTreino`, só com o que o `combater` do `ginasio.py` usa do líder. No início do ficheiro, um comentário diz o que é isso: que atributos o `combater` lê do líder e que métodos lhe chama. As importações são estas:
 
 ```python
 from pokemon import PokemonAgua, PokemonPlanta
 from ginasio import Ginasio, Treinador
 ```
 
-Testa com estas linhas, no fim do ficheiro:
+Linhas de teste, no fim do ficheiro:
 
 ```python
 maquina = MaquinaDeTreino()
@@ -525,7 +574,7 @@ treino.combater(ash)
 treino.mostrar_historico()
 ```
 
-Quando a classe estiver certa, o teste mostra:
+O teste deve mostrar:
 
 ```text
 
@@ -544,97 +593,110 @@ Histórico do ginásio de Pallet:
  - Ash com Bulbasaur: venceu Ash
 ```
 
-**c)** O ginásio aceitou a máquina como líder sem saber o que ela é. Que linha da tua classe faz com que o segundo combate não aconteça?
+Rever: [Duck typing ou herança](../03-objetos-e-composicao.md#duck-typing-ou-herança) e [O ginásio organiza um combate](../03-objetos-e-composicao.md#o-ginásio-organiza-um-combate).
+
+<details>
+<summary>Pista</summary>
+
+O que devolve o `escolher_pokemon` de um `Treinador` quando não há Pokémon com vida?
+
+</details>
 
 ## Dataclasses
 
 ### Exercício 15: A ficha do Centro Pokémon como dataclass
 
-Treina: escrever uma dataclass a partir de uma classe que só guarda dados (guia, [A mesma classe como dataclass](../03-objetos-e-composicao.md#a-mesma-classe-como-dataclass) e [O que a dataclass escreve por ti](../03-objetos-e-composicao.md#o-que-a-dataclass-escreve-por-ti)).
+A `Ficha` do exercício 8 guardava o nome do Pokémon e a vida com que ele entrou no Centro Pokémon. O centro quer guardar também a vida com que o Pokémon saiu, e saber quanta vida ele recuperou. Num ficheiro novo, escreve a `Ficha` como dataclass, com os dois campos do exercício 8 e um terceiro, `vida_depois`. Tem também o método `recuperou`, que devolve quanta vida o Pokémon recuperou no centro.
 
-A classe `Ficha` do exercício 8 guarda o nome de um Pokémon e a vida com que ele entrou no Centro Pokémon. Num ficheiro novo, escreve-a como dataclass, com os mesmos dois dados e com o método `resumo`, igual ao do exercício 8. Escolhe o tipo de cada campo.
-
-Testa com estas linhas, no fim do ficheiro:
+Linhas de teste, no fim do ficheiro:
 
 ```python
-primeira = Ficha("Charmander", 20)
-segunda = Ficha("Charmander", 20)
-print(primeira.resumo())
+primeira = Ficha("Charmander", 20, 150)
+segunda = Ficha("Charmander", 20, 150)
+terceira = Ficha("Bulbasaur", 0, 150)
 print(primeira)
-print(primeira == segunda, primeira is segunda)
+print(primeira.recuperou(), terceira.recuperou())
+print(primeira == segunda, primeira == terceira)
 ```
 
-**a)** A primeira linha tem de ser exatamente `Charmander entrou com 20 de vida`. Prevê, antes de executares, o que vão mostrar as duas últimas, e confirma executando.
+O teste deve mostrar:
 
-**b)** Que tipo deste a cada campo? Na segunda linha da saída, como se vê qual dos campos é um texto e qual é um número?
+```text
+Ficha(nome_pokemon='Charmander', vida_antes=20, vida_depois=150)
+130 150
+True False
+```
+
+Rever: [Uma dataclass escreve o construtor por ti](../03-objetos-e-composicao.md#uma-dataclass-escreve-o-construtor-por-ti) e [Uma dataclass continua a ser uma classe](../03-objetos-e-composicao.md#uma-dataclass-continua-a-ser-uma-classe).
+
+<details>
+<summary>Pista</summary>
+
+O `recuperou` é um método como os das classes normais: faz uma conta com dois campos do próprio objeto, lidos com o `self`.
+
+</details>
 
 ### Exercício 16: Dataclass ou classe normal
 
-Treina: decidir quando uma dataclass serve (guia, [Quando uma dataclass não serve](../03-objetos-e-composicao.md#quando-uma-dataclass-não-serve)).
-
-**a)** Para cada uma destas quatro classes, decide se faria sentido escrevê-la como dataclass. Justifica cada resposta com o que a classe guarda e com as regras que tem.
+Para cada uma destas quatro classes, decide se faria sentido escrevê-la como dataclass. Justifica cada resposta num comentário, com o que a classe guarda e com as regras que tem.
 
 | | Classe |
 | --- | --- |
-| a1) | A `Baga` do exercício 1, que guarda um nome e uma cura e tem o método `descricao` |
-| a2) | A `Baga` do exercício 5, em que o nome é uma propriedade e nunca pode ficar vazio |
-| a3) | A `Pokedex` do exercício 9, com a lista dos nomes registados, que começa vazia, e o método `registar` |
-| a4) | A `Medalha` da parte 4 do guia, que só guarda a cidade do ginásio |
+| a) | A `Baga` do exercício 1, que guarda um nome e uma cura e tem o método `descricao` |
+| b) | A `Baga` do exercício 5, em que o nome é uma propriedade e nunca pode ficar vazio |
+| c) | A `Pokedex` do exercício 9, com a lista dos nomes registados, que começa vazia, e o método `registar`, que não repete nomes |
+| d) | Uma `Medalha`, que só guarda a cidade do ginásio que a deu |
 
-**b)** Escreve a `Medalha` como dataclass, com um só campo, `cidade`, e testa-a com estas linhas:
+Rever: [Quando uma dataclass não serve](../03-objetos-e-composicao.md#quando-uma-dataclass-não-serve).
 
-```python
-medalha_do_ash = Medalha("Cerulean")
-medalha_do_gary = Medalha("Cerulean")
-print(medalha_do_ash)
-print(medalha_do_ash == medalha_do_gary)
-print(medalha_do_ash is medalha_do_gary)
-print(medalha_do_ash == Medalha("Pewter"))
-```
+<details>
+<summary>Pista</summary>
 
-Quando a classe estiver certa, o teste mostra:
+Para cada classe, pergunta-te se só guarda dados ou se também tem regras.
 
-```text
-Medalha(cidade='Cerulean')
-True
-False
-False
-```
-
-**c)** O Ash e o Gary ganharam uma medalha cada um no ginásio de Cerulean. O `==` diz `True` e o `is` diz `False`. Explica o que quer dizer cada uma das duas respostas, com as palavras "os mesmos dados" e "o mesmo objeto".
+</details>
 
 ## Decoradores
 
-Os exercícios 17, 20, 21 e 23 são uma introdução aos decoradores. Os exercícios 17, 20 e 21 usam só funções, sem classes e sem o `pokemon.py`: faz cada um num ficheiro novo. O exercício 23 volta às mesmas ideias com uma classe, a `Baga`, que reescreves sem arrobas.
+### Exercício 17: Uma tabela de conversões
 
-Nesta ficha, precisas de saber ler o que faz a arroba nos decoradores que já usas e de usar uma função como valor, sem a chamar. Estes quatro exercícios chegam para isso.
-
-Na numeração faltam o 18, o 19 e o 22. São três exercícios de decoradores para quem quiser praticar mais, e estão em [Para ires mais longe](#para-ires-mais-longe). São opcionais.
-
-### Exercício 17: Função ou chamada?
-
-Treina: distinguir a função de uma chamada à função (guia, [Uma função é um valor](../03-objetos-e-composicao.md#uma-função-é-um-valor)).
+Um dicionário também pode guardar funções:
 
 ```python
-def saudacao():
-    return "Bom dia!"
+def km_para_metros(valor):
+    return valor * 1000
 
 
-mensagem = saudacao()
-funcao = saudacao
+def horas_para_minutos(valor):
+    return valor * 60
 
-print(mensagem)
-print(funcao())
-print(funcao)
+
+conversoes = {"km": km_para_metros, "horas": horas_para_minutos}
+
+print(conversoes["km"](3))
+print(conversoes["horas"](2))
 ```
 
-**a)** Prevê, sem executar, o que mostra cada `print`, e confirma executando. Na terceira linha, o Python mostra a função na forma `<function ... at 0x...>`, com um número depois de `at` que muda de execução para execução. Na previsão, basta `<function ...>`.
+Escreve a função `euros_para_centimos` e junta-a ao dicionário, com a chave `"euros"`. Acrescenta uma linha que mostre, através do dicionário, quantos cêntimos são 2,5 euros, que em Python se escreve `2.5`. A saída passa a ser:
 
-**b)** Qual das duas variáveis, `mensagem` ou `funcao`, guarda um texto? E qual guarda a própria função?
+```text
+3000
+120
+250.0
+```
 
-### Exercício 20: Quando corre o decorador?
+Explica num comentário de onde vem o `.0` da última linha.
 
-Treina: perceber que o decorador corre quando o `def` é lido, e não quando a função é chamada (guia, [Um decorador corre uma vez, quando o def é lido](../03-objetos-e-composicao.md#um-decorador-corre-uma-vez-quando-o-def-é-lido)).
+Rever: [Uma função é um valor](../03-objetos-e-composicao.md#uma-função-é-um-valor).
+
+<details>
+<summary>Pista</summary>
+
+O que dá `conversoes["km"]` sozinho, sem o `(3)`?
+
+</details>
+
+### Exercício 18: O momento em que o decorador corre
 
 ```python
 def avisar(funcao):
@@ -646,61 +708,71 @@ print("Início")
 
 
 @avisar
-def ligar_luz():
-    print("Luz ligada.")
+def saltar():
+    print("A personagem salta.")
 
 
 print("Meio")
 
 
 @avisar
-def abrir_porta():
-    print("Porta aberta.")
+def agachar():
+    print("A personagem agacha-se.")
 
 
 print("Fim")
-abrir_porta()
-ligar_luz()
+agachar()
+saltar()
 ```
 
-**a)** Prevê, sem executar, todas as linhas que o programa mostra, pela ordem certa, e confirma executando.
+Descobre, sem executar, todas as linhas que o programa mostra, pela ordem certa, e confirma executando.
 
-**b)** Quantas vezes aparece "Li a função"? Porque é que não aparece outra vez quando se chama `ligar_luz()`?
+Rever: [Um decorador corre uma vez, quando o def é lido](../03-objetos-e-composicao.md#um-decorador-corre-uma-vez-quando-o-def-é-lido).
 
-### Exercício 21: O teu primeiro decorador
+<details>
+<summary>Pista</summary>
 
-Treina: escrever um decorador que guarda funções (guia, [O que faz a arroba](../03-objetos-e-composicao.md#o-que-faz-a-arroba)).
+O Python lê o ficheiro de cima para baixo. Em que momento corre o corpo do `avisar`, e em que momento corre o corpo de cada função decorada?
 
-Uma casa inteligente tem três comandos:
+</details>
+
+### Exercício 19: O teu primeiro decorador
+
+Uma personagem de um jogo tem três comandos:
 
 ```python
-def ligar_luz():
-    print("Luz ligada.")
+def saltar():
+    print("A personagem salta.")
 
 
-def abrir_porta():
-    print("Porta aberta.")
+def agachar():
+    print("A personagem agacha-se.")
 
 
-def ligar_aquecimento():
-    print("Aquecimento ligado.")
+def atacar():
+    print("A personagem ataca.")
 ```
 
-**a)** Cria uma lista vazia `comandos` e escreve um decorador `comando` que acrescenta a função à lista e a devolve. Põe `@comando` por cima dos três `def`.
-
-**b)** Mostra um menu numerado, com o nome de cada função (usa `.__name__`):
+Escreve um decorador, `comando`, que guarda cada função numa lista, `comandos`, e põe-no por cima dos três `def`. O programa mostra um menu numerado com o nome de cada comando, que se obtém com `.__name__`, pede o número de um comando e executa-o. Só tens de aceitar os números do menu. Uma execução, com a resposta 2:
 
 ```text
-1 - ligar_luz
-2 - abrir_porta
-3 - ligar_aquecimento
+1 - saltar
+2 - agachar
+3 - atacar
+Comando: 2
+A personagem agacha-se.
 ```
 
-**c)** Pede ao utilizador o número de um comando e executa esse comando. Atenção: o utilizador escreve 1, 2 ou 3, mas as posições da lista começam em 0.
+Rever: [O que faz a arroba](../03-objetos-e-composicao.md#o-que-faz-a-arroba) e [Um decorador corre uma vez, quando o def é lido](../03-objetos-e-composicao.md#um-decorador-corre-uma-vez-quando-o-def-é-lido).
 
-### Exercício 23: Uma classe sem arrobas
+<details>
+<summary>Pista</summary>
 
-Treina: reescrever decoradores como atribuições (guia, [O que faz a arroba](../03-objetos-e-composicao.md#o-que-faz-a-arroba)).
+Um decorador recebe uma função. O que tem de devolver, para a função continuar a existir com o mesmo nome? No menu, os números começam em 1, e as posições da lista começam em 0.
+
+</details>
+
+### Exercício 20: Uma classe sem arrobas
 
 Esta versão da `Baga` usa três decoradores:
 
@@ -734,48 +806,50 @@ True False
 Baga Oran (cura 10)
 ```
 
-**a)** Reescreve a classe sem nenhuma linha começada por arroba, de forma que as duas linhas de teste continuem a mostrar exatamente o mesmo.
+Um colega reescreveu a classe sem nenhuma linha começada por arroba. O programa dele tem um erro, e para logo:
 
-**b)** Na tua versão, apaga só a linha que substitui o `@property`. Prevê o que mostra a última linha do teste, e confirma executando. Explica num comentário o que viste, e volta a pôr a linha.
+```python
+class Baga:
+    cura_valida = staticmethod(cura_valida)
+    oran = classmethod(oran)
+    descricao = property(descricao)
 
-**c)** As duas versões fazem o mesmo. Diz uma vantagem da versão com arroba para quem lê a classe.
+    def __init__(self, nome, cura):
+        self.nome = nome
+        self.cura = cura
 
-## Apoio
+    def cura_valida(valor):
+        return valor >= 1 and valor <= 50
 
-Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho.
+    def oran(cls):
+        return cls("Baga Oran", 10)
 
-- Exercício 1: segue o programa linha a linha, com o valor de `oran.cura` e de `sitrus.cura` depois de cada linha. Repara na linha que muda uma cura antes das chamadas ao `descricao`.
-- Exercício 2: o método recebe o Pokémon por parâmetro, como o `capturar` do treinador. Lê o enunciado com atenção: pede três coisas, por uma ordem.
-- Exercício 3: para cada método, faz a pergunta do guia: este método precisa de saber qual é o objeto? Lê com cuidado "incluindo os dois" na primeira linha.
-- Exercício 4: pensa no que o Python faz ao nome `__cura` dentro da classe e fora dela. Na alínea c), mostra que o colega não tem razão, com o nome que o Python dá, por dentro, ao atributo.
-- Exercício 5: segue o exemplo da vida do `Pokemon`: um get com `@property`, um set com `@vida.setter` e o valor guardado noutro atributo. A regra é sobre um texto, por isso compara com `""`.
-- Exercício 6: começa pelo construtor, que passa o tipo à classe-mãe. No `calcular_dano`, começa pelo dano base, que a mãe calcula, e só depois aplica a regra do tipo do alvo. Confirma o que o método devolve.
-- Exercício 7: para cada linha, experimenta a frase com "é um" e com "tem" e vê qual é verdadeira. Nas relações "tem", responde às duas perguntas do guia antes de escolheres o losango.
-- Exercício 8: procura em cada método o sítio onde o objeto é criado e o sítio onde fica guardado. Na alínea b), segue as linhas do ciclo `for` pela ordem em que estão.
-- Exercício 9: compara com a linha do `combater` que cria um `Combate`. A Pokédex é criada pelo treinador, e o construtor dela não recebe argumentos.
-- Exercício 10: antes de tirar um Pokémon da lista, confirma que ele lá está, com `in`. Pensa no que a lista guarda: uma referência, e não o objeto.
-- Exercício 11: procura, em cada um dos dois métodos, o sítio onde aparece o nome de uma classe. De que classe é o objeto que cada um cria?
-- Exercício 12: um construtor alternativo cria o objeto com `cls(...)`. Os dados da baga nova vêm dos atributos das duas bagas recebidas, que só deves ler.
-- Exercício 13: segue as chamadas pela ordem, uma a uma, até ao primeiro erro. Em que momento é que o Python procura o método `usar_em`?
-- Exercício 14: na alínea a), percorre o `combater` e procura cada vez que aparece `self.lider`. Na alínea b), a máquina é um objeto que cria o seu Pokémon no construtor.
-- Exercício 15: cada campo leva o nome, dois pontos e o tipo. O `resumo` escreve-se como numa classe normal.
-- Exercício 16: para cada classe, pergunta-te se só guarda dados ou se também tem regras. Na alínea b), só precisas de um campo.
-- Exercício 17: um nome sem parênteses é a função. Com parênteses, é o que a função devolve.
-- Exercício 20: o Python lê o ficheiro de cima para baixo. Em que momento corre o corpo do decorador, e em que momento corre o corpo da função decorada?
-- Exercício 21: um decorador é uma função que recebe uma função. O que tem de fazer com ela, e o que tem de devolver para a função continuar a existir com o mesmo nome? Os números do menu começam em 1, e as posições da lista começam em 0.
-- Exercício 23: uma linha `@d` por cima de `def f` faz o mesmo que `f = d(f)` depois do `def`. Na alínea b), pensa no que o nome `descricao` guarda quando não é uma propriedade.
-- Desafio opcional: enquanto o Pokémon não for capturado, que valor deve ter a informação de quem é o treinador? Em que dois métodos do treinador é que a equipa muda?
-- Para ires mais longe, o histórico: depois de o `ultimo_combate` devolver o registo, quantos caminhos levam a esse objeto? Na alínea c), pensa em devolver outra coisa que não seja o objeto da lista.
-- Exercício 18: num dicionário, o valor guardado é a função, sem parênteses. Para a chamar, põem-se os parênteses depois da chave.
-- Exercício 19: o `@tarefa` por cima do `def` faz o que a linha de atribuição fazia depois dele.
-- Exercício 22: em `aplicar(dobro, ...)` entrega-se a função, e quem a chama é o `aplicar`.
-- O decorador que se esqueceu de uma linha: compara as últimas linhas deste decorador com as do exercício 19. O que fica guardado no nome `acordar` depois do `def`?
+    def descricao(self):
+        return f"{self.nome} (cura {self.cura})"
 
-## Desafio opcional
 
-### O mesmo Pokémon em duas equipas
+print(Baga.cura_valida(30), Baga.cura_valida(80))
+print(Baga.oran().descricao)
+```
 
-Na agregação, a mesma parte pode estar em mais do que um todo. No mundo dos Pokémon, isso cria um problema: com a classe `Treinador` do guia, nada impede que dois treinadores capturem o mesmo Pokémon.
+**a)** Encontra o erro e corrige-o, sem voltares a pôr arrobas. As duas linhas de teste têm de mostrar o mesmo que a versão com arrobas.
+
+**b)** Na tua versão corrigida, tira a linha que substitui o `@property`. O que mostra agora a última linha do teste? Experimenta, explica num comentário o que viste e volta a pôr a linha.
+
+Rever: [O que faz a arroba](../03-objetos-e-composicao.md#o-que-faz-a-arroba).
+
+<details>
+<summary>Pista</summary>
+
+Lê a mensagem: que nome é que o Python ainda não conhecia quando chegou a essa linha? Na alínea b), pensa no que fica no nome `descricao` quando ele não é uma propriedade.
+
+</details>
+
+## Desafios
+
+### Desafio 1: O mesmo Pokémon em duas equipas
+
+Na agregação, a mesma parte pode estar em mais do que um todo. Com a classe `Treinador` do `ginasio.py`, nada impede que dois treinadores capturem o mesmo Pokémon:
 
 ```python
 from pokemon import PokemonAgua
@@ -798,9 +872,7 @@ None
 
 O Starmie está nas duas equipas ao mesmo tempo. Quando fica KO num combate da Misty, o Brock fica sem Pokémon para lutar, sem ter combatido.
 
-Altera as classes de forma que um Pokémon que já pertence a um treinador não possa ser capturado por outro. Quando alguém tenta, o `capturar` não junta o Pokémon à equipa e escreve "Starmie já pertence a Misty.". Um Pokémon libertado com o `libertar` do exercício 10 fica sem treinador, e pode voltar a ser capturado.
-
-Tens de decidir em que objeto fica guardada a informação de quem é o treinador de cada Pokémon, e em que métodos essa informação tem de ser atualizada. Podes alterar a tua cópia do `pokemon.py`.
+Muda as classes de forma que um Pokémon que já pertence a um treinador não possa ser capturado por outro. Quando alguém tenta, o `capturar` não junta o Pokémon à equipa e escreve "Starmie já pertence a Misty.". Um Pokémon libertado com o `libertar` do exercício 10 fica sem treinador e pode voltar a ser capturado. Tens de decidir em que objeto fica a informação de quem é o treinador de cada Pokémon, e em que métodos ela muda. Podes mudar a tua cópia do `pokemon.py`.
 
 Testa com estas linhas, num ficheiro com as tuas classes:
 
@@ -817,7 +889,7 @@ print(len(misty.equipa), len(brock.equipa))
 misty.capturar(starmie)
 ```
 
-Quando as classes estiverem certas, o teste mostra:
+O teste deve mostrar:
 
 ```text
 Starmie já pertence a Misty.
@@ -827,13 +899,14 @@ Misty liberta Starmie.
 Starmie já pertence a Brock.
 ```
 
-## Para ires mais longe
+<details>
+<summary>Pista</summary>
 
-Estes exercícios são opcionais. O primeiro e o último são casos que enganam. Os outros três são exercícios de decoradores que ficaram sem lugar nos oito grupos. Guardam o número que têm nessa sequência: o 18 e o 19 vêm a seguir ao exercício 17, e o 22 a seguir ao 21.
+Enquanto o Pokémon não for capturado, que valor deve ter a informação de quem é o treinador?
 
-Para ler o que faz a arroba, os exercícios 17, 20, 21 e 23 chegam. Estes dão mais prática a quem a quiser. O 18 guarda funções num dicionário. O 19 faz o caminho de `f = d(f)` para `@d`, com um decorador parecido com o do exercício 21. O 22 entrega funções a outras funções. Faz cada um num ficheiro novo, como os outros exercícios de decoradores. As respostas escritas vão para comentários, como no resto da ficha.
+</details>
 
-### Um histórico que se deixa estragar
+### Desafio 2: Um histórico que se deixa estragar
 
 Um colega acrescentou ao ginásio um método para saber qual foi o último combate:
 
@@ -846,7 +919,7 @@ class Ginasio:
         return self.combates[-1]
 ```
 
-Numa cópia do `ginasio.py`, acrescenta este método à classe `Ginasio` e substitui o programa principal por este:
+Numa cópia do `ginasio.py`, com o nome `historico.py`, acrescenta este método à classe `Ginasio` e troca o programa principal por este:
 
 ```python
 if __name__ == "__main__":
@@ -862,7 +935,7 @@ if __name__ == "__main__":
     cerulean.mostrar_historico()
 ```
 
-Executa. Os dois históricos, no fim da saída, são diferentes:
+Ao correres o `historico.py`, os dois históricos do fim da saída são diferentes:
 
 ```text
 Histórico do ginásio de Cerulean:
@@ -872,74 +945,20 @@ Histórico do ginásio de Cerulean:
  - Ash com Charmander: venceu Ash
 ```
 
-**a)** Explica porque é que o histórico do ginásio mudou, se o programa principal nunca mexeu na lista `combates`.
+**a)** Explica num comentário porque é que o histórico mudou, se o programa principal nunca mexeu na lista `combates`, e que característica da composição deixou de ser verdade.
 
-**b)** Que característica da composição deixou de ser verdade quando o método `ultimo_combate` foi acrescentado?
+**b)** Muda o `ultimo_combate` de forma que quem o chama fique a saber o resultado do último combate, sem conseguir estragar o histórico do ginásio. Está certo quando, com o mesmo programa principal, a linha `registo.vencedor = "Ash"` já não muda o histórico: o segundo histórico, se o programa chegar a escrevê-lo, fica igual ao primeiro.
 
-**c)** Muda o método `ultimo_combate` de forma que quem o chama fique a saber o resultado do último combate, mas não consiga estragar o histórico do ginásio.
+<details>
+<summary>Pista</summary>
 
-### Exercício 18: Uma tabela de conversões
+Depois de o `ultimo_combate` devolver o registo, quantos caminhos levam a esse objeto? Na alínea b), pensa em devolver outra coisa que não seja o objeto da lista.
 
-Treina: guardar funções num dicionário e chamá-las a partir dele (guia, [Uma função é um valor](../03-objetos-e-composicao.md#uma-função-é-um-valor)).
+</details>
 
-```python
-def km_para_metros(valor):
-    return valor * 1000
+### Desafio 3: Uma função que recebe outra função
 
-
-def horas_para_minutos(valor):
-    return valor * 60
-
-
-conversoes = {"km": km_para_metros, "horas": horas_para_minutos}
-
-print(conversoes["km"](3))
-print(conversoes["horas"](2))
-```
-
-**a)** Prevê, sem executar, as duas linhas que o programa mostra.
-
-**b)** Escreve uma função `euros_para_centimos` e acrescenta-a ao dicionário, com a chave `"euros"`. Junta uma linha que mostre quantos cêntimos são 2,5 euros (em Python, escreve-se `2.5`).
-
-### Exercício 19: Pôr as arrobas
-
-Treina: passar de `f = d(f)` para `@d` (guia, [O que faz a arroba](../03-objetos-e-composicao.md#o-que-faz-a-arroba)).
-
-```python
-tarefas = []
-
-
-def tarefa(funcao):
-    tarefas.append(funcao)
-    return funcao
-
-
-def acordar():
-    print("Acordar às 7h.")
-
-
-acordar = tarefa(acordar)
-
-
-def tomar_pequeno_almoco():
-    print("Tomar o pequeno-almoço.")
-
-
-tomar_pequeno_almoco = tarefa(tomar_pequeno_almoco)
-
-for passo in tarefas:
-    passo()
-```
-
-**a)** Prevê, sem executar, o que o programa mostra.
-
-**b)** Reescreve o programa com `@tarefa` por cima de cada `def`, sem as linhas de atribuição. A saída tem de ficar igual.
-
-**c)** Acrescenta uma terceira tarefa, `apanhar_autocarro`, que escreve "Apanhar o autocarro.". Usa só a arroba e não mexas no ciclo.
-
-### Exercício 22: Funções que se entregam
-
-Treina: distinguir uma função de uma chamada à função (guia, [Uma função é um valor](../03-objetos-e-composicao.md#uma-função-é-um-valor) e [Entregar uma função a outra função](../03-objetos-e-composicao.md#entregar-uma-função-a-outra-função)).
+Estas duas funções fazem contas com um número:
 
 ```python
 def dobro(numero):
@@ -948,64 +967,43 @@ def dobro(numero):
 
 def triplo(numero):
     return numero * 3
-
-
-def aplicar(funcao, valores):
-    resultado = []
-    for valor in valores:
-        resultado.append(funcao(valor))
-    return resultado
-
-
-print(aplicar(dobro, [1, 2, 3]))
-operacao = triplo
-print(aplicar(operacao, [10]))
-print(operacao is triplo, operacao is dobro)
-print(dobro(triplo(2)))
 ```
 
-**a)** Prevê, sem executar, as quatro linhas que o programa mostra, e confirma executando.
+Escreve a função `aplicar(funcao, valores)`, que recebe uma função e uma lista de números e devolve uma lista nova, com o resultado da função para cada número. A lista recebida não muda.
 
-**b)** Na linha `operacao = triplo`, a função `triplo` foi chamada? O que ficou guardado na variável `operacao`?
-
-**c)** Acrescenta no fim do programa a linha `print(aplicar(dobro(), [1, 2, 3]))`. Prevê o que acontece, e confirma executando. Explica a mensagem num comentário, e apaga a linha.
-
-### O decorador que se esqueceu de uma linha
+Linhas de teste, no fim do ficheiro:
 
 ```python
-def tarefa(funcao):
-    print(f"Guardei {funcao.__name__}.")
-
-
-@tarefa
-def acordar():
-    print("Acordar às 7h.")
-
-
-print(acordar)
-acordar()
+print(aplicar(dobro, [1, 2, 3]))
+print(aplicar(triplo, [10]))
+print(aplicar(dobro, []))
+operacao = triplo
+print(aplicar(operacao, [1, 2]))
+numeros = [4, 5]
+print(aplicar(dobro, numeros), numeros)
 ```
 
-**a)** Comparado com o `tarefa` do exercício 19, mais acima, o que falta neste decorador?
+O teste deve mostrar:
 
-**b)** Prevê, sem executar, o que mostra o `print(acordar)`, e confirma executando. Explica, num comentário, a última linha da mensagem de erro.
+```text
+[2, 4, 6]
+[30]
+[]
+[3, 6]
+[8, 10] [4, 5]
+```
+
+<details>
+<summary>Pista</summary>
+
+Compara com o `para_todos` do guia: o que é que o `aplicar` tem de fazer de diferente com o que a função devolve?
+
+</details>
 
 ## Critérios de conclusão
 
-Concluíste a ficha quando:
-
-- os testes dos exercícios 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 16, 21 e 23 mostram exatamente as linhas indicadas no enunciado;
-- previste o que mostram os programas dos exercícios 1, 4, 8, 11, 13, 15, 17 e 20 antes de os executares. Onde falhaste, sabes dizer em que linha o teu raciocínio se afastou do programa;
-- as tuas justificações dos exercícios 3, 7, 8 e 16 estão em comentários, no ficheiro de cada exercício, e usam as perguntas do guia, e não só a resposta final;
-- consegues explicar, sem ler, a diferença entre agregação e composição com o exemplo do ginásio;
-- consegues explicar, sem ler, a diferença entre um método estático e um método de classe com o exemplo do líder.
-
-O desafio e a secção "Para ires mais longe", incluindo os exercícios 18, 19 e 22, são opcionais e não entram nestes critérios. Se os fizeres, a regra das previsões vale também para eles.
-
-## Autoavaliação
-
-1. Qual dos oito grupos achaste mais difícil, e o que farias para o perceber melhor?
-2. Em que exercícios a tua previsão falhou? Em que linha é que o teu raciocínio se afastou do programa?
-3. Sem olhar para o guia, sabes dizer quando usas um método do objeto, um método estático e um método de classe?
+- Os exercícios 1, 2, 3, 4, 5, 6, 9, 10, 12, 13, 14, 15, 17, 19 e 20 correm e mostram exatamente o que o enunciado diz.
+- As escolhas dos exercícios 3, 7 e 16, e as explicações dos exercícios 8, 9, 14, 17 e 20, estão em comentários, no ficheiro de cada exercício.
+- Nos exercícios 11, 13 e 18, cada linha que falhaste tem um comentário com a razão.
 
 ![Rodapé](../../imagens/rodape.png)

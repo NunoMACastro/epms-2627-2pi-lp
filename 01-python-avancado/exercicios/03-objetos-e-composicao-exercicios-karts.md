@@ -2,23 +2,11 @@
 
 # Ficha de exercícios: Objetos, composição e comportamento no Grande Prémio de Karts
 
-Ficha do tema Objetos, composição e comportamento, do módulo 10794, Programação avançada com Python. Constróis um jogo de corridas de karts completo, num só programa, e decides tu como o escrever a partir das regras do jogo. Fazes sozinho, ao teu ritmo: o que não acabares na aula, acabas em casa ou na aula seguinte.
-
-## O que precisas de saber
-
-O [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md). Convém teres feito antes a [ficha principal do tema](03-objetos-e-composicao-exercicios.md), porque este exercício junta num só programa o que lá praticaste por partes. Usas também três coisas do 10.º ano que o guia não usa: a divisão inteira `//`, o resto da divisão `%` e o `range`.
-
-## Como trabalhar
-
-A ficha tem um só exercício, o Grande Prémio de Karts, que é a parte obrigatória. O desafio e a secção "Para ires mais longe" são opcionais.
-
-O enunciado não te diz como escrever o programa. Diz-te as regras do jogo, e cada regra pede-te uma decisão: que classes crias, o que cada uma guarda e sabe fazer, e como as ligas umas às outras. Os nomes que o programa final usa, como `Kart`, `Piloto` ou `com_turbo`, são obrigatórios. Os outros escolhes tu.
-
-Lê as regras todas antes de começares. Faz o exercício todo num só ficheiro, por exemplo `karts.py`.
+Juntas num só programa, um jogo de corridas de karts, o que treinaste por partes na [ficha principal do tema](03-objetos-e-composicao-exercicios.md), e decides tu como escrever cada regra do jogo. Tem um só exercício, obrigatório. Escreves o programa num só ficheiro, por exemplo `karts.py`, e entregas-o ao professor. Conta para as atitudes e valores, a autonomia e o empenho, e não para a avaliação prática. Para rever: o [guia do tema](../03-objetos-e-composicao.md) e o [laboratório](../laboratorios/03-objetos-e-composicao-laboratorio.md).
 
 ## Exercício 1: Grande Prémio de Karts
 
-Vais programar uma corrida de karts ao estilo do Mario Kart: três pilotos, quatro voltas e, pelo caminho, caixas com power-ups.
+Queremos um programa para uma corrida de karts ao estilo do Mario Kart: três pilotos, quatro voltas e, pelo caminho, caixas com power-ups. Além do que o guia mostra, usas três coisas do 10.º ano: a divisão inteira `//`, o resto da divisão `%` e o `range`.
 
 ### Os karts
 
@@ -40,11 +28,11 @@ Vais programar uma corrida de karts ao estilo do Mario Kart: três pilotos, quat
 6. Cada piloto tem um nome e conduz um kart que escolheu na garagem. O kart já existia antes de o piloto o escolher e continua a existir se o piloto sair do jogo.
 7. Uma corrida tem o nome do circuito, o número de voltas e os pilotos inscritos. Os pilotos já existem antes da corrida e continuam a existir depois dela, para poderem correr outras.
 8. Em cada volta, os pilotos jogam pela ordem em que se inscreveram. Cada um acelera, abre uma caixa e avança. O power-up que estiver na caixa é aplicado ao kart desse piloto.
-9. No fim de cada volta, a corrida regista três coisas: o número da volta, o nome de quem vai à frente (quem percorreu mais distância) e a distância dele. Num empate, fica à frente quem se inscreveu primeiro. É a própria corrida que faz estes registos, enquanto corre, e só ela os guarda. No fim, mostra o registo e o vencedor, que é quem vai à frente no fim da última volta.
+9. No fim de cada volta, a corrida regista três coisas: o número da volta, o nome de quem vai à frente (quem percorreu mais distância) e a distância dele. Num empate, fica à frente quem se inscreveu primeiro. É a própria corrida que faz estes registos, enquanto corre, e só ela os guarda. No fim, mostra o registo e o vencedor, que é quem vai à frente no fim da última volta. Ao começar, a corrida mostra o circuito, as voltas e os pilotos, com o kart e o tipo dele. Em cada volta, mostra, para cada piloto, o power-up que lhe calhou e a velocidade e a distância com que ficou. O registo e o vencedor mostram-se com `mostrar_registo`.
 
 ### Os power-ups
 
-10. Cada power-up é uma função que recebe o kart que abriu a caixa. Há quatro, escritos por esta ordem:
+10. Cada power-up é uma função que recebe o kart do piloto que abriu a caixa. Há quatro, escritos por esta ordem:
     - `banana`: o kart escorrega e sofre um choque;
     - `cogumelo`: o kart ganha 30 de velocidade;
     - `tinta`: o piloto deixa de ver e trava, e o kart perde 40 de velocidade;
@@ -54,7 +42,7 @@ Vais programar uma corrida de karts ao estilo do Mario Kart: três pilotos, quat
 
 ### O programa que tem de funcionar
 
-O teu programa tem de acabar com estas linhas, sem as mudar:
+O programa acaba com estas linhas, sem as mudares. Os nomes que elas usam, como `Kart`, `Piloto` ou `com_turbo`, são obrigatórios, e os outros escolhes tu.
 
 ```python
 teste = Kart("Teste")
@@ -76,7 +64,7 @@ corrida.mostrar_registo()
 
 ### A saída
 
-Com essas linhas no fim, o teu programa tem de mostrar exatamente isto:
+Com essas linhas no fim, o programa mostra exatamente isto:
 
 ```text
 Teste dos limites: 100
@@ -114,50 +102,44 @@ Registo da corrida:
 Vencedor: Inês
 ```
 
-## Apoio
+<details>
+<summary>Pista</summary>
 
-Pistas que ajudam sem dar a resposta. Tenta primeiro sozinho, e usa só a pista da regra em que estás preso.
-
-- Por onde começar: os karts podem ser testados sozinhos, antes de haver pilotos e corrida. Cria um kart, põe-no a fazer as três coisas da regra 2 e mostra a velocidade e a distância com `print`.
-- Regra 3: nos Pokémon das aulas, a vida também nunca passa de 150, mesmo com `bulbasaur.vida = 200`. Como é que o programa garante isso, sem repetir a verificação em cada método?
+- Para começar: os karts podem ser testados sozinhos, antes de haver pilotos e corrida. Cria um kart, põe-no a fazer as três coisas da regra 2 e mostra a velocidade e a distância com `print`.
+- Regra 3: nos Pokémon do guia, a vida também nunca passa de 150, mesmo com `charmander.vida = 999`. Como é que o programa garante isso, sem repetir a verificação em cada método?
 - Regra 4: compara as relações "um kart leve é um kart" e "um kart leve tem um kart". Qual das duas frases é verdadeira? Como é que o fogo e a água dos Pokémon partilham o que têm em comum?
 - Regra 5: no ginásio das aulas, o `Lider` também se criava numa linha, já com a equipa. Quem escreve `KartLeve.com_turbo("Foguete")` está a pedir um kart de que classe? Como é que o código que cria o kart fica a saber isso?
 - Regras 6, 7 e 9: para cada coisa que um piloto ou uma corrida guarda, faz as duas perguntas do guia. Faz sentido sem o todo? Quem a cria?
 - Regra 10: antes de escreveres a banana, pensa num kart normal e num kart pesado, os dois a 70. Com que velocidade fica cada um depois de escorregar? Quem sabe de que tipo é o kart: a banana ou o próprio kart?
-- Regra 11: quem abre as caixas, e onde guarda quantas já abriu? Se o contador vai 0, 1, 2, 3, 4, 5, 6, que conta te dá as posições 0, 1, 2, 3, 0, 1, 2? E continua certa com cinco power-ups?
-- Regra 12: na parte 8 do guia, viste que o Python pode fazer alguma coisa a uma função no momento em que lê o `def`. O que podia fazer a cada power-up?
+- Regra 11: as caixas são as mesmas para todos os pilotos e não recomeçam em cada volta. Que objeto vê todas as caixas que se abrem e pode contar quantas já se abriram? Se o contador vai 0, 1, 2, 3, 4, 5, 6, que conta te dá as posições 0, 1, 2, 3, 0, 1, 2? E continua certa com cinco power-ups?
+- Regra 12: na ficha principal, o decorador `comando` do exercício 19 fazia uma coisa a cada função no momento do `def`. O que podia fazer a cada power-up?
 - A saída: se um número não bate certo, procura a primeira linha em que a tua saída se afasta da do enunciado. Depois segue, uma a uma, as contas desse piloto nessa volta.
+- A saída não tem empates nem metades de números ímpares. Experimenta numa cópia um kart a 35 que sofre um choque, e dois karts empatados.
 
-## Desafio opcional
+</details>
 
-### Um power-up novo
+## Desafios
+
+Faz cada desafio numa cópia do programa, por exemplo `karts_desafio1.py` e `karts_desafio2.py`.
+
+### Desafio 1: Um power-up novo
 
 Acrescenta um quinto power-up, `cogumelo_dourado`, que dá 50 de velocidade. Escreve-o a seguir à `estrela`, sem mudar mais nenhuma linha do programa. Antes de executares, prevê quem vai à frente no fim da volta 2, e com quantos metros, e confirma executando.
 
-## Para ires mais longe
-
-### Uma segunda corrida
+### Desafio 2: Uma segunda corrida
 
 A seguir à corrida do Arco-Íris, os mesmos três pilotos correm outra, no circuito do Castelo, também com quatro voltas. Acrescenta ao fim do programa as linhas que criam esta corrida, inscrevem os três pilotos e a correm.
 
 1. Antes de executares, prevê com que velocidade e com que distância começa cada kart a corrida do Castelo. Explica porquê, num comentário por cima das linhas da corrida do Castelo.
-2. Muda o programa para que os karts comecem cada corrida como começaram a primeira, no início da pista. Confirma que a corrida do Arco-Íris continua a dar a saída do enunciado.
+2. Muda o programa para que os karts comecem cada corrida com a velocidade e a distância com que começaram a primeira. A Inês parte outra vez a 50 e a 0 m. A corrida do Arco-Íris tem de continuar a dar a saída do enunciado.
 
 ## Critérios de conclusão
 
-Concluíste a ficha quando:
+- O teu programa acaba com as linhas do enunciado, sem mudanças, e mostra exatamente a saída indicada.
+- A regra dos limites da velocidade está escrita num só sítio, e o que os três tipos de kart têm em comum também.
+- Acrescentar um power-up novo cumpre a regra 12.
+- Consegues explicar, regra a regra, o que decidiste e porquê.
 
-- o teu programa acaba com as linhas do enunciado, sem mudanças, e mostra exatamente a saída indicada;
-- a regra dos limites da velocidade está escrita num só sítio, e o que os três tipos de kart têm em comum também;
-- acrescentar um power-up novo cumpre a regra 12;
-- consegues explicar, regra a regra, o que decidiste e porquê.
-
-O desafio e a secção "Para ires mais longe" são opcionais e não entram nestes critérios.
-
-## Autoavaliação
-
-1. Que regra do jogo te levou mais tempo a perceber como se escrevia?
-2. Houve alguma regra que escreveste de uma maneira e tiveste de mudar porque a saída não batia certo? Qual, e o que mudaste?
-3. Se tivesses de acrescentar um quarto tipo de kart, que partes do programa mudavas?
+Os dois desafios são opcionais e não entram nestes critérios.
 
 ![Rodapé](../../imagens/rodape.png)

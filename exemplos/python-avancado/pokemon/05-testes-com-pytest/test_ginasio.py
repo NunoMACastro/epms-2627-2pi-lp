@@ -45,18 +45,18 @@ def test_combate_sem_pokemon_com_vida_e_recusado(cerulean):
     assert cerulean.combates == []
 
 
-def test_o_desafiante_que_vence_fica_registado(cerulean):
-    """Quando o desafiante ganha, o registo do combate diz o nome dele."""
+def test_o_desafiante_que_vence_fica_no_historico(cerulean):
+    """Quando o desafiante ganha, o combate fica no histórico com ele como vencedor."""
     ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 25, 20)])
 
     cerulean.combater(ash)
 
-    # Combate é uma dataclass: o == compara os três campos dos dois registos.
+    # Combate é uma dataclass: o == compara os três campos dos dois combates.
     assert cerulean.combates == [Combate("Ash", "Bulbasaur", "Ash")]
 
 
-def test_o_lider_que_vence_fica_registado(cerulean):
-    """Quando o líder ganha, o registo do combate diz o nome do líder."""
+def test_o_lider_que_vence_fica_no_historico(cerulean):
+    """Quando o líder ganha, o combate fica no histórico com o líder como vencedor."""
     ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 90, 40)])
 
     cerulean.combater(ash)

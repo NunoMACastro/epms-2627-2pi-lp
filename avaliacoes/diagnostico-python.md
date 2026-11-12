@@ -1,17 +1,15 @@
 ![Cabeçalho](../imagens/cabecalho.png)
 
-# Diagnóstico inicial: Python em contexto de serviço
+# Diagnóstico de Python: os pedidos de assistência
 
-Este diagnóstico é uma revisão opcional da matéria de Python do 10.º ano, para fazeres por tua conta, quando quiseres. Não é recolhido nem corrigido em aula. Serve para perceberes como raciocinas e o que ainda dominas, e para escolheres o que te convém rever. Feito de seguida, demora cerca de 60 minutos.
+Este diagnóstico é uma revisão opcional do Python do 10.º ano, para fazeres por tua conta, quando quiseres. Não é recolhido nem tem nota: serve para veres o que ainda dominas e o que te convém rever. Os exemplos são pedidos de assistência a computadores.
 
-Podes consultar os guias do 10.º e executar código localmente. Antes de executar, escreve a tua previsão; depois compara-a com o resultado. Não uses um gerador de soluções durante o diagnóstico: o objetivo é veres o teu próprio raciocínio, e um gerador mostrava-te o dele. Uma sintaxe esquecida não impede uma explicação em português. Usa apenas os dados fictícios apresentados; não são pedidos dados reais. Não tem nota.
+Podes consultar os guias do 10.º e correr o código no teu computador. Não peças a solução a um assistente de inteligência artificial, porque o objetivo é veres o teu próprio raciocínio. Escreve cada parte num ficheiro teu, como `parte_a.py`. Quando uma pergunta começa por "Sem correres o programa", pensa na resposta de cabeça e só depois corre; as outras respostas escreve-as em comentários no ficheiro. Se não te lembrares de como se escreve alguma coisa em Python, explica em português o que querias fazer. Se não terminares uma parte, escreve num comentário o passo em que paraste.
 
-Se o fizeres de seguida, conta com cerca de 10 minutos para a parte A, 10 para a B e 15 para a C. Depois, 15 para a D, 5 para a E e 5 para a revisão final. Se não conseguires terminar uma parte, escreve o passo em que paraste.
-
-## A: ler e explicar
+## Parte A: ler e explicar
 
 ```python
-"""Exemplo de leitura de pedidos fictícios, sem acesso externo."""
+"""Mostra os identificadores dos pedidos abertos."""
 pedidos = [
     {"id": 1, "titulo": "Substituir teclado", "estado": "aberto"},
     {"id": 2, "titulo": "Instalar editor", "estado": "fechado"},
@@ -28,13 +26,13 @@ resultado = ids_abertos(pedidos)
 print(resultado)
 ```
 
-1. Prevê a saída e identifica o tipo de `pedidos`, `pedidos[0]`, `pedidos[0]["id"]` e `resultado`.
-2. Identifica o parâmetro, o argumento da chamada e o valor de retorno. Depois explica, na comprehension, que parte filtra os pedidos e que parte os transforma, e o que faz cada uma.
-3. A função altera a lista `pedidos`? Justifica. Depois reescreve o corpo da função com um ciclo `for` em vez da comprehension, de forma que o resultado seja o mesmo.
+1. Sem correres o programa, pensa no que ele escreve e no tipo de `pedidos`, `pedidos[0]`, `pedidos[0]["id"]` e `resultado`. Depois corre-o e confirma a saída, e os tipos com `type()`.
+2. Identifica o parâmetro, o argumento da chamada e o valor de retorno. Depois explica, na comprehension, que parte filtra os pedidos e que parte os transforma.
+3. A função altera a lista `pedidos`? Justifica. Depois reescreve o corpo da função com um ciclo `for` em vez da comprehension, com o mesmo resultado.
 
-## B: encontrar e corrigir um erro
+## Parte B: encontrar e corrigir um erro
 
-O código seguinte está errado de propósito: a função devia devolver quantos pedidos estão abertos, mas o programa mostra valores inesperados.
+A função seguinte devia devolver quantos pedidos estão abertos, mas o programa mostra valores inesperados.
 
 ```python
 """Exemplo com um erro de propósito, para encontrares e corrigires."""
@@ -55,21 +53,21 @@ resultado = contar_abertos(pedidos)
 print(resultado, total)
 ```
 
-1. Prevê as duas linhas que o programa escreve. Depois explica se a variável `total` de fora da função e a variável `total` de dentro da função são a mesma variável.
-2. Corrige a função para que devolva a contagem, sem escrever nada dentro dela. Explica a diferença entre `print` e `return`.
-3. Indica o que devolve a função corrigida quando recebe uma lista vazia, e escreve um teste que confirmaria que a correção funciona.
+1. Sem correres o programa, pensa nas duas linhas que ele escreve, e depois confirma. Explica se o `total` de fora da função e o `total` de dentro dela são a mesma variável.
+2. Corrige a função para que devolva a contagem e não mostre nada no ecrã. Explica a diferença entre `print` e `return`.
+3. Diz o que devolve a função corrigida quando recebe uma lista vazia, e escreve um `assert` que confirme esse resultado.
 
-## C: alterar e escrever uma função
-
-A função recebe dados que cumprem este contrato: `registos` é uma lista de dicionários. Cada dicionário tem uma chave `"id"`, com um número inteiro, e uma chave `"estado"`, com um texto. Não precisas de verificar dados que não cumpram o contrato.
+## Parte C: escrever uma função
 
 Escreve a função `selecionar_por_estado(registos, estado)`, que devolve uma lista nova com os identificadores dos pedidos cujo estado é igual ao parâmetro `estado`. A função não deve alterar `registos`. Acrescenta uma docstring curta a dizer para que serve a função.
 
-Mostra o resultado em três casos: uma lista com dois pedidos abertos, uma lista sem nenhum pedido no estado pedido e uma lista vazia. Explica porque escolheste um ciclo ou uma comprehension: o código sozinho, sem a justificação, não chega.
+O parâmetro `registos` é sempre uma lista de dicionários. Cada dicionário tem uma chave `"id"`, com um número inteiro, e uma chave `"estado"`, com um texto. Não precisas de verificar dados que não sejam assim.
 
-## D: ficheiro, JSON e erros
+Mostra o resultado em três casos: uma lista com dois pedidos abertos, uma lista sem nenhum pedido no estado que procuras e uma lista vazia. Explica porque escolheste um ciclo ou uma comprehension.
 
-Um serviço local precisa de ler uma lista de pedidos guardada num ficheiro JSON, com dados fictícios. A função seguinte está errada de propósito.
+## Parte D: ficheiro, JSON e erros
+
+A função seguinte devia ler uma lista de pedidos guardada num ficheiro JSON.
 
 ```python
 """Exemplo com erros de propósito, para encontrares e corrigires."""
@@ -85,19 +83,27 @@ def carregar(caminho):
         return []
 ```
 
-1. Explica porque é que `json.loads(ficheiro)` não é a chamada certa e indica que função do módulo `json` lê diretamente um ficheiro aberto.
-2. Corrige a função `carregar`. Deve devolver a lista lida do ficheiro e, se o valor guardado no JSON não for uma lista, deve lançar `ValueError`. Não precisas de verificar os campos de cada pedido.
-3. Escreve o código que chama `carregar` e trata três erros, cada um à sua maneira. São estes: `OSError`, quando o ficheiro não se consegue ler; `json.JSONDecodeError`, quando o texto não é JSON válido; e `ValueError`, quando o JSON é válido mas não é uma lista. Indica por que ordem escreves os `except`, sabendo que `JSONDecodeError` é uma subclasse de `ValueError`. Não apanhes todos os erros com `except Exception`.
-4. Explica porque é que devolver `[]` em qualquer falha esconde informação a quem chama a função. Explica também para que serve o `with`.
+1. Explica porque é que `json.loads(ficheiro)` não é a chamada certa, e indica que função do módulo `json` lê diretamente um ficheiro aberto. Para veres o erro, tira o `try` e o `except`, corre `carregar` com um ficheiro válido e lê a última linha da mensagem.
+2. Explica porque é que devolver `[]` em qualquer falha esconde informação a quem chama a função.
+3. Corrige a função `carregar`, de forma que os erros cheguem a quem a chama. Deve devolver a lista lida do ficheiro e, se o valor guardado no JSON não for uma lista, deve lançar `ValueError`. Não precisas de verificar os campos de cada pedido.
+4. Escreve o código que chama `carregar` e trata três erros, com uma mensagem diferente para cada um. O primeiro é o `OSError`, quando o ficheiro não se consegue ler (o `FileNotFoundError` do 10.º é um deles). O segundo é o `json.JSONDecodeError`, quando o texto não é JSON válido, e o terceiro é o `ValueError`, quando o JSON é válido mas não é uma lista. Não apanhes todos os erros com `except Exception`.
+5. Diz por que ordem escreveste os `except`, sabendo que o `JSONDecodeError` é filho do `ValueError`. Esta ideia vem do tema 04 deste ano: [Os except pela ordem errada](../01-python-avancado/04-excecoes-depuracao-e-logging.md#os-except-pela-ordem-errada).
+6. Para que serve o `with`?
 
-Para testares à mão, prepara quatro casos. O primeiro é um ficheiro válido com `[{"id": 1, "estado": "aberto"}]`, e o segundo um ficheiro com JSON válido que não é uma lista, `{}`. O terceiro é um ficheiro com JSON mal formado, só com `[`, e o quarto um caminho para um ficheiro que não existe. Antes de correres cada caso, escreve a resposta que esperas.
+Para confirmares o teu código, cria três ficheiros na pasta do teu programa e corre-o a partir dessa pasta. O primeiro é um ficheiro válido, com `[{"id": 1, "estado": "aberto"}]`, e o segundo tem JSON válido que não é uma lista, `{}`. O terceiro tem JSON mal formado, só com `[`. O quarto caso é um caminho para um ficheiro que não existe.
 
-## E: decompor e organizar
+## Parte E: decompor e organizar
 
-Sem escrever uma API nem instalar bibliotecas, propõe uma organização em módulos e funções para três tarefas: carregar os pedidos, selecionar os pedidos por estado e mostrar os identificadores. Para cada função, indica o que recebe, o que devolve e de que é responsável. Explica onde colocarias o código que arranca o programa e para que serve `if __name__ == "__main__":`. Diz também qual das funções conseguirias testar sem abrir nenhum ficheiro, e porquê.
+Propõe uma organização em módulos e funções para três tarefas: carregar os pedidos, selecionar os pedidos por estado e mostrar os identificadores. Podes partir das funções das partes C e D. Descreve, num comentário, o que recebe e o que devolve cada função, e pelo que é responsável. Explica onde colocarias o código que arranca o programa e para que serve `if __name__ == "__main__":`. Diz também qual das funções conseguirias testar sem abrir nenhum ficheiro, e porquê.
 
 ## Revisão final
 
-Não há entrega: o código e as explicações ficam contigo. Marca quais os resultados que previste e quais os que efetivamente executaste, e compara cada previsão com o que aconteceu. As partes em que a previsão falhou, ou em que paraste, mostram-te a matéria do 10.º que vale a pena rever nos guias desse ano. Não confundas terminar rapidamente com compreender.
+As partes em que o resultado não foi o que esperavas, ou em que paraste, mostram-te a matéria do 10.º que vale a pena rever:
+
+- parte A: as listas e os dicionários, as funções e as list comprehensions;
+- parte B: as funções, a diferença entre `print` e `return` e onde vive cada variável;
+- parte C: as funções e as list comprehensions;
+- parte D: os ficheiros, o JSON e as exceções, e o guia do tema 04 deste ano;
+- parte E: os módulos e a organização de um projeto.
 
 ![Rodapé](../imagens/rodape.png)

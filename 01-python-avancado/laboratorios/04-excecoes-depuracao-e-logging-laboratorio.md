@@ -2,20 +2,16 @@
 
 # Laboratório: Exceções, depuração e logging
 
-Laboratório do tema Exceções, depuração e logging, do módulo 10794, Programação avançada com Python. Vais pegar no ginásio Pokémon do tema 03 e dar-lhe três coisas novas, uma de cada vez. A primeira são exceções próprias para as recusas. A segunda é a investigação de dois erros com o depurador do VS Code. A terceira é um registo do que o ginásio faz. Cada passo diz o que fazer, porquê e o que deves ver, e avanças ao teu ritmo. O que não acabares na aula, acabas em casa ou na aula seguinte. Tudo o que precisas está aqui; o [guia do tema](../04-excecoes-depuracao-e-logging.md) tem a teoria completa, para quem quiser saber mais.
-
 ## O que vais construir
 
-No fim, o teu ginásio é igual à versão 04 do exemplo dos Pokémon. O `Treinador` recusa a captura de um sétimo Pokémon, e o `Ginasio` recusa um combate sem Pokémon com vida. As duas recusas são exceções próprias, que estão num ficheiro novo, o `erros.py`. O ginásio regista também os combates, e o programa que o usa escolhe o que quer ver desse registo. Pelo caminho, investigas dois erros com o depurador. Em dois desafios finais, acrescentas uma exceção tua e dás dados à `EquipaCheia`.
-
-A pasta de trabalho acaba assim:
+Vais dar ao ginásio Pokémon do tema 03 exceções próprias para as recusas e investigar dois erros com o depurador do VS Code. Depois, o ginásio passa a escrever no registo, primeiro no ecrã e a seguir num ficheiro. No fim, a pasta tem estes ficheiros:
 
 ```text
 ginasio-com-erros/
-├── anunciadores.py
 ├── capturas.py
 ├── combates.py
 ├── erros.py
+├── ginasio.log
 ├── ginasio.py
 ├── investigar.py
 ├── pilha.py
@@ -24,162 +20,338 @@ ginasio-com-erros/
 └── teste_erros.py
 ```
 
-| Fase | O que muda | O que funciona no fim |
-| --- | --- | --- |
-| 1 | O `erros.py` e o `teste_erros.py` | As três exceções do ginásio, em família, confirmadas pelo `isinstance` |
-| 2 | O `capturar`, no `ginasio.py`, e o `capturas.py` | A equipa recusa o sétimo Pokémon e fica com seis |
-| 3 | O `combater`, no `ginasio.py`, e o `combates.py` | Um combate sem Pokémon com vida é recusado, e o ginásio fica como estava |
-| 4 | O `investigar.py` | Um erro de cálculo, sem mensagem de erro, encontrado com o depurador |
-| 5 | O `pilha.py` | Um erro que rebenta longe da causa, seguido pela pilha de chamadas |
-| 6 | O registo, no `ginasio.py`, e o `registo.py` | O ginásio regista os combates, e o nível escolhe-se no programa |
-| 7 | O `registo.py` | O registo vai para um ficheiro, com a hora de cada mensagem |
-
-Em todas as fases trabalhas da mesma maneira. Antes de executares um programa, prevês o que vais ver. Depois executas e comparas. Quando o resultado é diferente do que previste, procura a explicação antes de continuares: é ela que mais te ensina. Todos os programas deste laboratório foram executados em Python 3.9 e em Python 3.14, com as mesmas saídas.
-
-## Palavras que vais usar
-
-- Exceção: a forma de o Python avisar que uma linha não pode ser feita. Sobe pelas funções que estão a meio até alguém a apanhar, ou até parar o programa.
-- `raise`: a instrução que lança uma exceção. Em inglês quer dizer levantar.
-- `try`, `except`, `else` e `finally`: o `try` é o bloco onde se espera uma exceção, e o `except` é o bloco que a trata, se for do tipo indicado. O `else` corre quando o `try` acaba sem exceção, e o `finally` corre sempre.
-- Docstring: o texto entre três aspas, logo a seguir ao `def` ou ao `class`, que explica o que a função ou a classe faz.
-- Herança: uma classe-filha herda tudo o que a classe-mãe tem. Em `class EquipaCheia(ErroDoGinasio)`, a classe entre parênteses é a classe-mãe.
-- Exceção própria: uma classe criada por ti, filha de `Exception`, com um nome que diz o problema. Para saber mais, vê a secção "Uma exceção própria" do [guia](../04-excecoes-depuracao-e-logging.md).
-- `isinstance`: a função que pergunta se um objeto é de uma classe, ou de uma classe-filha dela, e devolve `True` ou `False`.
-- Constante: um valor que o programa não muda, escrito em maiúsculas, como `TAMANHO_MAXIMO_DA_EQUIPA`.
-- Sintoma e causa: o sintoma é o que se vê de um erro, como uma mensagem ou um valor errado. A causa é a linha de código que está mal e que provoca o sintoma. Os dois raramente estão no mesmo sítio.
-- Hipótese: uma frase que diz o que achas que está a acontecer, e que os valores do programa podem confirmar ou desmentir.
-- Erro de execução e erro de lógica: o erro de execução para o programa a meio, com uma mensagem. O erro de lógica deixa o programa correr até ao fim e dá o resultado errado.
-- Traceback: a mensagem de erro completa, com o caminho de chamadas até à linha onde a exceção rebentou. Quer dizer, à letra, "o rasto para trás".
-- Andar: cada par de linhas `File` de um traceback, com o ficheiro, a linha, a função e o código.
-- Pilha de chamadas: a lista das funções e dos métodos que estão a meio, cada um à espera do que chamou.
-- Depurador e ponto de paragem: o depurador corre o programa e deixa-o parar. O ponto de paragem é a linha onde ele para, antes de a executar. Para saber mais, vê a secção "O depurador do VS Code" do [guia](../04-excecoes-depuracao-e-logging.md).
-- Logging, logger e nível: o logging é o registo do que um programa faz, escrito para quem o mantém. O logger é o objeto que escreve as mensagens. O nível diz a importância de cada mensagem: `DEBUG`, `INFO`, `WARNING`, `ERROR` ou `CRITICAL`.
-- `basicConfig`: a chamada que configura o registo do programa inteiro, com o nível mínimo, o formato das linhas e, se for preciso, o ficheiro.
+1. [Fase 1: As exceções do ginásio](#fase-1-as-exceções-do-ginásio)
+2. [Fase 2: A recusa vem antes da mudança](#fase-2-a-recusa-vem-antes-da-mudança)
+3. [Fase 3: finally: o que corre sempre](#fase-3-finally-o-que-corre-sempre)
+4. [Fase 4: O depurador para num ponto de paragem](#fase-4-o-depurador-para-num-ponto-de-paragem)
+5. [Fase 5: Um erro que rebenta longe da causa](#fase-5-um-erro-que-rebenta-longe-da-causa)
+6. [Fase 6: O ginásio escreve no registo](#fase-6-o-ginásio-escreve-no-registo)
+7. [Fase 7: O registo num ficheiro](#fase-7-o-registo-num-ficheiro)
 
 ## O que precisas
 
-- O Python 3, para executar os programas. Confirma que o tens com o comando `python3 --version`. Deve aparecer `Python 3.` seguido de dois números, o que quer dizer que o Python está instalado. No Windows, se `python3` não funcionar, usa `python --version` ou `py --version`.
-- O VS Code com a extensão Python da Microsoft, para escrever os ficheiros, executar os programas e depurá-los. Confirma que a tens: no ícone das extensões da barra lateral, escreve `Python` na caixa de pesquisa. A extensão da Microsoft deve aparecer como instalada.
-- Os ficheiros `pokemon.py`, `ginasio.py` e `anunciadores.py` da [pasta 03 dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/), que o laboratório copia na preparação. O [README do exemplo](../../exemplos/python-avancado/pokemon/README.md) explica o que tem cada pasta.
-- O `ginasio.py` que copias já tem uma classe `Combate`, escrita com `@dataclass`, que o laboratório não muda. É por isso que o ficheiro começa por `from dataclasses import dataclass`. Deixa essa linha como está.
-
-## Se alguma coisa falhar
-
-1. Estás na pasta certa? Todos os comandos correm na pasta `ginasio-com-erros`. Se abriste o terminal do VS Code com essa pasta aberta, já lá estás. Para confirmar, escreve `pwd` (na linha de comandos clássica do Windows, `cd`) e vê se o caminho acaba em `ginasio-com-erros`.
-2. Guardaste o ficheiro antes de executar? O Python executa o que está guardado no disco. Guarda e executa outra vez.
-3. Os ficheiros estão todos na mesma pasta? O `ginasio.py` importa do `erros.py` e do `pokemon.py`, e só os encontra se estiverem na mesma pasta que ele.
-4. Apareceu uma mensagem de erro que não esperavas? Lê a última linha: diz o tipo de erro e o que aconteceu. Procura essa linha em [Problemas frequentes](#problemas-frequentes).
-5. Cada fase parte do ficheiro como ficou na paragem anterior. Se te perderes, compara o teu `ginasio.py` com o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04. Na paragem da fase 6, o teu é igual a ele. Na paragem da fase 3, é igual a ele sem as linhas do logger, que só entram na fase 6. O texto do início e a demonstração do fim do exemplo são diferentes em qualquer dos casos, porque não os mudas.
+- O Python 3.9 ou mais recente. O comando `python3 --version` deve mostrar `Python 3.9.6` ou uma versão maior. No Windows, se o `python3` não existir, usa `python` ou `py` em todos os comandos.
+- O VS Code com a extensão Python, da Microsoft, que traz o depurador. No painel Extensions, à esquerda, escreve `Python` na pesquisa: a extensão da Microsoft deve aparecer como instalada.
+- O `pokemon.py` e o `ginasio.py` da [pasta 03 dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/), que copias em [Preparar o projeto](#preparar-o-projeto).
 
 ## Preparar o projeto
 
-1. Cria uma pasta nova no teu computador, com o nome `ginasio-com-erros`, e abre-a no VS Code. No VS Code, o menu File, Open Folder (Ficheiro, Abrir Pasta, se estiver em português) abre uma pasta. Dar à pasta um nome sem espaços nem acentos evita problemas com os comandos.
-2. Copia para essa pasta os três ficheiros da [pasta 03 dos exemplos](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/): o `pokemon.py`, o `ginasio.py` e o `anunciadores.py`. Copia os dos exemplos, e não os teus do tema 03, para os testes deste laboratório darem exatamente as saídas indicadas. O VS Code mostra os ficheiros na barra lateral, à esquerda.
-3. Abre o terminal do VS Code, que já fica na pasta aberta. Usa o menu Terminal, New Terminal (Terminal, Novo Terminal, em português), ou o atalho Ctrl+\` (a tecla do acento grave). Escreve o comando que executa a demonstração do ginásio:
+1. Cria uma pasta nova, `ginasio-com-erros`, onde guardas os trabalhos da disciplina, e abre-a no VS Code, com a opção `Open Folder...` do menu File. No menu Terminal, escolhe New Terminal e escreve `pwd`. O que deves ver: o caminho da pasta, a acabar em `ginasio-com-erros`.
 
-```bash
-python3 ginasio.py
-```
+2. Copia para a pasta o [`pokemon.py`](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/pokemon.py) e o [`ginasio.py`](../../exemplos/python-avancado/pokemon/03-objetos-e-composicao/ginasio.py) dos exemplos. Abre cada um e copia o conteúdo todo; no painel Explorer, cria um ficheiro com o mesmo nome, cola e guarda. Copia os dos exemplos, e não os teus do laboratório 03, para as saídas e os números das linhas serem os deste laboratório.
 
-O que deves ver: a demonstração do tema 03, com os combates, e uma última linha igual a esta:
+3. Corre o ginásio, para confirmares o ponto de partida:
 
-```text
-Ash continua com 2 Pokémon; Misty continua com 1.
-```
+   ```bash
+   python3 ginasio.py
+   ```
 
-Isto quer dizer que os três ficheiros estão no sítio certo e que o ponto de partida funciona. Se aparecer outra coisa, vê as [verificações rápidas](#se-alguma-coisa-falhar).
-
-Ao longo do laboratório, vais mudar o `ginasio.py` e criar ficheiros novos nesta pasta. Os testes ficam em ficheiros à parte, e não no programa principal do `ginasio.py`.
+   O que deves ver: os combates do tema 03 e, na última linha, `Ash continua com 2 Pokémon; Misty continua com 1.` Se aparecer outra coisa, vê [Se alguma coisa falhar](#se-alguma-coisa-falhar).
 
 ## Fase 1: As exceções do ginásio
 
-Até aqui, quando o ginásio não podia fazer o que lhe pediam, escrevia uma mensagem e saía. Quem o chamou não ficava a saber que o pedido falhou. Uma exceção própria resolve isso: é uma classe criada por ti, filha de `Exception`, que um método lança com `raise` quando recusa um pedido. Como herda de `Exception`, a classe herda tudo o que uma exceção precisa, incluindo a forma de guardar e mostrar a mensagem. Por isso o corpo pode ser só a docstring.
+Crias o `erros.py`, com as três exceções do ginásio, e confirmas com o `isinstance` que formam uma família, com o `ErroDoGinasio` como classe-mãe. Rever: [As exceções do ginásio](../04-excecoes-depuracao-e-logging.md#as-exceções-do-ginásio).
 
-O ginásio vai ter três exceções, em família. O `ErroDoGinasio` é a classe-mãe, e a `EquipaCheia` e a `SemPokemonComVida` são filhas dele. Com uma classe-mãe comum, um só `except ErroDoGinasio` apanha qualquer erro do ginásio, e um `except` com o nome de uma filha apanha só esse caso. Para saber mais, lê a secção "Uma exceção própria" do [guia](../04-excecoes-depuracao-e-logging.md).
+1. Cria o ficheiro `erros.py`, na pasta do projeto, com este conteúdo:
 
-1. Cria o ficheiro `erros.py`, na pasta `ginasio-com-erros`. Na barra lateral, passa o rato sobre o nome da pasta e clica no ícone do ficheiro com um sinal de mais (New File, Novo Ficheiro). Escreve o nome `erros.py` e carrega em Enter. O ficheiro é novo e fica completo, com este conteúdo:
+   ```python
+   """Exceções próprias do ginásio Pokémon, o código das aulas de Python avançado.
 
-```python
-"""Exceções próprias do ginásio Pokémon, o código das aulas de Python avançado.
-
-Todas herdam de ErroDoGinasio, que herda de Exception. Assim, quem quiser
-apanhar qualquer erro do ginásio escreve except ErroDoGinasio, e quem quiser
-apanhar só um caso escreve o nome da classe-filha.
-"""
+   Todas herdam de ErroDoGinasio, que herda de Exception. Assim, quem quiser
+   apanhar qualquer erro do ginásio escreve except ErroDoGinasio, e quem quiser
+   apanhar só um caso escreve o nome da classe-filha.
+   """
 
 
-class ErroDoGinasio(Exception):
-    """Classe-mãe de todos os erros do ginásio Pokémon."""
+   class ErroDoGinasio(Exception):
+       """Classe-mãe de todos os erros do ginásio Pokémon."""
 
 
-class EquipaCheia(ErroDoGinasio):
-    """Um treinador tentou capturar um Pokémon com a equipa já completa."""
+   class EquipaCheia(ErroDoGinasio):
+       """Um treinador tentou capturar um Pokémon com a equipa já completa."""
 
 
-class SemPokemonComVida(ErroDoGinasio):
-    """Um combate não pode começar: um dos treinadores não tem Pokémon com vida."""
-```
+   class SemPokemonComVida(ErroDoGinasio):
+       """Um combate não pode começar: um dos treinadores não tem Pokémon com vida."""
+   ```
 
-Leitura guiada: o ficheiro abre com uma docstring que diz o que ele é e qual é a regra da família. Depois vêm as três classes. O `ErroDoGinasio` herda de `Exception`, e as outras duas herdam do `ErroDoGinasio`. Nenhuma tem mais do que a docstring, porque tudo o que uma exceção precisa vem da herança.
+2. Cria o ficheiro `teste_erros.py`, que pergunta ao Python se a família está certa:
 
-2. Cria o ficheiro `teste_erros.py`, com este conteúdo. O `isinstance(objeto, classe)` pergunta se o objeto é dessa classe, ou de uma classe-filha dela, e devolve `True` ou `False`. O programa usa-o para confirmar a família.
+   ```python
+   # teste_erros.py: confirma que as exceções do ginásio formam uma família.
+   from erros import EquipaCheia, ErroDoGinasio, SemPokemonComVida
 
-```python
-# teste_erros.py: confirma que as exceções do ginásio formam uma família.
-from erros import EquipaCheia, ErroDoGinasio, SemPokemonComVida
+   # A primeira linha pergunta se cada filha é um ErroDoGinasio; a segunda, se a mãe é uma exceção.
+   print(isinstance(EquipaCheia("teste"), ErroDoGinasio), isinstance(SemPokemonComVida("teste"), ErroDoGinasio))
+   print(isinstance(ErroDoGinasio("teste"), Exception))
+   erro = EquipaCheia("A equipa está cheia.")
+   print(erro)
+   ```
 
-print(isinstance(EquipaCheia("teste"), ErroDoGinasio), isinstance(SemPokemonComVida("teste"), ErroDoGinasio))
-print(isinstance(ErroDoGinasio("teste"), Exception))
-erro = EquipaCheia("A equipa está cheia.")
-print(erro)
-```
+   Corre `python3 teste_erros.py`. O que deves ver:
 
-Leitura guiada: a primeira linha faz duas perguntas, uma por cada filha: cada uma é um `ErroDoGinasio`? A segunda pergunta se o próprio `ErroDoGinasio` é uma exceção. As últimas duas linhas criam uma exceção com uma mensagem e mostram-na com `print`.
+   ```text
+   True True
+   True
+   A equipa está cheia.
+   ```
 
-3. Antes de executares, prevê as três linhas. Depois, no terminal, corre:
+   O `print` de uma exceção escreve a mensagem dela. Se aparecer um `ModuleNotFoundError` ou um `TypeError`, vê [`No module named 'erros'`](#modulenotfounderror-no-module-named-erros) ou [`EquipaCheia() takes no arguments`](#typeerror-equipacheia-takes-no-arguments).
 
-```bash
-python3 teste_erros.py
-```
+3. Tira, de propósito, a `EquipaCheia` da família: no `erros.py`, muda a linha `class EquipaCheia(ErroDoGinasio):` para `class EquipaCheia(Exception):`. Antes de correres, prevê o que muda nas três linhas. Corre outra vez o `teste_erros.py`. O que deves ver:
 
-No Windows, se `python3` não funcionar, o comando é `python teste_erros.py` ou `py teste_erros.py`.
+   ```text
+   False True
+   True
+   A equipa está cheia.
+   ```
 
-O que deves ver:
-
-```text
-True True
-True
-A equipa está cheia.
-```
-
-Isto quer dizer que as duas primeiras linhas confirmam a família: as duas exceções do ginásio são `ErroDoGinasio`, e um `ErroDoGinasio` é uma exceção. A terceira linha mostra que um `print` de uma exceção escreve a sua mensagem. Se aparecer `ModuleNotFoundError`, o `teste_erros.py` não está na mesma pasta que o `erros.py`: vê os [problemas frequentes](#problemas-frequentes).
+   A `EquipaCheia` continua a ser uma exceção, com a sua mensagem, mas já não é um `ErroDoGinasio`, e um `except ErroDoGinasio` deixava de a apanhar. Volta a pôr `ErroDoGinasio` entre os parênteses e corre outra vez: a primeira linha volta a `True True`.
 
 ### Paragem 1
 
-Tens o `erros.py` com a família de exceções, e o teste confirma que as duas filhas são `ErroDoGinasio` e que o `ErroDoGinasio` é uma exceção.
+O `erros.py` tem as três exceções, e o `teste_erros.py` confirma a família.
 
-Pensa antes de continuares: porque é que a `EquipaCheia` não precisa de mais código do que a docstring? A resposta: porque herda do `ErroDoGinasio`, que herda de `Exception`, tudo o que uma exceção precisa para guardar e mostrar a mensagem.
+Pensa antes de continuares: a `EquipaCheia` só tem a docstring. De onde vem o que o `print(erro)` usou para escrever a mensagem? A resposta: da `Exception`, através do `ErroDoGinasio`. A classe herda tudo o que uma exceção precisa, e a forma de guardar e mostrar a mensagem vem com isso.
 
-## Fase 2: A equipa cheia
+## Fase 2: A recusa vem antes da mudança
 
-Quando um método recusa um pedido, tem de o fazer antes de mexer no estado. Se o `raise` viesse depois do `append`, o Pokémon recusado ficava na equipa, e a mensagem diria uma coisa enquanto o estado diria outra. Nesta fase pões um limite de seis Pokémon na equipa do `Treinador`, guardado numa constante, e fazes o `capturar` lançar a `EquipaCheia` quando a equipa já o atingiu. Quem chama o `capturar` apanha a recusa com `try` e `except`, e o `else` corre só quando a captura correu bem. Para saber mais, lê as secções "raise: uma recusa que não se pode ignorar" e "As exceções do ginásio" do [guia](../04-excecoes-depuracao-e-logging.md).
+Pões um limite de seis Pokémon na equipa, e o `capturar` passa a recusar o sétimo com a `EquipaCheia`. O `raise` fica antes do `append`, para a recusa vir antes da mudança. Rever: [A recusa vem antes da mudança](../04-excecoes-depuracao-e-logging.md#a-recusa-vem-antes-da-mudança).
 
-1. Em `ginasio.py`, substitui a linha `from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta` por estas linhas. Trazem para o ficheiro as duas exceções e a constante com o limite da equipa. Ter o limite num só sítio evita repeti-lo na condição e na mensagem.
+1. No `ginasio.py`, substitui a linha `from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta` por estas:
+
+   ```python
+   from erros import EquipaCheia
+   from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
+
+   # O limite da equipa, num só sítio: a condição e a mensagem do capturar usam-no.
+   TAMANHO_MAXIMO_DA_EQUIPA = 6
+   ```
+
+2. Na classe `Treinador`, substitui o método `capturar` inteiro por este, com o `def` alinhado com os outros métodos:
+
+   ```python
+       def capturar(self, pokemon):
+           """Junta à equipa um Pokémon que foi criado fora do treinador.
+
+           Se a equipa já tem TAMANHO_MAXIMO_DA_EQUIPA Pokémon, não junta nada e
+           lança EquipaCheia.
+           """
+           # A verificação vem antes do append: com a equipa cheia, o raise para o
+           # método aqui, e o Pokémon recusado nunca entra na equipa.
+           if len(self.equipa) >= TAMANHO_MAXIMO_DA_EQUIPA:
+               raise EquipaCheia(f"{self.nome} já tem {TAMANHO_MAXIMO_DA_EQUIPA} Pokémon e não pode capturar {pokemon.nome}.")
+           self.equipa.append(pokemon)
+   ```
+
+3. Cria o ficheiro `capturas.py`, em que o Brock tenta capturar oito Pokémon para seis lugares:
+
+   ```python
+   # capturas.py: testa o limite da equipa, com oito capturas para seis lugares.
+   from erros import EquipaCheia
+   from pokemon import Pokemon
+   from ginasio import Treinador
+
+   brock = Treinador("Brock")
+   nomes = ["Geodude", "Onix", "Graveler", "Golem", "Sandshrew", "Rhyhorn", "Kabuto", "Omanyte"]
+   for nome in nomes:
+       try:
+           brock.capturar(Pokemon(nome, "Pedra", 50, 20))
+       except EquipaCheia as erro:
+           print(f"Recusado: {erro}")
+       else:
+           # O else só corre quando o capturar acaba sem exceção.
+           print(f"{nome} capturado.")
+   print(len(brock.equipa))
+   ```
+
+4. Antes de correres, prevê o número da última linha: o ciclo tenta oito capturas. Corre `python3 capturas.py`. O que deves ver:
+
+   ```text
+   Geodude capturado.
+   Onix capturado.
+   Graveler capturado.
+   Golem capturado.
+   Sandshrew capturado.
+   Rhyhorn capturado.
+   Recusado: Brock já tem 6 Pokémon e não pode capturar Kabuto.
+   Recusado: Brock já tem 6 Pokémon e não pode capturar Omanyte.
+   6
+   ```
+
+   A última linha diz 6: as duas recusas pararam o `capturar` antes do `append`, e o ciclo continuou porque o `except` as apanhou. Se aparecer um `NameError`, vê [`name 'EquipaCheia' is not defined`](#nameerror-name-equipacheia-is-not-defined).
+
+5. Põe, de propósito, a mudança antes da recusa: no `capturar`, passa a linha `self.equipa.append(pokemon)` para logo a seguir ao comentário, por cima do `if`. Corre outra vez o `capturas.py`. O que deves ver:
+
+   ```text
+   Geodude capturado.
+   Onix capturado.
+   Graveler capturado.
+   Golem capturado.
+   Sandshrew capturado.
+   Recusado: Brock já tem 6 Pokémon e não pode capturar Rhyhorn.
+   Recusado: Brock já tem 6 Pokémon e não pode capturar Kabuto.
+   Recusado: Brock já tem 6 Pokémon e não pode capturar Omanyte.
+   8
+   ```
+
+   Cada Pokémon entra na equipa antes da verificação. O Rhyhorn é dado como recusado e ficou na equipa, que acaba com oito: a mensagem diz uma coisa e a equipa diz outra. Volta a pôr o `append` por baixo do `if` e corre outra vez: a última linha volta a 6.
+
+### Paragem 2
+
+O `Treinador` recusa o sétimo Pokémon com a `EquipaCheia`, e a equipa fica com seis.
+
+Pensa antes de continuares: se o `capturar` recusasse com um `print` e um `return`, como o `combater` do tema 03, o que escrevia o `capturas.py` para o Kabuto? A resposta: `Kabuto capturado.` O `capturar` acabava sem exceção, e o `else` corria. A última linha dizia 6 na mesma, e o programa contradizia-se sem dar por isso.
+
+## Fase 3: finally: o que corre sempre
+
+O `combater` passa a recusar com a `SemPokemonComVida`, e um programa com três desafios escreve o estado do ginásio num `finally`, que corre sempre, haja ou não exceção. Rever: [finally: o que corre sempre](../04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre).
+
+1. No início do `ginasio.py`, substitui a linha `from erros import EquipaCheia` por esta:
+
+   ```python
+   from erros import EquipaCheia, SemPokemonComVida
+   ```
+
+2. Na classe `Ginasio`, no método `combater`, substitui as linhas desde `def combater(self, desafiante):` até ao `return`, inclusive, por estas. O resto do método, a partir do `print` com os sinais `===`, fica como está:
+
+   ```python
+       def combater(self, desafiante):
+           """Um combate entre o Pokémon escolhido por cada treinador.
+
+           Se um dos dois não tem Pokémon com vida, não há combate: lança
+           SemPokemonComVida, e o ginásio fica como estava.
+           """
+           atacante = desafiante.escolher_pokemon()
+           defensor = self.lider.escolher_pokemon()
+           if atacante is None or defensor is None:
+               raise SemPokemonComVida(f"Não há combate em {self.cidade}: um dos treinadores não tem Pokémon com vida.")
+           # O desafiante só entra na lista depois da verificação: um combate
+           # recusado deixa o ginásio como estava.
+           if desafiante not in self.desafiantes:
+               self.desafiantes.append(desafiante)
+   ```
+
+3. Cria o ficheiro `combates.py`. O Gary desafia a Misty duas vezes, e o Brock entra pelo meio com um Geodude sem vida nenhuma:
+
+   ```python
+   # combates.py: três desafios a Cerulean, e o estado do ginásio depois de cada um.
+   from erros import ErroDoGinasio
+   from pokemon import Pokemon, PokemonAgua, PokemonFogo
+   from ginasio import Ginasio, Lider, Treinador
+
+   misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
+   gary = Treinador.com_equipa("Gary", [PokemonFogo("Vulpix", 30, 20)])
+   brock = Treinador.com_equipa("Brock", [Pokemon("Geodude", "Pedra", 0, 10)])
+   cerulean = Ginasio("Cerulean", misty)
+   for desafiante in [gary, brock, gary]:
+       try:
+           cerulean.combater(desafiante)
+       except ErroDoGinasio as erro:
+           print(f"{desafiante.nome} recusado: {erro}")
+       finally:
+           # O finally corre no fim de cada volta, com ou sem exceção.
+           print(f"Desafiantes: {len(cerulean.desafiantes)}, combates: {len(cerulean.combates)}")
+   ```
+
+4. Corre `python3 combates.py`. O que deves ver:
+
+   ```text
+
+   === Gary desafia Misty no ginásio de Cerulean ===
+   Vulpix ataca Starmie e tira 20 de vida.
+   Starmie tem 70/150 de vida.
+   É super eficaz!
+   Starmie ataca Vulpix e tira 70 de vida.
+   Vulpix está KO (0/150).
+   Desafiantes: 1, combates: 1
+   Brock recusado: Não há combate em Cerulean: um dos treinadores não tem Pokémon com vida.
+   Desafiantes: 1, combates: 1
+   Gary recusado: Não há combate em Cerulean: um dos treinadores não tem Pokémon com vida.
+   Desafiantes: 1, combates: 1
+   ```
+
+   O Brock, sem vida, e o Gary, com o Vulpix KO, são recusados, e o ginásio fica com um desafiante e um combate. Se a recusa aparecer sem a cidade, ou com os desafiantes a 2, vê [a recusa sem a cidade](#a-recusa-aparece-sem-a-cidade) ou [os desafiantes a 2](#a-linha-dos-desafiantes-diz-2-depois-do-brock).
+
+5. Tira, de propósito, o `except`: no `combates.py`, põe um `#` no início das duas linhas do `except`, a do `except` e a do `print` por baixo dele. Antes de correres, prevê se a linha dos desafiantes ainda aparece depois do desafio do Brock, que já ninguém apanha. Corre outra vez. Depois do combate do Gary, o que deves ver é:
+
+   ```text
+   Desafiantes: 1, combates: 1
+   Desafiantes: 1, combates: 1
+   Traceback (most recent call last):
+   ```
+
+   E a mensagem de erro acaba nesta linha:
+
+   ```text
+   erros.SemPokemonComVida: Não há combate em Cerulean: um dos treinadores não tem Pokémon com vida.
+   ```
+
+   A linha dos desafiantes aparece duas vezes, a segunda já com a exceção a subir. O `finally` correu antes de a exceção parar o programa, e o terceiro desafio nunca aconteceu. Tira os dois `#` e corre outra vez: a saída volta à do passo 4.
+
+### Paragem 3
+
+O `Ginasio` recusa um combate sem Pokémon com vida com a `SemPokemonComVida`, e o `combates.py` mostra o estado do ginásio depois de cada desafio. O `ginasio.py` completo, como deve estar agora:
 
 ```python
+"""Ginásio Pokémon: composição e agregação, o código das aulas de Python avançado.
+
+Três classes que guardam outros objetos:
+
+- Treinador tem uma equipa de Pokémon. É uma agregação: os Pokémon são
+  criados fora do treinador e continuam a existir sem ele.
+- Ginasio tem um líder e uma lista de desafiantes, que são treinadores criados
+  fora (agregação), e guarda o registo dos seus combates (composição): os
+  objetos Combate só são criados pelo ginásio, dentro do método combater,
+  e só o ginásio os guarda.
+- Combate é o registo de um combate: quem desafiou, com que Pokémon e quem
+  venceu.
+
+E três coisas que vieram depois, com as partes 5, 6 e 7 do guia:
+
+- Lider É UM Treinador que escolhe sempre o Pokémon com mais vida. O
+  Treinador tem um método de classe, com_equipa, que cria um treinador já com
+  a equipa; chamado em Lider, cria um Lider.
+- O Ginasio anuncia os seus combates através de um anunciador, que pode ser
+  qualquer objeto com o método anunciar(combate). É o duck typing: os
+  anunciadores estão no ficheiro anunciadores.py.
+- Combate passou a ser uma dataclass: o @dataclass escreve o construtor, a
+  forma de mostrar um registo com print e a comparação de registos com ==.
+
+As classes de Pokémon vêm do ficheiro pokemon.py, que tem de estar na mesma
+pasta que este.
+"""
+
+from dataclasses import dataclass
+
 from erros import EquipaCheia, SemPokemonComVida
 from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
 
+# O limite da equipa, num só sítio: a condição e a mensagem do capturar usam-no.
 TAMANHO_MAXIMO_DA_EQUIPA = 6
-```
 
-Leitura guiada: as duas importações trazem para o `ginasio.py` as exceções do `erros.py`. A constante fica logo a seguir, no início do ficheiro, onde qualquer método a lê. A `SemPokemonComVida` ainda não é usada: entra na fase 3.
 
-2. Em `ginasio.py`, substitui o método `capturar` do `Treinador` por este. A verificação vem antes do `append`. A linha `class Treinador:` do bloco só mostra onde o método fica: não a copies.
-
-```python
 class Treinador:
-    # Só o método capturar muda; o resto da classe fica como estava.
+    """Um treinador tem uma equipa de Pokémon (agregação)."""
+
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        # AGREGAÇÃO: a equipa começa vazia e recebe Pokémon que já existiam.
+        self.equipa = []
+
+    @classmethod
+    def com_equipa(cls, nome, pokemons):
+        """Cria um treinador da classe cls, já com os Pokémon da lista na equipa.
+
+        É um construtor alternativo. Em Treinador.com_equipa(...), cls é
+        Treinador; em Lider.com_equipa(...), cls é Lider, e o objeto criado
+        é um Lider.
+        """
+        treinador = cls(nome)
+        for pokemon in pokemons:
+            treinador.capturar(pokemon)
+        return treinador
 
     def capturar(self, pokemon):
         """Junta à equipa um Pokémon que foi criado fora do treinador.
@@ -187,105 +359,61 @@ class Treinador:
         Se a equipa já tem TAMANHO_MAXIMO_DA_EQUIPA Pokémon, não junta nada e
         lança EquipaCheia.
         """
+        # A verificação vem antes do append: com a equipa cheia, o raise para o
+        # método aqui, e o Pokémon recusado nunca entra na equipa.
         if len(self.equipa) >= TAMANHO_MAXIMO_DA_EQUIPA:
             raise EquipaCheia(f"{self.nome} já tem {TAMANHO_MAXIMO_DA_EQUIPA} Pokémon e não pode capturar {pokemon.nome}.")
         self.equipa.append(pokemon)
-```
 
-Leitura guiada: a verificação vem primeiro. O `len(self.equipa)` é o número de Pokémon na equipa, e o `>=` compara-o com o limite. Se a equipa já está cheia, o `raise` cria a `EquipaCheia`, com uma mensagem que diz quem, quantos e que Pokémon ficou de fora, e o método para aí. O `append` só corre se a verificação passar.
+    def escolher_pokemon(self):
+        """Devolve o primeiro Pokémon da equipa que ainda pode lutar, ou None."""
+        for pokemon in self.equipa:
+            if pokemon.vida > 0:
+                return pokemon
+        return None
 
-3. Cria o ficheiro `capturas.py`, com este conteúdo. O Brock tenta capturar oito Pokémon para seis lugares.
 
-```python
-# capturas.py: testa o limite da equipa, com oito capturas para seis lugares.
-from erros import EquipaCheia
-from pokemon import Pokemon
-from ginasio import Treinador
+class Lider(Treinador):
+    """Um Lider É UM Treinador que escolhe sempre o Pokémon com mais vida."""
 
-brock = Treinador("Brock")
-nomes = ["Geodude", "Onix", "Vulpix", "Zubat", "Sandshrew", "Rhyhorn", "Kabuto", "Omanyte"]
-for nome in nomes:
-    try:
-        brock.capturar(Pokemon(nome, "Pedra", 50, 20))
-    except EquipaCheia as erro:
-        print(f"Recusado: {erro}")
-    else:
-        print(f"{nome} capturado.")
-print(len(brock.equipa))
-```
+    def escolher_pokemon(self):
+        """Devolve o Pokémon da equipa com mais vida, ou None se estão todos KO."""
+        escolhido = None
+        for pokemon in self.equipa:
+            if pokemon.vida > 0:
+                if escolhido is None or pokemon.vida > escolhido.vida:
+                    escolhido = pokemon
+        return escolhido
 
-Leitura guiada: o ciclo percorre os oito nomes e tenta capturar cada um dentro de um `try`. Se o `capturar` lança a `EquipaCheia`, o `except` escreve a mensagem. Se não lança, o `else` escreve que o Pokémon foi capturado. O último `print` conta os Pokémon que ficaram na equipa.
 
-4. Antes de executares, prevê quantas linhas "capturado" vão aparecer, quais são os Pokémon recusados e qual é o número da última linha. Depois executa:
+@dataclass
+class Combate:
+    """Registo de um combate. Só o ginásio cria registos (composição).
 
-```bash
-python3 capturas.py
-```
+    É uma dataclass: guarda os nomes do desafiante, do seu Pokémon e do
+    vencedor, e o @dataclass escreve sozinho o construtor, a forma de o
+    mostrar com print e a comparação com ==.
+    """
 
-O que deves ver:
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
 
-```text
-Geodude capturado.
-Onix capturado.
-Vulpix capturado.
-Zubat capturado.
-Sandshrew capturado.
-Rhyhorn capturado.
-Recusado: Brock já tem 6 Pokémon e não pode capturar Kabuto.
-Recusado: Brock já tem 6 Pokémon e não pode capturar Omanyte.
-6
-```
+    def resumo(self):
+        """Devolve uma linha de texto que descreve o combate."""
+        return f"{self.desafiante} com {self.pokemon_desafiante}: venceu {self.vencedor}"
 
-Isto quer dizer que a equipa aceitou seis Pokémon e recusou os dois últimos. Se aparecer outra coisa, vê os [problemas frequentes](#problemas-frequentes).
 
-5. Pensa: porque é que a última linha diz 6, e não 8, se o ciclo tentou oito capturas?
-
-A resposta: porque o `raise` para o `capturar` antes do `append`. As duas capturas recusadas não chegaram a mexer na equipa. O ciclo continuou, porque o `except` apanhou as duas exceções.
-
-6. Agora uma experiência, com um erro de propósito. Troca no `capturar` a ordem do `append` e da verificação, de forma que o `append` venha primeiro. Antes de executares, prevê o que muda na saída. Em `ginasio.py`, substitui o método `capturar` por esta versão com erro, executa o `capturas.py` outra vez e compara:
-
-```python
-class Treinador:
-    # Versão com erro de propósito: só o método capturar muda.
-
-    def capturar(self, pokemon):
-        """Versão com erro de propósito: o append vem antes da verificação."""
-        self.equipa.append(pokemon)
-        if len(self.equipa) >= TAMANHO_MAXIMO_DA_EQUIPA:
-            raise EquipaCheia(f"{self.nome} já tem {TAMANHO_MAXIMO_DA_EQUIPA} Pokémon e não pode capturar {pokemon.nome}.")
-```
-
-O que deves ver:
-
-```text
-Geodude capturado.
-Onix capturado.
-Vulpix capturado.
-Zubat capturado.
-Sandshrew capturado.
-Recusado: Brock já tem 6 Pokémon e não pode capturar Rhyhorn.
-Recusado: Brock já tem 6 Pokémon e não pode capturar Kabuto.
-Recusado: Brock já tem 6 Pokémon e não pode capturar Omanyte.
-8
-```
-
-Isto acontece porque o Rhyhorn entrou na equipa e foi dado como recusado, e a equipa acaba com oito. A mensagem diz uma coisa e o estado diz outra. A experiência mostra que o `raise` tem de vir antes de qualquer alteração ao estado. Para corrigir, volta a pôr no `ginasio.py` o `capturar` do passo 2 e executa o `capturas.py` para confirmar que a última linha volta a ser 6.
-
-### Paragem 2
-
-O `Treinador` recusa o sétimo Pokémon com uma exceção, e a equipa fica com seis. O `capturas.py` mostra exatamente as nove linhas do passo 4.
-
-Pensa antes de continuares: se o `capturar` escrevesse a mensagem com `print` em vez de lançar a exceção, o `capturas.py` conseguia distinguir os Pokémon capturados dos recusados? A resposta: não. O `else` correria sempre, porque o `capturar` nunca falharia, e o programa escreveria "capturado" para os oito. A exceção é o que avisa o código que chamou.
-
-## Fase 3: O combate recusado
-
-O `combater` do tema 03 escrevia "Não há combate" e saía quando um dos treinadores não tinha Pokémon com vida. Quem o chamava não sabia se tinha havido combate. Nesta fase trocas isso por uma exceção. Há uma segunda mudança, mais subtil: a verificação passa para antes de o desafiante entrar na lista de desafiantes. Assim, um combate recusado deixa o ginásio exatamente como estava. O `finally` de um `try` corre sempre, haja ou não exceção, e vai servir para escrever, depois de cada desafio, quantos desafiantes e quantos combates o ginásio tem. Para saber mais, lê as secções "As exceções do ginásio" e "finally: o que corre sempre" do [guia](../04-excecoes-depuracao-e-logging.md).
-
-1. Em `ginasio.py`, no método `combater` do `Ginasio`, substitui as linhas desde `def combater(self, desafiante):` até ao `return` (inclusive) por este bloco. O `print` com os sinais `===` e o resto do método ficam como estão. A linha `class Ginasio:` do bloco só mostra onde o método fica: não a copies.
-
-```python
 class Ginasio:
-    # Só o início do método combater muda; o resto da classe fica como estava.
+    """Um ginásio tem um líder e recebe desafiantes (agregação)
+    e guarda o registo dos seus combates (composição)."""
+
+    def __init__(self, cidade, lider):
+        """Cria um ginásio com a cidade e o líder, e as duas listas vazias."""
+        self.cidade = cidade
+        self.lider = lider              # AGREGAÇÃO: Treinador criado fora
+        self.desafiantes = []           # AGREGAÇÃO: existem sem o ginásio
+        self.combates = []              # COMPOSIÇÃO: só o ginásio os cria
 
     def combater(self, desafiante):
         """Um combate entre o Pokémon escolhido por cada treinador.
@@ -297,94 +425,175 @@ class Ginasio:
         defensor = self.lider.escolher_pokemon()
         if atacante is None or defensor is None:
             raise SemPokemonComVida(f"Não há combate em {self.cidade}: um dos treinadores não tem Pokémon com vida.")
+        # O desafiante só entra na lista depois da verificação: um combate
+        # recusado deixa o ginásio como estava.
         if desafiante not in self.desafiantes:
             self.desafiantes.append(desafiante)
+        print(f"\n=== {desafiante.nome} desafia {self.lider.nome} no ginásio de {self.cidade} ===")
+        while True:
+            atacante.atacar(defensor)
+            if defensor.vida == 0:
+                vencedor = desafiante
+                break
+            defensor.atacar(atacante)
+            if atacante.vida == 0:
+                vencedor = self.lider
+                break
+        # O registo nasce aqui dentro: é o ginásio que o cria e o guarda.
+        self.combates.append(Combate(desafiante.nome, atacante.nome, vencedor.nome))
+
+    def mostrar_historico(self):
+        """Mostra o resumo de todos os combates deste ginásio."""
+        print(f"\nHistórico do ginásio de {self.cidade}:")
+        for combate in self.combates:
+            print(" -", combate.resumo())
+
+    def anunciar_combates(self, anunciador):
+        """Entrega cada combate ao anunciador, para ele o anunciar.
+
+        O anunciador pode ser um objeto de qualquer classe, desde que tenha o
+        método anunciar(combate). O ginásio não quer saber de que classe é.
+        """
+        for combate in self.combates:
+            anunciador.anunciar(combate)
+
+
+if __name__ == "__main__":
+    misty = Treinador("Misty")
+    misty.capturar(PokemonAgua("Starmie", 120, 35))
+    ash = Treinador("Ash")
+    ash.capturar(PokemonFogo("Charmander", 90, 40))
+    ash.capturar(PokemonPlanta("Bulbasaur", 110, 25, 20))
+    cerulean = Ginasio("Cerulean", misty)
+    cerulean.combater(ash)
+    cerulean.combater(ash)
+    cerulean.mostrar_historico()
+    # Apagar o ginásio apaga os registos dos combates, que só ele guardava.
+    # Os treinadores e os seus Pokémon continuam a existir.
+    del cerulean
+    print(f"\n{ash.nome} continua com {len(ash.equipa)} Pokémon; {misty.nome} continua com {len(misty.equipa)}.")
 ```
 
-Leitura guiada: o método começa por perguntar a cada treinador qual é o Pokémon que vai lutar. Se algum devolve `None`, não há combate, e o `raise` lança a `SemPokemonComVida` e o método para. A lista de desafiantes só é alterada depois da verificação, e por isso um combate recusado não deixa rasto. O resto do método, que começa no `print` com os sinais `===`, fica como estava.
+As duas recusas, a do `capturar` e a do `combater`, verificam primeiro e lançam a exceção antes de mexerem no estado. O resto do ficheiro, com o texto do início e o programa principal, é o da pasta 03.
 
-2. Cria o ficheiro `combates.py`, com este conteúdo. O Brock entra com um Geodude que já não tem vida nenhuma.
+Pensa antes de continuares: no passo 4, um `print` a seguir ao `try`, sem `finally`, escrevia o mesmo. Então, quando é que o `finally` faz diferença? A resposta: quando há uma exceção que nenhum `except` apanha, como no passo 5, ou quando o `try` sai da função com `return`. No passo 5, o `finally` correu na mesma, e um `print` a seguir ao `try` nunca chegava a correr.
 
-```python
-# combates.py: um desafiante sem Pokémon com vida é recusado, e o ginásio fica como estava.
-from erros import ErroDoGinasio
-from pokemon import Pokemon, PokemonAgua, PokemonFogo
-from ginasio import Ginasio, Lider, Treinador
+## Fase 4: O depurador para num ponto de paragem
 
-misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
-gary = Treinador.com_equipa("Gary", [PokemonFogo("Vulpix", 30, 20)])
-brock = Treinador.com_equipa("Brock", [Pokemon("Geodude", "Pedra", 0, 10)])
-cerulean = Ginasio("Cerulean", misty)
-for desafiante in [gary, brock, gary]:
-    try:
-        cerulean.combater(desafiante)
-    except ErroDoGinasio as erro:
-        print(f"{desafiante.nome} recusado: {erro}")
-    finally:
-        print(f"Desafiantes: {len(cerulean.desafiantes)}, combates: {len(cerulean.combates)}")
-```
+Investigas um ataque que tira metade do que devia, um erro de lógica, com a rotina dos cinco passos e o depurador do VS Code. O depurador para num ponto de paragem, antes de a linha correr, e mostra-te os valores das variáveis. Rever: [O depurador para num ponto de paragem](../04-excecoes-depuracao-e-logging.md#o-depurador-para-num-ponto-de-paragem).
 
-Leitura guiada: o programa cria a líder, dois desafiantes e o ginásio. O ciclo faz três desafios, e o `except ErroDoGinasio` apanha qualquer recusa do ginásio. O `finally` escreve a mesma linha depois de cada desafio, com ou sem recusa.
+1. Cria o ficheiro `investigar.py`, com uma cópia da `PokemonAgua` que tem um erro de propósito:
 
-3. Antes de executares, prevê o que acontece a cada um dos três desafios, e as três linhas com os desafiantes e os combates. Depois executa:
+   ```python
+   # investigar.py: um erro de lógica para encontrar com o depurador.
+   from pokemon import Pokemon, PokemonFogo, PokemonPlanta
 
-```bash
-python3 combates.py
-```
 
-O que deves ver. Depois do primeiro combate, que o Gary perde, a saída acaba assim:
+   class PokemonAgua(Pokemon):
+       """Uma cópia da PokemonAgua do pokemon.py, com um erro de propósito para investigar."""
 
-```text
+       def __init__(self, nome, vida, ataque):
+           """Cria um Pokémon de água com nome, vida e ataque."""
+           super().__init__(nome, "Água", vida, ataque)
 
-=== Gary desafia Misty no ginásio de Cerulean ===
-Vulpix ataca Starmie e tira 20 de vida.
-Starmie tem 70/150 de vida.
-É super eficaz!
-Starmie ataca Vulpix e tira 70 de vida.
-Vulpix está KO (0/150).
-Desafiantes: 1, combates: 1
-Brock recusado: Não há combate em Cerulean: um dos treinadores não tem Pokémon com vida.
-Desafiantes: 1, combates: 1
-Gary recusado: Não há combate em Cerulean: um dos treinadores não tem Pokémon com vida.
-Desafiantes: 1, combates: 1
-```
+       def calcular_dano(self, alvo):
+           """Contra Fogo, a água tira o dobro."""
+           dano = super().calcular_dano(alvo)
+           if alvo.tipo == "fogo":
+               print("É super eficaz!")
+               dano = dano * 2
+           return dano
 
-Isto quer dizer que o primeiro desafio é um combate a sério, e que os outros dois são recusados. O Brock é recusado porque o Geodude não tem vida. O Gary é recusado porque o Vulpix ficou KO no primeiro combate.
 
-4. Pensa nas três perguntas seguintes, antes de leres cada resposta.
+   squirtle = PokemonAgua("Squirtle", 100, 30)
+   charmander = PokemonFogo("Charmander", 90, 40)
+   squirtle.atacar(charmander)
+   bulbasaur = PokemonPlanta("Bulbasaur", 110, 25, 20)
+   squirtle.atacar(bulbasaur)
+   ```
 
-O Brock foi recusado e não entrou na lista de desafiantes. Que linha do teu `combater` garante isso? A resposta: a linha `if desafiante not in self.desafiantes:` com o `append` por baixo, porque está depois do `raise`. Quando o combate é recusado, o método para antes de chegar lá.
+2. Observa e reproduz o erro: corre `python3 investigar.py`. O que deves ver:
 
-Na versão do tema 03, o desafiante entrava na lista logo no início do `combater`. Com essa ordem, o que diria a linha dos desafiantes depois do Brock, e porque estaria errado? A resposta: diria `Desafiantes: 2, combates: 1`. O Brock ficava na lista sem ter combatido. Estaria errado porque a lista diz quem desafiou o ginásio, e o Brock não chegou a desafiar. O ginásio mudava, quando a docstring diz que fica como estava.
+   ```text
+   Squirtle ataca Charmander e tira 30 de vida.
+   Charmander tem 60/150 de vida.
+   Squirtle ataca Bulbasaur e tira 30 de vida.
+   Bulbasaur tem 80/150 de vida.
+   ```
 
-A linha dos desafiantes e dos combates aparece três vezes, embora só tenha havido um combate. Porquê? A resposta: o `finally` corre em todas as voltas, com ou sem exceção. Houve três desafios, e por isso três linhas.
+   Escreve o caso num comentário no fim do `investigar.py`, a seguir à última linha de código. Rever: [A rotina dos cinco passos](../04-excecoes-depuracao-e-logging.md#a-rotina-dos-cinco-passos). O comentário leva o resultado esperado, tirado da regra do jogo, e o obtido, como este:
 
-### Paragem 3
+   ```python
+   # Caso: o Squirtle, de água e com 30 de ataque, ataca o Charmander, de fogo.
+   # Esperado: tira 60, com "É super eficaz!", porque a água tira o dobro ao fogo.
+   # Obtido: tira 30, sem a mensagem. Contra o Bulbasaur, de planta, tira 30, como deve.
+   # Tipo de erro: de lógica, porque o programa corre até ao fim e o resultado está errado.
+   ```
 
-O `Ginasio` recusa um combate sem Pokémon com vida com uma exceção, e fica como estava. Neste ponto, o teu `ginasio.py` tem as duas exceções, a constante, o `capturar` com a verificação e o `combater` novo. O `capturas.py` e o `combates.py` mostram as saídas dos passos 4 da fase 2 e 3 da fase 3. Para o conferires, compara-o com o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo 04, sem as linhas do logger: o `import logging`, o `logger = logging.getLogger(__name__)` e as quatro linhas que começam por `logger.`. O texto do início e a demonstração do fim do exemplo também são diferentes, porque não os mudas.
+3. Formula uma hipótese, antes de abrires o depurador, e acrescenta-a ao comentário. Diz o que esperas ver nos valores se tiveres razão, como esta:
 
-## Fase 4: Investigar um erro de cálculo com o depurador
+   ```python
+   # Hipótese: contra o Charmander, o if dá False e o dano fica em 30. Se for isso,
+   # as duas linhas do bloco do if não correm.
+   ```
 
-Um erro de lógica não tem mensagem de erro: o programa corre até ao fim e dá o resultado errado. Para o encontrar, segue-se uma rotina de cinco passos. Primeiro, observas e reproduzes o erro: escreves o caso que falhou, o resultado esperado e o obtido, e dizes que tipo de erro é. Depois, escreves uma hipótese. Em terceiro lugar, verificas a hipótese, olhando para os valores do programa enquanto corre. Em quarto, corriges a causa. Por fim, voltas a testar todos os casos, também os que já passavam. O que a rotina manda escrever, o sintoma, a hipótese e o que mudou, fica num comentário no fim do ficheiro que investigas, com `#` no início de cada linha. Assim, o código não muda de linha, e os números das linhas continuam a ser os do laboratório.
+4. Põe um ponto de paragem na linha 14, `dano = super().calcular_dano(alvo)`: clica na margem, à esquerda do número da linha, e aparece um ponto vermelho. Com o separador do `investigar.py` à frente no editor, carrega em F5 (Start Debugging), porque o F5 depura o ficheiro que está à frente.
 
-O depurador do VS Code é a ferramenta do terceiro passo. Corre o programa e deixa-o parar numa linha que escolhes, para veres os valores das variáveis e avançares uma linha de cada vez. É como a tabela com os valores das variáveis, linha a linha, que podes fazer à mão, mas feita pelo computador, com os valores verdadeiros. Os controlos de que precisas, nesta fase e na seguinte, são estes:
+   Na primeira vez, o VS Code pode perguntar que depurador usar: escolhe Python Debugger e, a seguir, Python File. Num portátil ou num Mac, as teclas F5 e F10 podem precisar da tecla Fn.
 
-| Para quê | Como |
-| --- | --- |
-| Pôr um ponto de paragem, a linha onde o programa para antes de a executar | Clicar na margem, à esquerda do número da linha: aparece um ponto vermelho. Clicar outra vez tira-o. Também se põe com F9, na linha onde está o cursor |
-| Executar com o depurador, ou continuar até ao próximo ponto de paragem | F5 |
-| Avançar uma linha, sem entrar nas funções que ela chama | F10 |
-| Parar a depuração | Shift+F5 |
+   O que deves ver: a linha 14 marcada a amarelo, que ainda não correu, e o terminal ainda sem nenhuma linha do ataque. O programa parou no primeiro ataque, o do Charmander. No painel Variáveis (Variables), abre o `alvo` com a seta: o `tipo` vale `'Fogo'`. Se o programa correr até ao fim sem parar, vê [O depurador não para no ponto de paragem](#o-depurador-não-para-no-ponto-de-paragem).
 
-Quando o programa está parado, a linha que vai correr a seguir aparece marcada a amarelo, e a barra lateral mostra três painéis. O painel Variáveis (Variables) tem os valores das variáveis da função onde o programa está parado, e um objeto abre-se com a seta, para ver os seus atributos. O painel Pilha de chamadas (Call Stack) tem os andares do traceback. O painel Vigiar (Watch) tem expressões que escreves tu, que o VS Code recalcula a cada passo.
+5. Verifica a condição no painel Vigiar (Watch). Na barra lateral da depuração, por baixo das Variáveis, passa o rato pelo título Vigiar (Watch) e clica no `+`. Escreve `alvo.tipo == "fogo"` e carrega em Enter. O que deves ver: `False`. A comparação é com `"fogo"`, em minúsculas, e o tipo está guardado com maiúscula. Rever: [Verificar a hipótese](../04-excecoes-depuracao-e-logging.md#verificar-a-hipótese).
 
-Em computadores portáteis e em Mac, as teclas F5, F10 e F11 podem precisar da tecla Fn. Na primeira vez que carregas em F5, o VS Code pode perguntar que depurador usar. Escolhe o de Python, e depois a opção de depurar o ficheiro que está aberto (Python Debugger e Python File, em inglês). O botão do triângulo, no canto de cima, corre o programa sem o depurador e ignora os pontos de paragem. Para depurar, usa o F5. Para saber mais, lê as secções "Um erro tem um sintoma e uma causa" e "O depurador do VS Code" do [guia](../04-excecoes-depuracao-e-logging.md).
+6. Avança com F10, o botão Step Over da barra de depuração, que corre a linha marcada e para na seguinte, até chegares ao `return`. Rever: [F10 passa por cima, F11 entra](../04-excecoes-depuracao-e-logging.md#f10-passa-por-cima-f11-entra). O que deves ver:
 
-1. Cria o ficheiro `investigar.py`, com este conteúdo. Tem uma cópia da classe `PokemonAgua`, com um erro de propósito. Um Squirtle, de água, ataca um Charmander, de fogo, e a água devia tirar o dobro ao fogo.
+   | Depois de | Linha marcada a amarelo | `dano` no painel Variáveis |
+   | --- | --- | --- |
+   | Parar no ponto de paragem | `dano = super().calcular_dano(alvo)` | ainda não existe |
+   | F10 | `if alvo.tipo == "fogo":` | 30 |
+   | F10 | `return dano` | 30 |
+
+   O depurador saltou do `if` para o `return`, e as duas linhas do bloco do `if` não correram: a hipótese confirma-se. Se passares à frente do `return`, ou se a linha marcada aparecer no `pokemon.py`, para com Shift+F5, volta ao separador do `investigar.py` e carrega em F5. O programa volta a parar na linha 14.
+
+7. Para a depuração com Shift+F5, ou com o quadrado vermelho (Stop) da barra de depuração, antes de mudares o ficheiro. Depois, acrescenta ao comentário o que o depurador mostrou:
+
+   ```python
+   # Verificação: parado na linha 14, o Vigiar mostrou alvo.tipo == "fogo" como False.
+   # Com o F10, o if saltou para o return, e o dano ficou em 30.
+   ```
+
+8. Corrige a causa: na linha 15, muda `"fogo"` para `"Fogo"`, como o `pokemon.py` escreve o tipo. O `if` e o seu bloco ficam assim:
+
+   ```python
+           if alvo.tipo == "Fogo":
+               print("É super eficaz!")
+               dano = dano * 2
+   ```
+
+9. Volta a testar tudo: corre `python3 investigar.py` no terminal. O que deves ver:
+
+   ```text
+   É super eficaz!
+   Squirtle ataca Charmander e tira 60 de vida.
+   Charmander tem 30/150 de vida.
+   Squirtle ataca Bulbasaur e tira 30 de vida.
+   Bulbasaur tem 80/150 de vida.
+   ```
+
+   Os dois casos estão certos, também o do Bulbasaur, que já passava. Acaba o comentário com o que mudou:
+
+   ```python
+   # O que mudou: no if, "fogo" passou a "Fogo". Agora tira 60 ao Charmander, com a
+   # mensagem, e 30 ao Bulbasaur, sem a mensagem: os dois casos certos.
+   ```
+
+### Paragem 4
+
+O `investigar.py` corrigido tira 60 ao Charmander e 30 ao Bulbasaur, e acaba com o comentário com o caso, a hipótese, a verificação e o que mudou. Confere o teu com este:
 
 ```python
 # investigar.py: um erro de lógica para encontrar com o depurador.
-from pokemon import Pokemon, PokemonFogo
+from pokemon import Pokemon, PokemonFogo, PokemonPlanta
 
 
 class PokemonAgua(Pokemon):
@@ -397,7 +606,7 @@ class PokemonAgua(Pokemon):
     def calcular_dano(self, alvo):
         """Contra Fogo, a água tira o dobro."""
         dano = super().calcular_dano(alvo)
-        if alvo.tipo == "fogo":
+        if alvo.tipo == "Fogo":
             print("É super eficaz!")
             dano = dano * 2
         return dano
@@ -406,215 +615,342 @@ class PokemonAgua(Pokemon):
 squirtle = PokemonAgua("Squirtle", 100, 30)
 charmander = PokemonFogo("Charmander", 90, 40)
 squirtle.atacar(charmander)
-```
-
-Leitura guiada: a classe `PokemonAgua` herda da `Pokemon` e reescreve o `calcular_dano`. Começa por pedir à classe-mãe o dano normal, que é o ataque. Depois, se o tipo do alvo for o que a condição diz, escreve a mensagem e dobra o dano. No fim, o programa cria um Squirtle e um Charmander e faz o Squirtle atacar.
-
-2. Observa e reproduz o erro. Executa o programa normalmente, com `python3 investigar.py`, e regista o sintoma num comentário no fim do `investigar.py`: quanto devia tirar o ataque, quanto tirou, e o que falta na saída. O que deves ver:
-
-```text
-Squirtle ataca Charmander e tira 30 de vida.
-Charmander tem 60/150 de vida.
-```
-
-A resposta: o caso é o Squirtle, com 30 de ataque, a atacar o Charmander. A água tira o dobro ao fogo, por isso devia tirar 60, com a mensagem "É super eficaz!". Tirou 30, e a mensagem não apareceu. O programa correu até ao fim e deu o resultado errado, por isso é um erro de lógica.
-
-3. Antes de abrires o depurador, escreve a tua hipótese no mesmo comentário. Diz o que achas que está a acontecer, em que linha, e o que esperas ver no depurador se tiveres razão. Escreve-a antes, porque, se a escreveres depois, vais olhar para os valores à procura do que já sabes.
-
-A resposta: uma hipótese que serve é que a condição do `if` está a dar falso, e por isso as duas linhas do bloco do `if` não correm. Se for isso, no depurador o `if` salta diretamente para o `return`, e o `dano` fica em 30. Outras hipóteses bem escritas também servem, mesmo erradas: o que conta é estarem escritas antes e dizerem o que esperas ver.
-
-4. Verifica a hipótese. Põe um ponto de paragem na linha `dano = super().calcular_dano(alvo)`, clicando na margem à esquerda do número dessa linha. Com o `investigar.py` aberto no editor, carrega em F5. Quando o programa parar, abre o `alvo` no painel das variáveis e repara no valor do `tipo`.
-
-O que deves ver: o ponto vermelho na margem, a linha `dano = super().calcular_dano(alvo)` marcada a amarelo, e o `tipo` do `alvo` a valer `'Fogo'`. Isto quer dizer que o programa parou antes de a linha correr, e que o tipo está guardado com a maiúscula do `pokemon.py`. Se o programa correr até ao fim sem parar, executaste sem o depurador: vê os [problemas frequentes](#problemas-frequentes).
-
-5. No painel Vigiar, acrescenta duas expressões: `alvo.tipo` e `alvo.tipo == "fogo"`. Para acrescentar uma, clica no sinal de mais do painel, escreve a expressão e carrega em Enter. Repara no que o VS Code mostra para cada uma.
-
-O que deves ver: `'Fogo'` para a primeira e `False` para a segunda. Isto quer dizer que o tipo do alvo é `'Fogo'`, com maiúscula, e que a comparação com `"fogo"`, em minúsculas, dá falso.
-
-6. Avança com F10, linha a linha, até ao `return`. Regista no comentário, depois de cada F10, a linha marcada a amarelo e o valor do `dano`, uma linha por passo, como numa tabela. O que deves ver:
-
-| Depois de | Linha marcada a amarelo | `dano` |
-| --- | --- | --- |
-| Parar no ponto de paragem | `dano = super().calcular_dano(alvo)` | ainda não existe |
-| F10 | `if alvo.tipo == "fogo":` | 30 |
-| F10 | `return dano` | 30 |
-
-O depurador salta do `if` diretamente para o `return`: as duas linhas do bloco do `if` não correm. Isto confirma a hipótese de exemplo, a de que a condição do `if` dá falso.
-
-7. Corrige a causa. Carrega em Shift+F5 para parar a depuração. A comparação é com `"fogo"`, em minúsculas, e o tipo está guardado como `"Fogo"`. Para o Python, os dois textos são diferentes, e a condição é simplesmente falsa: não há erro nenhum, só um resultado errado. É por isso que o Python não deu nenhuma mensagem de erro. Em `investigar.py`, substitui o método `calcular_dano` da classe `PokemonAgua` por este. A linha `class PokemonAgua(Pokemon):` do bloco só mostra onde o método fica: não a copies.
-
-```python
-class PokemonAgua(Pokemon):
-    # Só o método calcular_dano muda; o resto da classe fica como estava.
-
-    def calcular_dano(self, alvo):
-        """Contra Fogo, a água tira o dobro."""
-        dano = super().calcular_dano(alvo)
-        if alvo.tipo == "Fogo":
-            print("É super eficaz!")
-            dano = dano * 2
-        return dano
-```
-
-Leitura guiada: o método é o mesmo, e só mudou a grafia do texto na condição, de `"fogo"` para `"Fogo"`. Agora a comparação usa o tipo como o resto do código o escreve, e por isso a condição dá verdadeiro quando o alvo é de fogo.
-
-8. Volta a testar tudo. Executa o programa outra vez. O que deves ver:
-
-```text
-É super eficaz!
-Squirtle ataca Charmander e tira 60 de vida.
-Charmander tem 30/150 de vida.
-```
-
-Falta o caso que já funcionava, o de um alvo que não é de fogo. Na linha do `import`, acrescenta `PokemonPlanta`, e a seguir à última linha do programa, antes do comentário, acrescenta duas linhas:
-
-```python
-from pokemon import Pokemon, PokemonFogo, PokemonPlanta
-```
-
-```python
 bulbasaur = PokemonPlanta("Bulbasaur", 110, 25, 20)
 squirtle.atacar(bulbasaur)
+
+# Caso: o Squirtle, de água e com 30 de ataque, ataca o Charmander, de fogo.
+# Esperado: tira 60, com "É super eficaz!", porque a água tira o dobro ao fogo.
+# Obtido: tira 30, sem a mensagem. Contra o Bulbasaur, de planta, tira 30, como deve.
+# Tipo de erro: de lógica, porque o programa corre até ao fim e o resultado está errado.
+# Hipótese: contra o Charmander, o if dá False e o dano fica em 30. Se for isso,
+# as duas linhas do bloco do if não correm.
+# Verificação: parado na linha 14, o Vigiar mostrou alvo.tipo == "fogo" como False.
+# Com o F10, o if saltou para o return, e o dano ficou em 30.
+# O que mudou: no if, "fogo" passou a "Fogo". Agora tira 60 ao Charmander, com a
+# mensagem, e 30 ao Bulbasaur, sem a mensagem: os dois casos certos.
 ```
 
-Executa outra vez. Contra a planta, a água não tem vantagem, por isso o dano é o ataque, 30, e não aparece a mensagem. O que deves ver no fim da saída:
+O código só mudou numa palavra, e o comentário, no fim, não mudou nenhuma linha de sítio. A tua hipótese pode ter sido outra: o que conta é estar escrita antes do depurador e dizer o que esperavas ver.
 
-```text
-Squirtle ataca Bulbasaur e tira 30 de vida.
-Bulbasaur tem 80/150 de vida.
-```
-
-Os dois casos passam: o que mudou foi só a grafia de um texto, e o dobro aplica-se agora só contra o fogo.
-
-9. Acaba o comentário com a resposta a três perguntas: a hipótese que escreveste antes de abrir o depurador estava certa? Se não estava, o que é que o depurador te mostrou que não esperavas? E qual era a causa?
-
-A resposta: se a tua hipótese era que a condição do `if` dava falso, estava certa, e o depurador confirmou-a nas linhas que registaste com o F10. Se era outra, o que interessa é dizer o que o depurador mostrou de diferente. A causa era a comparação com `"fogo"`, em minúsculas, quando o tipo está guardado como `"Fogo"`. O Python não deu mensagem de erro porque, para ele, comparar dois textos diferentes não é um erro: o resultado é só `False`.
-
-### Paragem 4
-
-O `investigar.py` corrigido mostra o dobro do dano contra o fogo e o dano normal contra a planta. O comentário no fim do ficheiro tem o sintoma, a hipótese escrita antes de abrires o depurador, as linhas que registaste com o F10 e a causa.
-
-Pensa antes de continuares: o erro desapareceria se tivesses acrescentado ao `calcular_dano` um `if` para o Squirtle, em vez de corrigires a comparação? A resposta: o resultado desse caso passava a estar certo, mas a causa ficava lá, à espera de outro Pokémon de água contra outro Pokémon de fogo. Corrigir a causa é mudar a instrução que produz o erro, e não o sítio onde ele se vê.
+Pensa antes de continuares: porque é que o ponto de paragem ficou no `dano = super().calcular_dano(alvo)`, e não no `print("É super eficaz!")`? A resposta: com o erro, o `print` nunca corre, porque a condição dá `False`. O depurador nunca parava nele, e o programa corria até ao fim.
 
 ## Fase 5: Um erro que rebenta longe da causa
 
-Um erro de execução para o programa com uma mensagem, o traceback. O traceback mostra onde o erro rebentou e o caminho até lá, mas a causa pode estar numa linha que já acabou. Lê-se de baixo para cima. A última linha diz o quê. O andar de baixo diz onde rebentou, e os andares de cima dizem como se chegou lá. A pilha de chamadas é a lista das funções que estão a meio, cada uma à espera do que chamou, e o depurador mostra-a com os valores de cada andar. Para saber mais, lê as secções "Ler um traceback com três andares" e "A pilha de chamadas no depurador" do [guia](../04-excecoes-depuracao-e-logging.md).
+Segues um erro de execução com o traceback e com a pilha de chamadas do depurador. A causa está numa linha que já acabou quando o erro rebenta. Rever: [Um erro que rebenta longe da causa](../04-excecoes-depuracao-e-logging.md#um-erro-que-rebenta-longe-da-causa).
 
-1. Cria o ficheiro `pilha.py`, com este conteúdo. Tem um erro de propósito: a equipa do Ash leva o texto `"Squirtle"` no lugar de um Pokémon.
+1. Cria o ficheiro `pilha.py`. Tem um erro de propósito: a equipa do Ash leva o texto `"Squirtle"` no lugar de um Pokémon.
 
-```python
-# pilha.py: um erro que rebenta longe da causa. A equipa do Ash tem um erro de propósito.
-from pokemon import PokemonAgua, PokemonFogo
-from ginasio import Ginasio, Lider, Treinador
+   ```python
+   # pilha.py: um erro que rebenta longe da causa. A equipa do Ash tem um erro de propósito.
+   from pokemon import PokemonAgua, PokemonFogo
+   from ginasio import Ginasio, Lider, Treinador
 
-misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
-ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 30, 40), "Squirtle"])
-cerulean = Ginasio("Cerulean", misty)
-cerulean.combater(ash)
-cerulean.combater(ash)
-```
+   misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
+   ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 30, 40), "Squirtle"])
+   cerulean = Ginasio("Cerulean", misty)
+   cerulean.combater(ash)
+   cerulean.combater(ash)
+   ```
 
-Leitura guiada: o programa cria a líder e o Ash, cuja equipa tem um Charmander e um texto. O ginásio faz dois combates seguidos com o Ash. O texto `"Squirtle"` entra na equipa sem queixa, porque a lista aceita qualquer valor.
+2. Antes de correres, prevê se o programa rebenta no primeiro combate ou no segundo. Corre `python3 pilha.py`. O que deves ver:
 
-2. Observa e reproduz o erro. Executa o programa com `python3 pilha.py`. O primeiro combate acontece, o Charmander perde, e o programa para com um traceback. O que deves ver:
+   ```text
 
-```text
+   === Ash desafia Misty no ginásio de Cerulean ===
+   Charmander ataca Starmie e tira 40 de vida.
+   Starmie tem 50/150 de vida.
+   É super eficaz!
+   Starmie ataca Charmander e tira 70 de vida.
+   Charmander está KO (0/150).
+   Traceback (most recent call last):
+     File "pilha.py", line 9, in <module>
+       cerulean.combater(ash)
+       ~~~~~~~~~~~~~~~~~^^^^^
+     File "ginasio.py", line 128, in combater
+       atacante = desafiante.escolher_pokemon()
+     File "ginasio.py", line 75, in escolher_pokemon
+       if pokemon.vida > 0:
+          ^^^^^^^^^^^^
+   AttributeError: 'str' object has no attribute 'vida'
+   ```
 
-=== Ash desafia Misty no ginásio de Cerulean ===
-Charmander ataca Starmie e tira 40 de vida.
-Starmie tem 50/150 de vida.
-É super eficaz!
-Starmie ataca Charmander e tira 70 de vida.
-Charmander está KO (0/150).
-Traceback (most recent call last):
-  File "pilha.py", line 9, in <module>
-    cerulean.combater(ash)
-    ~~~~~~~~~~~~~~~~~^^^^^
-  File "ginasio.py", line 125, in combater
-    atacante = desafiante.escolher_pokemon()
-  File "ginasio.py", line 72, in escolher_pokemon
-    if pokemon.vida > 0:
-       ^^^^^^^^^^^^
-AttributeError: 'str' object has no attribute 'vida'
-```
+   Rebenta no segundo. No primeiro, o `escolher_pokemon` devolveu o Charmander antes de chegar ao texto, e o erro ficou escondido até o Charmander ficar KO. No teu terminal, cada `File` tem o caminho completo do ficheiro, e no Python 3.9 faltam as linhas com `~` e `^`. Se os números das linhas do `ginasio.py` forem outros, vê [as linhas do traceback](#o-traceback-tem-outros-números-de-linha).
 
-O traceback tem os caminhos completos do teu computador no lugar dos nomes simples dos ficheiros. As linhas com `~` e `^` só aparecem nas versões recentes do Python. Se o teu `ginasio.py` for diferente do do laboratório, os números das linhas dele podem ser outros. A última linha está em inglês: `'str' object has no attribute 'vida'` quer dizer "um objeto `str` não tem o atributo `vida`", e `str` é o tipo dos textos. É um erro de execução.
+3. Lê o traceback de baixo para cima e encontra três coisas: o que falhou, onde rebentou e por onde passou o programa até lá. Rever: [Ler um traceback com três andares](../04-excecoes-depuracao-e-logging.md#ler-um-traceback-com-três-andares). A resposta: a última linha diz que se tentou ler a `vida` de um texto, um `str`. O andar de baixo diz que rebentou na linha 75 do `ginasio.py`, no `escolher_pokemon`. Os andares de cima dizem que a linha 9 do `pilha.py` chamou o `combater`, e que o `combater` chamou o `escolher_pokemon`.
 
-3. Lê o traceback de baixo para cima e pensa, antes de abrires o depurador: em que linha do `pilha.py` começou o caminho até ao erro? Por que funções passou? Em que linha do `ginasio.py` rebentou?
+4. Vê a pilha de chamadas no depurador: com o separador do `pilha.py` à frente, carrega em F5, sem nenhum ponto de paragem. O programa para na linha onde a exceção rebentou, o `if pokemon.vida > 0:` do `ginasio.py`, com a exceção descrita numa caixa junto da linha. Rever: [A pilha de chamadas no depurador](../04-excecoes-depuracao-e-logging.md#a-pilha-de-chamadas-no-depurador).
 
-A resposta: o caminho começou na linha 9 do `pilha.py`, o segundo `cerulean.combater(ash)`. Passou pelo `combater` e pelo `escolher_pokemon`. Rebentou no `if pokemon.vida > 0:` do `escolher_pokemon`, onde o `pokemon` era um texto.
+   O que deves ver no painel Pilha de chamadas (Call Stack): três andares, pela ordem contrária à do traceback: `escolher_pokemon` em cima, `combater` e `<module>`. No `escolher_pokemon`, o painel Variáveis mostra o `pokemon` a valer `'Squirtle'`. Clica no andar `combater` e abre o `desafiante`: a `equipa` tem dois elementos, o Charmander, um objeto `PokemonFogo`, e o texto `'Squirtle'`. Clica no andar `<module>`: estás no `pilha.py`, onde o `ash` foi criado.
 
-4. Verifica a causa com o depurador. Com o `pilha.py` aberto no editor, executa com o F5, sem nenhum ponto de paragem. Por omissão, quando há uma exceção que ninguém apanha, o depurador não deixa o programa acabar: para na linha onde a exceção rebentou e marca-a. No painel da pilha de chamadas, clica em cada andar. No andar do `combater`, repara no que está na `equipa` do `desafiante`.
+5. Corrige a causa: carrega em Shift+F5, para parar a depuração. A causa não está em nenhum andar do traceback, mas na linha 6 do `pilha.py`, onde a equipa do Ash foi criada com um texto. Substitui essa linha por esta, com um Squirtle a sério:
 
-O que deves ver: o programa parado no `if pokemon.vida > 0:`, com a exceção descrita por cima da linha, e três andares na pilha: `escolher_pokemon`, `combater` e `<module>`. No andar `escolher_pokemon`, o `pokemon` vale `'Squirtle'`. No andar `combater`, abrindo o `desafiante`, a `equipa` tem dois elementos: o Charmander, que é um objeto, e o texto `'Squirtle'`. No andar `<module>`, estás no programa principal, onde o `ash` foi criado.
+   ```python
+   ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 30, 40), PokemonAgua("Squirtle", 100, 30)])
+   ```
 
-5. Corrige a causa. Carrega em Shift+F5 para parar a depuração. A causa não está em nenhum dos três andares do traceback, mas na linha onde a equipa do Ash foi criada. O Ash devia ter um Squirtle a sério. No `pilha.py`, substitui a linha do Ash por esta:
+6. Volta a testar: corre `python3 pilha.py`. O que deves ver:
 
-```python
-ash = Treinador.com_equipa("Ash", [PokemonFogo("Charmander", 30, 40), PokemonAgua("Squirtle", 100, 30)])
-```
+   ```text
 
-Leitura guiada: a lista da equipa continua a ter dois elementos, mas agora os dois são Pokémon. O `PokemonAgua` já estava importado no ficheiro, porque a Misty o usa.
+   === Ash desafia Misty no ginásio de Cerulean ===
+   Charmander ataca Starmie e tira 40 de vida.
+   Starmie tem 50/150 de vida.
+   É super eficaz!
+   Starmie ataca Charmander e tira 70 de vida.
+   Charmander está KO (0/150).
 
-6. Volta a testar tudo. Executa outra vez. O primeiro combate é igual, e o segundo passa a acontecer. O Squirtle, de água contra água e sem vantagem, ganha em dois ataques ao Starmie, que só tinha 50 de vida. O que deves ver:
+   === Ash desafia Misty no ginásio de Cerulean ===
+   Squirtle ataca Starmie e tira 30 de vida.
+   Starmie tem 20/150 de vida.
+   Starmie ataca Squirtle e tira 35 de vida.
+   Squirtle tem 65/150 de vida.
+   Squirtle ataca Starmie e tira 30 de vida.
+   Starmie está KO (0/150).
+   ```
 
-```text
-
-=== Ash desafia Misty no ginásio de Cerulean ===
-Charmander ataca Starmie e tira 40 de vida.
-Starmie tem 50/150 de vida.
-É super eficaz!
-Starmie ataca Charmander e tira 70 de vida.
-Charmander está KO (0/150).
-
-=== Ash desafia Misty no ginásio de Cerulean ===
-Squirtle ataca Starmie e tira 30 de vida.
-Starmie tem 20/150 de vida.
-Starmie ataca Squirtle e tira 35 de vida.
-Squirtle tem 65/150 de vida.
-Squirtle ataca Starmie e tira 30 de vida.
-Starmie está KO (0/150).
-```
-
-7. Pensa nas duas perguntas seguintes, antes de leres cada resposta.
-
-O erro está na linha onde a equipa foi criada, e o primeiro combate correu bem. Porque é que só rebentou no segundo? A resposta: o `escolher_pokemon` devolve o primeiro Pokémon com vida e para. No primeiro combate, o Charmander tinha vida e foi devolvido antes de o ciclo chegar ao texto. No segundo, o Charmander já estava KO, o ciclo passou para o elemento seguinte, e foi aí que rebentou. Um erro pode ficar escondido enquanto o caminho do programa não passa por ele.
-
-Um colega propõe corrigir o `escolher_pokemon` para saltar tudo o que não tenha vida. Porque é que isso esconde o erro, em vez de o corrigir? A resposta: o Ash ficava com uma equipa em que o "Squirtle" nunca luta, sem nenhuma mensagem, e ninguém percebia porquê. O erro está na linha onde a equipa foi criada com um texto, e é aí que se corrige.
+   O segundo combate passa a acontecer: o Squirtle, de água contra água, vence o Starmie, que só tinha 50 de vida.
 
 ### Paragem 5
 
-O `pilha.py` corrigido faz os dois combates. Já sabes ler um traceback de baixo para cima e usar a pilha de chamadas no depurador para ver o estado de cada andar.
+O `pilha.py` corrigido faz os dois combates, e o `escolher_pokemon`, onde o erro rebentava, não mudou.
 
-Pensa antes de continuares: nenhum dos três andares do traceback era a linha que estava mal. Então, para que serve o traceback? A resposta: diz o que falhou, onde rebentou e o caminho até lá. É o ponto de partida da investigação, e a causa procura-se a partir dele, na pilha de chamadas e nos valores de cada andar.
+Pensa antes de continuares: com o erro, se a equipa do Ash fosse `["Squirtle", PokemonFogo("Charmander", 30, 40)]`, com o texto primeiro, que linha do `pilha.py` aparecia no andar de cima do traceback? A resposta: a linha 8, o primeiro `cerulean.combater(ash)`. O `escolher_pokemon` lia logo o texto, e o erro rebentava no primeiro combate, com a mesma causa na linha 6.
 
-## Fase 6: O registo do ginásio
+## Fase 6: O ginásio escreve no registo
 
-O `print` é para quem usa o programa, e o registo é para quem o mantém. O módulo `logging` do Python deixa um programa escrever mensagens de registo, cada uma com um nível que diz a importância do que aconteceu. O `DEBUG` é para pormenores que só interessam a quem investiga. O `INFO` é para o programa a funcionar como devia. O `WARNING` é para uma coisa inesperada que o programa conseguiu tratar. O `ERROR` é para uma operação que falhou, e o `CRITICAL` para uma falha tão grave que o programa não pode continuar.
+O ginásio passa a escrever no registo, com um logger e uma mensagem com o nível certo para cada acontecimento, e um programa novo escolhe que níveis se veem. Rever: [O ginásio escreve no registo](../04-excecoes-depuracao-e-logging.md#o-ginásio-escreve-no-registo).
 
-As mensagens ficam no código, escritas por um logger. Quem decide que nível mínimo se mostra, e como se escreve cada linha, é o programa principal, com uma chamada ao `logging.basicConfig`. Assim, para ver mais ou menos mensagens, não se mexe no ginásio. Para saber mais, lê as secções "Os cinco níveis", "O registo do ginásio" e "Quem configura é o programa" do [guia](../04-excecoes-depuracao-e-logging.md).
+1. No `ginasio.py`, substitui tudo desde o início do ficheiro até à linha `TAMANHO_MAXIMO_DA_EQUIPA = 6` pelas linhas seguintes. O texto do início passa a dizer o que o ficheiro faz neste tema, e chama histórico aos combates guardados, porque daqui em diante o registo é o do logger. São novos também o `import logging` e as duas últimas linhas, com o logger:
 
-1. Em `ginasio.py`, substitui as linhas desde `from dataclasses import dataclass` até `TAMANHO_MAXIMO_DA_EQUIPA = 6` por estas. Trazem o módulo `logging` e criam o logger do ficheiro. A linha `from dataclasses import dataclass` repete-se porque está dentro do que substituis, e fica igual.
+   ```python
+   """ginasio.py: o ginásio Pokémon, com exceções para as recusas e um registo.
+
+   - Treinador tem uma equipa de Pokémon e recusa a captura com a equipa cheia,
+     com a exceção EquipaCheia. Lider É UM Treinador que escolhe sempre o
+     Pokémon com mais vida.
+   - Ginasio tem um líder, recebe desafiantes e guarda o histórico dos seus
+     combates, um objeto Combate por combate. Recusa um combate sem Pokémon com
+     vida, com a exceção SemPokemonComVida.
+   - O ginásio escreve no registo, com o logger deste ficheiro, cada combate e
+     cada recusa. Quem configura o registo é o programa que usa o ginásio.
+
+   As exceções vêm do ficheiro erros.py, e as classes de Pokémon do pokemon.py,
+   que têm de estar na mesma pasta que este.
+   """
+
+   import logging
+   from dataclasses import dataclass
+
+   from erros import EquipaCheia, SemPokemonComVida
+   from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
+
+   # O limite da equipa, num só sítio: a condição e a mensagem do capturar usam-no.
+   TAMANHO_MAXIMO_DA_EQUIPA = 6
+
+   # O logger deste ficheiro. O __name__ dá-lhe o nome do módulo, "ginasio".
+   logger = logging.getLogger(__name__)
+   ```
+
+   Troca também, mais abaixo, as três linhas que ainda chamam registo aos combates:
+
+   - na docstring da `Combate`, a primeira linha passa a `"""Um combate do histórico. Só o ginásio cria combates (composição).`;
+   - na docstring do `Ginasio`, a segunda linha passa a `e guarda o histórico dos seus combates (composição)."""`;
+   - no programa principal, o primeiro comentário passa a dizer "o histórico dos combates", em vez de "os registos dos combates".
+
+2. No método `combater`, acrescenta as quatro mensagens do registo, em três sítios. Dentro do `if` que recusa o combate, por cima do `raise`, acrescenta o aviso, com doze espaços, como o `raise`:
+
+   ```python
+               # O aviso vem antes do raise: depois dele, o método já parou.
+               logger.warning(f"Combate recusado em {self.cidade}: {desafiante.nome} contra {self.lider.nome}, sem Pokémon com vida.")
+   ```
+
+   A seguir ao `append` dos desafiantes, por cima do `print` com os sinais `===`, acrescenta o início do combate, com oito espaços:
+
+   ```python
+           logger.info(f"Combate em {self.cidade}: {desafiante.nome} com {atacante.nome} contra {self.lider.nome} com {defensor.nome}.")
+           logger.debug(f"Vida no início: {atacante.nome} {atacante.vida}, {defensor.nome} {defensor.vida}.")
+   ```
+
+   No fim do método, substitui as duas últimas linhas, o comentário e o `append` dos combates, por estas três:
+
+   ```python
+           # O combate entra no histórico, que só o ginásio guarda (composição).
+           self.combates.append(Combate(desafiante.nome, atacante.nome, vencedor.nome))
+           logger.info(f"Fim do combate em {self.cidade}: venceu {vencedor.nome}.")
+   ```
+
+3. Cria o ficheiro `registo.py`, o programa que configura o registo. Rever: [Quem configura é o programa](../04-excecoes-depuracao-e-logging.md#quem-configura-é-o-programa).
+
+   ```python
+   # registo.py: o ginásio de Celadon escreve no registo, e este programa escolhe o que se vê.
+   import logging
+
+   from erros import ErroDoGinasio
+   from pokemon import PokemonAgua, PokemonPlanta
+   from ginasio import Ginasio, Lider, Treinador
+
+   # Quem configura o registo é o programa: o level é o nível mínimo, e o format
+   # põe o nível e o nome do logger à frente de cada mensagem.
+   logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
+
+   erika = Lider.com_equipa("Erika", [PokemonPlanta("Tangela", 50, 20, 10)])
+   misty = Treinador.com_equipa("Misty", [PokemonAgua("Psyduck", 60, 20)])
+   celadon = Ginasio("Celadon", erika)
+   for tentativa in range(2):
+       try:
+           celadon.combater(misty)
+       except ErroDoGinasio as erro:
+           print(f"Recusado: {erro}")
+   ```
+
+4. Antes de correres, prevê quantas das quatro mensagens do ginásio vão aparecer, com o nível mínimo `INFO`. A Misty desafia duas vezes, e o Psyduck fica KO no primeiro combate. Corre `python3 registo.py`. O que deves ver:
+
+   ```text
+   [INFO] ginasio: Combate em Celadon: Misty com Psyduck contra Erika com Tangela.
+
+   === Misty desafia Erika no ginásio de Celadon ===
+   Psyduck ataca Tangela e tira 20 de vida.
+   Tangela tem 30/150 de vida.
+   É super eficaz!
+   Tangela ataca Psyduck e tira 40 de vida.
+   Psyduck tem 20/150 de vida.
+   Psyduck ataca Tangela e tira 20 de vida.
+   Tangela tem 10/150 de vida.
+   É super eficaz!
+   Tangela ataca Psyduck e tira 40 de vida.
+   Psyduck está KO (0/150).
+   [INFO] ginasio: Fim do combate em Celadon: venceu Erika.
+   [WARNING] ginasio: Combate recusado em Celadon: Misty contra Erika, sem Pokémon com vida.
+   Recusado: Não há combate em Celadon: um dos treinadores não tem Pokémon com vida.
+   ```
+
+   Aparecem três: as duas de `INFO` e o aviso do combate recusado. A de `DEBUG` fica escondida, porque está abaixo do nível mínimo. Se as linhas do registo não aparecerem, ou aparecer um `--- Logging error ---`, vê [o registo que não aparece](#as-linhas-do-registo-não-aparecem) ou [o `Logging error`](#----logging-error-----com-not-all-arguments-converted-during-string-formatting).
+
+5. No `registo.py`, muda o nível do `basicConfig` para `logging.DEBUG` e corre outra vez. O que deves ver, no início:
+
+   ```text
+   [INFO] ginasio: Combate em Celadon: Misty com Psyduck contra Erika com Tangela.
+   [DEBUG] ginasio: Vida no início: Psyduck 60, Tangela 50.
+   ```
+
+   A mensagem de `DEBUG` estava no ginásio desde o passo 2, e aparece porque a configuração passou a pedi-la.
+
+### Paragem 6
+
+O ginásio escreve no registo quatro mensagens, em três níveis, e o `registo.py` escolhe quais se veem. O `ginasio.py` inteiro, para conferires o teu:
 
 ```python
+"""ginasio.py: o ginásio Pokémon, com exceções para as recusas e um registo.
+
+- Treinador tem uma equipa de Pokémon e recusa a captura com a equipa cheia,
+  com a exceção EquipaCheia. Lider É UM Treinador que escolhe sempre o
+  Pokémon com mais vida.
+- Ginasio tem um líder, recebe desafiantes e guarda o histórico dos seus
+  combates, um objeto Combate por combate. Recusa um combate sem Pokémon com
+  vida, com a exceção SemPokemonComVida.
+- O ginásio escreve no registo, com o logger deste ficheiro, cada combate e
+  cada recusa. Quem configura o registo é o programa que usa o ginásio.
+
+As exceções vêm do ficheiro erros.py, e as classes de Pokémon do pokemon.py,
+que têm de estar na mesma pasta que este.
+"""
+
 import logging
 from dataclasses import dataclass
 
 from erros import EquipaCheia, SemPokemonComVida
 from pokemon import PokemonAgua, PokemonFogo, PokemonPlanta
 
+# O limite da equipa, num só sítio: a condição e a mensagem do capturar usam-no.
 TAMANHO_MAXIMO_DA_EQUIPA = 6
 
+# O logger deste ficheiro. O __name__ dá-lhe o nome do módulo, "ginasio".
 logger = logging.getLogger(__name__)
-```
 
-Leitura guiada: o `import logging` traz o módulo para o ficheiro. O `logging.getLogger(__name__)` devolve o logger do ficheiro. O `__name__` é o nome do módulo, `"ginasio"` quando outro programa o importa, e é esse nome que aparece nas mensagens, para se saber de onde vieram.
 
-2. Em `ginasio.py`, substitui o método `combater` inteiro por este. É o da fase 3 com quatro mensagens a mais: o aviso antes do `raise`, o `info` e o `debug` do início do combate, e o `info` do fim. A linha `class Ginasio:` do bloco só mostra onde o método fica: não a copies.
+class Treinador:
+    """Um treinador tem uma equipa de Pokémon (agregação)."""
 
-```python
+    def __init__(self, nome):
+        """Cria um treinador com um nome e a equipa vazia."""
+        self.nome = nome
+        # AGREGAÇÃO: a equipa começa vazia e recebe Pokémon que já existiam.
+        self.equipa = []
+
+    @classmethod
+    def com_equipa(cls, nome, pokemons):
+        """Cria um treinador da classe cls, já com os Pokémon da lista na equipa.
+
+        É um construtor alternativo. Em Treinador.com_equipa(...), cls é
+        Treinador; em Lider.com_equipa(...), cls é Lider, e o objeto criado
+        é um Lider.
+        """
+        treinador = cls(nome)
+        for pokemon in pokemons:
+            treinador.capturar(pokemon)
+        return treinador
+
+    def capturar(self, pokemon):
+        """Junta à equipa um Pokémon que foi criado fora do treinador.
+
+        Se a equipa já tem TAMANHO_MAXIMO_DA_EQUIPA Pokémon, não junta nada e
+        lança EquipaCheia.
+        """
+        # A verificação vem antes do append: com a equipa cheia, o raise para o
+        # método aqui, e o Pokémon recusado nunca entra na equipa.
+        if len(self.equipa) >= TAMANHO_MAXIMO_DA_EQUIPA:
+            raise EquipaCheia(f"{self.nome} já tem {TAMANHO_MAXIMO_DA_EQUIPA} Pokémon e não pode capturar {pokemon.nome}.")
+        self.equipa.append(pokemon)
+
+    def escolher_pokemon(self):
+        """Devolve o primeiro Pokémon da equipa que ainda pode lutar, ou None."""
+        for pokemon in self.equipa:
+            if pokemon.vida > 0:
+                return pokemon
+        return None
+
+
+class Lider(Treinador):
+    """Um Lider É UM Treinador que escolhe sempre o Pokémon com mais vida."""
+
+    def escolher_pokemon(self):
+        """Devolve o Pokémon da equipa com mais vida, ou None se estão todos KO."""
+        escolhido = None
+        for pokemon in self.equipa:
+            if pokemon.vida > 0:
+                if escolhido is None or pokemon.vida > escolhido.vida:
+                    escolhido = pokemon
+        return escolhido
+
+
+@dataclass
+class Combate:
+    """Um combate do histórico. Só o ginásio cria combates (composição).
+
+    É uma dataclass: guarda os nomes do desafiante, do seu Pokémon e do
+    vencedor, e o @dataclass escreve sozinho o construtor, a forma de o
+    mostrar com print e a comparação com ==.
+    """
+
+    desafiante: str
+    pokemon_desafiante: str
+    vencedor: str
+
+    def resumo(self):
+        """Devolve uma linha de texto que descreve o combate."""
+        return f"{self.desafiante} com {self.pokemon_desafiante}: venceu {self.vencedor}"
+
+
 class Ginasio:
-    # Só o método combater muda; o resto da classe fica como estava.
+    """Um ginásio tem um líder e recebe desafiantes (agregação)
+    e guarda o histórico dos seus combates (composição)."""
+
+    def __init__(self, cidade, lider):
+        """Cria um ginásio com a cidade e o líder, e as duas listas vazias."""
+        self.cidade = cidade
+        self.lider = lider              # AGREGAÇÃO: Treinador criado fora
+        self.desafiantes = []           # AGREGAÇÃO: existem sem o ginásio
+        self.combates = []              # COMPOSIÇÃO: só o ginásio os cria
 
     def combater(self, desafiante):
         """Um combate entre o Pokémon escolhido por cada treinador.
@@ -625,8 +961,11 @@ class Ginasio:
         atacante = desafiante.escolher_pokemon()
         defensor = self.lider.escolher_pokemon()
         if atacante is None or defensor is None:
+            # O aviso vem antes do raise: depois dele, o método já parou.
             logger.warning(f"Combate recusado em {self.cidade}: {desafiante.nome} contra {self.lider.nome}, sem Pokémon com vida.")
             raise SemPokemonComVida(f"Não há combate em {self.cidade}: um dos treinadores não tem Pokémon com vida.")
+        # O desafiante só entra na lista depois da verificação: um combate
+        # recusado deixa o ginásio como estava.
         if desafiante not in self.desafiantes:
             self.desafiantes.append(desafiante)
         logger.info(f"Combate em {self.cidade}: {desafiante.nome} com {atacante.nome} contra {self.lider.nome} com {defensor.nome}.")
@@ -641,259 +980,231 @@ class Ginasio:
             if atacante.vida == 0:
                 vencedor = self.lider
                 break
-        # O registo nasce aqui dentro: é o ginásio que o cria e o guarda.
+        # O combate entra no histórico, que só o ginásio guarda (composição).
         self.combates.append(Combate(desafiante.nome, atacante.nome, vencedor.nome))
         logger.info(f"Fim do combate em {self.cidade}: venceu {vencedor.nome}.")
+
+    def mostrar_historico(self):
+        """Mostra o resumo de todos os combates deste ginásio."""
+        print(f"\nHistórico do ginásio de {self.cidade}:")
+        for combate in self.combates:
+            print(" -", combate.resumo())
+
+    def anunciar_combates(self, anunciador):
+        """Entrega cada combate ao anunciador, para ele o anunciar.
+
+        O anunciador pode ser um objeto de qualquer classe, desde que tenha o
+        método anunciar(combate). O ginásio não quer saber de que classe é.
+        """
+        for combate in self.combates:
+            anunciador.anunciar(combate)
+
+
+if __name__ == "__main__":
+    misty = Treinador("Misty")
+    misty.capturar(PokemonAgua("Starmie", 120, 35))
+    ash = Treinador("Ash")
+    ash.capturar(PokemonFogo("Charmander", 90, 40))
+    ash.capturar(PokemonPlanta("Bulbasaur", 110, 25, 20))
+    cerulean = Ginasio("Cerulean", misty)
+    cerulean.combater(ash)
+    cerulean.combater(ash)
+    cerulean.mostrar_historico()
+    # Apagar o ginásio apaga o histórico dos combates, que só ele guardava.
+    # Os treinadores e os seus Pokémon continuam a existir.
+    del cerulean
+    print(f"\n{ash.nome} continua com {len(ash.equipa)} Pokémon; {misty.nome} continua com {len(misty.equipa)}.")
 ```
 
-Leitura guiada: cada nível é um método do logger, com o nome do nível em minúsculas, e recebe a mensagem escrita com uma f-string. O aviso está dentro do `if` que recusa o combate, antes do `raise`, porque depois do `raise` o método já parou. As duas mensagens seguintes só correm quando o combate vai mesmo acontecer. O `info` diz quem combate com quem, e o `debug` guarda um pormenor que só interessa a quem investiga, a vida de cada Pokémon antes do primeiro ataque. A última mensagem, de `info`, diz quem venceu.
+As quatro mensagens do registo estão todas no `combater`, à volta do combate e da recusa. O resto do ficheiro é o da paragem 3, com o texto do início novo e o histórico no lugar do registo dos combates.
 
-3. Cria o ficheiro `registo.py`, com este conteúdo. É o programa principal que configura o registo, com o nível `INFO`.
-
-```python
-# registo.py: o ginásio de Celadon regista os combates, e este programa escolhe o que se vê.
-import logging
-
-from erros import ErroDoGinasio
-from pokemon import PokemonAgua, PokemonPlanta
-from ginasio import Ginasio, Lider, Treinador
-
-logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
-
-erika = Lider.com_equipa("Erika", [PokemonPlanta("Tangela", 50, 20, 10)])
-misty = Treinador.com_equipa("Misty", [PokemonAgua("Psyduck", 60, 20)])
-celadon = Ginasio("Celadon", erika)
-for tentativa in range(2):
-    try:
-        celadon.combater(misty)
-    except ErroDoGinasio as erro:
-        print(f"Recusado: {erro}")
-```
-
-Leitura guiada: a chamada ao `basicConfig` vem antes de tudo o que regista. O `level` é o nível mínimo: com `logging.INFO`, as mensagens de `DEBUG` não aparecem. O `format` diz como se escreve cada linha: `%(levelname)s` é o nível, `%(name)s` é o nome do logger e `%(message)s` é a mensagem. O resto cria a Erika, a Misty e o ginásio, e a Misty desafia duas vezes. O segundo desafio é recusado, porque o Psyduck fica KO no primeiro.
-
-4. Antes de executares, prevê que linhas do registo vão aparecer, com que nível, e onde ficam em relação às linhas do combate. Depois executa:
-
-```bash
-python3 registo.py
-```
-
-O que deves ver. As linhas do registo são as três que começam por um nível entre parênteses retos: a primeira antes do combate e as outras duas depois dele.
-
-```text
-[INFO] ginasio: Combate em Celadon: Misty com Psyduck contra Erika com Tangela.
-
-=== Misty desafia Erika no ginásio de Celadon ===
-Psyduck ataca Tangela e tira 20 de vida.
-Tangela tem 30/150 de vida.
-É super eficaz!
-Tangela ataca Psyduck e tira 40 de vida.
-Psyduck tem 20/150 de vida.
-Psyduck ataca Tangela e tira 20 de vida.
-Tangela tem 10/150 de vida.
-É super eficaz!
-Tangela ataca Psyduck e tira 40 de vida.
-Psyduck está KO (0/150).
-[INFO] ginasio: Fim do combate em Celadon: venceu Erika.
-[WARNING] ginasio: Combate recusado em Celadon: Misty contra Erika, sem Pokémon com vida.
-Recusado: Não há combate em Celadon: um dos treinadores não tem Pokémon com vida.
-```
-
-Isto quer dizer que o `INFO` do início e do fim, e o `WARNING` do combate recusado, vieram do registo, e que o combate e o "Recusado" vieram dos `print`. A mensagem de `DEBUG` não aparece, porque o nível mínimo é `INFO`.
-
-5. Muda o nível no `registo.py` para `logging.DEBUG`, na linha do `basicConfig`, e executa outra vez. O que deves ver, logo a seguir à primeira linha do registo:
-
-```text
-[DEBUG] ginasio: Vida no início: Psyduck 60, Tangela 50.
-```
-
-6. Muda o nível para `logging.WARNING` e executa. Das linhas do registo, só fica a do aviso. As do `INFO` e a do `DEBUG` deixam de aparecer, e o combate e o "Recusado" continuam, porque são `print`. O que deves ver, no fim da saída:
-
-```text
-[WARNING] ginasio: Combate recusado em Celadon: Misty contra Erika, sem Pokémon com vida.
-Recusado: Não há combate em Celadon: um dos treinadores não tem Pokémon com vida.
-```
-
-7. Pensa: para ver as mensagens de `DEBUG`, mudaste uma palavra no `registo.py` e nenhuma no `ginasio.py`. Porque é que isso é uma vantagem em relação a acrescentar e apagar `print`?
-
-A resposta: as mensagens ficam no código, num só sítio, e a configuração decide o que se vê. Não é preciso acrescentar `print` para investigar, nem apagá-los depois, nem lembrar onde estavam quando o erro volta. Não se mexe no ginásio para o investigar.
-
-### Paragem 6
-
-O ginásio regista os combates em três níveis, e o programa escolhe o que se vê. Neste ponto, o teu `ginasio.py` é igual ao da pasta 04 dos exemplos, a não ser no texto do início e na demonstração do fim, que não mudaste. Podes conferir o teu com o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) do exemplo.
-
-Pensa antes de continuares: porque é que o `basicConfig` está no `registo.py`, e não no `ginasio.py`? A resposta: o ginásio é usado por vários programas, e cada um quer o seu registo. Se o `ginasio.py` configurasse o registo, impunha a sua escolha a todos. Como o `basicConfig` só faz efeito da primeira vez que é chamado, a configuração do programa era ignorada.
+Pensa antes de continuares: para ver a mensagem de `DEBUG`, mudaste uma palavra no `registo.py` e nenhuma no `ginasio.py`. Que vantagem tem isto sobre acrescentar e apagar `print` no ginásio? A resposta: as mensagens ficam no código, e a configuração decide o que se vê. Não é preciso escrever `print` para investigar, apagá-los depois, nem lembrar onde estavam quando o erro volta.
 
 ## Fase 7: O registo num ficheiro
 
-O `basicConfig` pode mandar o registo para um ficheiro, em vez do ecrã, com o parâmetro `filename`. O formato pode acrescentar a data e a hora de cada mensagem, com `%(asctime)s`. Num ficheiro, a hora é o que permite saber quando aconteceu cada coisa, dias depois. Cada execução acrescenta as suas linhas ao fim do ficheiro, sem apagar as anteriores. Um registo é lido por outras pessoas e guarda-se durante muito tempo. Por isso nunca leva palavras-passe, códigos de acesso nem dados pessoais. Para saber mais, lê as secções "Guardar o registo num ficheiro" e "O que nunca se regista" do [guia](../04-excecoes-depuracao-e-logging.md).
+O registo passa do ecrã para o ficheiro `ginasio.log`, com a data e a hora de cada mensagem. Rever: [O registo num ficheiro](../04-excecoes-depuracao-e-logging.md#o-registo-num-ficheiro).
 
-1. No `registo.py`, substitui a linha do `basicConfig` por esta. Manda o registo para o ficheiro `ginasio.log` e acrescenta a hora de cada mensagem.
+1. No `registo.py`, substitui a linha do `basicConfig`, e o comentário por cima dela, por estas:
 
-```python
-logging.basicConfig(filename="ginasio.log", level=logging.INFO,
-                    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
-```
+   ```python
+   # O filename manda o registo para um ficheiro, e o %(asctime)s põe a data e a
+   # hora à frente de cada mensagem. Sem o encoding="utf-8", no Windows, os
+   # acentos do ficheiro ficam estragados.
+   logging.basicConfig(filename="ginasio.log", encoding="utf-8", level=logging.INFO,
+                       format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+   ```
 
-Leitura guiada: o parâmetro `filename` é o que muda o destino do registo, do ecrã para o ficheiro. O `format` ganhou o `%(asctime)s` à frente. O nível continua a ser `INFO`.
+2. Corre `python3 registo.py` duas vezes seguidas. O que deves ver no terminal, de cada vez:
 
-2. Executa o `registo.py` duas vezes seguidas, com `python3 registo.py`. O que deves ver no ecrã, em cada execução: só o que vem dos `print`, isto é, o combate e o "Recusado". As linhas do registo deixaram de aparecer no ecrã.
+   ```text
 
-3. Abre o ficheiro `ginasio.log`, que apareceu na pasta, no VS Code. Antes de o abrires, prevê quantas linhas tem.
+   === Misty desafia Erika no ginásio de Celadon ===
+   Psyduck ataca Tangela e tira 20 de vida.
+   Tangela tem 30/150 de vida.
+   É super eficaz!
+   Tangela ataca Psyduck e tira 40 de vida.
+   Psyduck tem 20/150 de vida.
+   Psyduck ataca Tangela e tira 20 de vida.
+   Tangela tem 10/150 de vida.
+   É super eficaz!
+   Tangela ataca Psyduck e tira 40 de vida.
+   Psyduck está KO (0/150).
+   Recusado: Não há combate em Celadon: um dos treinadores não tem Pokémon com vida.
+   ```
 
-O que deves ver: seis linhas, três por execução, com a data e a hora à frente. As datas e as horas são as do teu computador:
+   Ficaram só as linhas dos `print`: as do registo foram para o ficheiro.
 
-```text
-2026-10-18 18:26:53,787 [INFO] ginasio: Combate em Celadon: Misty com Psyduck contra Erika com Tangela.
-2026-10-18 18:26:53,787 [INFO] ginasio: Fim do combate em Celadon: venceu Erika.
-2026-10-18 18:26:53,787 [WARNING] ginasio: Combate recusado em Celadon: Misty contra Erika, sem Pokémon com vida.
-```
+3. Na pasta apareceu o ficheiro `ginasio.log`. Antes de o abrires, prevê quantas linhas tem. Abre-o no VS Code, com um clique no painel Explorer. O que deves ver: seis linhas, com a data e a hora do teu computador. As três primeiras são parecidas com estas:
 
-Estas são as três linhas da primeira execução, e a segunda execução acrescenta outras três por baixo. O ficheiro não é apagado entre execuções.
+   ```text
+   2026-11-12 09:23:04,291 [INFO] ginasio: Combate em Celadon: Misty com Psyduck contra Erika com Tangela.
+   2026-11-12 09:23:04,291 [INFO] ginasio: Fim do combate em Celadon: venceu Erika.
+   2026-11-12 09:23:04,291 [WARNING] ginasio: Combate recusado em Celadon: Misty contra Erika, sem Pokémon com vida.
+   ```
 
-4. Pensa: quantas linhas tem o ficheiro, e porquê? O que aparece no ecrã, e o que deixou de aparecer?
-
-A resposta: seis, porque cada execução escreve as três linhas do registo, as duas de `INFO` e a de `WARNING`, e acrescenta-as ao fim do ficheiro. No ecrã ficam só os `print`: o combate e o "Recusado". As linhas do registo deixaram de aparecer, porque foram para o ficheiro.
+   Cada execução acrescentou as suas três linhas ao fim do ficheiro, sem apagar as anteriores. Se o `ginasio.log` não aparecer na pasta, vê [O `ginasio.log` não aparece](#o-ginasiolog-não-aparece).
 
 ### Paragem 7
 
-O registo vai para o ficheiro `ginasio.log`, com a hora de cada mensagem, e o ecrã mostra só o jogo.
+O registo do ginásio vai para o `ginasio.log`, com a hora de cada mensagem, e o terminal mostra só o jogo.
 
-Pensa antes de terminares: o registo do ginásio tem os nomes dos treinadores, que aqui são personagens inventadas. Num programa com pessoas reais, o que teria de mudar? A resposta: o registo usaria um identificador, como um número de inscrição, e não o nome nem o contacto da pessoa. Nunca se escrevem num registo palavras-passe, chaves, números de documentos, moradas ou telefones.
+Pensa antes de terminares: se mudares o nível do `basicConfig` para `logging.WARNING` e correres o `registo.py` mais uma vez, quantas linhas ganha o `ginasio.log`? A resposta: uma, a do aviso do combate recusado. As duas de `INFO` ficam abaixo do nível mínimo, e o ficheiro passa de seis para sete linhas.
 
-## Problemas frequentes
+## Se alguma coisa falhar
+
+1. Estás na pasta certa? Escreve `pwd` no terminal, ou `cd` na linha de comandos clássica do Windows: o caminho tem de acabar em `ginasio-com-erros`.
+2. Guardaste o ficheiro? O Python corre o que está guardado no disco, e não o que vês no editor.
+3. Os ficheiros estão todos na mesma pasta, com os nomes certos, em minúsculas e sem acentos?
+4. A saída é diferente da do texto? Compara o teu `ginasio.py` com o da [paragem 3](#paragem-3) ou o da [paragem 6](#paragem-6), linha a linha.
+5. Faltaste a uma aula, ou perdeste-te a meio? Faz [Preparar o projeto](#preparar-o-projeto) e cria o `erros.py` do passo 1 da fase 1. Para continuares na fase 3, faz também os passos 1 e 2 da fase 2. Para continuares na fase 4, 5 ou 6, copia o `ginasio.py` da paragem 3. Para continuares na fase 7, copia o da paragem 6 e cria o `registo.py` do passo 3 da fase 6.
+
+### `can't open file '...': [Errno 2] No such file or directory`
+
+O Python procurou o ficheiro na pasta onde o terminal está, e o caminho da mensagem mostra que é outra. Abre a pasta `ginasio-com-erros` no VS Code e abre lá um terminal novo.
 
 ### `ModuleNotFoundError: No module named 'erros'`
 
-O ficheiro `erros.py` não está na mesma pasta que o `ginasio.py`, ou tem outro nome. Confirma que se chama exatamente `erros.py`.
+A linha do `import` pede um ficheiro que não está na pasta. Confirma que o `erros.py` está na mesma pasta que o programa que corres, com esse nome exato. A mesma mensagem com `'pokemon'` ou `'ginasio'` tem a mesma causa.
 
 ### `ImportError: cannot import name 'EquipaCheia' from 'erros'`
 
-O ficheiro foi encontrado, mas não tem uma classe com esse nome. A mensagem inclui o caminho do ficheiro. Nas versões recentes do Python, quando há um nome parecido, acaba também com uma sugestão, `Did you mean: ...?`, que quer dizer "querias dizer...?". Confirma a grafia, com as maiúsculas: `EquipaCheia`.
-
-### `NameError: name 'EquipaCheia' is not defined`, quando se captura com a equipa cheia
-
-O `ginasio.py` usa a exceção, mas não a importou. Confirma a linha `from erros import EquipaCheia, SemPokemonComVida` no início do ficheiro. O erro só aparece quando o `raise` corre, e por isso o ficheiro parece estar bem até a equipa encher.
+O ficheiro foi encontrado, mas não tem uma classe com esse nome. Confirma a grafia, com as maiúsculas, no `erros.py` e na linha do `import`. Nas versões recentes do Python, a mensagem acaba com o nome parecido que encontrou, depois de `Did you mean`.
 
 ### `TypeError: EquipaCheia() takes no arguments`
 
-Uma das classes do `erros.py` não tem a classe-mãe entre parênteses, e por isso é uma classe normal, e não uma exceção. A `ErroDoGinasio` tem de ser filha de `Exception`, e as outras de `ErroDoGinasio`. A mensagem aparece quando o programa cria a exceção com uma mensagem, como `EquipaCheia("...")`, porque uma classe normal sem construtor não aceita argumentos. Traz o nome da classe que se estava a criar, que pode ser outra das três, como `SemPokemonComVida`.
+A classe não tem a classe-mãe entre parênteses, e por isso é uma classe normal, sem construtor, e não uma exceção. A `ErroDoGinasio` tem de ser filha de `Exception`, e as outras duas de `ErroDoGinasio`. Dentro de um `try`, a mesma causa acrescenta uma segunda mensagem, `catching classes that do not inherit from BaseException is not allowed`.
 
-### `TypeError: catching classes that do not inherit from BaseException is not allowed`
+### `NameError: name 'EquipaCheia' is not defined`
 
-É a mesma causa do problema anterior, vista de outro lado. Acontece a seguir ao `TypeError: EquipaCheia() takes no arguments`, quando isso se passa dentro de um `try`. O `except` tem o nome de uma classe que não é uma exceção, e o Python não consegue apanhar com ela. O Python mostra então as duas mensagens, separadas pela frase `During handling of the above exception, another exception occurred`. Corrige a classe no `erros.py`.
+O `ginasio.py` usa a exceção, mas não a importou. Confirma a linha `from erros import EquipaCheia, SemPokemonComVida` no início do ficheiro. O erro só aparece quando o `raise` corre, e por isso o ginásio parece estar bem até à primeira recusa. A mesma mensagem com `SemPokemonComVida` aparece na fase 3, quando falta juntá-la à importação.
 
-### O teste da fase 3 escreve "Não há combate: um dos treinadores não tem Pokémon com vida." sem a cidade
+### A recusa aparece sem a cidade
 
-O `combater` ainda tem o `print` e o `return` da versão anterior. Tira-os e põe o `raise` no lugar deles.
+O `combates.py` escreve "Não há combate: um dos treinadores não tem Pokémon com vida." porque o `combater` ainda tem o `print` e o `return` do tema 03. Substitui as linhas desde o `def combater` até ao `return` pelo bloco do passo 2 da fase 3.
 
-### Na fase 3, a linha dos desafiantes diz 2 depois do Brock
+### A linha dos desafiantes diz 2 depois do Brock
 
-A linha que junta o desafiante à lista está antes da verificação. Passa-a para depois do `raise`.
+O `if desafiante not in self.desafiantes:` e o `append` estão antes da verificação, e o Brock entrou na lista antes de ser recusado. Passa essas duas linhas para depois do `raise`.
 
 ### O depurador não para no ponto de paragem
 
-Ou executaste sem o depurador, com o triângulo ou com Ctrl+F5, ou o ponto está numa linha que não corre. Usa o F5, e confirma que o ponto vermelho está na linha certa do ficheiro que estás a executar.
+Correste sem o depurador, com o triângulo do canto de cima ou no terminal, ou carregaste em F5 com outro ficheiro à frente. Volta ao separador do `investigar.py` e carrega em F5. Confirma também que o ponto vermelho está na linha 14, que corre sempre.
 
-### O F5 pergunta que depurador usar e não aparece o de Python
+### O F5 não mostra o depurador de Python
 
-A extensão Python da Microsoft não está instalada, ou está desativada. Instala-a no painel das extensões do VS Code.
+A extensão Python da Microsoft não está instalada, ou está desativada. Instala-a no painel Extensions e carrega outra vez em F5.
 
-### As mensagens do registo não aparecem
+### O traceback tem outros números de linha
 
-O `registo.py` não tem o `basicConfig`, ou tem o nível acima do das mensagens. Sem configuração, só aparecem as de `WARNING`.
+O teu `ginasio.py` é diferente do da paragem 3, com linhas a mais ou a menos. Os andares e a última linha são os mesmos, e o resto da fase funciona. Para teres os números do texto, copia o `ginasio.py` da [paragem 3](#paragem-3).
+
+### As linhas do registo não aparecem
+
+O `registo.py` não tem o `basicConfig`, ou tem o `basicConfig` depois dos combates. Sem configuração, aparece só o aviso, sem o nível nem o nome à frente. A chamada ao `basicConfig` fica antes de tudo o que regista.
 
 ### `--- Logging error ---`, com `not all arguments converted during string formatting`
 
-Uma mensagem do registo foi escrita como um `print`, com vírgulas. Escreve-a numa f-string.
+Uma mensagem do registo foi escrita como num `print`, com vírgulas: `logger.info("Fim do combate:", vencedor.nome)`. O logger recebe uma só mensagem. Escreve-a numa f-string, como as do passo 2 da fase 6.
 
 ### O `ginasio.log` não aparece
 
-O ficheiro é criado na pasta onde o terminal está, que pode não ser a do laboratório. Abre o terminal na pasta `ginasio-com-erros` e executa de lá.
+O ficheiro é criado na pasta onde o terminal está quando corres o programa, que pode não ser a do projeto. Confirma com `pwd` e corre o `registo.py` a partir da pasta `ginasio-com-erros`.
 
 ## Desafios
 
-1. Neste momento, nada impede que o mesmo Pokémon seja capturado duas vezes pelo mesmo treinador: o mesmo objeto fica duas vezes na lista da equipa. Acrescenta ao ginásio uma exceção nova para este caso.
+Os desafios partem do `erros.py` e do `ginasio.py` do fim da fase 6.
 
-- No `erros.py`, uma classe `PokemonRepetido`, filha de `ErroDoGinasio`.
-- No `capturar`, se o Pokémon já está na equipa do treinador, o método regista um aviso, com o nível `WARNING`, e lança `PokemonRepetido`, sem juntar nada à equipa.
-- A mensagem do aviso é "Ash tentou capturar outra vez o Charmander." A da exceção é "Ash já tem este Charmander na equipa." Ambas levam o nome do treinador e o do Pokémon.
+1. Um Pokémon capturado duas vezes. Hoje, o mesmo objeto Pokémon pode entrar duas vezes na equipa do mesmo treinador. Acrescenta ao `erros.py` a exceção `PokemonRepetido`, filha de `ErroDoGinasio`. O `capturar` recusa esse caso: regista um aviso, com o nível `WARNING`, e lança a `PokemonRepetido`, sem juntar nada à equipa. As mensagens são as do teste, com o nome do treinador e o do Pokémon. Testa com o `repetido.py`, na mesma pasta:
 
-Para testar, cria o ficheiro `repetido.py`:
+   ```python
+   # repetido.py: testa a exceção PokemonRepetido, do desafio 1.
+   import logging
 
-```python
-# repetido.py: testa a exceção PokemonRepetido, do desafio.
-import logging
+   from erros import PokemonRepetido
+   from pokemon import PokemonFogo
+   from ginasio import Treinador
 
-from erros import PokemonRepetido
-from pokemon import PokemonFogo
-from ginasio import Treinador
+   logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
 
-logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
+   ash = Treinador("Ash")
+   charmander = PokemonFogo("Charmander", 90, 40)
+   ash.capturar(charmander)
+   try:
+       ash.capturar(charmander)
+   except PokemonRepetido as erro:
+       print(f"Recusado: {erro}")
+   ash.capturar(PokemonFogo("Charmander", 90, 40))
+   print(len(ash.equipa))
+   ```
 
-ash = Treinador("Ash")
-charmander = PokemonFogo("Charmander", 90, 40)
-ash.capturar(charmander)
-try:
-    ash.capturar(charmander)
-except PokemonRepetido as erro:
-    print(f"Recusado: {erro}")
-ash.capturar(PokemonFogo("Charmander", 90, 40))
-print(len(ash.equipa))
-```
+   Quando estiver certo, o teste mostra:
 
-Quando estiver certo, o teste mostra:
+   ```text
+   [WARNING] ginasio: Ash tentou capturar outra vez o Charmander.
+   Recusado: Ash já tem este Charmander na equipa.
+   2
+   ```
 
-```text
-[WARNING] ginasio: Ash tentou capturar outra vez o Charmander.
-Recusado: Ash já tem este Charmander na equipa.
-2
-```
+   Pista: o terceiro `capturar` junta um Charmander novo, com os mesmos valores do primeiro, e tem de ser aceite. A tua verificação pergunta se é o mesmo objeto ou se tem os mesmos valores? E, com a equipa cheia e um Pokémon repetido, qual das duas exceções diz mais a quem chamou?
 
-Antes de escreveres o código, decide duas coisas. A primeira: o terceiro `capturar` junta um Charmander criado de novo, com os mesmos valores do primeiro, e tem de ser aceite. Que pergunta faz a verificação, "é o mesmo objeto?" ou "tem os mesmos valores?", e como se escreve? A segunda: um treinador com a equipa cheia tenta capturar um Pokémon que já tem. Qual das duas exceções deve ser lançada, e o que decide isso no teu código? Pista: pensa no que o `==` faz com dois objetos de uma classe normal, escrita sem `@dataclass`. Pensa também em qual dos dois motivos de recusa dá mais informação a quem chamou.
+2. A `EquipaCheia` com dados. Hoje, a `EquipaCheia` só tem a docstring, e a mensagem é escrita no `raise` do `capturar`. Dá-lhe um construtor que recebe o treinador e o Pokémon que ficou de fora e os guarda nos atributos `treinador` e `pokemon`. A própria exceção escreve a mensagem, com o mesmo texto de hoje. No `capturar`, o `raise` passa só o treinador e o Pokémon. Rever: [Uma exceção com dados](../04-excecoes-depuracao-e-logging.md#uma-exceção-com-dados). Testa com o `fora_da_equipa.py`:
 
-2. A `EquipaCheia` do teu `erros.py` só tem a docstring, e a mensagem é escrita no `raise` do `capturar`. Dá-lhe dados, como na secção "Uma exceção com dados" do [guia](../04-excecoes-depuracao-e-logging.md#uma-exceção-com-dados).
+   ```python
+   # fora_da_equipa.py: testa a EquipaCheia com dados, do desafio 2.
+   from erros import EquipaCheia
+   from pokemon import PokemonFogo
+   from ginasio import Treinador
 
-- No `erros.py`, a `EquipaCheia` passa a ter um construtor que recebe o treinador e o Pokémon que ficou de fora. Guarda-os nos atributos `treinador` e `pokemon`, e escreve ela própria a mensagem, com o mesmo texto que tem hoje: "Ash já tem 6 Pokémon e não pode capturar Charmander."
-- No `capturar` do `ginasio.py`, o `raise` passa só o treinador e o Pokémon.
+   pokemons = []
+   for nome in ["Ponyta", "Vulpix", "Growlithe", "Magmar", "Ninetales", "Arcanine", "Charmander"]:
+       pokemons.append(PokemonFogo(nome, 50, 20))
+   try:
+       ash = Treinador.com_equipa("Ash", pokemons)
+   except EquipaCheia as erro:
+       print(erro)
+       print(f"Ficou de fora: {erro.pokemon.nome}.")
+       print(f"Na equipa de {erro.treinador.nome} ficaram {len(erro.treinador.equipa)} Pokémon.")
+   ```
 
-Para testar, cria o ficheiro `fora_da_equipa.py`:
+   Quando estiver certo, o teste mostra:
 
-```python
-# fora_da_equipa.py: testa a EquipaCheia com dados, do desafio 2.
-from erros import EquipaCheia
-from pokemon import PokemonFogo
-from ginasio import Treinador
+   ```text
+   Ash já tem 6 Pokémon e não pode capturar Charmander.
+   Ficou de fora: Charmander.
+   Na equipa de Ash ficaram 6 Pokémon.
+   ```
 
-pokemons = []
-for nome in ["Ponyta", "Vulpix", "Growlithe", "Magmar", "Ninetales", "Arcanine", "Charmander"]:
-    pokemons.append(PokemonFogo(nome, 50, 20))
-try:
-    ash = Treinador.com_equipa("Ash", pokemons)
-except EquipaCheia as erro:
-    print(erro)
-    print(f"Ficou de fora: {erro.pokemon.nome}.")
-    print(f"Na equipa de {erro.treinador.nome} ficaram {len(erro.treinador.equipa)} Pokémon.")
-```
+   O `capturas.py` da fase 2 tem de mostrar o mesmo que antes, porque a mensagem não mudou.
 
-Quando estiver certo, o teste mostra:
-
-```text
-Ash já tem 6 Pokémon e não pode capturar Charmander.
-Ficou de fora: Charmander.
-Na equipa de Ash ficaram 6 Pokémon.
-```
-
-Corre também outra vez o `capturas.py`, da fase 2. Tem de mostrar exatamente o mesmo que mostrava antes da mudança, porque a mensagem não mudou.
-
-Antes de escreveres o código, decide duas coisas. A primeira: a mensagem tem o número 6, que o `capturar` escrevia com a constante `TAMANHO_MAXIMO_DA_EQUIPA`, do `ginasio.py`. Dentro do `erros.py`, de onde vem esse número? Pista: o `ginasio.py` já importa o `erros.py`. Pensa no que acontece se o `erros.py` também importar o `ginasio.py`, e no que a equipa do treinador já te diz. A segunda: quando a exceção é lançada, o `com_equipa` ainda não devolveu o treinador, e a variável `ash` nunca chega a ser criada. Então, como é que o teste chega ao treinador e à equipa dele?
+   Pista: o 6 da mensagem vinha da constante do `ginasio.py`, e o `ginasio.py` já importa o `erros.py`. O que te diz a equipa do treinador, no momento da recusa? E, no teste, a variável `ash` nunca chega a existir: por onde chega o programa ao treinador?
 
 ## Antes de terminares
 
-- [ ] A pasta `ginasio-com-erros` tem o `erros.py` e o `ginasio.py` na versão final, e os ficheiros de teste: `teste_erros.py`, `capturas.py`, `combates.py`, `investigar.py` já corrigido, `pilha.py` já corrigido e `registo.py`.
-- [ ] O `investigar.py` acaba com o comentário da fase 4: o sintoma, a hipótese escrita antes de abrires o depurador, as linhas que registaste com o F10 e a causa.
-- [ ] Se fizeste o desafio 1, o `erros.py` e o `ginasio.py` têm a `PokemonRepetido`, e o `repetido.py` mostra as três linhas do enunciado.
-- [ ] Se fizeste o desafio 2, a `EquipaCheia` tem o construtor com os dados, o `fora_da_equipa.py` mostra as três linhas do enunciado, e o `capturas.py` mostra o mesmo que antes.
-- [ ] Consegues explicar, por palavras tuas, porque é que um método recusa com `raise` em vez de `print`. Consegues explicar também a diferença entre o sítio onde um erro rebenta e o sítio onde está a causa.
+- [ ] O `erros.py` tem as três exceções, e o `teste_erros.py` mostra `True True`, `True` e a mensagem.
+- [ ] O `capturas.py` mostra seis capturas, duas recusas e o 6, e o `combates.py` mostra o estado do ginásio depois de cada um dos três desafios.
+- [ ] O `investigar.py` está corrigido e acaba com o comentário com o caso, a hipótese, a verificação e o que mudou.
+- [ ] O `pilha.py` está corrigido e faz os dois combates.
+- [ ] O `ginasio.py` tem as quatro mensagens do registo, e o `ginasio.log` tem as linhas das execuções do `registo.py`.
+- [ ] Entregaste ao professor o `investigar.py` e o `ginasio.log`, conforme ele indicar.
 
 ![Rodapé](../../imagens/rodape.png)

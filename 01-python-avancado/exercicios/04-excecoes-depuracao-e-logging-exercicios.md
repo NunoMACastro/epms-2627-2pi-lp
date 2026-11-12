@@ -2,36 +2,24 @@
 
 # Ficha de exercícios: Exceções, depuração e logging
 
-Ficha do tema Exceções, depuração e logging, do módulo 10794, Programação avançada com Python. Praticas lançar e apanhar exceções, ler um traceback, encontrar a causa de um erro com uma hipótese e com o depurador, e escolher o que um programa regista. Fazes sozinho, ao teu ritmo: o que não acabares na aula, acabas em casa ou na aula seguinte.
+Praticas o `raise` e o `try`, a leitura de um traceback, a procura da causa de um erro com o depurador e o que um programa escreve no registo. Os exercícios 1 a 8 são obrigatórios. Cada exercício fica num ficheiro com o número dele no nome, como `exercicio1.py`, na pasta da ficha, a não ser que o enunciado lhe dê outro nome. As explicações que um exercício pedir ficam num comentário, no ficheiro dele. Para rever: o [guia do tema](../04-excecoes-depuracao-e-logging.md) e o [laboratório](../laboratorios/04-excecoes-depuracao-e-logging-laboratorio.md).
 
-## O que precisas de saber
+## O cenário
 
-O [guia do tema](../04-excecoes-depuracao-e-logging.md) e o [laboratório](../laboratorios/04-excecoes-depuracao-e-logging-laboratorio.md). Cada exercício diz, em "Treina", a secção do guia de que precisa.
-
-## Como trabalhar
-
-Os exercícios de 1 a 8 são obrigatórios e estão em três grupos. As exceções são os exercícios 1 a 3. Encontrar a causa de um erro são os exercícios 4 e 5. O logging são os exercícios 6 a 8. Faz os exercícios pela ordem. O desafio opcional, no fim, junta exceções e logging, e é para quem acabar cedo. Em "Para ires mais longe", também opcional, o exercício 9 dá mais prática do `finally`. As pistas estão em "Apoio", depois dos exercícios: tenta cada exercício antes de as ler.
-
-Cada exercício treina uma coisa só, e o enunciado diz qual é. O primeiro exercício de cada grupo é o mais próximo do guia, e os seguintes pedem-te uma decisão pequena que o guia não tomou por ti.
-
-Precisas do computador com o Python 3 e o VS Code. Cria uma pasta para esta ficha e copia para lá os quatro ficheiros da pasta [04-excecoes-depuracao-e-logging dos exemplos](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/): o `pokemon.py`, o `ginasio.py`, o `erros.py` e o `anunciadores.py`. Vários exercícios usam as classes desses ficheiros.
-
-As respostas escritas vão para comentários, com `#`, no ficheiro `.py` do exercício, em frases completas e com as tuas palavras. Um exercício sem código para escrever, como o 4, o 6 e o 8, tem um ficheiro só com comentários, com o número do exercício no nome. Quando um exercício pedir uma previsão, prevê antes de executar: é a previsão, e não a execução, que mostra o que percebeste. Entrega os ficheiros como o professor indicar.
+Os exercícios usam os Pokémon das aulas. Cria uma pasta para a ficha e copia para lá o [pokemon.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/pokemon.py), o [ginasio.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/ginasio.py) e o [erros.py](../../exemplos/python-avancado/pokemon/04-excecoes-depuracao-e-logging/erros.py) dos exemplos. Os programas que importam do `pokemon.py` ou do `ginasio.py` só correm nessa pasta.
 
 ## Exceções
 
-### Exercício 1: Prever o caminho de um try
+### Exercício 1: O caminho de um try
 
-Treina: seguir um `try` com `except`, `else` e `finally` (guia, [Apanhar a recusa: try, except e else](../04-excecoes-depuracao-e-logging.md#apanhar-a-recusa-try-except-e-else) e [finally: o que corre sempre](../04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre)).
-
-Num Centro Pokémon, as poções do dia são divididas pelos treinadores que lá estão. O operador `//` é a divisão inteira, que usaste no 10.º ano, e dividir por zero lança um `ZeroDivisionError`.
+Num Centro Pokémon, as poções do dia são divididas pelos treinadores que lá estão. O número de poções chega em texto, como o que o `input` lê. O operador `//` é a divisão inteira do 10.º ano, e dividir por zero lança um `ZeroDivisionError`.
 
 ```python
 # Exercício 1: as poções do dia divididas pelos treinadores do Centro.
-def dividir_pocoes(pocoes, treinadores):
-    """Divide as poções pelos treinadores e devolve o que cada um recebe."""
+def dividir_pocoes(texto_das_pocoes, treinadores):
+    """Divide as poções pelos treinadores e devolve quantas recebe cada um."""
     try:
-        cada_um = pocoes // treinadores
+        cada_um = int(texto_das_pocoes) // treinadores
     except ZeroDivisionError:
         print("Não há treinadores.")
         return 0
@@ -39,61 +27,79 @@ def dividir_pocoes(pocoes, treinadores):
         print(f"Cada treinador recebe {cada_um}.")
         return cada_um
     finally:
-        print("Divisão feita.")
+        print("Fim da divisão.")
 
 
-print(dividir_pocoes(10, 3))
-print(dividir_pocoes(10, 0))
+print(dividir_pocoes("10", 3))
+print(dividir_pocoes("10", 0))
+try:
+    print(dividir_pocoes("dez", 3))
+except ValueError:
+    print("Pedido recusado: as poções não vêm em algarismos.")
 ```
 
-**a)** Sem executar, prevê as seis linhas que o programa mostra. Se, ao executar, alguma linha for diferente, explica num comentário em que parte do `try` o teu raciocínio se afastou do programa.
+Descobre, sem executar, o que o programa mostra, e confirma executando. Cada linha em que falhaste leva um comentário com a razão.
 
-**b)** O `else` e o `except` têm os dois um `return`, e mesmo assim aparece "Divisão feita." nas duas chamadas. Porquê? Em que ordem aparecem a mensagem do `finally` e o número que a função devolve?
+Rever: [finally: o que corre sempre](../04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre).
 
-### Exercício 2: Uma regra que recusa a sério
+<details>
+<summary>Pista</summary>
 
-Treina: lançar uma exceção quando um valor não respeita uma regra (guia, [raise: uma recusa que não se pode ignorar](../04-excecoes-depuracao-e-logging.md#raise-uma-recusa-que-não-se-pode-ignorar)).
+Na terceira chamada, procura a linha do `try` que falha e a classe da exceção que ela lança. Algum `except` da função é dessa classe?
 
-Nas fichas do tema 03, a cura de uma baga ia de 1 a 50. Escreve uma classe `Baga` cujo construtor recebe o nome e a cura, e que lança um `ValueError` quando a cura está fora desse intervalo, antes de guardar qualquer atributo. A mensagem é "A cura de uma baga vai de 1 a 50, e a Baga Gigante pedia 80.", com o nome e a cura pedidos.
+</details>
 
-Testa com estas linhas, no fim do ficheiro:
+### Exercício 2: Uma baga que recusa a cura errada
+
+Escreve a classe `Baga`, que recebe o nome e a cura quando é criada. A cura vai de 1 a 50, e uma baga pedida com outra cura não é criada: o construtor lança um `ValueError`. A mensagem diz a regra, o nome e a cura pedida, como "A cura de uma baga vai de 1 a 50, e a Baga Gigante pedia 80.".
+
+Linhas de teste, no fim do ficheiro:
 
 ```python
-pedidos = [("Baga Oran", 10), ("Baga Gigante", 80), ("Baga Seca", 0), ("Baga Sitrus", 30), ("Baga Mínima", 1), ("Baga Máxima", 50)]
-bagas = []
-for nome, cura in pedidos:
+def pedir_baga(nome, cura):
+    """Tenta criar a baga e diz se foi criada ou recusada."""
     try:
         baga = Baga(nome, cura)
     except ValueError as erro:
         print(f"Recusada: {erro}")
     else:
-        bagas.append(baga)
-        print(f"Criada: {baga.nome}")
-print(len(bagas))
+        print(f"Criada: {baga.nome}, que cura {baga.cura}.")
+
+
+pedir_baga("Baga Oran", 10)
+pedir_baga("Baga Gigante", 80)
+pedir_baga("Baga Seca", 0)
+pedir_baga("Baga Mínima", 1)
+pedir_baga("Baga Máxima", 50)
 ```
 
-Quando a classe estiver certa, o teste mostra:
+O teste deve mostrar:
 
 ```text
-Criada: Baga Oran
+Criada: Baga Oran, que cura 10.
 Recusada: A cura de uma baga vai de 1 a 50, e a Baga Gigante pedia 80.
 Recusada: A cura de uma baga vai de 1 a 50, e a Baga Seca pedia 0.
-Criada: Baga Sitrus
-Criada: Baga Mínima
-Criada: Baga Máxima
-4
+Criada: Baga Mínima, que cura 1.
+Criada: Baga Máxima, que cura 50.
 ```
 
-Responde também, num comentário no fim do ficheiro: no tema 03, a propriedade da vida corrigia os valores fora dos limites, e o 500 passava a 150. Aqui, a baga com 80 é recusada. Em que situação preferias cada uma das duas formas?
+No tema 03, o set da vida corrigia um valor fora dos limites, e a `Baga` recusa-o. Pensa em dois casos: um ataque que deixaria a vida de um Pokémon em -20, e uma baga pedida com cura 80. Em qual dos dois corrigias o valor, e em qual o recusavas? Explica porquê num comentário.
 
-### Exercício 3: A ordem dos except
+Rever: [raise: uma recusa que não se pode ignorar](../04-excecoes-depuracao-e-logging.md#raise-uma-recusa-que-não-se-pode-ignorar), [A recusa vem antes da mudança](../04-excecoes-depuracao-e-logging.md#a-recusa-vem-antes-da-mudança) e, no guia 03, [Propriedades: o get e o set com cara de atributo](../03-objetos-e-composicao.md#propriedades-o-get-e-o-set-com-cara-de-atributo).
 
-Treina: escolher a ordem dos `except` numa família de exceções (guia, [Uma família de exceções](../04-excecoes-depuracao-e-logging.md#uma-família-de-exceções) e [Os except pela ordem errada](../04-excecoes-depuracao-e-logging.md#os-except-pela-ordem-errada)).
+<details>
+<summary>Pista</summary>
 
-A loja Pokémon tem duas exceções próprias, filhas de uma classe-mãe comum, e uma função que as lança:
+Escreve primeiro, numa frase, quando é que uma cura está fora do intervalo, e só depois a condição. Se a Baga Mínima ou a Baga Máxima forem recusadas, olha para os sinais da tua condição.
+
+</details>
+
+### Exercício 3: Os except da loja
+
+A loja Pokémon tem três exceções próprias, filhas de uma classe-mãe comum, e uma função que as lança:
 
 ```python
-# Exercício 3: a loja Pokémon, com duas exceções próprias e uma compra.
+# Exercício 3: a loja Pokémon, com três exceções próprias e uma compra.
 class ErroDaLoja(Exception):
     """Classe-mãe dos erros da loja Pokémon."""
 
@@ -106,53 +112,64 @@ class Esgotado(ErroDaLoja):
     """O artigo acabou."""
 
 
+class PrecoErrado(ErroDaLoja):
+    """O artigo tem um preço que não pode ser."""
+
+
 def comprar(artigo, preco, stock, dinheiro):
     """Devolve o dinheiro que sobra depois da compra, ou lança um erro da loja."""
+    if preco <= 0:
+        raise PrecoErrado(f"{artigo} tem um preço errado: {preco} moedas.")
     if stock == 0:
-        raise Esgotado(f"{artigo} esgotado.")
+        raise Esgotado(f"Já não há {artigo} na loja.")
     if dinheiro < preco:
         raise SemDinheiro(f"Faltam {preco - dinheiro} moedas para {artigo}.")
     return dinheiro - preco
-
-
-compras = [("Poção", 20, 5, 100), ("Pokébola", 200, 3, 100), ("Super Poção", 70, 0, 100)]
-for artigo, preco, stock, dinheiro in compras:
-    try:
-        sobra = comprar(artigo, preco, stock, dinheiro)
-        print(f"{artigo} comprado. Sobram {sobra} moedas.")
-    except ErroDaLoja as erro:
-        print(f"Erro da loja: {erro}")
-    except SemDinheiro:
-        print("Junta mais moedas e volta.")
 ```
 
-**a)** Sem executar, prevê as três linhas que o programa mostra. A frase "Junta mais moedas e volta." aparece alguma vez? Explica porquê num comentário.
+Escreve a função `pedir(artigo, preco, stock, dinheiro)`, que tenta a compra com o `comprar` e escreve o resultado. Quando falta dinheiro, escreve "Junta mais moedas e volta.". Com qualquer outro erro da loja, escreve "Erro da loja:" e a mensagem da exceção. Quando a compra corre bem, escreve o artigo e o dinheiro que sobra.
 
-**b)** Muda o `try` para que, quando falta dinheiro, apareça "Junta mais moedas e volta.", e, para qualquer outro erro da loja, a mensagem da exceção. Muda também o `print` da compra feita para um `else`. Quando estiver certo, o programa mostra:
+Linhas de teste, no fim do ficheiro:
+
+```python
+pedir("Poção", 20, 5, 100)
+pedir("Pokébola", 200, 3, 100)
+pedir("Super Poção", 70, 0, 100)
+pedir("Pokébola Dourada", 0, 2, 100)
+```
+
+O teste deve mostrar:
 
 ```text
-Poção comprado. Sobram 80 moedas.
+Compra feita: Poção. Sobram 80 moedas.
 Junta mais moedas e volta.
-Erro da loja: Super Poção esgotado.
+Erro da loja: Já não há Super Poção na loja.
+Erro da loja: Pokébola Dourada tem um preço errado: 0 moedas.
 ```
 
-**c)** A Super Poção custa 70 e o treinador tem 100, mas a compra foi recusada por estar esgotada. Se o stock fosse 0 e o dinheiro não chegasse, qual das duas exceções era lançada? O que decide isso na função?
+Rever: [Apanhar a recusa: try, except e else](../04-excecoes-depuracao-e-logging.md#apanhar-a-recusa-try-except-e-else) e [Os except pela ordem errada](../04-excecoes-depuracao-e-logging.md#os-except-pela-ordem-errada).
 
-## Encontrar a causa de um erro
+<details>
+<summary>Pista</summary>
+
+Se a Pokébola mostra "Erro da loja", segue os teus `except` pela ordem em que o Python os experimenta.
+
+</details>
+
+## Depurar
 
 ### Exercício 4: Ler um traceback
 
-Treina: ler um traceback de baixo para cima e encontrar a causa (guia, [Ler um traceback com três andares](../04-excecoes-depuracao-e-logging.md#ler-um-traceback-com-três-andares)).
-
-Este programa, guardado no ficheiro `liga.py`, usa o ginásio da pasta 04:
+Este é o programa do ficheiro `cerulean.py`:
 
 ```python
-# liga.py: um desafiante e um ginásio, com um erro de propósito.
-from pokemon import PokemonPlanta
-from ginasio import Ginasio, Treinador
+# cerulean.py: um combate no ginásio de Cerulean, com um erro de propósito.
+from pokemon import PokemonAgua, PokemonPlanta
+from ginasio import Ginasio, Lider, Treinador
 
+misty = Lider.com_equipa("Misty", [PokemonAgua("Starmie", 90, 35)])
 ash = Treinador.com_equipa("Ash", [PokemonPlanta("Bulbasaur", 110, 25, 20)])
-cerulean = Ginasio("Cerulean", "Misty")
+cerulean = Ginasio(misty, "Cerulean")
 cerulean.combater(ash)
 ```
 
@@ -160,7 +177,7 @@ Quando se executa, o Python escreve isto:
 
 ```text
 Traceback (most recent call last):
-  File "liga.py", line 7, in <module>
+  File "cerulean.py", line 8, in <module>
     cerulean.combater(ash)
     ~~~~~~~~~~~~~~~~~^^^^^
   File "ginasio.py", line 141, in combater
@@ -169,75 +186,82 @@ Traceback (most recent call last):
 AttributeError: 'str' object has no attribute 'escolher_pokemon'
 ```
 
-Responde, sem executar:
+Responde num comentário, no fim do `cerulean.py`: em que método e em que linha rebentou o erro, e o que era o `self.lider` nessa linha. Diz também em que linha do `cerulean.py` está a causa, e corrige-a. O programa passa a mostrar o combate, que acaba com a linha `Starmie está KO (0/150).`.
 
-**a)** Que tipo de exceção é, e o que diz a mensagem, por palavras tuas?
+Rever: [Ler um traceback com três andares](../04-excecoes-depuracao-e-logging.md#ler-um-traceback-com-três-andares) e [Um erro que rebenta longe da causa](../04-excecoes-depuracao-e-logging.md#um-erro-que-rebenta-longe-da-causa).
 
-**b)** Quantos andares tem o traceback? Em que função rebentou o erro, e quem a chamou?
+<details>
+<summary>Pista</summary>
 
-**c)** Na linha 141 do `ginasio.py`, o que era o `self.lider`? Em que linha do `liga.py` está a causa, e como a corriges?
+O andar de baixo está certo. Procura, no `ginasio.py`, a linha que dá valor ao `self.lider`, e pergunta de onde veio esse valor.
+
+</details>
 
 ### Exercício 5: Uma hipótese antes do depurador
 
-Treina: escrever uma hipótese e confirmá-la com o depurador (guia, [Um erro tem um sintoma e uma causa](../04-excecoes-depuracao-e-logging.md#um-erro-tem-um-sintoma-e-uma-causa) e [Exemplo guiado: o dano a dobrar](../04-excecoes-depuracao-e-logging.md#exemplo-guiado-o-dano-a-dobrar)).
-
-Este `Lider` devia escolher sempre o Pokémon da equipa com mais vida, como o do guia do tema 03:
+O Centro Pokémon trata primeiro o Pokémon mais ferido de cada equipa, entre os que ainda podem lutar. A função `mais_ferido` devia encontrá-lo:
 
 ```python
-# Exercício 5: um Lider que devia escolher o Pokémon com mais vida, com um erro de propósito.
-from pokemon import PokemonAgua
+# Exercício 5: o Pokémon mais ferido de uma equipa. Tem um erro de propósito.
+from pokemon import PokemonAgua, PokemonPlanta
 
 
-class Lider:
-    """Um líder que devia escolher sempre o Pokémon com mais vida."""
-
-    def __init__(self, nome, equipa):
-        """Cria o líder com o nome e a equipa dados."""
-        self.nome = nome
-        self.equipa = equipa
-
-    def escolher_pokemon(self):
-        """Devolve o Pokémon da equipa com mais vida, ou None se estão todos KO."""
-        escolhido = None
-        for pokemon in self.equipa:
-            if pokemon.vida > 0:
-                if escolhido is None or pokemon.vida < escolhido.vida:
-                    escolhido = pokemon
-        return escolhido
+def mais_ferido(equipa):
+    """Devolve o Pokémon com menos vida entre os que ainda podem lutar, ou None se estão todos KO."""
+    escolhido = equipa[0]
+    for pokemon in equipa:
+        if pokemon.vida > 0:
+            if pokemon.vida < escolhido.vida:
+                escolhido = pokemon
+    return escolhido
 
 
-misty = Lider("Misty", [PokemonAgua("Staryu", 60, 20), PokemonAgua("Starmie", 90, 35), PokemonAgua("Psyduck", 40, 20)])
-print(misty.escolher_pokemon().nome)
+equipa_da_misty = [PokemonAgua("Staryu", 60, 20), PokemonAgua("Starmie", 90, 35), PokemonAgua("Psyduck", 40, 20)]
+equipa_da_erika = [PokemonPlanta("Oddish", 0, 20, 10), PokemonPlanta("Tangela", 80, 25, 10), PokemonPlanta("Gloom", 50, 25, 10)]
+print(mais_ferido(equipa_da_misty).nome)
+print(mais_ferido(equipa_da_erika).nome)
+
+# 1. O caso, o esperado, o obtido e o tipo de erro:
+# 2. A hipótese, escrita antes de abrires o depurador:
+# 3. O que o depurador mostrou:
+# 4. O que mudaste:
+# 5. Os dois casos, depois da correção:
 ```
 
-O programa escreve `Psyduck`, e devia escrever `Starmie`.
+Encontra a causa com o depurador e corrige-a. A investigação segue a rotina dos cinco passos, no comentário do fim do ficheiro, que já tem um título para cada passo. No passo 3, escreve uma linha por volta do ciclo, no caso que falha, com o nome do `pokemon` e o do `escolhido` no início da volta.
 
-Encontra a causa com o depurador e corrige-a, até o programa escrever `Starmie`. A investigação fica num comentário no fim do ficheiro, com `#`, para o código não mudar de linha. O comentário tem:
+Rever: [A rotina dos cinco passos](../04-excecoes-depuracao-e-logging.md#a-rotina-dos-cinco-passos), [O depurador para num ponto de paragem](../04-excecoes-depuracao-e-logging.md#o-depurador-para-num-ponto-de-paragem) e [Exemplo guiado: o dano a dobrar](../04-excecoes-depuracao-e-logging.md#exemplo-guiado-o-dano-a-dobrar).
 
-1. A tua hipótese, escrita antes de abrires o depurador: que linha achas que está mal, e o que esperas ver no `escolhido` ao longo do ciclo, se tiveres razão.
-2. Uma tabela, com uma linha por volta do ciclo, com o nome do `pokemon` e o nome do `escolhido` (ou `None`, quando ainda não há nenhum). Os valores são os que o depurador mostra quando para num ponto de paragem na linha `if pokemon.vida > 0:`.
-3. Se a tabela confirmou ou desmentiu a hipótese, e a linha que mudaste para corrigir a causa.
+<details>
+<summary>Pista</summary>
 
-## Logging
+Põe o ponto de paragem na primeira linha dentro do `for`: com o programa parado, o F5 continua até à volta seguinte. Quando o `escolhido` já é um Pokémon, abre-o com a seta, no painel das variáveis, para veres o nome e a vida.
+
+</details>
+
+## O registo
 
 ### Exercício 6: Escolher o nível
 
-Treina: escolher o nível de uma mensagem pelo que ela significa (guia, [Os cinco níveis](../04-excecoes-depuracao-e-logging.md#os-cinco-níveis)).
-
-Um programa de um Centro Pokémon regista o que acontece. Para cada acontecimento, escolhe o nível da mensagem, entre `DEBUG`, `INFO`, `WARNING`, `ERROR` e `CRITICAL`. Justifica numa frase: quem precisa de saber, e o programa continuou ou não?
+O programa de um Centro Pokémon escreve no registo o que acontece. Para cada acontecimento da tabela, escolhe o nível da mensagem: `DEBUG`, `INFO`, `WARNING`, `ERROR` ou `CRITICAL`. Justifica cada escolha num comentário, numa frase. Diz se o programa fez o que queria fazer e se continuou, e quem precisa de saber, com que urgência.
 
 | | Acontecimento |
 | --- | --- |
-| a) | Um Pokémon foi tratado e ficou com a vida cheia |
-| b) | O valor de cada variável no início do tratamento, para quem está a procurar um erro |
-| c) | Um Pokémon chegou KO e não pode ser tratado; o programa passa ao seguinte |
-| d) | O ficheiro onde se guarda a lista de espera não se conseguiu escrever, e a lista de hoje perdeu-se |
-| e) | O Centro abriu, às 9 horas |
-| f) | O ficheiro de configuração do Centro não existe, e o programa não pode arrancar |
+| a) | A vida de um Pokémon depois de cada poção, uma linha por poção |
+| b) | Um treinador pediu o tratamento de um Pokémon que não está na lista de espera, e o programa passou ao pedido seguinte |
+| c) | O talão de um tratamento não se imprimiu, porque a impressora está sem papel, e o Pokémon foi tratado na mesma |
+| d) | A máquina que cura os Pokémon deixou de responder, e o programa não consegue tratar mais nenhum |
 
-### Exercício 7: De print para logging
+Rever: [Os cinco níveis](../04-excecoes-depuracao-e-logging.md#os-cinco-níveis).
 
-Treina: trocar os `print` de depuração por mensagens do registo, com o nível certo (guia, [O registo do ginásio](../04-excecoes-depuracao-e-logging.md#o-registo-do-ginásio) e [Quem configura é o programa](../04-excecoes-depuracao-e-logging.md#quem-configura-é-o-programa)).
+<details>
+<summary>Pista</summary>
+
+Para cada acontecimento, pergunta primeiro se o programa fez o que queria fazer, e só depois se continuou.
+
+</details>
+
+### Exercício 7: De print para o registo
 
 Esta função trata uma lista de Pokémon, e tem `print` espalhados, que alguém pôs para perceber o que ela fazia:
 
@@ -259,9 +283,9 @@ def tratar(pokemons, cura):
     return cheios
 ```
 
-Cria o ficheiro `centro.py` com esta função, e troca cada `print` por uma mensagem do registo, num logger com o nome `"centro"`. Escolhe o nível de cada uma pelo que ela significa. Escreve as mensagens com f-strings e termina cada uma com um ponto final, como "Tratamento acabado: 1 com a vida cheia.". O `centro.py` não configura o registo.
+Cria o `centro.py` com esta função e troca cada `print` por uma mensagem do registo, num logger com o nome `"centro"`, com o nível que a mensagem merece. As mensagens são as dos `print`, com ponto final, como o teste as mostra. O `centro.py` não configura o registo.
 
-Para testar, cria o ficheiro `teste_centro.py`:
+Testa com o `teste_centro.py`, na mesma pasta:
 
 ```python
 # teste_centro.py: testa o tratamento do Centro, com o registo configurado aqui.
@@ -270,121 +294,69 @@ import logging
 from pokemon import PokemonAgua, PokemonFogo
 from centro import tratar
 
-logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
 equipa = [PokemonAgua("Squirtle", 120, 30), PokemonFogo("Charmander", 0, 40), PokemonAgua("Psyduck", 50, 20)]
 print(tratar(equipa, 50))
 ```
 
-Quando estiver certo, o teste mostra:
+O teste deve mostrar:
 
 ```text
-[WARNING] centro: Charmander estava KO e não pode ser tratado.
-[INFO] centro: Tratamento acabado: 1 com a vida cheia.
+centro: Charmander estava KO e não pode ser tratado.
+centro: Tratamento acabado: 1 com a vida cheia.
 1
 ```
 
-Com o `basicConfig` no nível `logging.DEBUG`, o teste tem de mostrar três linhas de `DEBUG` antes da linha do aviso. São a do começo do tratamento, a do Squirtle e a do Charmander. E outra, a do Psyduck, entre o aviso e a linha do fim. Num comentário no fim do `teste_centro.py`, responde: porque é que o `basicConfig` está no `teste_centro.py`, e não no `centro.py`?
+Com `level=logging.WARNING` no teste, fica só a mensagem do KO:
+
+```text
+centro: Charmander estava KO e não pode ser tratado.
+1
+```
+
+Com `level=logging.DEBUG`, aparecem também as mensagens dos outros dois `print`: a do começo e uma por Pokémon.
+
+Rever: [O ginásio escreve no registo](../04-excecoes-depuracao-e-logging.md#o-ginásio-escreve-no-registo) e [Quem configura é o programa](../04-excecoes-depuracao-e-logging.md#quem-configura-é-o-programa).
+
+<details>
+<summary>Pista</summary>
+
+Se uma linha aparece com `root` no lugar de `centro`, não foi o logger do `centro.py` que a escreveu. Se aparece um bloco `--- Logging error ---`, compara a forma como o `print` recebe os valores com a forma como o logger os recebe.
+
+</details>
 
 ### Exercício 8: O que não se regista
 
-Treina: reconhecer dados que não podem ficar num registo (guia, [O que nunca se regista](../04-excecoes-depuracao-e-logging.md#o-que-nunca-se-regista)).
-
-Estas linhas são de um registo de uma aplicação de inscrições na Liga, com treinadores reais. Os dados da primeira linha são inventados, e o telefone está tapado, mas imagina que eram verdadeiros:
+Estas linhas são do registo de uma aplicação de trocas de Pokémon entre jogadores reais. Os dados são inventados, mas imagina que eram verdadeiros:
 
 ```text
-[INFO] liga: Nova inscrição: Joana Silva, joana.silva@example.com, telefone 9XX XXX XXX.
-[INFO] liga: Inscrição 1043 confirmada.
-[WARNING] liga: Entrada falhada para a inscrição 1043 com a palavra-passe Pikachu2026.
-[ERROR] liga: Não foi possível enviar o email de confirmação da inscrição 1043.
+[INFO] trocas: O jogador 2210 propôs uma troca ao jogador 3051: Pikachu por Eevee.
+[INFO] trocas: O jogador 3051 confirmou a idade para trocar: nasceu a 14/03/2011.
+[INFO] trocas: O jogador 3051 recusou a troca, com a mensagem "hoje não, estou de castigo até sexta".
+[WARNING] trocas: O jogador 2210 falhou o código de acesso 3 vezes seguidas, e a conta fica bloqueada 10 minutos.
 ```
 
-**a)** Para cada linha, diz se pode ficar no registo tal como está. Se não pode, diz que dado não devia estar lá e porquê.
+Num ficheiro só com comentários, diz se cada linha pode ficar no registo tal como está, e porquê. Reescreve as que não podem ficar, de forma que quem mantém a aplicação continue a saber o que aconteceu.
 
-**b)** Reescreve as linhas que não podem ficar, de forma que quem mantém a aplicação continue a saber o que aconteceu.
+Rever: [O que nunca se regista](../04-excecoes-depuracao-e-logging.md#o-que-nunca-se-regista).
 
-## Apoio
+<details>
+<summary>Pista</summary>
 
-- Exercício 1: segue cada chamada à parte, linha a linha, e prevê as linhas que aparecem por ordem, sem saltar nenhum bloco. Se tiveres dúvidas na alínea b, executa o programa e compara a ordem das linhas com a que previste.
-- Exercício 2: a verificação faz-se antes de guardar os atributos. Pensa primeiro, numa frase, quando é que uma cura está fora do intervalo, e só depois escreve a condição. O teste tem os valores 0 e 1, 50 e 80: ajudam a ver se os extremos estão certos.
-- Exercício 3: para a alínea a, descobre primeiro qual das três saídas da função cada compra usa, e só depois olha para os `except`. Para a alínea b, lembra-te de que o Python entra no primeiro `except` que corresponde.
-- Exercício 4: lê o traceback de baixo para cima. A última linha diz o quê, o andar de baixo diz onde rebentou, e os de cima dizem como se chegou lá. A linha que o traceback aponta mostra onde o erro rebentou, e a causa pode estar noutra linha do teu programa.
-- Exercício 5: escreve a hipótese numa frase que os valores do painel das variáveis possam confirmar ou desmentir. Para a tabela, com o ponto de paragem dentro do ciclo, o F5 continua até à volta seguinte, e não precisas de avançar linha a linha.
-- Exercício 6: para cada acontecimento, pergunta primeiro quem precisa de saber, entre quem usa o programa e quem o mantém. Depois pergunta se o programa continuou. Dois dos acontecimentos admitem mais de uma resposta, se a justificares.
-- Exercício 7: o logger cria-se uma vez, no início do `centro.py`, com `logging.getLogger("centro")`. Cada mensagem é um método desse logger, com o nome do nível em minúsculas. Se uma linha do teste aparecer com `root` no lugar de `centro`, não estás a usar o logger.
-- Exercício 8: lê cada linha como se fosse publicada. Pergunta-te se a pessoa de que se fala se reconhece nela, e se alguém que lesse a linha podia usar aquele dado para fazer alguma coisa.
-- Exercício 9: na alínea b), procura as duas linhas que fazem o treinador sair da sala. Têm de correr em qualquer caso.
+Lê cada linha como se fosse publicada. A pessoa de quem se fala gostava de a ver lá? E quem mantém a aplicação precisa daquele pormenor para perceber o que aconteceu?
 
-## Desafio opcional
+</details>
 
-O desafio são as inscrições numa Liga Pokémon, que têm três regras. Não se inscreve ninguém depois de as inscrições fecharem, não se inscreve duas vezes o mesmo nome, e não se inscreve ninguém depois de as vagas acabarem.
+## Desafios
 
-Num ficheiro `liga.py`, escreve:
+### Desafio 1: A sala que ficou ocupada
 
-- uma família de exceções: `ErroDaLiga`, filha de `Exception`, e três filhas dela, `InscricaoFechada`, `NomeRepetido` e `LigaCheia`;
-- uma classe `Liga`, cujo construtor recebe o número de vagas e começa com a lista de inscritos vazia e as inscrições abertas;
-- um método `fechar`, que fecha as inscrições e regista "Inscrições fechadas.", com o nível `INFO`;
-- um método `inscrever(nome)`. Quando uma das regras não deixa inscrever o treinador, lança a exceção certa. Quando deixa, junta-o aos inscritos e regista "Ash inscrito (1/3).", com o nível `INFO`, o número de inscritos e o de vagas.
+O Centro Pokémon tem uma sala de treino que só recebe um treinador de cada vez. Quando um treinador entra, a sala fica ocupada por ele, e quando sai, fica livre. Quem decide se um Pokémon pode treinar é o próprio Pokémon: o método `treinar` lança `SemEnergia` quando a energia não chega para um treino.
 
-O registo usa um logger com o nome `"liga"`. As mensagens das exceções são "As inscrições fecharam: Erika ficou de fora.", "Ash já está inscrito." e "Não há vagas para Gary.", com o nome do treinador.
-
-Testa com este programa, num ficheiro à parte:
+Copia este programa para um ficheiro `sala_de_treino.py`:
 
 ```python
-# teste_liga.py: testa as inscrições na Liga, com três vagas e cinco pedidos.
-import logging
-
-from liga import ErroDaLiga, Liga, NomeRepetido
-
-logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
-logger = logging.getLogger("inscricoes")
-
-liga = Liga(3)
-for nome in ["Ash", "Misty", "Ash", "Brock", "Gary"]:
-    try:
-        liga.inscrever(nome)
-    except NomeRepetido as erro:
-        logger.warning(f"Pedido repetido: {erro}")
-    except ErroDaLiga as erro:
-        logger.error(f"Inscrição recusada: {erro}")
-liga.fechar()
-try:
-    liga.inscrever("Erika")
-except ErroDaLiga as erro:
-    logger.error(f"Inscrição recusada: {erro}")
-print(liga.inscritos)
-```
-
-Quando estiver certo, o teste mostra:
-
-```text
-[INFO] liga: Ash inscrito (1/3).
-[INFO] liga: Misty inscrito (2/3).
-[WARNING] inscricoes: Pedido repetido: Ash já está inscrito.
-[INFO] liga: Brock inscrito (3/3).
-[ERROR] inscricoes: Inscrição recusada: Não há vagas para Gary.
-[INFO] liga: Inscrições fechadas.
-[ERROR] inscricoes: Inscrição recusada: As inscrições fecharam: Erika ficou de fora.
-['Ash', 'Misty', 'Brock']
-```
-
-Pista: escreve primeiro as quatro classes de exceções, e depois o `inscrever`, com as três verificações antes de juntar o nome. O logger fica no início do `liga.py`, sem `basicConfig`, porque quem configura é o programa de teste.
-
-Decide a ordem das três verificações. Com a Liga cheia, o Ash pede para se inscrever outra vez: deve receber `NomeRepetido` ou `LigaCheia`? O teste não verifica este caso. Escreve a tua escolha e a razão num comentário, junto do `inscrever`, e confirma que o teu código faz o que escolheste.
-
-## Para ires mais longe
-
-Este exercício é opcional. Dá mais prática do `finally`, no uso que o guia diz no fim da secção dele. Um método ocupa uma coisa e tem de a libertar, mesmo quando o erro sobe para quem o chamou. Não usa os ficheiros dos exemplos.
-
-### Exercício 9: A sala que ficou ocupada
-
-Treina: usar o `finally` para devolver o que um método ocupou, mesmo quando há uma exceção (guia, [Uma família de exceções](../04-excecoes-depuracao-e-logging.md#uma-família-de-exceções) e [finally: o que corre sempre](../04-excecoes-depuracao-e-logging.md#finally-o-que-corre-sempre)).
-
-O Centro Pokémon tem uma sala de treino que só recebe um treinador de cada vez. Quando um treinador entra, a sala fica ocupada por ele. Quando sai, a sala fica livre. Quem decide se um Pokémon pode treinar é o próprio Pokémon: o método `treinar` lança `SemEnergia` quando a energia não chega para um treino.
-
-Este programa tem um erro de propósito. Copia-o para um ficheiro `sala_de_treino.py`:
-
-```python
-# Exercício 9: a sala de treino do Centro Pokémon, que só recebe um treinador de cada vez.
+# sala_de_treino.py: a sala de treino do Centro Pokémon. Tem um erro de propósito.
 ENERGIA_POR_TREINO = 30
 
 
@@ -413,8 +385,8 @@ class PokemonEmTreino:
         """Gasta a energia de um treino e sobe um nível; sem energia, lança SemEnergia."""
         if self.energia < ENERGIA_POR_TREINO:
             raise SemEnergia(f"{self.nome} só tem {self.energia} de energia, e um treino gasta {ENERGIA_POR_TREINO}.")
-        self.energia -= ENERGIA_POR_TREINO
-        self.nivel += 1
+        self.energia = self.energia - ENERGIA_POR_TREINO
+        self.nivel = self.nivel + 1
 
 
 class SalaDeTreino:
@@ -436,19 +408,28 @@ class SalaDeTreino:
         print(f"{treinador} sai da sala.")
 
 
-sala = SalaDeTreino()
-pedidos = [("Ash", PokemonEmTreino("Pikachu", 50)), ("Brock", PokemonEmTreino("Onix", 10)), ("Misty", PokemonEmTreino("Staryu", 40))]
-for treinador, pokemon in pedidos:
+def pedir_treino(sala, treinador, pokemon):
+    """Pede a sala para o treino e escreve a recusa, se a houver."""
     try:
         sala.usar(treinador, pokemon)
     except ErroDoCentro as erro:
         print(f"Recusado: {erro}")
-print(f"Quem está na sala no fim: {sala.ocupada_por}")
+
+
+sala = SalaDeTreino()
+pedir_treino(sala, "Ash", PokemonEmTreino("Pikachu", 50))
+pedir_treino(sala, "Brock", PokemonEmTreino("Onix", 10))
+pedir_treino(sala, "Misty", PokemonEmTreino("Staryu", 40))
+print(f"Quem está na sala: {sala.ocupada_por}")
+# O Gary está a treinar quando a Erika chega.
+sala.ocupada_por = "Gary"
+pedir_treino(sala, "Erika", PokemonEmTreino("Oddish", 40))
+print(f"Quem está na sala: {sala.ocupada_por}")
 ```
 
-**a)** Sem executar, prevê as linhas que o programa mostra, e depois executa. O Brock já não está a treinar, e mesmo assim a Misty é recusada. Explica num comentário qual é o sintoma e qual é a causa: que linhas do `usar` não chegaram a correr, e porquê?
+**a)** Descobre, sem executar, as linhas que o programa escreve, e confirma executando, com um comentário para cada linha em que falhaste. Explica também o sintoma e a causa do erro: que linhas do `usar` não chegaram a correr, e porquê?
 
-**b)** Corrige o método `usar` com um `finally`, para que o treinador saia e a sala fique livre, quer o treino corra bem, quer corra mal. O `usar` não trata o erro do treino: o "Recusado" continua a ser escrito pelo programa principal. Um `try` pode ter só o `finally`, sem `except`. Muda só o `usar`. Quando estiver certo, o programa mostra:
+**b)** Corrige o método `usar` com um `finally`, para que o treinador saia e a sala fique livre, quer o treino corra bem, quer corra mal. O `usar` não trata o erro do treino: o "Recusado" continua a ser escrito pelo `pedir_treino`. Um `try` pode ter só o `finally`, sem `except`. Muda só o `usar`. O programa passa a mostrar:
 
 ```text
 Ash entra na sala.
@@ -460,26 +441,120 @@ Recusado: Onix só tem 10 de energia, e um treino gasta 30.
 Misty entra na sala.
 Staryu subiu para o nível 2.
 Misty sai da sala.
-Quem está na sala no fim: None
+Quem está na sala: None
+Recusado: Erika não pode entrar: a sala está ocupada por Gary.
+Quem está na sala: Gary
 ```
 
-**c)** Na saída da alínea b), "Brock sai da sala." aparece antes de "Recusado: ...". Porquê? Responde num comentário.
+<details>
+<summary>Pista</summary>
+
+Procura as linhas do `usar` que fazem o treinador sair da sala. Em que casos têm de correr, e em que casos não podem correr?
+
+</details>
+
+### Desafio 2: As inscrições na Liga
+
+Queremos as inscrições numa Liga Pokémon, num ficheiro `liga.py`. A Liga tem um número de vagas, que recebe quando é criada, e a lista dos nomes inscritos, que começa vazia. As inscrições começam abertas.
+
+Deves poder:
+
+- inscrever um treinador pelo nome, com o método `inscrever(nome)`;
+- fechar as inscrições, com o método `fechar()`.
+
+O programa recusa, sem mudar nada, com uma exceção da família `ErroDaLiga`, filha de `Exception`:
+
+- uma inscrição depois de as inscrições fecharem, com `InscricaoFechada`;
+- um nome que já está na lista, mesmo escrito com outras maiúsculas e minúsculas, como `"ash"` com o Ash inscrito, com `NomeRepetido`;
+- uma inscrição sem vagas, com `LigaCheia`.
+
+Cada inscrição e o fecho ficam no registo, com o nível `INFO`, num logger com o nome `"liga"`. O `liga.py` não configura o registo. As mensagens são as do teste.
+
+Testa com este programa, num ficheiro à parte:
+
+```python
+# teste_liga.py: testa as inscrições na Liga, com três vagas e seis pedidos.
+import logging
+
+from liga import ErroDaLiga, Liga, NomeRepetido
+
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
+logger = logging.getLogger("inscricoes")
+
+liga = Liga(3)
+for nome in ["Ash", "Misty", "ash", "Brock", "Gary"]:
+    try:
+        liga.inscrever(nome)
+    except NomeRepetido as erro:
+        logger.warning(f"Pedido repetido: {erro}")
+    except ErroDaLiga as erro:
+        logger.warning(f"Inscrição recusada: {erro}")
+liga.fechar()
+try:
+    liga.inscrever("Erika")
+except ErroDaLiga as erro:
+    logger.warning(f"Inscrição recusada: {erro}")
+print(liga.inscritos)
+```
+
+O teste deve mostrar:
+
+```text
+[INFO] liga: Ash entra na Liga (1/3).
+[INFO] liga: Misty entra na Liga (2/3).
+[WARNING] inscricoes: Pedido repetido: ash já está na lista.
+[INFO] liga: Brock entra na Liga (3/3).
+[WARNING] inscricoes: Inscrição recusada: Não há vagas para Gary.
+[INFO] liga: Inscrições fechadas.
+[WARNING] inscricoes: Inscrição recusada: As inscrições fecharam: Erika ficou de fora.
+['Ash', 'Misty', 'Brock']
+```
+
+<details>
+<summary>Pista</summary>
+
+Repara no número de inscritos na mensagem de cada inscrição: quando a mensagem é escrita, o nome já está na lista? Para o `"ash"`, pensa numa forma de pôr os dois nomes iguais antes de os comparar.
+
+</details>
+
+### Desafio 3: A volta estragada
+
+Um jogo de corridas guarda o tempo de cada volta em segundos, escrito em texto. Num ficheiro `corridas.py`, escreve a função `melhor_volta(tempos)`, que recebe a lista dos tempos e devolve o menor. Um tempo que não é um número, como `"1:23"`, fica de fora, e a corrida continua com as outras voltas. Quem mantém o jogo encontra o erro no registo, com o traceback, num logger com o nome `"corridas"`. O `corridas.py` não configura o registo.
+
+Testa com o `teste_corridas.py`, na mesma pasta:
+
+```python
+# teste_corridas.py: testa a melhor volta, com uma volta estragada.
+import logging
+
+from corridas import melhor_volta
+
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(name)s: %(message)s")
+tempos = ["1:23", "95", "88", "102"]
+print(f"Melhor volta: {melhor_volta(tempos)} segundos.")
+```
+
+O teste deve mostrar, por esta ordem:
+
+- a linha `[ERROR] corridas: Tempo inválido, deixado de fora: 1:23.`;
+- por baixo, o traceback, com o andar do teu `melhor_volta` e a última linha `ValueError: invalid literal for int() with base 10: '1:23'`;
+- a linha `Melhor volta: 88 segundos.`.
+
+Rever: [Registar uma exceção apanhada](../04-excecoes-depuracao-e-logging.md#registar-uma-exceção-apanhada).
+
+<details>
+<summary>Pista</summary>
+
+Se a melhor volta sair 0 ou `None`, ou se o programa parar com outro erro, olha para o `except`. O que faz ele à volta estragada, além de a registar?
+
+</details>
 
 ## Critérios de conclusão
 
-Concluíste a ficha quando:
-
-- os testes dos exercícios 2, 3 e 7 mostram exatamente as linhas indicadas no enunciado;
-- as respostas escritas estão em comentários, no ficheiro de cada exercício;
-- o comentário no fim do ficheiro do exercício 5 tem a hipótese, escrita antes de abrires o depurador, e a tabela com os valores que o depurador mostrou;
-- as justificações dos exercícios 6 e 8 dizem quem precisa de saber e porquê, e não só o nível ou a resposta.
-
-O desafio e o exercício 9, em "Para ires mais longe", são opcionais e não entram nestes critérios.
-
-## Autoavaliação
-
-1. Em que exercício precisaste de mais tempo, e o que fizeste para o resolver?
-2. Consegues explicar, por palavras tuas, a diferença entre o sítio onde um erro rebenta e o sítio onde está a causa?
-3. Em que situação usarias `WARNING` e em que situação usarias `ERROR`? Dá um exemplo do ginásio.
+- Os exercícios 2, 3 e 7 correm e mostram exatamente o que o enunciado diz.
+- Depois de corrigidos, o exercício 4 mostra o combate de Cerulean, e o 5 encontra o Pokémon mais ferido das duas equipas.
+- No exercício 1, cada linha que falhaste tem um comentário com a razão.
+- O comentário do fim do exercício 5 tem os cinco passos, com a hipótese escrita antes de abrires o depurador.
+- As explicações dos exercícios 2 e 4 e as escolhas dos exercícios 6 e 8 estão em comentários, e cada nível do exercício 6 tem a sua justificação.
 
 ![Rodapé](../../imagens/rodape.png)
