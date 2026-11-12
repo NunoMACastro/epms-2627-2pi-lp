@@ -2,7 +2,7 @@
 
 # Ficha de exercícios: Testes de comportamento com pytest
 
-Praticas os testes com o pytest: escolher os casos que apanham os erros, testar as recusas, usar uma fixture e testar um erro antes de o corrigir. Os exercícios 1 a 7 são obrigatórios e fazem-se pela ordem, porque o 5 e o 7 continuam os testes que escreves no 2, no 3 e no 4. Os ficheiros ficam numa pasta nova, `treino-com-testes`, fora da pasta do repositório dos alunos, como a do guia. As explicações que um exercício pedir ficam num comentário, no ficheiro de testes dele. Para rever: o [guia do tema](../05-testes-com-pytest.md) e o [laboratório](../laboratorios/05-testes-com-pytest-laboratorio.md).
+Praticas os testes com o pytest: escolher os casos que apanham os erros, testar as recusas, usar uma fixture e testar um erro antes de o corrigir. Os exercícios 1 a 7 são obrigatórios e fazem-se pela ordem, porque o 5 e o 7 continuam os testes que escreves no 2, no 3 e no 4. Os ficheiros ficam numa pasta nova, `treino-com-testes`, fora da pasta do repositório dos alunos, como a do guia. As explicações que um exercício pedir ficam num comentário, no ficheiro de testes dele. Precisas do pytest: se o computador ainda não o tiver, instala-o como no passo 4 de [Preparar o projeto](../laboratorios/05-testes-com-pytest-laboratorio.md#preparar-o-projeto), no laboratório. Para rever: o [guia do tema](../05-testes-com-pytest.md) e o [laboratório](../laboratorios/05-testes-com-pytest-laboratorio.md).
 
 ## O cenário
 

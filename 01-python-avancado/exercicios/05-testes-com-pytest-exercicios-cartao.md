@@ -2,7 +2,7 @@
 
 # Ficha de exercícios: Testes de comportamento com pytest num cartão de transportes
 
-Praticas, num programa pequeno e fora dos Pokémon, as exceções próprias e os testes com o pytest. Os exercícios 1 a 5 são obrigatórios: o primeiro cria o cartão, e cada um dos seguintes acrescenta-lhe uma regra. Trabalhas numa pasta nova, `cartao-de-transportes`, fora da pasta do repositório dos alunos, com dois ficheiros, `cartao.py` e `test_cartao.py`. Para rever: o [guia do tema](../05-testes-com-pytest.md) e o [laboratório](../laboratorios/05-testes-com-pytest-laboratorio.md).
+Praticas, num programa pequeno e fora dos Pokémon, as exceções próprias e os testes com o pytest. Os exercícios 1 a 5 são obrigatórios: o primeiro cria o cartão, e cada um dos seguintes acrescenta-lhe uma regra. Trabalhas numa pasta nova, `cartao-de-transportes`, fora da pasta do repositório dos alunos, com dois ficheiros, `cartao.py` e `test_cartao.py`. Se fizeres a ficha num computador sem o pytest, como o de casa, instala-o primeiro, como no passo 4 de [Preparar o projeto](../laboratorios/05-testes-com-pytest-laboratorio.md#preparar-o-projeto), no laboratório. Para rever: o [guia do tema](../05-testes-com-pytest.md) e o [laboratório](../laboratorios/05-testes-com-pytest-laboratorio.md).
 
 ## O cenário
 
