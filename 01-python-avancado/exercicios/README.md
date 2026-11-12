@@ -10,6 +10,6 @@ Uma ficha não é um laboratório. O [laboratório](../laboratorios/README.md) g
 | --- | --- |
 | 03 Objetos, composição e comportamento | [ficha](03-objetos-e-composicao-exercicios.md); [ficha dos karts](03-objetos-e-composicao-exercicios-karts.md); [livro de receitas](03-objetos-e-composicao-exercicios-receitas.md); [temas de treino](03-objetos-e-composicao-exercicios-treino.md) |
 | 04 Exceções, depuração e logging | [ficha](04-excecoes-depuracao-e-logging-exercicios.md) |
-| 05 Testes de comportamento com pytest | [ficha](05-testes-com-pytest-exercicios.md) |
+| 05 Testes de comportamento com pytest | [ficha](05-testes-com-pytest-exercicios.md); [ficha do cartão de transportes](05-testes-com-pytest-exercicios-cartao.md) |
 
 ![Rodapé](../../imagens/rodape.png)
