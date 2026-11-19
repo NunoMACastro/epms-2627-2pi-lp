@@ -1,8 +1,8 @@
-![Cabeçalho](../../imagens/cabecalho.png)
+![Cabeçalho](../../../imagens/cabecalho.png)
 
 # Ficha de exercícios: Testes de comportamento com pytest na mochila de uma personagem
 
-Praticas, num programa que já funciona, a troca das recusas feitas com `print` por exceções e os testes dessas recusas com o pytest. Fazes os dois exercícios numa pasta nova, `mochila-da-personagem`, com dois ficheiros, `personagem.py` e `test_personagem.py`. Se trabalhares num computador sem o pytest, instala-o primeiro, como no passo 4 de [Preparar o projeto](../laboratorios/05-testes-com-pytest-laboratorio.md#preparar-o-projeto), no laboratório.
+Praticas, num programa que já funciona, a troca das recusas feitas com `print` por exceções e os testes dessas recusas com o pytest. Fazes os dois exercícios numa pasta nova, `mochila-da-personagem`, com dois ficheiros, `personagem.py` e `test_personagem.py`. Se trabalhares num computador sem o pytest, instala-o primeiro, como no passo 4 de [Preparar o projeto](../../laboratorios/05-testes-com-pytest-laboratorio.md#preparar-o-projeto), no laboratório.
 
 ## O cenário
 
@@ -117,4 +117,4 @@ No `test_personagem.py`, escreve um teste com cada nome desta lista. Cada teste 
 - `python3 personagem.py` mostra exatamente a saída do exercício 1.
 - O `test_personagem.py` tem os 7 testes da lista, e `python3 -m pytest` passa sem falhas.
 
-![Rodapé](../../imagens/rodape.png)
+![Rodapé](../../../imagens/rodape.png)
