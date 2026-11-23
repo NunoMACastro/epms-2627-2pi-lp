@@ -9,5 +9,6 @@ Uma ficha não é um laboratório. O [laboratório](../laboratorios/README.md) g
 | Tema | Ficha |
 | --- | --- |
 | 01 Modelo relacional e ambiente PostgreSQL | [ficha](01-modelo-relacional-e-postgresql-exercicios.md) |
+| 02 DDL e integridade | [ficha](02-ddl-e-integridade-exercicios.md) |
 
 ![Rodapé](../../imagens/rodape.png)
