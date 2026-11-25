@@ -212,6 +212,45 @@ A grelha do pgAdmin mostra mais do que o `psql`: por baixo do nome de cada colun
 
 Os comandos do psql não funcionam no pgAdmin, porque são do `psql` e não são SQL. Se escreveres `\dt` na Query Tool, o servidor responde com um erro. No pgAdmin, as tabelas veem-se na árvore do lado esquerdo, dentro da base `pokemon`.
 
+### O servidor decide como ir buscar os dados
+
+Com a lista de dicionários do Python, para mostrar o nome e a cidade de cada treinador, és tu que dizes como se faz. Percorres a lista com um ciclo e escreves um treinador de cada vez:
+
+```python
+for treinador in treinadores:
+    print(treinador["nome"], treinador["cidade"])
+```
+
+A consulta `SELECT nome, cidade FROM treinadores;`, de [Escolher as colunas](#escolher-as-colunas), dá a mesma lista sem ciclo nenhum. Em SQL, dizes que resultado queres, as colunas e a tabela, e não como se chega lá. Quem decide como percorrer as linhas é o servidor.
+
+Quando a consulta chega ao servidor, passa por quatro passos:
+
+```mermaid
+flowchart LR
+    consulta["Consulta, enviada pelo cliente"] --> ler["1. Lê o texto"]
+    ler --> nomes["2. Confirma os nomes"]
+    nomes --> caminho["3. Escolhe o caminho"]
+    caminho --> buscar["4. Vai buscar as linhas"]
+    buscar --> resposta["Resposta, com as linhas"]
+    ler -- mal escrito --> erro1["syntax error"]
+    nomes -- nome que não existe --> erro2["does not exist"]
+```
+
+O diagrama mostra os quatro passos, da consulta à resposta. Um erro no passo 1 ou no passo 2 para tudo, e o cliente recebe só a mensagem de erro.
+
+No passo 1, o servidor lê o texto e confirma que está escrito como o SQL manda. Se não estiver, responde com `syntax error`, "erro de sintaxe". É o que acontece ao `\dt` na Query Tool do pgAdmin, porque não é SQL. No passo 2, confirma que as tabelas e as colunas da consulta existem na base. Se uma não existir, responde com `does not exist`, "não existe". Estas mensagens estão em [Erros frequentes](#erros-frequentes).
+
+Só uma consulta que passa estes dois passos chega ao passo 3, em que o servidor escolhe o caminho para ir buscar as linhas. Nas tabelas pequenas deste guia, o caminho é ler a tabela toda, linha a linha. No passo 4, o servidor vai buscar as linhas por esse caminho e envia a resposta ao cliente.
+
+Em que passo para a consulta sem a vírgula, `SELECT nome cidade FROM treinadores;`? Não para em nenhum, porque é SQL bem escrito e os nomes que usa existem. O servidor faz o que a consulta diz, mesmo quando não é o que querias.
+
+<details>
+<summary>Para ires mais longe: os nomes dos passos no PostgreSQL</summary>
+
+A documentação do PostgreSQL, em inglês, dá nomes a estes passos. Os passos 1 e 2 são do parser, o analisador. O passo 3 é do planner, o planeador, que compara os caminhos possíveis, estima quanto custa cada um e escolhe o mais barato. O passo 4 é do executor. Entre o 2 e o 3, a documentação mostra ainda o rewrite system, que reescreve a consulta quando há regras guardadas na base. Nas consultas deste guia, não muda nada. Está tudo em [The Path of a Query](https://www.postgresql.org/docs/17/query-path.html).
+
+</details>
+
 ## Parte 3: O NULL, as chaves e o modelo
 
 ### O NULL quer dizer que não há valor
