@@ -1,0 +1,28 @@
+# compose.yaml: o servidor PostgreSQL das aulas, a correr no Docker.
+# Na primeira vez que arranca, cria a base de dados pokemon com o pokemon.sql.
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: pokemon
+      # A palavra-passe vem do ficheiro .env, que nunca vai para o Git.
+      # Sem ela, o servidor não arranca, e o Docker escreve esta mensagem.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta o ficheiro .env com a POSTGRES_PASSWORD}
+    ports:
+      # Só este computador chega ao servidor, pelo endereço 127.0.0.1 e pela porta 5433.
+      - "127.0.0.1:5433:5432"
+    # O psql começa na pasta /projeto. Por isso, o \i encontra os ficheiros do projeto
+    # só pelo nome, como em \i esquema.sql.
+    working_dir: /projeto
+    volumes:
+      # Os dados ficam num volume do Docker e não se perdem quando o servidor para.
+      - dados:/var/lib/postgresql/data
+      # O pokemon.sql desta pasta entra numa pasta do servidor cujos ficheiros correm uma vez,
+      # quando a base ainda está vazia. O :ro deixa o servidor só ler o ficheiro.
+      - ./pokemon.sql:/docker-entrypoint-initdb.d/pokemon.sql:ro
+      # A pasta do projeto, que o servidor vê em /projeto. O que guardas no VS Code
+      # aparece lá logo, e o :ro não deixa o servidor mudar os teus ficheiros.
+      - ./:/projeto:ro
+
+volumes:
+  dados:

@@ -1,0 +1,3 @@
+# .gitignore: o que o Git deixa de fora nesta pasta.
+# O .env tem a palavra-passe do servidor e nunca vai para o Git.
+.env

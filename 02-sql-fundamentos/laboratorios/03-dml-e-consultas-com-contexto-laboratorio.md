@@ -695,7 +695,7 @@ As linhas que acrescentaste em [Preparar o projeto](#preparar-o-projeto) têm um
 
 ### `perguntas.sql: No such file or directory`
 
-O `psql` não encontrou o ficheiro na pasta do projeto. Escreve `\! ls` no `psql` e procura-o na lista. Se o nome for outro, como `Perguntas.sql` ou `perguntas.sql.txt`, corrige-o no painel Explorer.
+O `psql` não encontrou o ficheiro na pasta do projeto. Escreve `\! ls` no `psql` e procura-o na lista. Se o nome for outro, como `pergunta.sql` ou `perguntas.sql.txt`, corrige-o no painel Explorer.
 
 ### O `psql` fica à espera, com `ginasio-#` ou `ginasio-*#`
 
