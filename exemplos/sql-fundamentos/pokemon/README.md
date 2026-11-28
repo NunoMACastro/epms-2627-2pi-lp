@@ -2,12 +2,13 @@
 
 # Exemplo dos Pokémon em SQL
 
-A base de dados do ginásio Pokémon, guardada no PostgreSQL: os treinadores, os Pokémon que capturaram, as espécies e os tipos, e os combates nos ginásios. Cresce com a matéria, e cada pasta é uma versão completa, que corre sozinha. É usado nos temas [01 Modelo relacional e ambiente PostgreSQL](../../../02-sql-fundamentos/01-modelo-relacional-e-postgresql.md) e [02 DDL e integridade](../../../02-sql-fundamentos/02-ddl-e-integridade.md).
+A base de dados do ginásio Pokémon, guardada no PostgreSQL: os treinadores, os Pokémon que capturaram, as espécies e os tipos, e os combates nos ginásios. Cresce com a matéria, e cada pasta é uma versão completa, que corre sozinha. É usado nos temas [01 Modelo relacional e ambiente PostgreSQL](../../../02-sql-fundamentos/01-modelo-relacional-e-postgresql.md), [02 DDL e integridade](../../../02-sql-fundamentos/02-ddl-e-integridade.md) e [03 DML e consultas com contexto](../../../02-sql-fundamentos/03-dml-e-consultas-com-contexto.md).
 
 ## O que está nesta pasta
 
 - `01-modelo-relacional-e-postgresql`, a versão do tema 01. O `pokemon.sql` cria as cinco tabelas e põe lá os dados. O `compose.yaml` arranca o servidor PostgreSQL no Docker e, na primeira vez, corre o `pokemon.sql`. O `.env.example` diz que linha leva o ficheiro `.env`, onde fica a palavra-passe do servidor, e o `.gitignore` deixa o `.env` fora do Git.
 - `02-ddl-e-integridade`, a versão do tema 02. Tem tudo o que a versão 01 tem, e o `compose.yaml` mostra a pasta do projeto ao servidor, para o `psql` correr os ficheiros com o `\i`. O `esquema.sql` cria as cinco tabelas da base `ginasio`, com as regras que a base garante. O `dados.sql` põe lá os dados, e o `recusas.sql` tem linhas que a base recusa, uma por regra.
+- `03-dml-e-consultas-com-contexto`, a versão do tema 03. Tem tudo o que a versão 02 tem, e o `dados.sql` tem, no fim, mais duas espécies, dois Pokémon KO e um combate. O `perguntas.sql` tem onze perguntas ao ginásio, cada uma com a consulta que a responde e o resultado esperado num comentário.
 
 ## Como correr a versão 01
 
@@ -44,5 +45,20 @@ O início da linha passa a ser `ginasio=#`. Corre os três ficheiros, por esta o
 O que deves ver: o `esquema.sql` escreve cinco `DROP TABLE` e cinco `CREATE TABLE`, e o `dados.sql` escreve cinco linhas `INSERT`, com o número de linhas de cada tabela. O `recusas.sql` escreve sete `ERROR`, um por cada linha que a base recusa. Na primeira vez, o `esquema.sql` escreve também cinco `NOTICE`, porque ainda não havia tabelas para apagar. O `\dt` mostra as cinco tabelas, e o `\d pokemons` mostra as regras da tabela dos Pokémon.
 
 Se já tinhas a base `ginasio`, o `CREATE DATABASE` diz `database "ginasio" already exists`, e podes passar à base nova. O `esquema.sql` e o `dados.sql` voltam a construir a base `ginasio` de raiz sempre que os corres.
+
+## Como correr a versão 03
+
+Precisas do Docker Desktop aberto e de uma pasta com a versão 02 a funcionar, com a base `ginasio`. Se não a tens, faz primeiro o "Como correr a versão 02". Troca o `dados.sql` da tua pasta pelo desta versão e junta-lhe o `perguntas.sql`.
+
+No terminal, nessa pasta, arranca o servidor e entra no `psql`, na base `ginasio`:
+
+```bash
+docker compose up -d
+docker compose exec db psql -U postgres -d ginasio
+```
+
+Corre os três ficheiros, por esta ordem, com `\i esquema.sql`, `\i dados.sql` e `\i perguntas.sql`.
+
+O que deves ver: o `dados.sql` escreve oito linhas `INSERT`, a acabar em `INSERT 0 2`, `INSERT 0 2` e `INSERT 0 1`, e o `SELECT * FROM pokemons;` mostra oito Pokémon. O `perguntas.sql` escreve onze respostas, cada uma com o número de linhas do comentário da sua pergunta.
 
 ![Rodapé](../../../imagens/rodape.png)

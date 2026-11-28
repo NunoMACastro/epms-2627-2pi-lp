@@ -10,5 +10,6 @@ Um laboratório não é uma ficha de exercícios. No laboratório, aprendes a fa
 | --- | --- |
 | 01 Modelo relacional e ambiente PostgreSQL | [laboratório](01-modelo-relacional-e-postgresql-laboratorio.md) |
 | 02 DDL e integridade | [laboratório](02-ddl-e-integridade-laboratorio.md) |
+| 03 DML e consultas com contexto | [laboratório](03-dml-e-consultas-com-contexto-laboratorio.md) |
 
 ![Rodapé](../../imagens/rodape.png)
